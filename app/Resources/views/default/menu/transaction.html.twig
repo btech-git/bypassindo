@@ -1,0 +1,25 @@
+{% extends 'default/layout.html.twig' %}
+
+{% block title 'Transaction Menu' %}
+
+{% block stylesheets %}
+    <style>
+        table tr td:nth-child(2) { width: 30% }
+        table tr td:nth-child(3) { width: 30% }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="3" class="bg-info lead">
+                <strong>Group</strong>
+            </th>
+        </tr>
+        <tr>
+            <td>Entity</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_entity_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_entity_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+        </tr>
+    </table>
+{% endblock %}
