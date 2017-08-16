@@ -1,0 +1,84 @@
+{% set grid_layout = 'datagrid.html.twig' %}
+
+{{ grid_top(grid) }}
+
+<table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
+    <thead>
+        <tr data-action="sort" class="alert alert-info">
+            <th data-group="saleOrder" data-field="transactionDate">Transaction Date</th>
+            <th data-group="saleOrder" data-field="quotationNumber">Quotation Number</th>
+            <th data-group="saleOrder" data-field="purchaseOrderDate">Purchase Order Date</th>
+            <th data-group="saleOrder" data-field="purchaseOrderNumber">Purchase Order Number</th>
+            <th data-group="saleOrder" data-field="deliveryDate">Delivery Date</th>
+            <th data-group="saleOrder" data-field="invoiceRegistrationName">Invoice Registration Name</th>
+            <th data-group="saleOrder" data-field="isOffTheRoad">Is Off The Road</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
+            <th data-group="saleOrder" data-field="vehicleType">Vehicle Type</th>
+            <th data-group="saleOrder" data-field="vehicleSerialNumber">Vehicle Serial Number</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
+            <th data-group="saleOrder" data-field="vehicleOptionalInfo">Vehicle Optional Info</th>
+            <th data-group="saleOrder" data-field="vehicleAccessoriesInfo">Vehicle Accessories Info</th>
+            <th data-group="saleOrder" data-field="vehicleOtherInfo">Vehicle Other Info</th>
+            <th data-group="saleOrder" data-field="quantity">Quantity</th>
+            <th data-group="saleOrder" data-field="unitPrice">Unit Price</th>
+            <th data-group="saleOrder" data-field="total">Total</th>
+            <th data-group="saleOrder" data-field="isCash">Is Cash</th>
+            <th data-group="saleOrder" data-field="isLeasing">Is Leasing</th>
+            <th data-group="saleOrder" data-field="leasingName">Leasing Name</th>
+            <th data-group="saleOrder" data-field="leasingTerm">Leasing Term</th>
+            <th data-group="saleOrder" data-field="leasingMonthlyNominal">Leasing Monthly Nominal</th>
+            <th data-group="saleOrder" data-field="downPayment">Down Payment</th>
+            <th data-group="saleOrder" data-field="note">Note</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for saleOrder in grid.data %}
+            <tr data-field-id="{{ saleOrder.id }}">
+                <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleOrder.quotationNumber|default }}</td>
+                <td class="text-left">{{ saleOrder.purchaseOrderDate|default ? saleOrder.purchaseOrderDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleOrder.purchaseOrderNumber|default }}</td>
+                <td class="text-left">{{ saleOrder.deliveryDate|default ? saleOrder.deliveryDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleOrder.invoiceRegistrationName|default }}</td>
+                <td class="text-left">{{ saleOrder.isOffTheRoad|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ saleOrder.vehicleBrand|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleType|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleSerialNumber|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleColor|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleOptionalInfo|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleAccessoriesInfo|default }}</td>
+                <td class="text-left">{{ saleOrder.vehicleOtherInfo|default }}</td>
+                <td class="text-left">{{ saleOrder.quantity|default }}</td>
+                <td class="text-right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleOrder.total|default|number_format(2) }}</td>
+                <td class="text-left">{{ saleOrder.isCash|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ saleOrder.isLeasing|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ saleOrder.leasingName|default }}</td>
+                <td class="text-left">{{ saleOrder.leasingTerm|default }}</td>
+                <td class="text-right">{{ saleOrder.leasingMonthlyNominal|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleOrder.downPayment|default|number_format(2) }}</td>
+                <td class="text-left">{{ saleOrder.note|default }}</td>
+                <td class="text-left">
+                    {{ include('transaction/actions.html.twig', {
+                        'contents': {
+                            '{index}': null,
+                            '{new}': null,
+                            '{show}': include('action.html.twig', {'url': path('transaction_sale_order_show', {'id': saleOrder.id}), 'button': 'btn btn-info btn-sm', 'icon': 'glyphicon glyphicon-info-sign'}),
+                            '{edit}': include('action.html.twig', {'url': path('transaction_sale_order_edit', {'id': saleOrder.id}), 'button': 'btn btn-warning btn-sm', 'icon': 'glyphicon glyphicon-edit'}),
+                            '{delete}': include('action.html.twig', {'url': path('transaction_sale_order_delete', {'id': saleOrder.id}), 'button': 'btn btn-danger btn-sm', 'icon': 'glyphicon glyphicon-remove'}),
+                        }
+                    }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="25" class="alert alert-warning">
+                    <strong>There are no items to display.</strong>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ grid_bottom(grid) }}

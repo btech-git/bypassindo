@@ -17,10 +17,6 @@ use AppBundle\Entity\Admin\Staff;
 
 class StaffGridType extends DataGridType
 {
-    /**
-     * @param WidgetsBuilder $builder
-     * @param array $options
-     */
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
         $builder->searchWidget()
@@ -87,11 +83,6 @@ class StaffGridType extends DataGridType
         ;
     }
 
-    /**
-     * @param DataBuilder $builder
-     * @param ObjectRepository $repository
-     * @param array $options
-     */
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
         $criteria = Criteria::create();

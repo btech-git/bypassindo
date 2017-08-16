@@ -1,0 +1,120 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Sale Order #</label>
+                    <div>{{ saleOrder.codeNumber }}</div>
+                </div>
+                {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
+                <div>
+                    <strong>Name:</strong>
+                    <span id="customer-name">{{ saleOrder.customer.name|default }}</span>
+                </div>
+                <div>
+                    <strong>Contact Person:</strong>
+                    <span id="customer-contact-person">{{ saleOrder.customer.contactPerson|default }}</span>
+                </div>
+                <div>
+                    <strong>Phone:</strong>
+                    <span id="customer-phone">{{ saleOrder.customer.phone|default }}</span>
+                </div>
+                <div>
+                    <strong>Office Address:</strong>
+                    <span id="customer-office-address">{{ saleOrder.customer.officeAddress|default }}</span>
+                </div>
+                <br />
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.quotationNumber) }}
+                {{ form_row(form.purchaseOrderDate) }}
+                {{ form_row(form.purchaseOrderNumber) }}
+                {{ form_row(form.deliveryDate) }}
+                {{ form_row(form.isCash) }}
+                {{ form_row(form.isLeasing) }}
+                {{ form_row(form.leasingName) }}
+                {{ form_row(form.leasingTerm) }}
+                {{ form_row(form.leasingMonthlyNominal) }}
+                {{ form_row(form.downPayment) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.invoiceRegistrationName) }}
+                {{ form_row(form.isOffTheRoad, {'label': 'Off The Road'}) }}
+                {{ form_row(form.vehicleBrand) }}
+                {{ form_row(form.vehicleType) }}
+                {{ form_row(form.vehicleSerialNumber) }}
+                {{ form_row(form.vehicleColor) }}
+                {{ form_row(form.vehicleOptionalInfo) }}
+                {{ form_row(form.vehicleAccessoriesInfo) }}
+                {{ form_row(form.vehicleOtherInfo) }}
+                {{ form_row(form.quantity) }}
+                {{ form_row(form.unitPrice) }}
+                <div class="row form-group">
+                    <div class="col-sm-6 text-left">
+                        <strong>Total</strong>
+                    </div>
+                    <div class="col-sm-6 text-right">
+                        <span id="total">{{ saleOrder.total|default|number_format(2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+    
+        <div id="customer-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Customer List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="customer-grid" data-grid="{{ path('common_customer_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            function bind() {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
+                    data: $("form").serialize(),
+                    dataType: "JSON",
+                    success: function(data) {
+                        $("#total").text(data.total);
+                    }
+                });
+            }
+            
+            $("#{{ form.quantity.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#{{ form.unitPrice.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#customer-dialog").modal("hide");
+                $("#{{ form.customer.vars.id }}").val($(this).attr("data-field-id"));
+                $("#customer-name").text($(this).attr("data-field-name"));
+                $("#customer-contact-person").text($(this).attr("data-field-contact-person"));
+                $("#customer-phone").text($(this).attr("data-field-phone"));
+                $("#customer-office-address").text($(this).attr("data-field-office-address"));
+            });
+        });
+    </script>
+{% endblock %}

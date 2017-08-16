@@ -12,14 +12,11 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Common\UserRole;
 
 class StaffType extends AbstractType
 {
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -39,38 +36,37 @@ class StaffType extends AbstractType
                 'multiple' => true,
             ))
         ;
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $staff = $event->getData();
-            $form = $event->getForm();
-            if (empty($staff->getId())) {
-                $form->add('username');
-                $form->add('plainPassword', RepeatedType::class, array(
-                    'constraints' => array(new NotBlank(), new Length(array('min' => '6'))),
-                    'mapped' => false,
-                    'type' => PasswordType::class,
-                    'first_options'  => array('label' => 'New Password'),
-                    'second_options' => array('label' => 'Confirm Password'),
-                ));
-            }
-        });
-        $builder->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) use ($options) {
-            $form = $event->getForm();
-            $staff = $form->getData();
-            if (empty($staff->getId())) {
-                $plainPassword = $form->get('plainPassword')->getData();
-                $password = $options['encoder']->encodePassword($staff, $plainPassword);
-                $staff->setPassword($password);
-            }
-        });
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) {
+                $staff = $event->getData();
+                $form = $event->getForm();
+                if (empty($staff->getId())) {
+                    $form->add('username');
+                    $form->add('plainPassword', RepeatedType::class, array(
+                        'mapped' => false,
+                        'constraints' => array(new NotBlank(), new Length(array('min' => '6'))),
+                        'type' => PasswordType::class,
+                        'first_options'  => array('label' => 'New Password'),
+                        'second_options' => array('label' => 'Confirm Password'),
+                    ));
+                }
+            })
+            ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
+                $staff = $event->getData();
+                $form = $event->getForm();
+                if (empty($staff->getId())) {
+                    $plainPassword = $form->get('plainPassword')->getData();
+                    $password = $options['encoder']->encodePassword($staff, $plainPassword);
+                    $staff->setPassword($password);
+                }
+            })
+        ;
     }
 
-    /**
-     * @param OptionsResolver $resolver
-     */
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Admin\Staff'
+            'data_class' => Staff::class,
         ));
         $resolver->setRequired(array('encoder'));
     }

@@ -1,0 +1,118 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Sale Discount Application' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Code Number</th>
+                <td>{{ saleDiscountApplication.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Deal Status</th>
+                <td>{{ saleDiscountApplication.dealStatus|default }}</td>
+            </tr>
+            <tr>
+                <th>Deal Date</th>
+                <td>{{ saleDiscountApplication.dealDate|default ? saleDiscountApplication.dealDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Customer Status Type</th>
+                <td>{{ saleDiscountApplication.customerStatusType|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer Status Name</th>
+                <td>{{ saleDiscountApplication.customerStatusName|default }}</td>
+            </tr>
+            <tr>
+                <th>Request Type</th>
+                <td>{{ saleDiscountApplication.requestType|default }}</td>
+            </tr>
+            <tr>
+                <th>Request Quantity</th>
+                <td>{{ saleDiscountApplication.requestQuantity|default }}</td>
+            </tr>
+            <tr>
+                <th>Request Usage Type</th>
+                <td>{{ saleDiscountApplication.requestUsageType|default }}</td>
+            </tr>
+            <tr>
+                <th>Request Workshop</th>
+                <td>{{ saleDiscountApplication.requestWorkshop|default }}</td>
+            </tr>
+            <tr>
+                <th>Competitor Brand</th>
+                <td>{{ saleDiscountApplication.competitorBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Competitor Type</th>
+                <td>{{ saleDiscountApplication.competitorType|default }}</td>
+            </tr>
+            <tr>
+                <th>Competitor Dealer</th>
+                <td>{{ saleDiscountApplication.competitorDealer|default }}</td>
+            </tr>
+            <tr>
+                <th>Payment Method Type</th>
+                <td>{{ saleDiscountApplication.paymentMethodType|default }}</td>
+            </tr>
+            <tr>
+                <th>Payment Method Value</th>
+                <td>{{ saleDiscountApplication.paymentMethodValue|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer Price</th>
+                <td>{{ saleDiscountApplication.customerPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Salesman Price</th>
+                <td>{{ saleDiscountApplication.salesmanPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Approved Price</th>
+                <td>{{ saleDiscountApplication.approvedPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Competitor Price</th>
+                <td>{{ saleDiscountApplication.competitorPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Off The Road Price</th>
+                <td>{{ saleDiscountApplication.offTheRoadPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Registration Price</th>
+                <td>{{ saleDiscountApplication.registrationPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Sub Total Price</th>
+                <td>{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Other Price</th>
+                <td>{{ saleDiscountApplication.otherPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total Price</th>
+                <td>{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Mediator Price</th>
+                <td>{{ saleDiscountApplication.mediatorPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ saleDiscountApplication.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

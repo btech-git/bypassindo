@@ -1,0 +1,110 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Sale Order' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Quotation Number</th>
+                <td>{{ saleOrder.quotationNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Purchase Order Date</th>
+                <td>{{ saleOrder.purchaseOrderDate|default ? saleOrder.purchaseOrderDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Purchase Order Number</th>
+                <td>{{ saleOrder.purchaseOrderNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Delivery Date</th>
+                <td>{{ saleOrder.deliveryDate|default ? saleOrder.deliveryDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Invoice Registration Name</th>
+                <td>{{ saleOrder.invoiceRegistrationName|default }}</td>
+            </tr>
+            <tr>
+                <th>Is Off The Road</th>
+                <td>{{ saleOrder.isOffTheRoad|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Brand</th>
+                <td>{{ saleOrder.vehicleBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Type</th>
+                <td>{{ saleOrder.vehicleType|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Serial Number</th>
+                <td>{{ saleOrder.vehicleSerialNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Color</th>
+                <td>{{ saleOrder.vehicleColor|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Optional Info</th>
+                <td>{{ saleOrder.vehicleOptionalInfo|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Accessories Info</th>
+                <td>{{ saleOrder.vehicleAccessoriesInfo|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Other Info</th>
+                <td>{{ saleOrder.vehicleOtherInfo|default }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ saleOrder.quantity|default }}</td>
+            </tr>
+            <tr>
+                <th>Unit Price</th>
+                <td>{{ saleOrder.unitPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total</th>
+                <td>{{ saleOrder.total|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Is Cash</th>
+                <td>{{ saleOrder.isCash|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Leasing</th>
+                <td>{{ saleOrder.isLeasing|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Leasing Name</th>
+                <td>{{ saleOrder.leasingName|default }}</td>
+            </tr>
+            <tr>
+                <th>Leasing Term</th>
+                <td>{{ saleOrder.leasingTerm|default }}</td>
+            </tr>
+            <tr>
+                <th>Leasing Monthly Nominal</th>
+                <td>{{ saleOrder.leasingMonthlyNominal|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Down Payment</th>
+                <td>{{ saleOrder.downPayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ saleOrder.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

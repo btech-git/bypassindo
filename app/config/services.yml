@@ -7,3 +7,42 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
+    app.transaction.sale_discount_application_repository:
+        class: AppBundle\Repository\Transaction\SaleDiscountApplicationRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\SaleDiscountApplication
+
+    app.transaction.sale_discount_application_form:
+        class: AppBundle\Service\Transaction\SaleDiscountApplicationForm
+        arguments: ["@app.transaction.sale_discount_application_repository"]
+
+    app.transaction.sale_order_repository:
+        class: AppBundle\Repository\Transaction\SaleOrderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\SaleOrder
+
+    app.transaction.sale_order_form:
+        class: AppBundle\Service\Transaction\SaleOrderForm
+        arguments: ["@app.transaction.sale_order_repository"]
+
+    app.transaction.delivery_inspection_header_repository:
+        class: AppBundle\Repository\Transaction\DeliveryInspectionHeaderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\DeliveryInspectionHeader
+
+    app.transaction.delivery_inspection_header_form:
+        class: AppBundle\Service\Transaction\DeliveryInspectionHeaderForm
+        arguments: ["@app.transaction.delivery_inspection_header_repository"]
+
+    app.transaction.receive_order_repository:
+        class: AppBundle\Repository\Transaction\ReceiveOrderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\ReceiveOrder
+
+    app.transaction.receive_order_form:
+        class: AppBundle\Service\Transaction\ReceiveOrderForm
+        arguments: ["@app.transaction.receive_order_repository"]

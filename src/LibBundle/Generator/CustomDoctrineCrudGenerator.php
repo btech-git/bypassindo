@@ -62,6 +62,10 @@ class CustomDoctrineCrudGenerator extends DoctrineCrudGenerator
             $this->generateEditView($dir);
         }
 
+        if (in_array('new', $this->actions) || in_array('edit', $this->actions)) {
+            $this->generateFormView($dir);
+        }
+
         if (in_array('delete', $this->actions)) {
             $this->generateDeleteView($dir);
         }
@@ -75,6 +79,20 @@ class CustomDoctrineCrudGenerator extends DoctrineCrudGenerator
         return array_filter($this->actions, function ($item) {
             return in_array($item, array('show', 'edit', 'delete'));
         });
+    }
+
+    protected function generateFormView($dir)
+    {
+        $this->renderFile('crud/views/form.html.twig.twig', $dir.'/form.html.twig', array(
+            'route_prefix' => $this->routePrefix,
+            'route_name_prefix' => $this->routeNamePrefix,
+            'identifier' => $this->metadata->identifier[0],
+            'entity' => $this->entity,
+            'entity_singularized' => $this->entitySingularized,
+            'fields' => $this->metadata->fieldMappings,
+            'bundle' => $this->bundle->getName(),
+            'actions' => $this->actions,
+        ));
     }
 
     protected function generateDeleteView($dir)

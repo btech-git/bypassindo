@@ -493,7 +493,7 @@
                     sel.trigger("change");
                 }
             });
-            $("[data-role=table] [data-action=search] [data-group][data-field]", container).on("change", "[data-item]", function() {
+            $("[data-role=table] [data-action=search] [data-group][data-field]", container).on("change dp.hide", "[data-item]", function() {
                 var el = $(this).closest(".filter");
                 var sel = el.find("[data-item=operator]");
                 var params = getParams();

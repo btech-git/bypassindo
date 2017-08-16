@@ -1,0 +1,42 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Receive Order' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Production Year</th>
+                <td>{{ receiveOrder.vehicleProductionYear|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Chassis Number</th>
+                <td>{{ receiveOrder.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Machine Number</th>
+                <td>{{ receiveOrder.vehicleMachineNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Description</th>
+                <td>{{ receiveOrder.vehicleDescription|default }}</td>
+            </tr>
+            <tr>
+                <th>Service Book Number</th>
+                <td>{{ receiveOrder.serviceBookNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ receiveOrder.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

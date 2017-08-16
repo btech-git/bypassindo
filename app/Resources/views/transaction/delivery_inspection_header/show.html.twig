@@ -1,0 +1,30 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Delivery Inspection Header' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ deliveryInspectionHeader.transactionDate|default ? deliveryInspectionHeader.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Is Vehicle Complete</th>
+                <td>{{ deliveryInspectionHeader.isVehicleComplete|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Body Builder Executed</th>
+                <td>{{ deliveryInspectionHeader.isBodyBuilderExecuted|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ deliveryInspectionHeader.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

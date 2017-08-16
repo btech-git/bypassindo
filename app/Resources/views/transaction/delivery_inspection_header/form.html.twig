@@ -1,0 +1,139 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Delivery Inspection #</label>
+                    <div>{{ deliveryInspectionHeader.codeNumber }}</div>
+                </div>
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.isVehicleComplete) }}
+                {{ form_row(form.isBodyBuilderExecuted) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'} }) }}
+                <div>
+                    <strong>Name:</strong>
+                    <span id="customer-name">{{ deliveryInspectionHeader.saleOrder.customer.name|default }}</span>
+                </div>
+                <div>
+                    <strong>Vehicle Brand:</strong>
+                    <span id="sale-order-vehicle-brand">{{ deliveryInspectionHeader.saleOrder.vehicleBrand|default }}</span>
+                </div>
+                <div>
+                    <strong>Vehicle Type:</strong>
+                    <span id="sale-order-vehicle-type">{{ deliveryInspectionHeader.saleOrder.vehicleType|default }}</span>
+                </div>
+                <div>
+                    <strong>Vehicle Serial Number:</strong>
+                    <span id="sale-order-vehicle-serial-number">{{ deliveryInspectionHeader.saleOrder.vehicleSerialNumber|default }}</span>
+                </div>
+                <div>
+                    <strong>Vehicle Color:</strong>
+                    <span id="sale-order-vehicle-color">{{ deliveryInspectionHeader.saleOrder.vehicleColor|default }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+        
+        <hr />
+        
+        {% set last_id = '' %}
+        {% set starts, ends, names = {}, {}, {} %}
+        {% for detail in form.details %}
+            {% set id = detail.vars.value.inspectionItem.inspectionItemCategory.id %}
+            {% if last_id != id %}
+                {% set starts = starts|merge({('0' ~ id): loop.index0}) %}
+                {% set names = names|merge({('0' ~ id): detail.vars.value.inspectionItem.inspectionItemCategory.name}) %}
+            {% endif %}
+            {% set ends = ends|merge({('0' ~ id): loop.index0}) %}
+            {% set last_id = id %}
+        {% endfor %}
+        
+        <div id="item-list">
+            {% for detail in form.details %}
+                {% set id = detail.vars.value.inspectionItem.inspectionItemCategory.id %}
+                {% set diff = ends['0' ~ id] - starts['0' ~ id] + 1 %}
+                {% set range = diff + (3 - (diff % 3 == 0 ? 3 : diff % 3)) %}
+                {% set column = 0 %}
+                {% if loop.index0 < starts['0' ~ id] + 1 * (range // 3) %}
+                    {% set column = 1 %}
+                {% elseif loop.index0 < starts['0' ~ id] + 2 * (range // 3) %}
+                    {% set column = 2 %}
+                {% elseif loop.index0 < starts['0' ~ id] + 3 * (range // 3) %}
+                    {% set column = 3 %}
+                {% endif %}
+                <div data-category-id="{{ id }}" data-column="{{ column }}">
+                    {{ form_row(detail.inspectionItem) }}
+                    {{ form_widget(detail.isSelected, {'label': detail.vars.value.inspectionItem.name|default}) }}
+                    {{ form_errors(detail.isSelected) }}
+                </div>
+            {% endfor %}
+        </div>
+        
+        <div id="input-check-list">
+            {% for key, name in names %}
+                <div class="row">
+                    <div class="col-sm-12">
+                        <span class="lead"><strong>{{ name|default }}</strong></span>
+                    </div>
+                </div>
+                <div class="row" data-category-id="{{ key }}">
+                    <div class="col-sm-4" data-column="1"></div>
+                    <div class="col-sm-4" data-column="2"></div>
+                    <div class="col-sm-4" data-column="3"></div>
+                </div>
+                <br />
+            {% endfor %}
+        </div>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+    
+        <div id="sale-order-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sale Order List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="sale-order-grid" data-grid="{{ path('common_sale_order_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            $("#item-list > [data-column]").each(function() {
+                var categoryId = $(this).attr("data-category-id");
+                var column = $(this).attr("data-column");
+                
+                $(this).contents().appendTo("#input-check-list > [data-category-id=0"+categoryId+"] > [data-column="+column+"]");
+            });
+            
+            $("#item-list").remove();
+            
+            $("#sale-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#sale-order-dialog").modal("hide");
+                $("#{{ form.saleOrder.vars.id }}").val($(this).attr("data-field-id"));
+                $("#customer-name").text($(this).attr("data-field-customer-name"));
+                $("#sale-order-vehicle-brand").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("#sale-order-vehicle-type").text($(this).attr("data-field-sale-order-vehicle-type"));
+                $("#sale-order-vehicle-serial-number").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
+                $("#sale-order-vehicle-color").text($(this).attr("data-field-sale-order-vehicle-color"));
+            });
+        });
+    </script>
+{% endblock %}
