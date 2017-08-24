@@ -45,25 +45,28 @@ class DeliveryWorkshopController extends Controller
     }
 
     /**
-     * @Route("/new", name="transaction_delivery_workshop_new")
+     * @Route("/new.{_format}", name="transaction_delivery_workshop_new")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request, $_format = 'html')
     {
         $deliveryWorkshop = new DeliveryWorkshop();
-        $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop);
+        
+        $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
+        $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop, array(
+            'service' => $deliveryWorkshopService,
+            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+        ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository(DeliveryWorkshop::class);
-            $repository->add($deliveryWorkshop);
+        if ($_format === 'html' && $form->isSubmitted() && $form->isValid()) {
+            $deliveryWorkshopService->save($deliveryWorkshop);
 
             return $this->redirectToRoute('transaction_delivery_workshop_show', array('id' => $deliveryWorkshop->getId()));
         }
 
-        return $this->render('transaction/delivery_workshop/new.html.twig', array(
+        return $this->render('transaction/delivery_workshop/new.'.$_format.'.twig', array(
             'deliveryWorkshop' => $deliveryWorkshop,
             'form' => $form->createView(),
         ));
@@ -88,18 +91,20 @@ class DeliveryWorkshopController extends Controller
      */
     public function editAction(Request $request, DeliveryWorkshop $deliveryWorkshop)
     {
-        $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop);
+        $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
+        $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop, array(
+            'service' => $deliveryWorkshopService,
+            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+        ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository(DeliveryWorkshop::class);
-            $repository->update($deliveryWorkshop);
+        if ($_format === 'html' && $form->isSubmitted() && $form->isValid()) {
+            $deliveryWorkshopService->save($deliveryWorkshop);
 
             return $this->redirectToRoute('transaction_delivery_workshop_show', array('id' => $deliveryWorkshop->getId()));
         }
 
-        return $this->render('transaction/delivery_workshop/edit.html.twig', array(
+        return $this->render('transaction/delivery_workshop/edit.'.$_format.'.twig', array(
             'deliveryWorkshop' => $deliveryWorkshop,
             'form' => $form->createView(),
         ));

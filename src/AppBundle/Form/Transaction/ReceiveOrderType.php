@@ -27,12 +27,12 @@ class ReceiveOrderType extends AbstractType
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
-                $deliveryOrder = $event->getData();
-                $options['service']->initialize($deliveryOrder, $options['init']);
+                $receiveOrder = $event->getData();
+                $options['service']->initialize($receiveOrder, $options['init']);
             })
             ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
-                $deliveryOrder = $event->getData();
-                $options['service']->finalize($deliveryOrder);
+                $receiveOrder = $event->getData();
+                $options['service']->finalize($receiveOrder);
             })
         ;
     }

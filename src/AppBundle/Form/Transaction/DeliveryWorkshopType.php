@@ -5,19 +5,32 @@ namespace AppBundle\Form\Transaction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\DeliveryWorkshop;
+use AppBundle\Entity\Master\Supplier;
+use AppBundle\Entity\Transaction\ReceiveOrder;
 
 class DeliveryWorkshopType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('transactionDate')
+            ->add('transactionDate', 'date')
             ->add('note')
-            ->add('staffFirst')
-            ->add('staffLast')
-            ->add('supplier')
-            ->add('receiveOrder')
+            ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
+            ->add('receiveOrder', EntityTextType::class, array('class' => ReceiveOrder::class))
+        ;
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
+                $deliveryWorkshop = $event->getData();
+                $options['service']->initialize($deliveryWorkshop, $options['init']);
+            })
+            ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
+                $deliveryWorkshop = $event->getData();
+                $options['service']->finalize($deliveryWorkshop);
+            })
         ;
     }
 
@@ -26,5 +39,6 @@ class DeliveryWorkshopType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => DeliveryWorkshop::class,
         ));
+        $resolver->setRequired(array('service', 'init'));
     }
 }
