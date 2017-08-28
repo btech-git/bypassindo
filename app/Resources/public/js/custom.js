@@ -44,11 +44,20 @@ jQuery(function($) {
         el.load(el.attr("data-grid"), {id: el.attr("id")});
     });
     
-    $(document).on("click", "[data-confirm]", function() {
+    $(document).on("change", "input[type=checkbox][data-choice-group]", function() {
+        var group = $(this).attr("data-choice-group");
+        var checked = $(this).is(":checked");
+        $("input[type=checkbox][data-choice-group="+group+"]").prop("checked", false);
+        if (checked) {
+            $(this).prop("checked", true);
+        }
+    });
+    
+    $(document).on("click", "input[type=submit][data-confirm]", function() {
         return window.confirm($(this).attr("data-confirm"));
     });
     
-    $(document).on("focus", "[data-pick]", function() {
+    $(document).on("focus", "input[type=text][data-pick]", function() {
         var el = $(this);
         var dateformat = "YYYY-MM-DD";
         var timeformat = "HH:mm:ss";

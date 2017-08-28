@@ -13,30 +13,38 @@
                     <div>{{ deliveryInspectionHeader.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
-                {{ form_row(form.isVehicleComplete) }}
-                {{ form_row(form.isBodyBuilderExecuted) }}
+                {{ form_row(form.isVehicleComplete, {'attr': {'data-choice-group': 'completion-part-type'} }) }}
+                {{ form_row(form.isBodyBuilderExecuted, {'attr': {'data-choice-group': 'completion-part-type'} }) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'} }) }}
+                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'} }) }}
                 <div>
-                    <strong>Name:</strong>
-                    <span id="customer-name">{{ deliveryInspectionHeader.saleOrder.customer.name|default }}</span>
+                    <label>Customer:</label>
+                    <span id="customer-name">{{ deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Brand:</strong>
-                    <span id="sale-order-vehicle-brand">{{ deliveryInspectionHeader.saleOrder.vehicleBrand|default }}</span>
+                    <label>Vehicle Chassis Number:</label>
+                    <span id="vehicle-chassis-number">{{ deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Type:</strong>
-                    <span id="sale-order-vehicle-type">{{ deliveryInspectionHeader.saleOrder.vehicleType|default }}</span>
+                    <label>Vehicle Machine Number:</label>
+                    <span id="vehicle-machine-number">{{ deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Serial Number:</strong>
-                    <span id="sale-order-vehicle-serial-number">{{ deliveryInspectionHeader.saleOrder.vehicleSerialNumber|default }}</span>
+                    <label>Vehicle Brand:</label>
+                    <span id="sale-order-vehicle-brand">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Color:</strong>
-                    <span id="sale-order-vehicle-color">{{ deliveryInspectionHeader.saleOrder.vehicleColor|default }}</span>
+                    <label>Vehicle Serial Number:</label>
+                    <span id="sale-order-vehicle-serial-number">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                </div>
+                <div>
+                    <label>Vehicle Color:</label>
+                    <span id="sale-order-vehicle-color">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                </div>
+                <div>
+                    <label>Manufacture Code:</label>
+                    <span id="vehicle-model-manufacture-code">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                 </div>
             </div>
         </div>
@@ -82,7 +90,9 @@
             {% for key, name in names %}
                 <div class="row">
                     <div class="col-sm-12">
-                        <span class="lead"><strong>{{ name|default }}</strong></span>
+                        <span class="lead">
+                            <label>{{ name|default }}</label>
+                        </span>
                     </div>
                 </div>
                 <div class="row" data-category-id="{{ key }}">
@@ -96,15 +106,15 @@
         
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
     
-        <div id="sale-order-dialog" class="modal fade" role="dialog">
+        <div id="receive-order-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg" style="width: 90%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Sale Order List</h4>
+                        <h4 class="modal-title">Receive Order List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="sale-order-grid" data-grid="{{ path('common_sale_order_grid') }}"></div>
+                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid') }}"></div>
                     </div>
                 </div>
             </div>
@@ -125,14 +135,16 @@
             
             $("#item-list").remove();
             
-            $("#sale-order-grid").on("click", "table[data-role=table] tbody tr", function() {
-                $("#sale-order-dialog").modal("hide");
-                $("#{{ form.saleOrder.vars.id }}").val($(this).attr("data-field-id"));
+            $("#receive-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#receive-order-dialog").modal("hide");
+                $("#{{ form.receiveOrder.vars.id }}").val($(this).attr("data-field-id"));
                 $("#customer-name").text($(this).attr("data-field-customer-name"));
+                $("#vehicle-chassis-number").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("#vehicle-machine-number").text($(this).attr("data-field-vehicle-machine-number"));
                 $("#sale-order-vehicle-brand").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("#sale-order-vehicle-type").text($(this).attr("data-field-sale-order-vehicle-type"));
                 $("#sale-order-vehicle-serial-number").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
                 $("#sale-order-vehicle-color").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("#vehicle-model-manufacture-code").text($(this).attr("data-field-vehicle-model-manufacture-code"));
             });
         });
     </script>

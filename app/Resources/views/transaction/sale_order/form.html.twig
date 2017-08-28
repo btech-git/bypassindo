@@ -14,19 +14,19 @@
                 </div>
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div>
-                    <strong>Name:</strong>
+                    <label>Customer:</label>
                     <span id="customer-name">{{ saleOrder.customer.name|default }}</span>
                 </div>
                 <div>
-                    <strong>Contact Person:</strong>
+                    <label>Contact Person:</label>
                     <span id="customer-contact-person">{{ saleOrder.customer.contactPerson|default }}</span>
                 </div>
                 <div>
-                    <strong>Phone:</strong>
+                    <label>Phone:</label>
                     <span id="customer-phone">{{ saleOrder.customer.phone|default }}</span>
                 </div>
                 <div>
-                    <strong>Office Address:</strong>
+                    <label>Office Address:</label>
                     <span id="customer-office-address">{{ saleOrder.customer.officeAddress|default }}</span>
                 </div>
                 <br />
@@ -35,8 +35,8 @@
                 {{ form_row(form.purchaseOrderDate) }}
                 {{ form_row(form.purchaseOrderNumber) }}
                 {{ form_row(form.deliveryDate) }}
-                {{ form_row(form.isCash) }}
-                {{ form_row(form.isLeasing) }}
+                {{ form_row(form.isCash, {'attr': {'data-choice-group': 'payment-type'} }) }}
+                {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'} }) }}
                 {{ form_row(form.leasingName) }}
                 {{ form_row(form.leasingTerm) }}
                 {{ form_row(form.leasingMonthlyNominal) }}
@@ -45,8 +45,25 @@
             <div class="col-sm-6">
                 {{ form_row(form.invoiceRegistrationName) }}
                 {{ form_row(form.isOffTheRoad, {'label': 'Off The Road'}) }}
+                {{ form_row(form.vehicleModel, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#vehicle-model-dialog'} }) }}
+                <div>
+                    <label>Manufacture Code:</label>
+                    <span id="vehicle-model-manufacture-code">{{ saleOrder.vehicleModel.manufactureCode|default }}</span>
+                </div>
+                <div>
+                    <label>VLD Model Name:</label>
+                    <span id="vehicle-model-vld-model-name">{{ saleOrder.vehicleModel.vldModelName|default }}</span>
+                </div>
+                <div>
+                    <label>VOS Model Name:</label>
+                    <span id="vehicle-model-vos-model-name">{{ saleOrder.vehicleModel.vosModelName|default }}</span>
+                </div>
+                <div>
+                    <label>DMS Variant Name:</label>
+                    <span id="vehicle-model-dms-variant-name">{{ saleOrder.vehicleModel.dmsVariantName|default }}</span>
+                </div>
+                <br />
                 {{ form_row(form.vehicleBrand) }}
-                {{ form_row(form.vehicleType) }}
                 {{ form_row(form.vehicleSerialNumber) }}
                 {{ form_row(form.vehicleColor) }}
                 {{ form_row(form.vehicleOptionalInfo) }}
@@ -56,7 +73,7 @@
                 {{ form_row(form.unitPrice) }}
                 <div class="row form-group">
                     <div class="col-sm-6 text-left">
-                        <strong>Total</strong>
+                        <label>Total</label>
                     </div>
                     <div class="col-sm-6 text-right">
                         <span id="total">{{ saleOrder.total|default|number_format(2) }}</span>
@@ -82,6 +99,20 @@
                 </div>
             </div>
         </div>
+    
+        <div id="vehicle-model-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Vehicle Model List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="vehicle-model-grid" data-grid="{{ path('common_vehicle_model_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {{ form_end(form) }}
 {% endblock %}
 
@@ -100,12 +131,36 @@
                     }
                 });
             }
+            function showLeasing() {
+                $("#{{ form.leasingName.vars.id }}").parent().show();
+                $("#{{ form.leasingTerm.vars.id }}").parent().show();
+                $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().show();
+            }
+            function hideLeasing() {
+                $("#{{ form.leasingName.vars.id }}").parent().hide();
+                $("#{{ form.leasingTerm.vars.id }}").parent().hide();
+                $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().hide();
+            }
+            
+            if (!$("#{{ form.isLeasing.vars.id }}").is(":checked")) {
+                hideLeasing();
+            }
             
             $("#{{ form.quantity.vars.id }}").on("change", function() {
                 bind();
             });
             $("#{{ form.unitPrice.vars.id }}").on("change", function() {
                 bind();
+            });
+            $("#{{ form.isCash.vars.id }}").on("change", function() {
+                hideLeasing();
+            });
+            $("#{{ form.isLeasing.vars.id }}").on("change", function() {
+                if ($(this).is(":checked")) {
+                    showLeasing();
+                } else {
+                    hideLeasing();
+                }
             });
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");
@@ -114,6 +169,14 @@
                 $("#customer-contact-person").text($(this).attr("data-field-contact-person"));
                 $("#customer-phone").text($(this).attr("data-field-phone"));
                 $("#customer-office-address").text($(this).attr("data-field-office-address"));
+            });
+            $("#vehicle-model-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#vehicle-model-dialog").modal("hide");
+                $("#{{ form.vehicleModel.vars.id }}").val($(this).attr("data-field-id"));
+                $("#vehicle-model-manufacture-code").text($(this).attr("data-field-manufacture-code"));
+                $("#vehicle-model-vld-model-name").text($(this).attr("data-field-vld-model-name"));
+                $("#vehicle-model-vos-model-name").text($(this).attr("data-field-vos-model-name"));
+                $("#vehicle-model-dms-variant-name").text($(this).attr("data-field-dms-variant-name"));
             });
         });
     </script>

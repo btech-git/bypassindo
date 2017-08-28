@@ -8,70 +8,74 @@
     {{ form_start(form) }}
         <div class="row">
             <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Sale Discount #</label>
+                    <div>{{ saleDiscountApplication.codeNumber }}</div>
+                </div>
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div>
-                    <strong>Name:</strong>
+                    <label>Customer:</label>
                     <span id="customer-name">{{ saleDiscountApplication.customer.name|default }}</span>
                 </div>
                 <div>
-                    <strong>Contact Person:</strong>
+                    <label>Contact Person:</label>
                     <span id="customer-contact-person">{{ saleDiscountApplication.customer.contactPerson|default }}</span>
                 </div>
                 <div>
-                    <strong>Phone:</strong>
+                    <label>Phone:</label>
                     <span id="customer-phone">{{ saleDiscountApplication.customer.phone|default }}</span>
                 </div>
                 <div>
-                    <strong>Business Field:</strong>
+                    <label>Business Field:</label>
                     <span id="customer-business-field">{{ saleDiscountApplication.customer.businessField|default }}</span>
                 </div>
                 <div>
-                    <strong>Cat 2:</strong>
+                    <label>Cat 2:</label>
                 </div>
                 <div style="padding-left: 25px">
                     <div>
-                        <strong>Hino:</strong>
+                        <label>Hino:</label>
                         <span id="customer-category-two-hino-population">{{ saleDiscountApplication.customer.categoryTwoHinoPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Mitsubishi:</strong>
+                        <label>Mitsubishi:</label>
                         <span id="customer-category-two-mitsubishi-population">{{ saleDiscountApplication.customer.categoryTwoMitsubishiPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Toyota:</strong>
+                        <label>Toyota:</label>
                         <span id="customer-category-two-toyota-population">{{ saleDiscountApplication.customer.categoryTwoToyotaPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Isuzu:</strong>
+                        <label>Isuzu:</label>
                         <span id="customer-category-two-isuzu-population">{{ saleDiscountApplication.customer.categoryTwoIsuzuPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Other:</strong>
+                        <label>Other:</label>
                         <span id="customer-category-two-other-population">{{ saleDiscountApplication.customer.categoryTwoOtherPopulation|default|number_format(0) }}</span> unit
                     </div>
                 </div>
                 <div>
-                    <strong>Cat 3:</strong>
+                    <label>Cat 3:</label>
                 </div>
                 <div style="padding-left: 25px">
                     <div>
-                        <strong>Hino:</strong>
+                        <label>Hino:</label>
                         <span id="customer-category-three-hino-population">{{ saleDiscountApplication.customer.categoryThreeHinoPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Mitsubishi:</strong>
+                        <label>Mitsubishi:</label>
                         <span id="customer-category-three-mitsubishi-population">{{ saleDiscountApplication.customer.categoryThreeMitsubishiPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Nissan:</strong>
+                        <label>Nissan:</label>
                         <span id="customer-category-three-nissan-population">{{ saleDiscountApplication.customer.categoryThreeNissanPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Isuzu:</strong>
+                        <label>Isuzu:</label>
                         <span id="customer-category-three-isuzu-population">{{ saleDiscountApplication.customer.categoryThreeIsuzuPopulation|default|number_format(0) }}</span> unit
                     </div>
                     <div>
-                        <strong>Benz:</strong>
+                        <label>Benz:</label>
                         <span id="customer-category-three-benz-population">{{ saleDiscountApplication.customer.categoryThreeBenzPopulation|default|number_format(0) }}</span> unit
                     </div>
                 </div>
@@ -163,6 +167,13 @@
                 });
             }
             
+            if ($("#{{ form.customerStatusType.vars.id }}:checked").val() !== "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
+                $("#{{ form.customerStatusName.vars.id }}").hide();
+            }
+            if ($("#{{ form.paymentMethodType.vars.id }}:checked").val() !== "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}" && $("#{{ form.paymentMethodType.vars.id }}:checked").val() !== "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
+                $("#{{ form.paymentMethodValue.vars.id }}").hide();
+            }
+            
             $("#{{ form.offTheRoadPrice.vars.id }}").on("change", function() {
                 bind();
             });
@@ -171,6 +182,20 @@
             });
             $("#{{ form.otherPrice.vars.id }}").on("change", function() {
                 bind();
+            });
+            $("#{{ form.customerStatusType.vars.id }}").on("change", function() {
+                if ($(":checked", this).val() === "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
+                    $("#{{ form.customerStatusName.vars.id }}").show();
+                } else {
+                    $("#{{ form.customerStatusName.vars.id }}").hide();
+                }
+            });
+            $("#{{ form.paymentMethodType.vars.id }}").on("change", function() {
+                if ($(":checked", this).val() === "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}" || $(":checked", this).val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
+                    $("#{{ form.paymentMethodValue.vars.id }}").hide();
+                } else {
+                    $("#{{ form.paymentMethodValue.vars.id }}").show();
+                }
             });
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");

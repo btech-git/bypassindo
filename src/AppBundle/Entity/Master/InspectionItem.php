@@ -33,14 +33,9 @@ class InspectionItem
      * @Assert\NotNull()
      */
     private $inspectionItemCategory;
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\DeliveryInspectionDetail", mappedBy="inspectionItem")
-     */
-    private $deliveryInspectionDetails;
     
     public function __construct()
     {
-        $this->deliveryInspectionDetails = new ArrayCollection();
     }
     
     public function __toString()
@@ -58,7 +53,4 @@ class InspectionItem
     
     public function getInspectionItemCategory() { return $this->inspectionItemCategory; }
     public function setInspectionItemCategory(InspectionItemCategory $inspectionItemCategory = null) { $this->inspectionItemCategory = $inspectionItemCategory; }
-
-    public function getDeliveryInspectionDetails() { return $this->deliveryInspectionDetails; }
-    public function setDeliveryInspectionDetails(Collection $deliveryInspectionDetails) { $this->deliveryInspectionDetails = $deliveryInspectionDetails; }
 }

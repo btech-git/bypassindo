@@ -93,14 +93,9 @@ class Supplier
      * @Assert\NotNull()
      */
     private $isActive = true;
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\DeliveryWorkshop", mappedBy="supplier")
-     */
-    private $deliveryWorkshops;
     
     public function __construct()
     {
-        $this->deliveryWorkshops = new ArrayCollection();
     }
     
     public function __toString()
@@ -154,7 +149,4 @@ class Supplier
 
     public function getIsActive() { return $this->isActive; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }
-    
-    public function getDeliveryWorkshops() { return $this->deliveryWorkshops; }
-    public function setDeliveryWorkshops(Collection $deliveryWorkshops) { $this->deliveryWorkshops = $deliveryWorkshops; }
 }

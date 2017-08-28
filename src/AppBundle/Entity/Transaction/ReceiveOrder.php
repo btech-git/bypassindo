@@ -75,10 +75,15 @@ class ReceiveOrder extends CodeNumberEntity
      * @ORM\OneToMany(targetEntity="DeliveryWorkshop", mappedBy="receiveOrder")
      */
     private $deliveryWorkshops;
+    /**
+     * @ORM\OneToMany(targetEntity="DeliveryInspectionHeader", mappedBy="receiveOrder")
+     */
+    private $deliveryInspectionHeaders;
     
     public function __construct()
     {
         $this->deliveryWorkshops = new ArrayCollection();
+        $this->deliveryInspectionHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -120,4 +125,7 @@ class ReceiveOrder extends CodeNumberEntity
 
     public function getDeliveryWorkshops() { return $this->deliveryWorkshops; }
     public function setDeliveryWorkshops(Collection $deliveryWorkshops) { $this->deliveryWorkshops = $deliveryWorkshops; }
+
+    public function getDeliveryInspectionHeaders() { return $this->deliveryInspectionHeaders; }
+    public function setDeliveryInspectionHeaders(Collection $deliveryInspectionHeaders) { $this->deliveryInspectionHeaders = $deliveryInspectionHeaders; }
 }

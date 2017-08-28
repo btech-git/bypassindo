@@ -171,7 +171,7 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer", inversedBy="saleDiscountApplications")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
      * @Assert\NotNull()
      */
     private $customer;

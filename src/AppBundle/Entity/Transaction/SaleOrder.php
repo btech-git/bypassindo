@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Master\VehicleModel;
 
 /**
  * @ORM\Table(name="transaction_sale_order")
@@ -62,11 +63,6 @@ class SaleOrder extends CodeNumberEntity
      * @Assert\NotBlank()
      */
     private $vehicleBrand;
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
-     */
-    private $vehicleType;
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank()
@@ -153,23 +149,23 @@ class SaleOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer", inversedBy="saleOrders")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
      * @Assert\NotNull()
      */
     private $customer;
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
+     * @Assert\NotNull()
+     */
+    private $vehicleModel;
+    /**
      * @ORM\OneToMany(targetEntity="ReceiveOrder", mappedBy="saleOrder")
      */
     private $receiveOrders;
-    /**
-     * @ORM\OneToMany(targetEntity="DeliveryInspectionHeader", mappedBy="saleOrder")
-     */
-    private $deliveryInspectionHeaders;
     
     public function __construct()
     {
         $this->receiveOrders = new ArrayCollection();
-        $this->deliveryInspectionHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -202,9 +198,6 @@ class SaleOrder extends CodeNumberEntity
 
     public function getVehicleBrand() { return $this->vehicleBrand; }
     public function setVehicleBrand($vehicleBrand) { $this->vehicleBrand = $vehicleBrand; }
-
-    public function getVehicleType() { return $this->vehicleType; }
-    public function setVehicleType($vehicleType) { $this->vehicleType = $vehicleType; }
 
     public function getVehicleSerialNumber() { return $this->vehicleSerialNumber; }
     public function setVehicleSerialNumber($vehicleSerialNumber) { $this->vehicleSerialNumber = $vehicleSerialNumber; }
@@ -259,6 +252,9 @@ class SaleOrder extends CodeNumberEntity
 
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
+
+    public function getVehicleModel() { return $this->vehicleModel; }
+    public function setVehicleModel(VehicleModel $vehicleModel = null) { $this->vehicleModel = $vehicleModel; }
 
     public function getReceiveOrders() { return $this->receiveOrders; }
     public function setReceiveOrders(Collection $receiveOrders) { $this->receiveOrders = $receiveOrders; }

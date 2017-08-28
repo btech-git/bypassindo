@@ -37,6 +37,11 @@ class SaleOrderForm
     {
         $total = $saleOrder->getQuantity() * $saleOrder->getUnitPrice();
         $saleOrder->setTotal($total);
+        if ($saleOrder->getIsCash() && !$saleOrder->getIsLeasing()) {
+            $saleOrder->setLeasingName('');
+            $saleOrder->setLeasingTerm('');
+            $saleOrder->setLeasingMonthlyNominal('0.00');
+        }
     }
     
     public function save(SaleOrder $saleOrder)

@@ -52,15 +52,20 @@ class DeliveryInspectionHeader extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="SaleOrder", inversedBy="deliveryInspectionHeaders")
+     * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="deliveryInspectionHeaders")
      * @Assert\NotNull()
      */
-    private $saleOrder;
+    private $receiveOrder;
     /**
      * @ORM\OneToMany(targetEntity="DeliveryInspectionDetail", mappedBy="deliveryInspectionHeader")
      * @Assert\Valid() @Assert\Count(min=1)
      */
     private $deliveryInspectionDetails;
+    /**
+     * @ORM\OneToOne(targetEntity="DeliveryOrder", mappedBy="deliveryInspectionHeader")
+     * @Assert\NotNull()
+     */
+    private $deliveryOrder;
     
     public function __construct()
     {
@@ -92,9 +97,12 @@ class DeliveryInspectionHeader extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getSaleOrder() { return $this->saleOrder; }
-    public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
+    public function getReceiveOrder() { return $this->receiveOrder; }
+    public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
 
     public function getDeliveryInspectionDetails() { return $this->deliveryInspectionDetails; }
     public function setDeliveryInspectionDetails(Collection $deliveryInspectionDetails) { $this->deliveryInspectionDetails = $deliveryInspectionDetails; }
+
+    public function getDeliveryOrder() { return $this->deliveryOrder; }
+    public function setDeliveryOrder(DeliveryOrder $deliveryOrder = null) { $this->deliveryOrder = $deliveryOrder; }
 }

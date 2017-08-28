@@ -10,6 +10,7 @@ use Symfony\Component\Form\FormEvent;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\SaleOrder;
 use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Master\VehicleModel;
 
 class SaleOrderType extends AbstractType
 {
@@ -24,7 +25,6 @@ class SaleOrderType extends AbstractType
             ->add('invoiceRegistrationName')
             ->add('isOffTheRoad')
             ->add('vehicleBrand')
-            ->add('vehicleType')
             ->add('vehicleSerialNumber')
             ->add('vehicleColor')
             ->add('vehicleOptionalInfo')
@@ -40,6 +40,7 @@ class SaleOrderType extends AbstractType
             ->add('downPayment')
             ->add('note')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))
+            ->add('vehicleModel', EntityTextType::class, array('class' => VehicleModel::class))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {

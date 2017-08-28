@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\DeliveryInspectionHeader;
 use AppBundle\Entity\Transaction\DeliveryInspectionDetail;
-use AppBundle\Entity\Transaction\SaleOrder;
+use AppBundle\Entity\Transaction\ReceiveOrder;
 
 class DeliveryInspectionHeaderType extends AbstractType
 {
@@ -22,7 +22,7 @@ class DeliveryInspectionHeaderType extends AbstractType
             ->add('isVehicleComplete')
             ->add('isBodyBuilderExecuted')
             ->add('note')
-            ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
+            ->add('receiveOrder', EntityTextType::class, array('class' => ReceiveOrder::class))
             ->add('details', CollectionType::class, array(
                 'mapped' => false,
                 'entry_type' => DeliveryInspectionDetailType::class,

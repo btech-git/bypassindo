@@ -21,7 +21,7 @@ class DeliveryInspectionDetail
      */
     private $id;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\InspectionItem", inversedBy="deliveryInspectionDetails")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\InspectionItem")
      * @Assert\NotNull()
      */
     private $inspectionItem;

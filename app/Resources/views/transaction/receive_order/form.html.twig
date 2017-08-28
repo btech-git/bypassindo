@@ -21,24 +21,24 @@
             <div class="col-sm-6">
                 {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'} }) }}
                 <div>
-                    <strong>Name:</strong>
+                    <label>Customer:</label>
                     <span id="customer-name">{{ receiveOrder.saleOrder.customer.name|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Brand:</strong>
+                    <label>Vehicle Brand:</label>
                     <span id="sale-order-vehicle-brand">{{ receiveOrder.saleOrder.vehicleBrand|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Type:</strong>
-                    <span id="sale-order-vehicle-type">{{ receiveOrder.saleOrder.vehicleType|default }}</span>
-                </div>
-                <div>
-                    <strong>Vehicle Serial Number:</strong>
+                    <label>Vehicle Serial Number:</label>
                     <span id="sale-order-vehicle-serial-number">{{ receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
                 </div>
                 <div>
-                    <strong>Vehicle Color:</strong>
+                    <label>Vehicle Color:</label>
                     <span id="sale-order-vehicle-color">{{ receiveOrder.saleOrder.vehicleColor|default }}</span>
+                </div>
+                <div>
+                    <label>Manufacture Code:</label>
+                    <span id="vehicle-model-manufacture-code">{{ receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                 </div>
                 <br />
                 {{ form_row(form.serviceBookNumber) }}
@@ -74,9 +74,9 @@
                 $("#{{ form.saleOrder.vars.id }}").val($(this).attr("data-field-id"));
                 $("#customer-name").text($(this).attr("data-field-customer-name"));
                 $("#sale-order-vehicle-brand").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("#sale-order-vehicle-type").text($(this).attr("data-field-sale-order-vehicle-type"));
                 $("#sale-order-vehicle-serial-number").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
                 $("#sale-order-vehicle-color").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("#vehicle-model-manufacture-code").text($(this).attr("data-field-vehicle-model-manufacture-code"));
             });
         });
     </script>

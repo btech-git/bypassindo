@@ -179,19 +179,9 @@ class Customer
      * @Assert\NotNull()
      */
     private $isActive = true;
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleDiscountApplication", mappedBy="customer")
-     */
-    private $saleDiscountApplications;
-    /**
-     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleOrder", mappedBy="customer")
-     */
-    private $saleOrders;
     
     public function __construct()
     {
-        $this->saleDiscountApplications = new ArrayCollection();
-        $this->saleOrders = new ArrayCollection();
     }
     
     public function __toString()
@@ -296,10 +286,4 @@ class Customer
 
     public function getIsActive() { return $this->isActive; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }
-    
-    public function getSaleDiscountApplications() { return $this->saleDiscountApplications; }
-    public function setSaleDiscountApplications(Collection $saleDiscountApplications) { $this->saleDiscountApplications = $saleDiscountApplications; }
-    
-    public function getSaleOrders() { return $this->saleOrders; }
-    public function setSaleOrders(Collection $saleOrders) { $this->saleOrders = $saleOrders; }
 }

@@ -13,7 +13,6 @@
             <th data-group="saleOrder" data-field="invoiceRegistrationName">Invoice Registration Name</th>
             <th data-group="saleOrder" data-field="isOffTheRoad">Is Off The Road</th>
             <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
-            <th data-group="saleOrder" data-field="vehicleType">Vehicle Type</th>
             <th data-group="saleOrder" data-field="vehicleSerialNumber">Vehicle Serial Number</th>
             <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
             <th data-group="saleOrder" data-field="vehicleOptionalInfo">Vehicle Optional Info</th>
@@ -43,7 +42,6 @@
                 <td class="text-left">{{ saleOrder.invoiceRegistrationName|default }}</td>
                 <td class="text-left">{{ saleOrder.isOffTheRoad|default ? 'Yes' : 'No' }}</td>
                 <td class="text-left">{{ saleOrder.vehicleBrand|default }}</td>
-                <td class="text-left">{{ saleOrder.vehicleType|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleSerialNumber|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleColor|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleOptionalInfo|default }}</td>
@@ -73,7 +71,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="25" class="alert alert-warning">
+                <td colspan="24" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

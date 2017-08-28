@@ -42,7 +42,7 @@ class DeliveryWorkshop extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier", inversedBy="deliveryWorkshops")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
      * @Assert\NotNull()
      */
     private $supplier;

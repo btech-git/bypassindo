@@ -39,6 +39,14 @@ class SaleDiscountApplicationForm
         $grandTotal = $subTotal + $saleDiscountApplication->getOtherPrice();
         $saleDiscountApplication->setSubTotalPrice($subTotal);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
+        $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
+        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_OTHER) {
+            $saleDiscountApplication->setCustomerStatusName($customerStatusType);
+        }
+        $paymentMethodType = $saleDiscountApplication->getPaymentMethodType();
+        if ($paymentMethodType === SaleDiscountApplication::PAYMENT_METHOD_CASH) {
+            $saleDiscountApplication->setPaymentMethodValue($paymentMethodType);
+        }
     }
     
     public function save(SaleDiscountApplication $saleDiscountApplication)
