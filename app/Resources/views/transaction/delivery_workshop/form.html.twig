@@ -34,7 +34,7 @@
             <div class="col-sm-6">
                 {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'} }) }}
                 <div>
-                    <label>Name:</label>
+                    <label>Customer:</label>
                     <span id="customer-name">{{ deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}</span>
                 </div>
                 <div>
@@ -42,32 +42,32 @@
                     <span id="sale-order-vehicle-brand">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleBrand|default }}</span>
                 </div>
                 <div>
-                    <label>Vehicle Type:</label>
-                    <span id="sale-order-vehicle-type">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleType|default }}</span>
-                </div>
-                <div>
                     <label>Vehicle Serial Number:</label>
                     <span id="sale-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Production Year:</label>
-                    <span id="receive-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.vehicleProductionYear|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Chassis Number:</label>
-                    <span id="receive-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Machine Number:</label>
-                    <span id="receive-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}</span>
                 </div>
                 <div>
                     <label>Vehicle Color:</label>
                     <span id="sale-order-vehicle-color">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleColor|default }}</span>
                 </div>
                 <div>
+                    <label>Vehicle Production Year:</label>
+                    <span id="receive-order-vehicle-production-year">{{ deliveryWorkshop.receiveOrder.vehicleProductionYear|default }}</span>
+                </div>
+                <div>
+                    <label>Vehicle Chassis Number:</label>
+                    <span id="receive-order-vehicle-chassis-number">{{ deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}</span>
+                </div>
+                <div>
+                    <label>Vehicle Machine Number:</label>
+                    <span id="receive-order-vehicle-machine-number">{{ deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}</span>
+                </div>
+                <div>
                     <label>Vehicle Description:</label>
-                    <span id="receive-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.vehicleDescription|default }}</span>
+                    <span id="receive-order-vehicle-description">{{ deliveryWorkshop.receiveOrder.vehicleDescription|default }}</span>
+                </div>
+                <div>
+                    <label>Manufacture Code:</label>
+                    <span id="vehicle-model-manufacture-code">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                 </div>
                 <br />
             </div>
@@ -124,13 +124,13 @@
                 $("#{{ form.receiveOrder.vars.id }}").val($(this).attr("data-field-id"));
                 $("#customer-name").text($(this).attr("data-field-customer-name"));
                 $("#sale-order-vehicle-brand").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("#sale-order-vehicle-type").text($(this).attr("data-field-sale-order-vehicle-type"));
                 $("#sale-order-vehicle-serial-number").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
-                $("#receive-order-vehicle-production-year").text($(this).attr("data-field-receive-order-vehicle-production-year"));
-                $("#receive-order-vehicle-chassis-number").text($(this).attr("data-field-receive-order-vehicle-chassis-number"));
-                $("#receive-order-vehicle-machine-number").text($(this).attr("data-field-receive-order-vehicle-machine-number"));
                 $("#sale-order-vehicle-color").text($(this).attr("data-field-sale-order-vehicle-color"));
-                $("#receive-order-vehicle-description").text($(this).attr("data-field-receive-order-vehicle-description"));
+                $("#receive-order-vehicle-production-year").text($(this).attr("data-field-vehicle-production-year"));
+                $("#receive-order-vehicle-chassis-number").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("#receive-order-vehicle-machine-number").text($(this).attr("data-field-vehicle-machine-number"));
+                $("#receive-order-vehicle-description").text($(this).attr("data-field-vehicle-description"));
+                $("#vehicle-model-manufacture-code").text($(this).attr("data-field-vehicle-model-manufacture-code"));
             });
         });
     </script>

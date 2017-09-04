@@ -85,11 +85,11 @@ class DeliveryWorkshopController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="transaction_delivery_workshop_edit")
+     * @Route("/{id}/edit.{_format}", name="transaction_delivery_workshop_edit")
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
-    public function editAction(Request $request, DeliveryWorkshop $deliveryWorkshop)
+    public function editAction(Request $request, DeliveryWorkshop $deliveryWorkshop, $_format = 'html')
     {
         $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
         $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop, array(
@@ -117,14 +117,13 @@ class DeliveryWorkshopController extends Controller
      */
     public function deleteAction(Request $request, DeliveryWorkshop $deliveryWorkshop)
     {
+        $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $repository = $em->getRepository(DeliveryWorkshop::class);
-                $repository->remove($deliveryWorkshop);
+                $deliveryWorkshopService->delete($deliveryWorkshop);
 
                 $this->addFlash('success', array('title' => 'Success!', 'message' => 'The record was deleted successfully.'));
             } else {

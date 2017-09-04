@@ -27,9 +27,9 @@
         {% for saleOrder in grid.data %}
             <tr data-field-id="{{ saleOrder.id }}"
                 data-field-customer-name="{{ saleOrder.customer.name|default }}"
-                data-field-sale-order-vehicle-brand="{{ saleOrder.vehicleBrand|default }}"
-                data-field-sale-order-vehicle-serial-number="{{ saleOrder.vehicleSerialNumber|default }}"
-                data-field-sale-order-vehicle-color="{{ saleOrder.vehicleColor|default }}"
+                data-field-vehicle-brand="{{ saleOrder.vehicleBrand|default }}"
+                data-field-vehicle-serial-number="{{ saleOrder.vehicleSerialNumber|default }}"
+                data-field-vehicle-color="{{ saleOrder.vehicleColor|default }}"
                 data-field-vehicle-model-manufacture-code="{{ saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>

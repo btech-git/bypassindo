@@ -1,0 +1,78 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Delivery Order' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ deliveryOrder.transactionDate|default ? deliveryOrder.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Destination Address</th>
+                <td>{{ deliveryOrder.destinationAddress|default }}</td>
+            </tr>
+            <tr>
+                <th>Destination Phone</th>
+                <td>{{ deliveryOrder.destinationPhone|default }}</td>
+            </tr>
+            <tr>
+                <th>Is Network Book</th>
+                <td>{{ deliveryOrder.isNetworkBook|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Spare Tire</th>
+                <td>{{ deliveryOrder.isSpareTire|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Service Book</th>
+                <td>{{ deliveryOrder.isServiceBook|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Owner Manual</th>
+                <td>{{ deliveryOrder.isOwnerManual|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Jack Handle</th>
+                <td>{{ deliveryOrder.isJackHandle|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Lighter</th>
+                <td>{{ deliveryOrder.isLighter|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Tool Set</th>
+                <td>{{ deliveryOrder.isToolSet|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Four Hubcap</th>
+                <td>{{ deliveryOrder.isFourHubcap|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Paint Can</th>
+                <td>{{ deliveryOrder.isPaintCan|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Carpet Kit</th>
+                <td>{{ deliveryOrder.isCarpetKit|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Safety Triangle</th>
+                <td>{{ deliveryOrder.isSafetyTriangle|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Is Two Vehicle Key</th>
+                <td>{{ deliveryOrder.isTwoVehicleKey|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ deliveryOrder.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

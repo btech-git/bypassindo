@@ -63,7 +63,6 @@ class DeliveryInspectionHeader extends CodeNumberEntity
     private $deliveryInspectionDetails;
     /**
      * @ORM\OneToOne(targetEntity="DeliveryOrder", mappedBy="deliveryInspectionHeader")
-     * @Assert\NotNull()
      */
     private $deliveryOrder;
     

@@ -56,3 +56,13 @@ services:
     app.transaction.delivery_workshop_form:
         class: AppBundle\Service\Transaction\DeliveryWorkshopForm
         arguments: ["@app.transaction.delivery_workshop_repository"]
+
+    app.transaction.delivery_order_repository:
+        class: AppBundle\Repository\Transaction\DeliveryOrderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\DeliveryOrder
+
+    app.transaction.delivery_order_form:
+        class: AppBundle\Service\Transaction\DeliveryOrderForm
+        arguments: ["@app.transaction.delivery_order_repository"]

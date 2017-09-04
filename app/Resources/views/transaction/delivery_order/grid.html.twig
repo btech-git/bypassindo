@@ -1,0 +1,68 @@
+{% set grid_layout = 'datagrid.html.twig' %}
+
+{{ grid_top(grid) }}
+
+<table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
+    <thead>
+        <tr data-action="sort" class="alert alert-info">
+            <th data-group="deliveryOrder" data-field="transactionDate">Transaction Date</th>
+            <th data-group="deliveryOrder" data-field="destinationAddress">Destination Address</th>
+            <th data-group="deliveryOrder" data-field="destinationPhone">Destination Phone</th>
+            <th data-group="deliveryOrder" data-field="isNetworkBook">Is Network Book</th>
+            <th data-group="deliveryOrder" data-field="isSpareTire">Is Spare Tire</th>
+            <th data-group="deliveryOrder" data-field="isServiceBook">Is Service Book</th>
+            <th data-group="deliveryOrder" data-field="isOwnerManual">Is Owner Manual</th>
+            <th data-group="deliveryOrder" data-field="isJackHandle">Is Jack Handle</th>
+            <th data-group="deliveryOrder" data-field="isLighter">Is Lighter</th>
+            <th data-group="deliveryOrder" data-field="isToolSet">Is Tool Set</th>
+            <th data-group="deliveryOrder" data-field="isFourHubcap">Is Four Hubcap</th>
+            <th data-group="deliveryOrder" data-field="isPaintCan">Is Paint Can</th>
+            <th data-group="deliveryOrder" data-field="isCarpetKit">Is Carpet Kit</th>
+            <th data-group="deliveryOrder" data-field="isSafetyTriangle">Is Safety Triangle</th>
+            <th data-group="deliveryOrder" data-field="isTwoVehicleKey">Is Two Vehicle Key</th>
+            <th data-group="deliveryOrder" data-field="note">Note</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for deliveryOrder in grid.data %}
+            <tr data-field-id="{{ deliveryOrder.id }}">
+                <td class="text-left">{{ deliveryOrder.transactionDate|default ? deliveryOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ deliveryOrder.destinationAddress|default }}</td>
+                <td class="text-left">{{ deliveryOrder.destinationPhone|default }}</td>
+                <td class="text-left">{{ deliveryOrder.isNetworkBook|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isSpareTire|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isServiceBook|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isOwnerManual|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isJackHandle|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isLighter|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isToolSet|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isFourHubcap|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isPaintCan|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isCarpetKit|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isSafetyTriangle|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.isTwoVehicleKey|default ? 'Yes' : 'No' }}</td>
+                <td class="text-left">{{ deliveryOrder.note|default }}</td>
+                <td class="text-left">
+                    {{ include('transaction/actions.html.twig', {
+                        'contents': {
+                            '{index}': null,
+                            '{new}': null,
+                            '{show}': include('action.html.twig', {'url': path('transaction_delivery_order_show', {'id': deliveryOrder.id}), 'button': 'btn btn-info btn-sm', 'icon': 'glyphicon glyphicon-info-sign'}),
+                            '{edit}': include('action.html.twig', {'url': path('transaction_delivery_order_edit', {'id': deliveryOrder.id}), 'button': 'btn btn-warning btn-sm', 'icon': 'glyphicon glyphicon-edit'}),
+                            '{delete}': include('action.html.twig', {'url': path('transaction_delivery_order_delete', {'id': deliveryOrder.id}), 'button': 'btn btn-danger btn-sm', 'icon': 'glyphicon glyphicon-remove'}),
+                        }
+                    }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="17" class="alert alert-warning">
+                    <strong>There are no items to display.</strong>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ grid_bottom(grid) }}
