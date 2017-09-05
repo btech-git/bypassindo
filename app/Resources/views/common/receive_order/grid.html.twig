@@ -7,6 +7,7 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="receiveOrder" data-field="codeNumber">Receive #</th>
             <th data-group="receiveOrder" data-field="transactionDate">Transaction Date</th>
+            <th data-group="saleOrder" data-field="codeNumber">SO #</th>
             <th data-group="customer" data-field="name">Customer Name</th>
             <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
             <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
@@ -16,6 +17,7 @@
         <tr data-action="search">
             <th data-group="receiveOrder" data-field="codeNumber"></th>
             <th data-group="receiveOrder" data-field="transactionDate"></th>
+            <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
             <th data-group="saleOrder" data-field="vehicleBrand"></th>
             <th data-group="saleOrder" data-field="vehicleColor"></th>
@@ -31,12 +33,14 @@
                 data-field-vehicle-machine-number="{{ receiveOrder.vehicleMachineNumber|default }}"
                 data-field-vehicle-description="{{ receiveOrder.vehicleDescription|default }}"
                 data-field-customer-name="{{ receiveOrder.saleOrder.customer.name|default }}"
+                data-field-sale-order-code-number="{{ receiveOrder.saleOrder.codeNumber|default }}"
                 data-field-sale-order-vehicle-brand="{{ receiveOrder.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-serial-number="{{ receiveOrder.saleOrder.vehicleSerialNumber|default }}"
                 data-field-sale-order-vehicle-color="{{ receiveOrder.saleOrder.vehicleColor|default }}"
                 data-field-vehicle-model-manufacture-code="{{ receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ receiveOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ receiveOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ receiveOrder.saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ receiveOrder.saleOrder.vehicleColor|default }}</td>
@@ -45,7 +49,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="7" class="alert alert-warning">
+                <td colspan="8" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

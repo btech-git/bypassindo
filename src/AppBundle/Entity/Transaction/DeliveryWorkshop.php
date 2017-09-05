@@ -9,11 +9,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Supplier;
 
 /**
  * @ORM\Table(name="transaction_delivery_workshop")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\DeliveryWorkshopRepository")
+ * @Assert\Expression("
+       this.getPurchaseWorkshopHeader() !== null and this.getPurchaseWorkshopHeader().getSaleOrder() !== null and
+       this.getReceiveOrder() !== null and this.getReceiveOrder().getSaleOrder() !== null and
+       this.getPurchaseWorkshopHeader().getSaleOrder().getId() == this.getReceiveOrder().getSaleOrder().getId()
+   ")
  */
 class DeliveryWorkshop extends CodeNumberEntity
 {
@@ -42,10 +46,10 @@ class DeliveryWorkshop extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
+     * @ORM\ManyToOne(targetEntity="PurchaseWorkshopHeader", inversedBy="deliveryWorkshops")
      * @Assert\NotNull()
      */
-    private $supplier;
+    private $purchaseWorkshopHeader;
     /**
      * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="deliveryWorkshops")
      * @Assert\NotNull()
@@ -58,7 +62,7 @@ class DeliveryWorkshop extends CodeNumberEntity
     
     public function getCodeNumberConstant()
     {
-        return 'RW';
+        return 'DW';
     }
     
     public function getId() { return $this->id; }
@@ -75,8 +79,8 @@ class DeliveryWorkshop extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getSupplier() { return $this->supplier; }
-    public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
+    public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
+    public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }
 
     public function getReceiveOrder() { return $this->receiveOrder; }
     public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }

@@ -12,7 +12,8 @@ use AppBundle\Entity\Master\Customer;
 use AppBundle\Entity\Master\InspectionItem;
 
 /**
- * @ORM\Table(name="transaction_delivery_inspection_detail") @ORM\Entity
+ * @ORM\Table(name="transaction_delivery_inspection_detail")
+ * @ORM\Entity
  */
 class DeliveryInspectionDetail
 {

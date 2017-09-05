@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\DeliveryWorkshop;
-use AppBundle\Entity\Master\Supplier;
+use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
 use AppBundle\Entity\Transaction\ReceiveOrder;
 
 class DeliveryWorkshopType extends AbstractType
@@ -19,7 +19,7 @@ class DeliveryWorkshopType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('note')
-            ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
+            ->add('purchaseWorkshopHeader', EntityTextType::class, array('class' => PurchaseWorkshopHeader::class))
             ->add('receiveOrder', EntityTextType::class, array('class' => ReceiveOrder::class))
         ;
         $builder

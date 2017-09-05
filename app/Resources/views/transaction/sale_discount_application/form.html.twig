@@ -13,73 +13,74 @@
                     <div>{{ saleDiscountApplication.codeNumber }}</div>
                 </div>
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
-                <div>
-                    <label>Customer:</label>
-                    <span id="customer-name">{{ saleDiscountApplication.customer.name|default }}</span>
+                <div class="form-group" id="customer-info">
+                    <div>
+                        <label>Customer:</label>
+                        <span data-name="customer-name">{{ saleDiscountApplication.customer.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Contact Person:</label>
+                        <span data-name="customer-contact-person">{{ saleDiscountApplication.customer.contactPerson|default }}</span>
+                    </div>
+                    <div>
+                        <label>Phone:</label>
+                        <span data-name="customer-phone">{{ saleDiscountApplication.customer.phone|default }}</span>
+                    </div>
+                    <div>
+                        <label>Business Field:</label>
+                        <span data-name="customer-business-field">{{ saleDiscountApplication.customer.businessField|default }}</span>
+                    </div>
+                    <div>
+                        <label>Cat 2:</label>
+                    </div>
+                    <div style="padding-left: 25px">
+                        <div>
+                            <label>Hino:</label>
+                            <span data-name="customer-category-two-hino-population">{{ saleDiscountApplication.customer.categoryTwoHinoPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Mitsubishi:</label>
+                            <span data-name="customer-category-two-mitsubishi-population">{{ saleDiscountApplication.customer.categoryTwoMitsubishiPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Toyota:</label>
+                            <span data-name="customer-category-two-toyota-population">{{ saleDiscountApplication.customer.categoryTwoToyotaPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Isuzu:</label>
+                            <span data-name="customer-category-two-isuzu-population">{{ saleDiscountApplication.customer.categoryTwoIsuzuPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Other:</label>
+                            <span data-name="customer-category-two-other-population">{{ saleDiscountApplication.customer.categoryTwoOtherPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                    </div>
+                    <div>
+                        <label>Cat 3:</label>
+                    </div>
+                    <div style="padding-left: 25px">
+                        <div>
+                            <label>Hino:</label>
+                            <span data-name="customer-category-three-hino-population">{{ saleDiscountApplication.customer.categoryThreeHinoPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Mitsubishi:</label>
+                            <span data-name="customer-category-three-mitsubishi-population">{{ saleDiscountApplication.customer.categoryThreeMitsubishiPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Nissan:</label>
+                            <span data-name="customer-category-three-nissan-population">{{ saleDiscountApplication.customer.categoryThreeNissanPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Isuzu:</label>
+                            <span data-name="customer-category-three-isuzu-population">{{ saleDiscountApplication.customer.categoryThreeIsuzuPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                        <div>
+                            <label>Benz:</label>
+                            <span data-name="customer-category-three-benz-population">{{ saleDiscountApplication.customer.categoryThreeBenzPopulation|default|number_format(0) }}</span> unit
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label>Contact Person:</label>
-                    <span id="customer-contact-person">{{ saleDiscountApplication.customer.contactPerson|default }}</span>
-                </div>
-                <div>
-                    <label>Phone:</label>
-                    <span id="customer-phone">{{ saleDiscountApplication.customer.phone|default }}</span>
-                </div>
-                <div>
-                    <label>Business Field:</label>
-                    <span id="customer-business-field">{{ saleDiscountApplication.customer.businessField|default }}</span>
-                </div>
-                <div>
-                    <label>Cat 2:</label>
-                </div>
-                <div style="padding-left: 25px">
-                    <div>
-                        <label>Hino:</label>
-                        <span id="customer-category-two-hino-population">{{ saleDiscountApplication.customer.categoryTwoHinoPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Mitsubishi:</label>
-                        <span id="customer-category-two-mitsubishi-population">{{ saleDiscountApplication.customer.categoryTwoMitsubishiPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Toyota:</label>
-                        <span id="customer-category-two-toyota-population">{{ saleDiscountApplication.customer.categoryTwoToyotaPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Isuzu:</label>
-                        <span id="customer-category-two-isuzu-population">{{ saleDiscountApplication.customer.categoryTwoIsuzuPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Other:</label>
-                        <span id="customer-category-two-other-population">{{ saleDiscountApplication.customer.categoryTwoOtherPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                </div>
-                <div>
-                    <label>Cat 3:</label>
-                </div>
-                <div style="padding-left: 25px">
-                    <div>
-                        <label>Hino:</label>
-                        <span id="customer-category-three-hino-population">{{ saleDiscountApplication.customer.categoryThreeHinoPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Mitsubishi:</label>
-                        <span id="customer-category-three-mitsubishi-population">{{ saleDiscountApplication.customer.categoryThreeMitsubishiPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Nissan:</label>
-                        <span id="customer-category-three-nissan-population">{{ saleDiscountApplication.customer.categoryThreeNissanPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Isuzu:</label>
-                        <span id="customer-category-three-isuzu-population">{{ saleDiscountApplication.customer.categoryThreeIsuzuPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                    <div>
-                        <label>Benz:</label>
-                        <span id="customer-category-three-benz-population">{{ saleDiscountApplication.customer.categoryThreeBenzPopulation|default|number_format(0) }}</span> unit
-                    </div>
-                </div>
-                <br />
                 {{ form_row(form.transactionDate) }}
                 {{ form_row(form.dealStatus) }}
                 {{ form_row(form.dealDate, {'label': false}) }}
@@ -200,20 +201,20 @@
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");
                 $("#{{ form.customer.vars.id }}").val($(this).attr("data-field-id"));
-                $("#customer-name").text($(this).attr("data-field-name"));
-                $("#customer-contact-person").text($(this).attr("data-field-contact-person"));
-                $("#customer-phone").text($(this).attr("data-field-phone"));
-                $("#customer-business-field").text($(this).attr("data-field-business-field"));
-                $("#customer-category-two-hino-population").text($(this).attr("data-field-category-two-hino-population"));
-                $("#customer-category-two-mitsubishi-population").text($(this).attr("data-field-category-two-mitsubishi-population"));
-                $("#customer-category-two-toyota-population").text($(this).attr("data-field-category-two-toyota-population"));
-                $("#customer-category-two-isuzu-population").text($(this).attr("data-field-category-two-isuzu-population"));
-                $("#customer-category-two-other-population").text($(this).attr("data-field-category-two-other-population"));
-                $("#customer-category-three-hino-population").text($(this).attr("data-field-category-three-hino-population"));
-                $("#customer-category-three-mitsubishi-population").text($(this).attr("data-field-category-three-mitsubishi-population"));
-                $("#customer-category-three-nissan-population").text($(this).attr("data-field-category-three-nissan-population"));
-                $("#customer-category-three-isuzu-population").text($(this).attr("data-field-category-three-isuzu-population"));
-                $("#customer-category-three-benz-population").text($(this).attr("data-field-category-three-benz-population"));
+                $("[data-name=customer-name]", "#customer-info").text($(this).attr("data-field-name"));
+                $("[data-name=customer-contact-person]", "#customer-info").text($(this).attr("data-field-contact-person"));
+                $("[data-name=customer-phone]", "#customer-info").text($(this).attr("data-field-phone"));
+                $("[data-name=customer-business-field]", "#customer-info").text($(this).attr("data-field-business-field"));
+                $("[data-name=customer-category-two-hino-population]", "#customer-info").text($(this).attr("data-field-category-two-hino-population"));
+                $("[data-name=customer-category-two-mitsubishi-population]", "#customer-info").text($(this).attr("data-field-category-two-mitsubishi-population"));
+                $("[data-name=customer-category-two-toyota-population]", "#customer-info").text($(this).attr("data-field-category-two-toyota-population"));
+                $("[data-name=customer-category-two-isuzu-population]", "#customer-info").text($(this).attr("data-field-category-two-isuzu-population"));
+                $("[data-name=customer-category-two-other-population]", "#customer-info").text($(this).attr("data-field-category-two-other-population"));
+                $("[data-name=customer-category-three-hino-population]", "#customer-info").text($(this).attr("data-field-category-three-hino-population"));
+                $("[data-name=customer-category-three-mitsubishi-population]", "#customer-info").text($(this).attr("data-field-category-three-mitsubishi-population"));
+                $("[data-name=customer-category-three-nissan-population]", "#customer-info").text($(this).attr("data-field-category-three-nissan-population"));
+                $("[data-name=customer-category-three-isuzu-population]", "#customer-info").text($(this).attr("data-field-category-three-isuzu-population"));
+                $("[data-name=customer-category-three-benz-population]", "#customer-info").text($(this).attr("data-field-category-three-benz-population"));
             });
         });
     </script>

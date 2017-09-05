@@ -162,10 +162,15 @@ class SaleOrder extends CodeNumberEntity
      * @ORM\OneToMany(targetEntity="ReceiveOrder", mappedBy="saleOrder")
      */
     private $receiveOrders;
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseWorkshopHeader", mappedBy="saleOrder")
+     */
+    private $purchaseWorkshopHeaders;
     
     public function __construct()
     {
         $this->receiveOrders = new ArrayCollection();
+        $this->purchaseWorkshopHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -258,4 +263,7 @@ class SaleOrder extends CodeNumberEntity
 
     public function getReceiveOrders() { return $this->receiveOrders; }
     public function setReceiveOrders(Collection $receiveOrders) { $this->receiveOrders = $receiveOrders; }
+
+    public function getPurchaseWorkshopHeaders() { return $this->purchaseWorkshopHeaders; }
+    public function setPurchaseWorkshopHeaders(Collection $purchaseWorkshopHeaders) { $this->purchaseWorkshopHeaders = $purchaseWorkshopHeaders; }
 }

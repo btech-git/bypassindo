@@ -12,18 +12,18 @@ use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
-use AppBundle\Entity\Transaction\ReceiveOrder;
-use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
+use AppBundle\Entity\Master\Supplier;
 
-class ReceiveOrderGridType extends DataGridType
+class PurchaseWorkshopHeaderGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
         $months = array_flip(array(1 => 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'));
 
         $builder->searchWidget()
-            ->addGroup('receiveOrder')
-                ->setEntityName(ReceiveOrder::class)
+            ->addGroup('purchaseWorkshopHeader')
+                ->setEntityName(PurchaseWorkshopHeader::class)
                 ->addField('codeNumber')
                     ->setReferences(array('codeNumberOrdinal', 'codeNumberMonth', 'codeNumberYear'))
                     ->addOperator(EqualNonEmptyType::class)
@@ -40,14 +40,14 @@ class ReceiveOrderGridType extends DataGridType
                     ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
-            ->addGroup('customer')
-                ->setEntityName(Customer::class)
+            ->addGroup('supplier')
+                ->setEntityName(Supplier::class)
                 ->addField('name')
                     ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()
-            ->addGroup('receiveOrder')
+            ->addGroup('purchaseWorkshopHeader')
                 ->addField('codeNumber')
                     ->setReferences(array('codeNumberYear', 'codeNumberMonth', 'codeNumberOrdinal'))
                     ->addOperator(SortBlankType::class)
@@ -57,7 +57,7 @@ class ReceiveOrderGridType extends DataGridType
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
-            ->addGroup('customer')
+            ->addGroup('supplier')
                 ->addField('name')
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
@@ -76,13 +76,11 @@ class ReceiveOrderGridType extends DataGridType
         $criteria = Criteria::create();
         $criteria2 = Criteria::create();
         $associations = array(
-            'saleOrder' => array('criteria' => null, 'associations' => array(
-                'customer' => array('criteria' => $criteria2, 'merge' => true),
-            )),
+            'supplier' => array('criteria' => $criteria2, 'merge' => true),
         );
 
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
+            if ($group === 'supplier') {
                 $operator::search($criteria2, $field, $values);
             } else {
                 $operator::search($criteria, $field, $values);
@@ -90,7 +88,7 @@ class ReceiveOrderGridType extends DataGridType
         });
 
         $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
+            if ($group === 'supplier') {
                 $operator::sort($criteria2, $field);
             } else {
                 $operator::sort($criteria, $field);

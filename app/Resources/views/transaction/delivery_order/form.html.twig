@@ -28,43 +28,44 @@
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.deliveryInspectionHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-inspection-header-dialog'} }) }}
-                <div>
-                    <label>Customer:</label>
-                    <span id="customer-name">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</span>
+                <div class="form-group" id="delivery-inspection-header-info">
+                    <div>
+                        <label>Customer:</label>
+                        <span data-name="customer-name">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Brand:</label>
+                        <span data-name="sale-order-vehicle-brand">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Serial Number:</label>
+                        <span data-name="sale-order-vehicle-serial-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Color:</label>
+                        <span data-name="sale-order-vehicle-color">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Production Year:</label>
+                        <span data-name="receive-order-vehicle-production-year">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Chassis Number:</label>
+                        <span data-name="receive-order-vehicle-chassis-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Machine Number:</label>
+                        <span data-name="receive-order-vehicle-machine-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Description:</label>
+                        <span data-name="receive-order-vehicle-description">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</span>
+                    </div>
+                    <div>
+                        <label>Manufacture Code:</label>
+                        <span data-name="vehicle-model-manufacture-code">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                    </div>
                 </div>
-                <div>
-                    <label>Vehicle Brand:</label>
-                    <span id="sale-order-vehicle-brand">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Serial Number:</label>
-                    <span id="sale-order-vehicle-serial-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Color:</label>
-                    <span id="sale-order-vehicle-color">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Production Year:</label>
-                    <span id="receive-order-vehicle-production-year">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Chassis Number:</label>
-                    <span id="receive-order-vehicle-chassis-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Machine Number:</label>
-                    <span id="receive-order-vehicle-machine-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}</span>
-                </div>
-                <div>
-                    <label>Vehicle Description:</label>
-                    <span id="receive-order-vehicle-description">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</span>
-                </div>
-                <div>
-                    <label>Manufacture Code:</label>
-                    <span id="vehicle-model-manufacture-code">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
-                </div>
-                <br />
                 {{ form_row(form.destinationAddress) }}
                 {{ form_row(form.destinationPhone) }}
             </div>
@@ -96,15 +97,15 @@
             $("#delivery-inspection-header-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#delivery-inspection-header-dialog").modal("hide");
                 $("#{{ form.deliveryInspectionHeader.vars.id }}").val($(this).attr("data-field-id"));
-                $("#customer-name").text($(this).attr("data-field-customer-name"));
-                $("#sale-order-vehicle-brand").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("#sale-order-vehicle-serial-number").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
-                $("#sale-order-vehicle-color").text($(this).attr("data-field-sale-order-vehicle-color"));
-                $("#receive-order-vehicle-production-year").text($(this).attr("data-field-receive-order-vehicle-production-year"));
-                $("#receive-order-vehicle-chassis-number").text($(this).attr("data-field-receive-order-vehicle-chassis-number"));
-                $("#receive-order-vehicle-machine-number").text($(this).attr("data-field-receive-order-vehicle-machine-number"));
-                $("#receive-order-vehicle-description").text($(this).attr("data-field-receive-order-vehicle-description"));
-                $("#vehicle-model-manufacture-code").text($(this).attr("data-field-vehicle-model-manufacture-code"));
+                $("[data-name=customer-name]", "#delivery-inspection-header-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=sale-order-vehicle-brand]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-serial-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
+                $("[data-name=sale-order-vehicle-color]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=receive-order-vehicle-production-year]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-production-year"));
+                $("[data-name=receive-order-vehicle-chassis-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-chassis-number"));
+                $("[data-name=receive-order-vehicle-machine-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-machine-number"));
+                $("[data-name=receive-order-vehicle-description]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-description"));
+                $("[data-name=vehicle-model-manufacture-code]", "#delivery-inspection-header-info").text($(this).attr("data-field-vehicle-model-manufacture-code"));
             });
         });
     </script>
