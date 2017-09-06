@@ -9,17 +9,13 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Master\Customer;
 
 /**
- * @ORM\Table(name="transaction_delivery_workshop")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\DeliveryWorkshopRepository")
- * @Assert\Expression("
-       this.getPurchaseWorkshopHeader() !== null and this.getPurchaseWorkshopHeader().getSaleOrder() !== null and
-       this.getReceiveOrder() !== null and this.getReceiveOrder().getSaleOrder() !== null and
-       this.getPurchaseWorkshopHeader().getSaleOrder().getId() == this.getReceiveOrder().getSaleOrder().getId()
-   ")
+ * @ORM\Table(name="transaction_receive_workshop")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\ReceiveWorkshopRepository")
  */
-class DeliveryWorkshop extends CodeNumberEntity
+class ReceiveWorkshop extends CodeNumberEntity
 {
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -30,6 +26,11 @@ class DeliveryWorkshop extends CodeNumberEntity
      * @Assert\NotNull() @Assert\Date()
      */
     private $transactionDate;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $supplierDeliveryNumber;
     /**
      * @ORM\Column(type="text")
      * @Assert\NotNull()
@@ -46,19 +47,10 @@ class DeliveryWorkshop extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseWorkshopHeader", inversedBy="deliveryWorkshops")
+     * @ORM\OneToOne(targetEntity="DeliveryWorkshop", inversedBy="receiveWorkshop")
      * @Assert\NotNull()
      */
-    private $purchaseWorkshopHeader;
-    /**
-     * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="deliveryWorkshops")
-     * @Assert\NotNull()
-     */
-    private $receiveOrder;
-    /**
-     * @ORM\OneToOne(targetEntity="ReceiveWorkshop", mappedBy="deliveryWorkshop")
-     */
-    private $receiveWorkshop;
+    private $deliveryWorkshop;
     
     public function __construct()
     {
@@ -66,13 +58,16 @@ class DeliveryWorkshop extends CodeNumberEntity
     
     public function getCodeNumberConstant()
     {
-        return 'DW';
+        return 'RW';
     }
     
     public function getId() { return $this->id; }
     
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
+
+    public function getSupplierDeliveryNumber() { return $this->supplierDeliveryNumber; }
+    public function setSupplierDeliveryNumber($supplierDeliveryNumber) { $this->supplierDeliveryNumber = $supplierDeliveryNumber; }
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
@@ -83,12 +78,6 @@ class DeliveryWorkshop extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
-    public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }
-
-    public function getReceiveOrder() { return $this->receiveOrder; }
-    public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
-
-    public function getReceiveWorkshop() { return $this->receiveWorkshop; }
-    public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }
+    public function getDeliveryWorkshop() { return $this->deliveryWorkshop; }
+    public function setDeliveryWorkshop(DeliveryWorkshop $deliveryWorkshop = null) { $this->deliveryWorkshop = $deliveryWorkshop; }
 }
