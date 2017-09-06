@@ -1,0 +1,26 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Purchase Workshop Header' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ purchaseWorkshopHeader.transactionDate|default ? purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ purchaseWorkshopHeader.note|default }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total</th>
+                <td>{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

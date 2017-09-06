@@ -1,0 +1,11 @@
+{
+    "grandTotal": "{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}",
+    "purchaseWorkshopDetails": {
+        {%- for index, purchaseWorkshopDetail in purchaseWorkshopHeader.purchaseWorkshopDetails -%}
+            "{{ index }}": {
+                "total": "{{ purchaseWorkshopDetail.total|default|number_format(2) }}"
+            }
+            {%- if not loop.last -%},{%- endif -%}
+        {%- endfor -%}
+    }
+}
