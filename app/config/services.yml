@@ -76,3 +76,13 @@ services:
     app.transaction.purchase_workshop_header_form:
         class: AppBundle\Service\Transaction\PurchaseWorkshopHeaderForm
         arguments: ["@app.transaction.purchase_workshop_header_repository"]
+        
+    app.transaction.receive_workshop_repository:
+        class: AppBundle\Repository\Transaction\ReceiveWorkshopRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\ReceiveWorkshop
+
+    app.transaction.receive_workshop_form:
+        class: AppBundle\Service\Transaction\ReceiveWorkshopForm
+        arguments: ["@app.transaction.receive_workshop_repository"]

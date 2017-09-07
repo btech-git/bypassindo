@@ -1,0 +1,26 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Receive Workshop' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ receiveWorkshop.transactionDate|default ? receiveWorkshop.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Supplier Delivery Number</th>
+                <td>{{ receiveWorkshop.supplierDeliveryNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ receiveWorkshop.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
