@@ -193,9 +193,9 @@
             });
             $("#{{ form.paymentMethodType.vars.id }}").on("change", function() {
                 if ($(":checked", this).val() === "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}" || $(":checked", this).val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
-                    $("#{{ form.paymentMethodValue.vars.id }}").hide();
-                } else {
                     $("#{{ form.paymentMethodValue.vars.id }}").show();
+                } else {
+                    $("#{{ form.paymentMethodValue.vars.id }}").hide();
                 }
             });
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {

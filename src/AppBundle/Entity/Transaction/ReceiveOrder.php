@@ -79,6 +79,10 @@ class ReceiveOrder extends CodeNumberEntity
      * @ORM\OneToMany(targetEntity="DeliveryInspectionHeader", mappedBy="receiveOrder")
      */
     private $deliveryInspectionHeaders;
+    /**
+     * @ORM\OneToOne(targetEntity="SaleInvoice", mappedBy="receiveOrder")
+     */
+    private $saleInvoice;
     
     public function __construct()
     {
@@ -128,4 +132,7 @@ class ReceiveOrder extends CodeNumberEntity
 
     public function getDeliveryInspectionHeaders() { return $this->deliveryInspectionHeaders; }
     public function setDeliveryInspectionHeaders(Collection $deliveryInspectionHeaders) { $this->deliveryInspectionHeaders = $deliveryInspectionHeaders; }
+
+    public function getSaleInvoice() { return $this->saleInvoice; }
+    public function setSaleInvoice(SaleInvoice $saleInvoice = null) { $this->saleInvoice = $saleInvoice; }
 }
