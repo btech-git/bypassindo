@@ -1,0 +1,50 @@
+{% set grid_layout = 'datagrid.html.twig' %}
+
+{{ grid_top(grid) }}
+
+<table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
+    <thead>
+        <tr data-action="sort" class="alert alert-info">
+            <th data-group="saleInvoice" data-field="transactionDate">Transaction Date</th>
+            <th data-group="saleInvoice" data-field="taxNumberPrefix">Tax Number Prefix</th>
+            <th data-group="saleInvoice" data-field="taxNumber">Tax Number</th>
+            <th data-group="saleInvoice" data-field="note">Note</th>
+            <th data-group="saleInvoice" data-field="amount">Amount</th>
+            <th data-group="saleInvoice" data-field="totalPayment">Total Payment</th>
+            <th data-group="saleInvoice" data-field="remaining">Remaining</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for saleInvoice in grid.data %}
+            <tr data-field-id="{{ saleInvoice.id }}">
+                <td class="text-left">{{ saleInvoice.transactionDate|default ? saleInvoice.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleInvoice.taxNumberPrefix|default }}</td>
+                <td class="text-left">{{ saleInvoice.taxNumber|default }}</td>
+                <td class="text-left">{{ saleInvoice.note|default }}</td>
+                <td class="text-right">{{ saleInvoice.amount|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoice.totalPayment|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoice.remaining|default|number_format(2) }}</td>
+                <td class="text-left">
+                    {{ include('transaction/actions.html.twig', {
+                        'contents': {
+                            '{index}': null,
+                            '{new}': null,
+                            '{show}': include('action.html.twig', {'url': path('transaction_sale_invoice_show', {'id': saleInvoice.id}), 'button': 'btn btn-info btn-sm', 'icon': 'glyphicon glyphicon-info-sign'}),
+                            '{edit}': include('action.html.twig', {'url': path('transaction_sale_invoice_edit', {'id': saleInvoice.id}), 'button': 'btn btn-warning btn-sm', 'icon': 'glyphicon glyphicon-edit'}),
+                            '{delete}': include('action.html.twig', {'url': path('transaction_sale_invoice_delete', {'id': saleInvoice.id}), 'button': 'btn btn-danger btn-sm', 'icon': 'glyphicon glyphicon-remove'}),
+                        }
+                    }) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8" class="alert alert-warning">
+                    <strong>There are no items to display.</strong>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ grid_bottom(grid) }}

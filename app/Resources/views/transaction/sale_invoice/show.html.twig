@@ -1,0 +1,42 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Sale Invoice' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ saleInvoice.transactionDate|default ? saleInvoice.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Tax Number Prefix</th>
+                <td>{{ saleInvoice.taxNumberPrefix|default }}</td>
+            </tr>
+            <tr>
+                <th>Tax Number</th>
+                <td>{{ saleInvoice.taxNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ saleInvoice.note|default }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ saleInvoice.amount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Payment</th>
+                <td>{{ saleInvoice.totalPayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Remaining</th>
+                <td>{{ saleInvoice.remaining|default|number_format(2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

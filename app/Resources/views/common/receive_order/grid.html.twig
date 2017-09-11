@@ -37,7 +37,8 @@
                 data-field-sale-order-vehicle-brand="{{ receiveOrder.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-serial-number="{{ receiveOrder.saleOrder.vehicleSerialNumber|default }}"
                 data-field-sale-order-vehicle-color="{{ receiveOrder.saleOrder.vehicleColor|default }}"
-                data-field-vehicle-model-manufacture-code="{{ receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}">
+                data-field-vehicle-model-manufacture-code="{{ receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}"
+                data-field-sale-order-unit-price="{{ receiveOrder.saleOrder.unitPrice|default|number_format(2) }}">
                 <td class="text-left">{{ receiveOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveOrder.saleOrder.codeNumber|default }}</td>

@@ -1,0 +1,81 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Pelunasan #</label>
+                    <div>{{ salePayment.codeNumber }}</div>
+                </div>
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.amount) }}
+                {{ form_row(form.paymentMethod) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.saleInvoice, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-invoice-dialog'} }) }}
+                <div class="form-group" id="sale-invoice-info">
+                    <div>
+                        <label>SO #:</label>
+                        <span data-name="sale-order-code-number">{{ salePayment.saleInvoice.receiveOrder.saleOrder.codeNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Customer:</label>
+                        <span data-name="customer-name">{{ salePayment.saleInvoice.receiveOrder.saleOrder.customer.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Invoice #:</label>
+                        <span data-name="sale-invoice-code-number">{{ salePayment.saleInvoice.codeNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Faktur Pajak #:</label>
+                        <span data-name="sale-invoice-tax-number">{{ salePayment.saleInvoice.taxNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Jumlah</label>
+                        <span data-name="sale-invoice-amount">{{ salePayment.saleInvoice.amount|default|number_format(2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+    
+        <div id="sale-invoice-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sale Invoice List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="sale-invoice-grid" data-grid="{{ path('common_sale_invoice_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            $("#sale-invoice-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#sale-invoice-dialog").modal("hide");
+                $("#{{ form.saleInvoice.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=customer-name]", "#sale-invoice-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=sale-invoice-code-number]", "#sale-invoice-info").text($(this).attr("data-field-sale-invoice-code-number"));
+                $("[data-name=sale-invoice-amount]", "#sale-invoice-info").text($(this).attr("data-field-sale-invoice-amount"));
+                $("[data-name=sale-invoice-tax-number]", "#sale-invoice-info").text($(this).attr("data-field-sale-invoice-tax-number"));
+                $("[data-name=sale-order-code-number]", "#sale-invoice-info").text($(this).attr("data-field-sale-order-code-number"));
+            });
+        });
+    </script>
+{% endblock %}

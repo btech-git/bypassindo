@@ -1,0 +1,103 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Invoice #</label>
+                    <div>{{ saleInvoice.codeNumber }}</div>
+                </div>
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.taxNumberPrefix) }}
+                {{ form_row(form.taxNumber) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'} }) }}
+                <div class="form-group" id="receive-order-info">
+                    <div>
+                        <label>Customer:</label>
+                        <span data-name="customer-name">{{ saleInvoice.receiveOrder.saleOrder.customer.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Brand:</label>
+                        <span data-name="sale-order-vehicle-brand">{{ saleInvoice.receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Serial Number:</label>
+                        <span data-name="sale-order-vehicle-serial-number">{{ saleInvoice.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Color:</label>
+                        <span data-name="sale-order-vehicle-color">{{ saleInvoice.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Production Year:</label>
+                        <span data-name="receive-order-vehicle-production-year">{{ saleInvoice.receiveOrder.vehicleProductionYear|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Chassis Number:</label>
+                        <span data-name="receive-order-vehicle-chassis-number">{{ saleInvoice.receiveOrder.vehicleChassisNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Machine Number:</label>
+                        <span data-name="receive-order-vehicle-machine-number">{{ saleInvoice.receiveOrder.vehicleMachineNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Manufacture Code:</label>
+                        <span data-name="vehicle-model-manufacture-code">{{ saleInvoice.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                    </div>
+                    <div>
+                        <label>Jumlah</label>
+                        <span data-name="sale-order-unit-price">{{ saleInvoice.receiveOrder.saleOrder.vehicleModel.manufactureCode|default|number_format(2) }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+    
+        <div id="receive-order-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sale Order List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            $("#receive-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#receive-order-dialog").modal("hide");
+                $("#{{ form.receiveOrder.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=sale-order-code-number]", "#receive-order-info").text($(this).attr("data-field-sale-order-code-number"));
+                $("[data-name=customer-name]", "#receive-order-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=sale-order-vehicle-brand]", "#receive-order-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-serial-number]", "#receive-order-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
+                $("[data-name=sale-order-vehicle-color]", "#receive-order-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=receive-order-vehicle-production-year]", "#receive-order-info").text($(this).attr("data-field-vehicle-production-year"));
+                $("[data-name=receive-order-vehicle-chassis-number]", "#receive-order-info").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("[data-name=receive-order-vehicle-machine-number]", "#receive-order-info").text($(this).attr("data-field-vehicle-machine-number"));
+                $("[data-name=receive-order-vehicle-description]", "#receive-order-info").text($(this).attr("data-field-vehicle-description"));
+                $("[data-name=vehicle-model-manufacture-code]", "#receive-order-info").text($(this).attr("data-field-vehicle-model-manufacture-code"));
+                $("[data-name=sale-order-unit-price]", "#receive-order-info").text($(this).attr("data-field-sale-order-unit-price"));
+            });
+        });
+    </script>
+{% endblock %}

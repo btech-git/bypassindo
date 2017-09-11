@@ -15,6 +15,7 @@ use AppBundle\Entity\Master\Customer;
  * @ORM\Table(name="transaction_sale_invoice")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleInvoiceRepository")
  * @UniqueEntity({"taxNumberPrefix", "taxNumber"})
+ * @UniqueEntity("receiveOrder")
  */
 class SaleInvoice extends CodeNumberEntity
 {
@@ -121,4 +122,20 @@ class SaleInvoice extends CodeNumberEntity
 
     public function getReceiveOrder() { return $this->receiveOrder; }
     public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
+
+    public function sync()
+    {
+        $receiveOrder = $this->getReceiveOrder();
+        $saleOrder = $receiveOrder === null ? null : $receiveOrder->getSaleOrder();
+        $unitPrice = $saleOrder === null ? '0.00' : $saleOrder->getUnitPrice();
+        $this->amount = $unitPrice;
+        
+        $totalPayment = '0.00';
+        foreach ($this->getSalePayments() as $salePayment) {
+            $totalPayment += $salePayment->getAmount();
+        }
+        $this->totalPayment = $totalPayment;
+        
+        $this->remaining = $this->amount - $this->totalPayment;
+    }
 }
