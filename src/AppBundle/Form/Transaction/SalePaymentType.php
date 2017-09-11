@@ -20,7 +20,7 @@ class SalePaymentType extends AbstractType
             ->add('transactionDate', 'date')
             ->add('amount')
             ->add('note')
-            ->add('paymentMethod', EntityTextType::class, array('class' => PaymentMethod::class))
+            ->add('paymentMethod')
             ->add('saleInvoice', EntityTextType::class, array('class' => SaleInvoice::class))
         ;
         $builder

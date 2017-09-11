@@ -25,16 +25,16 @@
         {% for saleInvoice in grid.data %}
             <tr data-field-id="{{ saleInvoice.id }}"
                 data-field-sale-invoice-code-number="{{ saleInvoice.codeNumber|default }}"
-                data-field-sale-invoice-amount="{{ saleInvoice.amount|default }}"
+                data-field-sale-invoice-amount="{{ saleInvoice.amount|default|number_format(2) }}"
                 data-field-sale-invoice-tax-number="{{ saleInvoice.taxNumber|default }}"
                 data-field-sale-order-code-number="{{ saleInvoice.receiveOrder.saleOrder.codeNumber|default }}"
-                data-field-customer-name="{{ saleInvoice.receiveOrder.saleOrder.customer.name|default }}"
+                data-field-customer-name="{{ saleInvoice.receiveOrder.saleOrder.customer.name|default }}">
                 <td class="text-left">{{ saleInvoice.codeNumber|default }}</td>
                 <td class="text-left">{{ saleInvoice.transactionDate|default ? saleInvoice.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ saleInvoice.receiveOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ saleInvoice.receiveOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ saleInvoice.taxNumber|default }}</td>
-                <td class="text-left">{{ saleInvoice.amount|default }}</td>
+                <td class="text-right">{{ saleInvoice.amount|default|number_format(2) }}</td>
             </tr>
         {% else %}
             <tr>
