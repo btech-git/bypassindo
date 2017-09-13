@@ -96,7 +96,8 @@
                 {{ form_row(form.competitorType) }}
                 {{ form_row(form.competitorDealer) }}
                 {{ form_row(form.paymentMethodType) }}
-                {{ form_row(form.paymentMethodValue, {'label': false}) }}
+                {{ form_row(form.bankingCompany, {'label': false}) }}
+                {{ form_row(form.financeCompany, {'label': false}) }}
                 {{ form_row(form.customerPrice) }}
                 {{ form_row(form.salesmanPrice) }}
                 {{ form_row(form.approvedPrice) }}
@@ -168,12 +169,25 @@
                 });
             }
             
-            if ($("#{{ form.customerStatusType.vars.id }}:checked").val() !== "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
-                $("#{{ form.customerStatusName.vars.id }}").hide();
+            function setCustomerStatusVisibility(sel) {
+                $("#{{ form.customerStatusName.vars.id }}").parent().hide();
+                if (sel.val() === "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
+                    $("#{{ form.customerStatusName.vars.id }}").parent().show();
+                }
             }
-            if ($("#{{ form.paymentMethodType.vars.id }}:checked").val() !== "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}" && $("#{{ form.paymentMethodType.vars.id }}:checked").val() !== "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
-                $("#{{ form.paymentMethodValue.vars.id }}").hide();
+            function setCompaniesVisibility(sel) {
+                $("#{{ form.bankingCompany.vars.id }}").parent().hide();
+                $("#{{ form.financeCompany.vars.id }}").parent().hide();
+                if (sel.val() === "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}") {
+                    $("#{{ form.bankingCompany.vars.id }}").parent().show();
+                }
+                else if (sel.val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
+                    $("#{{ form.financeCompany.vars.id }}").parent().show();
+                }
             }
+            
+            setCustomerStatusVisibility($("#{{ form.customerStatusType.vars.id }} :checked"));
+            setCompaniesVisibility($("#{{ form.paymentMethodType.vars.id }} :checked"));
             
             $("#{{ form.offTheRoadPrice.vars.id }}").on("change", function() {
                 bind();
@@ -185,18 +199,10 @@
                 bind();
             });
             $("#{{ form.customerStatusType.vars.id }}").on("change", function() {
-                if ($(":checked", this).val() === "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
-                    $("#{{ form.customerStatusName.vars.id }}").show();
-                } else {
-                    $("#{{ form.customerStatusName.vars.id }}").hide();
-                }
+                setCustomerStatusVisibility($(":checked", this));
             });
             $("#{{ form.paymentMethodType.vars.id }}").on("change", function() {
-                if ($(":checked", this).val() === "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}" || $(":checked", this).val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
-                    $("#{{ form.paymentMethodValue.vars.id }}").show();
-                } else {
-                    $("#{{ form.paymentMethodValue.vars.id }}").hide();
-                }
+                setCompaniesVisibility($(":checked", this));
             });
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");

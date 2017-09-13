@@ -37,6 +37,11 @@ class SalePaymentForm
     {
         $saleInvoice = $salePayment->getSaleInvoice();
         if ($saleInvoice !== null) {
+            $salePayments = $saleInvoice->getSalePayments();
+            $oldSalePayments = $salePayments->getValues();
+            if (!in_array($salePayment, $oldSalePayments)) {
+                $salePayments->add($salePayment);
+            }
             $saleInvoice->sync();
         }
     }
@@ -60,6 +65,11 @@ class SalePaymentForm
     
     protected function beforeDelete(SalePayment $salePayment)
     {
-        $this->sync($salePayment);
+        $saleInvoice = $salePayment->getSaleInvoice();
+        if ($saleInvoice !== null) {
+            $salePayments = $saleInvoice->getSalePayments();
+            $salePayments->removeElement($salePayment);
+            $saleInvoice->sync();
+        }
     }
 }

@@ -52,8 +52,8 @@
                         <span data-name="vehicle-model-manufacture-code">{{ saleInvoice.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                     <div>
-                        <label>Jumlah</label>
-                        <span data-name="sale-order-unit-price">{{ saleInvoice.receiveOrder.saleOrder.vehicleModel.manufactureCode|default|number_format(2) }}</span>
+                        <label>Jumlah:</label>
+                        <span data-name="sale-order-unit-price">{{ saleInvoice.receiveOrder.saleOrder.unitPrice|default|number_format(2) }}</span>
                     </div>
                 </div>
             </div>

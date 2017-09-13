@@ -43,7 +43,8 @@ class SaleDiscountApplicationType extends AbstractType
                 'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'PAYMENT_METHOD'),
                 'choices_as_values' => true,
             ))
-            ->add('paymentMethodValue')
+            ->add('bankingCompany')
+            ->add('financeCompany')
             ->add('customerPrice')
             ->add('salesmanPrice')
             ->add('approvedPrice')

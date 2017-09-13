@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Master\Employee;
 use AppBundle\Entity\Master\Customer;
 use AppBundle\Entity\Master\VehicleModel;
 
@@ -149,6 +150,21 @@ class SaleOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     * @Assert\NotNull()
+     */
+    private $staffApproval;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Employee")
+     * @Assert\NotNull()
+     */
+    private $employeeSale;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Employee")
+     * @Assert\NotNull()
+     */
+    private $employeeSaleHead;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
      * @Assert\NotNull()
      */
@@ -254,6 +270,15 @@ class SaleOrder extends CodeNumberEntity
 
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
+
+    public function getStaffApproval() { return $this->staffApproval; }
+    public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
+
+    public function getEmployeeSale() { return $this->employeeSale; }
+    public function setEmployeeSale(Employee $employeeSale = null) { $this->employeeSale = $employeeSale; }
+
+    public function getEmployeeSaleHead() { return $this->employeeSaleHead; }
+    public function setEmployeeSaleHead(Employee $employeeSaleHead = null) { $this->employeeSaleHead = $employeeSaleHead; }
 
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }

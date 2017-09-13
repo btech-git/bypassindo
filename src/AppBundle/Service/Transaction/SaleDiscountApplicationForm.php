@@ -44,8 +44,11 @@ class SaleDiscountApplicationForm
             $saleDiscountApplication->setCustomerStatusName($customerStatusType);
         }
         $paymentMethodType = $saleDiscountApplication->getPaymentMethodType();
-        if ($paymentMethodType === SaleDiscountApplication::PAYMENT_METHOD_CASH) {
-            $saleDiscountApplication->setPaymentMethodValue($paymentMethodType);
+        if ($paymentMethodType !== SaleDiscountApplication::PAYMENT_METHOD_BANK) {
+            $saleDiscountApplication->setBankingCompany(null);
+        }
+        if ($paymentMethodType !== SaleDiscountApplication::PAYMENT_METHOD_FINANCE_COMPANY) {
+            $saleDiscountApplication->setFinanceCompany(null);
         }
     }
     

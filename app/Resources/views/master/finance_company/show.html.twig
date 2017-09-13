@@ -1,0 +1,22 @@
+{% extends 'master/layout.html.twig' %}
+
+{% block title 'Show Finance Company' %}
+
+{% block actions %}
+    {{ include('master/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ financeCompany.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Is Active</th>
+                <td>{{ financeCompany.isActive|default ? 'Yes' : 'No' }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

@@ -130,7 +130,7 @@ class SalePaymentController extends Controller
                 $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to delete the record.'));
             }
 
-            return $this->redirectToRoute('transaction_sale_order_index');
+            return $this->redirectToRoute('transaction_sale_payment_index');
         }
 
         return $this->render('transaction/sale_payment/delete.html.twig', array(

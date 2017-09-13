@@ -10,10 +10,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Master\BankingCompany;
+use AppBundle\Entity\Master\FinanceCompany;
 
 /**
  * @ORM\Table(name="transaction_sale_discount_application")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleDiscountApplicationRepository")
+ * @Assert\Expression("this.getBankingCompany() == null or this.getFinanceCompany() == null")
  */
 class SaleDiscountApplication extends CodeNumberEntity
 {
@@ -101,11 +104,6 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $paymentMethodType;
     /**
-     * @ORM\Column(type="string", length=60)
-     * @Assert\NotBlank()
-     */
-    private $paymentMethodValue;
-    /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
@@ -175,6 +173,14 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $customer;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\BankingCompany")
+     */
+    private $bankingCompany;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
+     */
+    private $financeCompany;
     
     public function __construct()
     {
@@ -226,9 +232,6 @@ class SaleDiscountApplication extends CodeNumberEntity
     public function getPaymentMethodType() { return $this->paymentMethodType; }
     public function setPaymentMethodType($paymentMethodType) { $this->paymentMethodType = $paymentMethodType; }
 
-    public function getPaymentMethodValue() { return $this->paymentMethodValue; }
-    public function setPaymentMethodValue($paymentMethodValue) { $this->paymentMethodValue = $paymentMethodValue; }
-
     public function getCustomerPrice() { return $this->customerPrice; }
     public function setCustomerPrice($customerPrice) { $this->customerPrice = $customerPrice; }
 
@@ -270,4 +273,10 @@ class SaleDiscountApplication extends CodeNumberEntity
 
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
+
+    public function getBankingCompany() { return $this->bankingCompany; }
+    public function setBankingCompany(BankingCompany $bankingCompany = null) { $this->bankingCompany = $bankingCompany; }
+
+    public function getFinanceCompany() { return $this->financeCompany; }
+    public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }
 }
