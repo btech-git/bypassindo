@@ -71,6 +71,10 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $purchaseWorkshopHeader;
     /**
+     * @ORM\OneToMany(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
+     */
+    private $purchasePaymentHeaders;
+    /**
      * @ORM\OneToMany(targetEntity="PurchaseInvoiceDetail", mappedBy="purchaseInvoiceHeader")
      * @Assert\Valid() @Assert\Count(min=1)
      */
@@ -118,26 +122,27 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
     public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }
 
-//    public function getPurchasePaymentHeaders() { return $this->purchasePaymentHeaders; }
-//    public function setPurchasePaymentHeaders(Collection $purchasePaymentHeaders) { $this->purchasePaymentHeaders = $purchasePaymentHeaders; }
+    public function getPurchasePaymentHeaders() { return $this->purchasePaymentHeaders; }
+    public function setPurchasePaymentHeaders(Collection $purchasePaymentHeaders) { $this->purchasePaymentHeaders = $purchasePaymentHeaders; }
 
     public function getPurchaseInvoiceDetails() { return $this->purchaseInvoiceDetails; }
     public function setPurchaseInvoiceDetails(Collection $purchaseInvoiceDetails) { $this->purchaseInvoiceDetails = $purchaseInvoiceDetails; }
 
     public function sync()
     {
-//        $grandTotal = '0.00';
-//        foreach ($this->getPurchaseInvoiceDetails() as $purchaseInvoiceDetail) {
-//            $grandTotal += $purchaseInvoiceDetail->getTotal();
-//        }
-//        $this->grandTotal = $grandTotal;
-//        
-//        $totalPayment = '0.00';
-//        foreach ($this->getPurchasePaymentHeaders() as $purchasePaymentHeader) {
-//            $totalPayment += $purchasePaymentHeader->getGrandTotal();
-//        }
-//        $this->totalPayment = $totalPayment;
-//        
-//        $this->remaining = $this->grandTotal - $this->totalPayment;
+        $grandTotal = '0.00';
+        foreach ($this->purchaseInvoiceDetails as $purchaseInvoiceDetail) {
+            $grandTotal += $purchaseInvoiceDetail->getTotal();
+        }
+        $this->grandTotal = $grandTotal;
+        
+        $totalPayment = '0.00';
+        foreach ($this->purchasePaymentHeaders as $purchasePaymentHeader) {
+            $purchasePaymentHeader->sync();
+            $totalPayment += $purchasePaymentHeader->getTotalAmount();
+        }
+        $this->totalPayment = $totalPayment;
+        
+        $this->remaining = $this->grandTotal - $this->totalPayment;
     }
 }
