@@ -1,0 +1,11 @@
+{
+    "grandTotal": "{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}",
+    "purchaseInvoiceDetails": {
+        {%- for index, purchaseInvoiceDetail in purchaseInvoiceHeader.purchaseInvoiceDetails -%}
+            "{{ index }}": {
+                "total": "{{ purchaseInvoiceDetail.total|default|number_format(2) }}"
+            }
+            {%- if not loop.last -%},{%- endif -%}
+        {%- endfor -%}
+    }
+}

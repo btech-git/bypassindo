@@ -24,6 +24,7 @@
     <tbody>
         {% for purchaseWorkshopHeader in grid.data %}
             <tr data-field-id="{{ purchaseWorkshopHeader.id }}"
+                data-field-code-number="{{ purchaseWorkshopHeader.codeNumber|default }}"
                 data-field-supplier-name="{{ purchaseWorkshopHeader.supplier.name|default }}"
                 data-field-sale-order-code-number="{{ purchaseWorkshopHeader.saleOrder.codeNumber|default }}"
                 data-field-sale-order-vehicle-brand="{{ purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}"

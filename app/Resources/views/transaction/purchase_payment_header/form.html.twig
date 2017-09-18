@@ -1,0 +1,175 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% import _self as self %}
+
+{% macro details_row(object) %}
+    <tr data-index="{{ object.vars.name }}">
+        <td>
+            {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount'} }) }}
+        </td>
+        <td>
+            {{ form_row(object.memo, {'label': false}) }}
+        </td>
+        <td>
+            <button type="button" class="btn btn-info remove-purchase-payment-detail-prototype">Delete</button>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Pelunasan Pembelian #</label>
+                    <div>{{ purchasePaymentHeader.codeNumber }}</div>
+                </div>
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.paymentMethod) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.purchaseInvoiceHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-invoice-header-dialog'} }) }}
+                <div class="form-group" id="purchase-invoice-header-info">
+                    <div>
+                        <label>Invoice #:</label>
+                        <span data-name="code-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.codeNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label> Grand Total:</label>
+                        <span data-name="grand-total">{{ purchasePaymentHeader.purchaseInvoiceHeader.grandTotal|default }}</span>
+                    </div>
+                    <div>
+                        <label>Supplier:</label>
+                        <span data-name="supplier-name">{{ purchasePaymentHeader.purchaseInvoiceHeader.supplier.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>SO#:</label>
+                        <span data-name="sale-order-code-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Brand:</label>
+                        <span data-name="sale-order-vehicle-brand">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Serial Number:</label>
+                        <span data-name="sale-order-vehicle-serial-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Vehicle Color:</label>
+                        <span data-name="sale-order-vehicle-color">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+            
+        <hr />
+        
+        <div>
+            <button type="button" class="btn btn-default" id="add-purchase-payment-detail-prototype">Add Detail</button>
+        </div>
+        
+        <br />
+        
+        <table class="table table-bordered" id="purchase-payment-detail-list">
+            <thead>
+                <tr class="bg-info">
+                    <th>Memo</th>
+                    <th>Amount</th>
+                    <th style="width: 0"></th>
+                </tr>
+            </thead>
+            <tbody data-prototype="{{ self.details_row(form.purchasePaymentDetails.vars.prototype)|e }}">
+                {% for purchasePaymentDetail in form.purchasePaymentDetails %}
+                    {{ self.details_row(purchasePaymentDetail) }}
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right">Grand Total</td>
+                    <td class="text-right"><span data-name="grand-total">{{ purchasePaymentHeader.grandTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+            
+        <div id="purchase-invoice-header-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Invoice List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="purchase-invoice-header-grid" data-grid="{{ path('common_purchase_invoice_header_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            function bind() {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
+                    data: $("form").serialize(),
+                    dataType: "JSON",
+                    success: function(data) {
+                        $.each(data.purchasePaymentDetails, function(index, purchasePaymentDetail) {
+                            $("[data-name=total-" + index + "]", "#purchase-payment-detail-list").text(purchasePaymentDetail.total);
+                        });
+                        $("[data-name=grand-total]", "#purchase-payment-detail-list").text(data.grandTotal);
+                    }
+                });
+            }
+            
+            var table = $("#purchase-payment-detail-list");
+            var tableBody = $("tbody", table);
+            
+            tableBody.on("change", "[data-name=quantity]", function() {
+                bind();
+            });
+            tableBody.on("change", "[data-name=price]", function() {
+                bind();
+            });
+            tableBody.on("click", ".remove-purchase-payment-detail-prototype", function() {
+                $(this).closest("tr").remove();
+                bind();
+            });
+            
+            $("#purchase-invoice-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#purchase-invoice-dialog").modal("hide");
+                $("#{{ form.purchaseInvoiceHeader.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-code-number"));
+                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grandt-total"));
+                $("[data-name=supplier-name]", "#purchase-invoice-header-info").text($(this).attr("data-field-supplier-name"));
+                $("[data-name=sale-order-code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-code-number"));
+                $("[data-name=sale-order-vehicle-brand]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-serial-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
+                $("[data-name=sale-order-vehicle-color]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+            });
+            
+            $("#add-purchase-payment-detail-prototype").on("click", function() {
+                var name = "{{ form.purchasePaymentDetails.vars.prototype.vars.name }}";
+                var rows = tableBody.children("tr");
+                var index = Math.max({{ purchasePaymentDetailsCount }}, (rows.length > 0) ? parseInt(rows.last().attr("data-index")) + 1 : 0);
+                tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
+                    var amountPrototype = prototype.find("#{{ form.purchasePaymentDetails.vars.prototype.amount.vars.id }}");
+                    amountPrototype.attr("value", $("[data-name=purchase-invoice-detail-amount]", "#purchase-invoice-header-info").text());
+                });
+            });
+        });
+    </script>
+{% endblock %}

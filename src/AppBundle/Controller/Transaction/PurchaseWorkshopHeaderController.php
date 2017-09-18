@@ -127,7 +127,7 @@ class PurchaseWorkshopHeaderController extends Controller
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-            $purchaseWorkshopHeaderService->delete($purchaseWorkshopHeader);
+                $purchaseWorkshopHeaderService->delete($purchaseWorkshopHeader);
 
                 $this->addFlash('success', array('title' => 'Success!', 'message' => 'The record was deleted successfully.'));
             } else {

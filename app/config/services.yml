@@ -106,3 +106,23 @@ services:
     app.transaction.sale_payment_form:
         class: AppBundle\Service\Transaction\SalePaymentForm
         arguments: ["@app.transaction.sale_payment_repository"]
+        
+    app.transaction.purchase_invoice_header_repository:
+        class: AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\PurchaseInvoiceHeader
+
+    app.transaction.purchase_invoice_header_form:
+        class: AppBundle\Service\Transaction\PurchaseInvoiceHeaderForm
+        arguments: ["@app.transaction.purchase_invoice_header_repository"]
+        
+    app.transaction.purchase_payment_header_repository:
+        class: AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\PurchasePaymentHeader
+
+    app.transaction.purchase_payment_header_form:
+        class: AppBundle\Service\Transaction\PurchasePaymentHeaderForm
+        arguments: ["@app.transaction.purchase_payment_header_repository"]
