@@ -126,3 +126,13 @@ services:
     app.transaction.purchase_payment_header_form:
         class: AppBundle\Service\Transaction\PurchasePaymentHeaderForm
         arguments: ["@app.transaction.purchase_payment_header_repository"]
+        
+    app.transaction.purchase_delivery_order_repository:
+        class: AppBundle\Repository\Transaction\PurchaseDeliveryOrderRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\PurchaseDeliveryOrder
+
+    app.transaction.purchase_delivery_order_form:
+        class: AppBundle\Service\Transaction\PurchaseDeliveryOrderForm
+        arguments: ["@app.transaction.purchase_delivery_order_repository"]

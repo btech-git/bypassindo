@@ -1,0 +1,184 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Memo' %}
+
+{% block body %}
+    <div class="memo">
+        <div class="header">
+            <h1 class="title">PT. Bypassindo Jaya Indah</h1>
+            <h2 class="title">Surat Pesanan Kendaraan (SPK)</h2>
+        </div>
+        
+        <br />
+        
+        <div class="note">
+            <div class="table full">
+                <div class="cell col">
+                    <div class="table full">
+                        <div class="row">
+                            <div class="cell label">SPK #</div>
+                            <div class="cell value">{{ saleOrder.codeNumber|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Tanggal</div>
+                            <div class="cell value">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('d M Y') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Penawaran #</div>
+                            <div class="cell value">{{ saleOrder.quotationNumber|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">PO Customer # #</div>
+                            <div class="cell value">{{ saleOrder.purchaseOrderNumber|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Tanggal</div>
+                            <div class="cell value">{{ saleOrder.purchaseOrderDate|default ? saleOrder.transactionDate|date('d M Y') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Tanggal Penyerahan</div>
+                            <div class="cell value">{{ saleOrder.deliveryDate|default ? saleOrder.transactionDate|date('d M Y') }}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cell col">
+                    <div class="table full">
+                        <div class="row">
+                            <div class="cell label">Customer</div>
+                            <div class="cell value">{{ saleOrder.customer.company|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Faktur STNK atas nama</div>
+                            <div class="cell value">{{ saleOrder.invoiceRegistrationName|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Off The Road?</div>
+                            <div class="cell value">{{ saleOrder.isOffTheRoad|default ? saleOrder.transactionDate|date('d M Y') }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Merk</div>
+                            <div class="cell value">{{ saleOrder.vehicleBrand|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Type</div>
+                            <div class="cell label"></div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">NIK</div>
+                            <div class="cell value">{{ saleOrder.vehicleSerialNumber|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Warna</div>
+                            <div class="cell value">{{ saleOrder.vehicleColor|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Optional</div>
+                            <div class="cell value">{{ saleOrder.vehicleOptionalInfo|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Acessories</div>
+                            <div class="cell value">{{ saleOrder.vehicleAccessoriesInfo|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Lain-lain</div>
+                            <div class="cell value">{{ saleOrder.vehicleOtherInfo|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Quantity</div>
+                            <div class="cell value">{{ saleOrder.quantity|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Unit Price</div>
+                            <div class="cell value">{{ saleOrder.unitPrice|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Total</div>
+                            <div class="cell value">{{ saleOrder.total|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Cash</div>
+                            <div class="cell value">{{ saleOrder.isCash|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Leasing</div>
+                            <div class="cell value">{{ saleOrder.isLeasing|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Nama Leasing</div>
+                            <div class="cell value">{{ saleOrder.leasingName|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Tenor</div>
+                            <div class="cell value">{{ saleOrder.leasingTerm|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">Angsuran/Bln</div>
+                            <div class="cell value">{{ saleOrder.leasingMonthlyNominal|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">DP</div>
+                            <div class="cell value">{{ saleOrder.downPayment|default }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <br />
+        
+        <div class="note">
+            <div class="table">
+                <div class="cell label">Terbilang:</div>
+                <div class="cell">&nbsp;&nbsp;</div>
+                <div class="cell">{{ saleOrder.total|default|number_format(0, '.', '')|say|capitalize }} rupiah.</div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <div class="table">
+                <div class="cell label">Catatan:</div>
+                <div class="cell">&nbsp;&nbsp;</div>
+                <div class="cell">{{ saleOrder.note|default }}</div>
+            </div>
+        </div>
+        
+        <br />
+        
+        <div class="signature">
+            <div class="table full">
+                <div class="cell sig">
+                    <div>Penerima,</div>
+                </div>
+                <div class="cell sig">
+                    <div>Hormat Kami,</div>
+                    {% if show %}
+                        <div class="blank"></div>
+                        <div class="blank"></div>
+                        <div></div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets_include %}
+    <link rel="stylesheet" href="{{ asset('../app/Resources/public/css/memo.css') }}" />
+{% endblock %}
+
+{% block javascripts_include %}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .col:nth-child(1) { width: 50% }
+        .col:nth-child(2) { width: 50% }
+        
+        .col:nth-child(1) .label { width: 35% }
+        .col:nth-child(1) .value { width: 65% }
+        .col:nth-child(2) .label { width: 35% }
+        .col:nth-child(2) .value { width: 65% }
+        
+        .sig:nth-child(1) { width: 50% }
+        .sig:nth-child(2) { width: 50% }
+    </style>
+{% endblock %}

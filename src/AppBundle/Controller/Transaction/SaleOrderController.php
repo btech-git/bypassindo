@@ -138,4 +138,17 @@ class SaleOrderController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}", name="transaction_sale_order_memo")
+     * @Method("GET")
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function memoAction(SaleOrder $saleOrder)
+    {
+        return $this->render('transaction/sale_order/memo.html.twig', array(
+            'saleOrder' => $saleOrder,
+        ));
+    }
+
 }
