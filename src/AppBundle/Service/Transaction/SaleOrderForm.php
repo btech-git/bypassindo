@@ -24,6 +24,8 @@ class SaleOrderForm
             $saleOrder->setCodeNumberToNext($currentSaleOrder->getCodeNumber(), $year, $month);
             
             $saleOrder->setStaffFirst($staff);
+            $saleOrder->setStaffApproval($staff);
+            $saleOrder->setVehicleBrand('HINO');
         }
         $saleOrder->setStaffLast($staff);
     }

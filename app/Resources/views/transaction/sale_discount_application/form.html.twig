@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>Sale Discount #</label>
+                    <label>Pengajuan Discount #</label>
                     <div>{{ saleDiscountApplication.codeNumber }}</div>
                 </div>
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
@@ -68,7 +68,7 @@
                             <span data-name="customer-category-three-mitsubishi-population">{{ saleDiscountApplication.customer.categoryThreeMitsubishiPopulation|default|number_format(0) }}</span> unit
                         </div>
                         <div>
-                            <label>Nissan:</label>
+                            <label>UD. Trucks:</label>
                             <span data-name="customer-category-three-nissan-population">{{ saleDiscountApplication.customer.categoryThreeNissanPopulation|default|number_format(0) }}</span> unit
                         </div>
                         <div>
@@ -84,25 +84,25 @@
                 {{ form_row(form.transactionDate) }}
                 {{ form_row(form.dealStatus) }}
                 {{ form_row(form.dealDate, {'label': false}) }}
-                {{ form_row(form.customerStatusType) }}
+                {{ form_row(form.customerStatusType, {'label' : 'Customer Status' }) }}
                 {{ form_row(form.customerStatusName, {'label': false}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.requestType) }}
-                {{ form_row(form.requestQuantity) }}
-                {{ form_row(form.requestUsageType) }}
-                {{ form_row(form.requestWorkshop) }}
+                {{ form_row(form.requestType, {'label' : 'Type Permintaan' }) }}
+                {{ form_row(form.requestQuantity, {'label' : 'Quantity Permintaan' }) }}
+                {{ form_row(form.requestUsageType, {'label' : 'Type of Body / Usage' }) }}
+                {{ form_row(form.requestWorkshop, {'label' : 'Karoseri' }) }}
                 {{ form_row(form.competitorBrand) }}
                 {{ form_row(form.competitorType) }}
                 {{ form_row(form.competitorDealer) }}
-                {{ form_row(form.paymentMethodType) }}
+                {{ form_row(form.paymentMethodType, {'label' : 'Cara Pembayaran' }) }}
                 {{ form_row(form.bankingCompany, {'label': false}) }}
                 {{ form_row(form.financeCompany, {'label': false}) }}
-                {{ form_row(form.customerPrice) }}
-                {{ form_row(form.salesmanPrice) }}
-                {{ form_row(form.approvedPrice) }}
-                {{ form_row(form.competitorPrice) }}
-                {{ form_row(form.mediatorPrice) }}
+                {{ form_row(form.customerPrice, {'label' : 'Harga Permintaan Customer' }) }}
+                {{ form_row(form.salesmanPrice, {'label' : 'Sales ke Customer' }) }}
+                {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui' }) }}
+                {{ form_row(form.competitorPrice, {'label' : 'Kompetitor ke Customer' }) }}
+                {{ form_row(form.mediatorPrice, {'label' : 'Mediator Fee' }) }}
             </div>
         </div>
             

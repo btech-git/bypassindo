@@ -21,8 +21,17 @@
                 {{ form_row(form.vehicleDescription) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'} }) }}
-                <div class="form-group" id="sale-order-info">
+                {{ form_row(form.purchaseDeliveryOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-delivery-order-dialog'} }) }}
+                <div class="form-group" id="purchase-delivery-order-info">
+                    <div>
+                        <label>DO #:</label>
+                        <span data-name="code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
+                    </div>
+                    
+                    <div>
+                        <label>SO #:</label>
+                        <span data-name="sale-order-code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
+                    </div>
                     <div>
                         <label>Customer:</label>
                         <span data-name="customer-name">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
@@ -32,16 +41,8 @@
                         <span data-name="sale-order-vehicle-brand">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</span>
-                    </div>
-                    <div>
                         <label>Vehicle Color:</label>
                         <span data-name="sale-order-vehicle-color">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
-                    </div>
-                    <div>
-                        <label>Manufacture Code:</label>
-                        <span data-name="vehicle-model-manufacture-code">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                 </div>
                 {{ form_row(form.serviceBookNumber) }}
@@ -52,15 +53,15 @@
         
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
     
-        <div id="sale-order-dialog" class="modal fade" role="dialog">
+        <div id="purchase-delivery-order-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg" style="width: 90%">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Sale Order List</h4>
+                        <h4 class="modal-title">Delivery Order List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="sale-order-grid" data-grid="{{ path('common_sale_order_grid') }}"></div>
+                        <div id="purchase-delivery-order-grid" data-grid="{{ path('common_purchase_delivery_order_grid') }}"></div>
                     </div>
                 </div>
             </div>
@@ -72,14 +73,14 @@
     {{ parent() }}
     <script>
         jQuery(function($) {
-            $("#sale-order-grid").on("click", "table[data-role=table] tbody tr", function() {
-                $("#sale-order-dialog").modal("hide");
-                $("#{{ form.saleOrder.vars.id }}").val($(this).attr("data-field-id"));
-                $("[data-name=customer-name]", "#sale-order-info").text($(this).attr("data-field-customer-name"));
-                $("[data-name=sale-order-vehicle-brand]", "#sale-order-info").text($(this).attr("data-field-vehicle-brand"));
-                $("[data-name=sale-order-vehicle-serial-number]", "#sale-order-info").text($(this).attr("data-field-vehicle-serial-number"));
-                $("[data-name=sale-order-vehicle-color]", "#sale-order-info").text($(this).attr("data-field-vehicle-color"));
-                $("[data-name=vehicle-model-manufacture-code]", "#sale-order-info").text($(this).attr("data-field-vehicle-model-manufacture-code"));
+            $("#purchase-delivery-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#purchase-delivery-order-dialog").modal("hide");
+                $("#{{ form.purchaseDeliveryOrder.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-code-number"));
+                $("[data-name=sale-order-code-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-code-number"));
+                $("[data-name=customer-name]", "#purchase-delivery-order-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=sale-order-vehicle-brand]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-color]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-color"));
             });
         });
     </script>

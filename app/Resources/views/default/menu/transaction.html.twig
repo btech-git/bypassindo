@@ -28,6 +28,8 @@
         </tr>
         <tr>
             <td>DO Pusat</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
         </tr>
     </table>
             

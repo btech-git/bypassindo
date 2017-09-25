@@ -5,6 +5,9 @@ namespace AppBundle\Form\Transaction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\Form\FormEvent;
+use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Transaction\SaleOrder;
 

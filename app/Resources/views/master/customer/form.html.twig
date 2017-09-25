@@ -6,6 +6,8 @@
 
 {% block content %}
     {{ form_start(form) }}
+        {{ form_row(form.isPersonal, {'attr': {'data-choice-group': 'customer-type'},'label' : 'Perorangan' }) }}
+        {{ form_row(form.isCompany, {'attr': {'data-choice-group': 'customer-type'},'label' : 'Perusahaan' }) }}
         {{ form_widget(form) }}
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
     {{ form_end(form) }}

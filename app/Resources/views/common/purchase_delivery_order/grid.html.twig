@@ -1,0 +1,55 @@
+{% set grid_layout = 'datagrid.html.twig' %}
+
+{{ grid_top(grid) }}
+
+<table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
+    <thead>
+        <tr data-action="sort" class="alert alert-info">
+            <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Transaction Date</th>
+            <th data-group="saleOrder" data-field="codeNumber">SO #</th>
+            <th data-group="customer" data-field="name">Customer Name</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="purchaseDeliveryOrder" data-field="codeNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="transactionDate"></th>
+            <th data-group="saleOrder" data-field="codeNumber"></th>
+            <th data-group="customer" data-field="name"></th>
+            <th data-group="saleOrder" data-field="vehicleBrand"></th>
+            <th data-group="saleOrder" data-field="vehicleColor"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchaseDeliveryOrder in grid.data %}
+            <tr data-field-id="{{ purchaseDeliveryOrder.id }}"
+                data-field-code-number="{{ purchaseDeliveryOrder.codeNumber|default }}"
+                data-field-customer-name="{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}"
+                data-field-sale-order-code-number="{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}"
+                data-field-sale-order-vehicle-brand="{{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
+                data-field-sale-order-vehicle-color="{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}">
+                <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6" class="alert alert-warning">
+                    <strong>There are no items to display.</strong>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ grid_bottom(grid) }}
+
+<script>
+    jQuery(function($) {
+        $("#{{ grid.id }}-top").css("display", "none");
+    });
+</script>

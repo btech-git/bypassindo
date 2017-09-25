@@ -12,7 +12,7 @@ class PurchaseDeliveryOrderRepository extends EntityRepository
         $query->setParameter('codeNumberMonth', $month);
         $query->setParameter('codeNumberYear', $year);
         $query->setMaxResults(1);
-        $lastReceiveOrder = $query->getOneOrNullResult();
+        $lastPurchaseDeliveryOrder = $query->getOneOrNullResult();
         
         return $lastPurchaseDeliveryOrder;
     }

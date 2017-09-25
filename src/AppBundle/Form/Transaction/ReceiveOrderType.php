@@ -25,7 +25,7 @@ class ReceiveOrderType extends AbstractType
             ->add('vehicleDescription')
             ->add('serviceBookNumber')
             ->add('note')
-            ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
+            ->add('purchaseDeliveryOrder', EntityTextType::class, array('class' => PurchaseDeliveryOrder::class))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {

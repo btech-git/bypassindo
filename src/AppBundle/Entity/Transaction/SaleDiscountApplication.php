@@ -26,7 +26,7 @@ class SaleDiscountApplication extends CodeNumberEntity
     const DEAL_STATUS_CONTRACT = 'contract';
     const CUSTOMER_STATUS_HINO = 'hino';
     const CUSTOMER_STATUS_MITSUBISHI = 'mitsubishi';
-    const CUSTOMER_STATUS_NISSAN = 'nissan';
+    const CUSTOMER_STATUS_NISSAN = 'U D. Trucks';
     const CUSTOMER_STATUS_ISUZU = 'isuzu';
     const CUSTOMER_STATUS_BENZ = 'benz';
     const CUSTOMER_STATUS_OTHER = 'other';

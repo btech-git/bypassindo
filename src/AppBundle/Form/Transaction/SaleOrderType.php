@@ -39,7 +39,6 @@ class SaleOrderType extends AbstractType
             ->add('leasingMonthlyNominal')
             ->add('downPayment')
             ->add('note')
-            ->add('staffApproval')
             ->add('employeeSale')
             ->add('employeeSaleHead')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))

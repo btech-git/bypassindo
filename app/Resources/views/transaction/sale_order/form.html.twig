@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>Sale Order #</label>
+                    <label>SPK #</label>
                     <div>{{ saleOrder.codeNumber }}</div>
                 </div>
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
@@ -35,29 +35,24 @@
                 {{ form_row(form.quotationNumber) }}
                 {{ form_row(form.purchaseOrderDate) }}
                 {{ form_row(form.purchaseOrderNumber) }}
-                {{ form_row(form.deliveryDate) }}
-                {{ form_row(form.isCash, {'attr': {'data-choice-group': 'payment-type'} }) }}
-                {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'} }) }}
+                {{ form_row(form.deliveryDate, {'label' : 'Janji Penyerahan' }) }}
+                {{ form_row(form.isCash, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Tunai' }) }}
+                {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Leasing' }) }}
                 {{ form_row(form.leasingName) }}
-                {{ form_row(form.leasingTerm) }}
-                {{ form_row(form.leasingMonthlyNominal) }}
+                {{ form_row(form.leasingTerm, {'label': 'Tenor'}) }}
+                {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan'}) }}
                 {{ form_row(form.downPayment) }}
-                {{ form_row(form.staffApproval) }}
-                {{ form_row(form.employeeSale) }}
-                {{ form_row(form.employeeSaleHead) }}
+                {{ form_row(form.employeeSale, {'label' : 'Salesman' }) }}
+                {{ form_row(form.employeeSaleHead, {'label' : 'Salesman Spv' }) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.invoiceRegistrationName) }}
+                {{ form_row(form.invoiceRegistrationName, {'label' : 'STNK atas nama' }) }}
                 {{ form_row(form.isOffTheRoad, {'label': 'Off The Road'}) }}
                 {{ form_row(form.vehicleModel, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#vehicle-model-dialog'} }) }}
                 <div class="form-group" id="vehicle-model-info">
                     <div>
                         <label>Manufacture Code:</label>
                         <span data-name="vehicle-model-manufacture-code">{{ saleOrder.vehicleModel.manufactureCode|default }}</span>
-                    </div>
-                    <div>
-                        <label>VLD Model Name:</label>
-                        <span data-name="vehicle-model-vld-model-name">{{ saleOrder.vehicleModel.vldModelName|default }}</span>
                     </div>
                     <div>
                         <label>VOS Model Name:</label>
@@ -69,7 +64,7 @@
                     </div>
                 </div>
                 {{ form_row(form.vehicleBrand) }}
-                {{ form_row(form.vehicleSerialNumber) }}
+                {{ form_row(form.vehicleSerialNumber, {'label': 'Tahun Pembuatan'}) }}
                 {{ form_row(form.vehicleColor) }}
                 {{ form_row(form.vehicleOptionalInfo) }}
                 {{ form_row(form.vehicleAccessoriesInfo) }}
@@ -179,7 +174,6 @@
                 $("#vehicle-model-dialog").modal("hide");
                 $("#{{ form.vehicleModel.vars.id }}").val($(this).attr("data-field-id"));
                 $("[data-name=vehicle-model-manufacture-code]", "#vehicle-model-info").text($(this).attr("data-field-manufacture-code"));
-                $("[data-name=vehicle-model-vld-model-name]", "#vehicle-model-info").text($(this).attr("data-field-vld-model-name"));
                 $("[data-name=vehicle-model-vos-model-name]", "#vehicle-model-info").text($(this).attr("data-field-vos-model-name"));
                 $("[data-name=vehicle-model-dms-variant-name]", "#vehicle-model-info").text($(this).attr("data-field-dms-variant-name"));
             });

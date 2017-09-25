@@ -6,13 +6,11 @@
     <thead>
         <tr data-action="sort" class="alert alert-info">
             <th data-group="vehicleModel" data-field="manufactureCode">Manufacture Code</th>
-            <th data-group="vehicleModel" data-field="vldModelName">Vld Model Name</th>
             <th data-group="vehicleModel" data-field="vosModelName">Vos Model Name</th>
             <th data-group="vehicleModel" data-field="dmsVariantName">Dms Variant Name</th>
         </tr>
         <tr data-action="search">
             <th data-group="vehicleModel" data-field="manufactureCode"></th>
-            <th data-group="vehicleModel" data-field="vldModelName"></th>
             <th data-group="vehicleModel" data-field="vosModelName"></th>
             <th data-group="vehicleModel" data-field="dmsVariantName"></th>
         </tr>
@@ -21,11 +19,9 @@
         {% for vehicleModel in grid.data %}
             <tr data-field-id="{{ vehicleModel.id }}"
                 data-field-manufacture-code="{{ vehicleModel.manufactureCode|default }}"
-                data-field-vld-model-name="{{ vehicleModel.vldModelName|default }}"
                 data-field-vos-model-name="{{ vehicleModel.vosModelName|default }}"
                 data-field-dms-variant-name="{{ vehicleModel.dmsVariantName|default }}">
                 <td class="text-left">{{ vehicleModel.manufactureCode|default }}</td>
-                <td class="text-left">{{ vehicleModel.vldModelName|default }}</td>
                 <td class="text-left">{{ vehicleModel.vosModelName|default }}</td>
                 <td class="text-left">{{ vehicleModel.dmsVariantName|default }}</td>
             </tr>
