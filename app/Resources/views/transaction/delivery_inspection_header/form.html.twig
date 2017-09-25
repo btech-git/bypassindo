@@ -55,6 +55,11 @@
         
         <hr />
         
+        <div class="form-group">
+            <button type="button" class="btn btn-default" id="check-all-details">Check All</button>
+            <button type="button" class="btn btn-default" id="uncheck-all-details">Unheck All</button>
+        </div>
+        
         {% set last_id = '' %}
         {% set starts, ends, names = {}, {}, {} %}
         {% for detail in form.details %}
@@ -82,7 +87,7 @@
                 {% endif %}
                 <div data-category-id="{{ id }}" data-column="{{ column }}">
                     {{ form_row(detail.inspectionItem) }}
-                    {{ form_widget(detail.isSelected, {'label': detail.vars.value.inspectionItem.name|default}) }}
+                    {{ form_widget(detail.isSelected, {'label': detail.vars.value.inspectionItem.name|default, 'attr': {'class': 'detail-input-selection'} }) }}
                     {{ form_errors(detail.isSelected) }}
                 </div>
             {% endfor %}
@@ -137,6 +142,12 @@
             
             $("#item-list").remove();
             
+            $("#check-all-details").on("click", function() {
+                $(".detail-input-selection").prop("checked", true);
+            });
+            $("#uncheck-all-details").on("click", function() {
+                $(".detail-input-selection").prop("checked", false);
+            });
             $("#receive-order-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#receive-order-dialog").modal("hide");
                 $("#{{ form.receiveOrder.vars.id }}").val($(this).attr("data-field-id"));

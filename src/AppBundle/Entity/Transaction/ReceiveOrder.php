@@ -27,6 +27,16 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $transactionDate;
     /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $deliveryDate;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $deliveryNumber;
+    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(2010)
      */
@@ -67,10 +77,10 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="SaleOrder", inversedBy="receiveOrders")
+     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="receiveOrders")
      * @Assert\NotNull()
      */
-    private $saleOrder;
+    private $purchaseDeliveryOrder;
     /**
      * @ORM\OneToMany(targetEntity="DeliveryWorkshop", mappedBy="receiveOrder")
      */
@@ -100,6 +110,12 @@ class ReceiveOrder extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
 
+    public function getDeliveryDate() { return $this->deliveryDate; }
+    public function setDeliveryDate($deliveryDate) { $this->deliveryDate = $deliveryDate; }
+
+    public function getDeliveryNumber() { return $this->deliveryNumber; }
+    public function setDeliveryNumber($deliveryNumber) { $this->deliveryNumber = $deliveryNumber; }
+
     public function getVehicleProductionYear() { return $this->vehicleProductionYear; }
     public function setVehicleProductionYear($vehicleProductionYear) { $this->vehicleProductionYear = $vehicleProductionYear; }
 
@@ -124,8 +140,8 @@ class ReceiveOrder extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getSaleOrder() { return $this->saleOrder; }
-    public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
+    public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
+    public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
 
     public function getDeliveryWorkshops() { return $this->deliveryWorkshops; }
     public function setDeliveryWorkshops(Collection $deliveryWorkshops) { $this->deliveryWorkshops = $deliveryWorkshops; }

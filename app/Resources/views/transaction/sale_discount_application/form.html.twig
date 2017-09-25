@@ -186,8 +186,8 @@
                 }
             }
             
-            setCustomerStatusVisibility($("#{{ form.customerStatusType.vars.id }} :checked"));
-            setCompaniesVisibility($("#{{ form.paymentMethodType.vars.id }} :checked"));
+            setCustomerStatusVisibility($(":checked", "#{{ form.customerStatusType.vars.id }}"));
+            setCompaniesVisibility($(":checked", "#{{ form.paymentMethodType.vars.id }}"));
             
             $("#{{ form.offTheRoadPrice.vars.id }}").on("change", function() {
                 bind();

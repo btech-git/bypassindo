@@ -38,13 +38,31 @@ class PurchaseInvoiceHeaderForm
     
     private function sync(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
-        $grandTotal = 0.00;
-        foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetails() as $purchaseInvoiceDetail) {
-            $total = $purchaseInvoiceDetail->getQuantity() * $purchaseInvoiceDetail->getUnitPrice();
-            $purchaseInvoiceDetail->setTotal($total);
-            $grandTotal += $total;
+//        $grandTotal = 0.00;
+//        foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetails() as $purchaseInvoiceDetail) {
+//            $total = $purchaseInvoiceDetail->getQuantity() * $purchaseInvoiceDetail->getUnitPrice();
+//            $purchaseInvoiceDetail->setTotal($total);
+//            $grandTotal += $total;
+//        }
+//        $purchaseInvoiceHeader->setGrandTotal($grandTotal);
+        $purchaseWorkshopHeader = $purchaseInvoiceHeader->getPurchaseWorkshopHeader();
+        if ($purchaseInvoiceHeader->getIsPurchaseWorkshopHeader() && $purchaseWorkshopHeader !== null) {
+            $purchaseInvoiceHeader->setSupplier($purchaseWorkshopHeader->getSupplier());
+            $purchaseInvoiceDetails = $purchaseInvoiceHeader->getPurchaseInvoiceDetails();
+            $purchaseInvoiceDetails->clear();
+            foreach ($purchaseWorkshopHeader->getPurchaseWorkshopDetails() as $purchaseWorkshopDetail) {
+                $purchaseInvoiceDetail = new \AppBundle\Entity\Transaction\PurchaseInvoiceDetail();
+                $purchaseInvoiceDetail->setItemName($purchaseWorkshopDetail->getItemName());
+                $purchaseInvoiceDetail->setQuantity($purchaseWorkshopDetail->getQuantity());
+                $purchaseInvoiceDetail->setUnitPrice($purchaseWorkshopDetail->getUnitPrice());
+                $purchaseInvoiceDetail->setTotal($purchaseWorkshopDetail->getTotal());
+                $purchaseInvoiceDetail->setPurchaseInvoiceHeader($purchaseInvoiceHeader);
+                $purchaseInvoiceDetails->add($purchaseInvoiceDetail);
+            }
+        } else {
+            $purchaseInvoiceHeader->setPurchaseWorkshopHeader(null);
         }
-        $purchaseInvoiceHeader->setGrandTotal($grandTotal);
+        $purchaseInvoiceHeader->sync();
     }
     
     public function save(PurchaseInvoiceHeader $purchaseInvoiceHeader)

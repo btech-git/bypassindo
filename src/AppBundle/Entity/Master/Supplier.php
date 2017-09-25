@@ -10,7 +10,6 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="master_supplier") @ORM\Entity
- * @UniqueEntity("taxNumber")
  */
 class Supplier
 {
@@ -74,7 +73,7 @@ class Supplier
      */
     private $email;
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
     private $taxNumber;

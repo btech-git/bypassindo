@@ -26,6 +26,15 @@
     </tr>
 {% endmacro %}
 
+{% macro info_details_row(object) %}
+    <tr>
+        <td data-name="item-name">{{ object.itemName|default }}</td>
+        <td data-name="quantity">{{ object.quantity|default }}</td>
+        <td class="text-right" data-name="unit-price">{{ object.unitPrice|default|number_format(2) }}</td>
+        <td class="text-right" data-name="total">{{ object.total|default|number_format(2) }}</td>
+    </tr>
+{% endmacro %}
+
 {% block content %}
     {{ form_start(form) }}
         <div class="row">
@@ -35,6 +44,24 @@
                     <div>{{ purchaseInvoiceHeader.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
+                {{ form_row(form.isPurchaseWorkshopHeader, {'label': false}) }}
+                {#<div class="form-group">
+                    <button type="button" class="btn btn-default">Clear Selection</button>
+                </div>#}
+                {#<div class="form-group" id="choice">
+                    <label for="supplier-choice">
+                        <input type="radio" id="supplier-choice" name="choice" value="Supplier" />
+                        Supplier
+                    </label>
+                    <br />
+                    <label for="purchase-workshop-header-choice">
+                        <input type="radio" id="purchase-workshop-header-choice" name="choice" value="PurchaseWorkshopHeader" />
+                        Purchase Workshop Header
+                    </label>
+                </div>#}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.supplierInvoiceNumber) }}
                 {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'} }) }}
                 <div class="form-group" id="supplier-info">
                     <div>
@@ -50,9 +77,6 @@
                         <span data-name="supplier-office-address">{{ purchaseInvoiceHeader.supplier.officeAddress|default }}</span>
                     </div>
                 </div>
-            </div>
-            <div class="col-sm-6">
-                {{ form_row(form.supplierInvoiceNumber) }}
                 {{ form_row(form.purchaseWorkshopHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-workshop-header-dialog'} }) }}
                 <div class="form-group" id="purchase-workshop-header-info">
                     <div>
@@ -113,6 +137,28 @@
             </tfoot>
         </table>
         
+        <table class="table table-bordered" id="purchase-invoice-detail-info-list">
+            <thead>
+                <tr class="bg-info">
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody data-prototype="{{ self.info_details_row(null)|e }}">
+                {% for purchaseInvoiceDetail in purchaseInvoiceHeader.purchaseInvoiceDetails %}
+                    {{ self.info_details_row(purchaseInvoiceDetail) }}
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right" colspan="3">Grand Total</td>
+                    <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                </tr>
+            </tfoot>
+        </table>
+        
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
         
         <div id="supplier-dialog" class="modal fade" role="dialog">
@@ -160,9 +206,44 @@
                             $("[data-name=total-" + index + "]", "#purchase-invoice-detail-list").text(purchaseInvoiceDetail.total);
                         });
                         $("[data-name=grand-total]", "#purchase-invoice-detail-list").text(data.grandTotal);
+                        var infoTable = $("#purchase-invoice-detail-info-list");
+                        var infoTableBody = $("tbody", infoTable);
+                        infoTableBody.empty();
+                        $.each(data.purchaseInvoiceDetails, function(index, purchaseInvoiceDetail) {
+                            var name = "__index__";
+                            infoTableBody.appendByPrototype(infoTableBody.attr("data-prototype"), name, index, function(prototype) {
+                                $("[data-name=item-name]", prototype).text(purchaseInvoiceDetail.itemName);
+                                $("[data-name=quantity]", prototype).text(purchaseInvoiceDetail.quantity);
+                                $("[data-name=unit-price]", prototype).text(purchaseInvoiceDetail.unitPrice);
+                                $("[data-name=total]", prototype).text(purchaseInvoiceDetail.total);
+                            });
+                        });
+                        $("[data-name=grand-total]", infoTable).text(data.grandTotal);
                     }
                 });
             }
+            
+            function setChoiceVisibility(sel) {
+                $("#{{ form.supplier.vars.id }}").parent().hide();
+                $("#supplier-info").hide();
+                $("#purchase-invoice-detail-list").hide();
+                $("#{{ form.purchaseWorkshopHeader.vars.id }}").parent().hide();
+                $("#purchase-workshop-header-info").hide();
+                $("#purchase-invoice-detail-info-list").hide();
+                $("#add-purchase-invoice-detail-prototype").hide();
+                if (sel.val() === "0") {
+                    $("#{{ form.supplier.vars.id }}").parent().show();
+                    $("#supplier-info").show();
+                    $("#purchase-invoice-detail-list").show();
+                    $("#add-purchase-invoice-detail-prototype").show();
+                } else if (sel.val() === "1") {
+                    $("#{{ form.purchaseWorkshopHeader.vars.id }}").parent().show();
+                    $("#purchase-workshop-header-info").show();
+                    $("#purchase-invoice-detail-info-list").show();
+                }
+            }
+            
+            setChoiceVisibility($(":checked", "#{{ form.isPurchaseWorkshopHeader.vars.id }}"));
             
             var table = $("#purchase-invoice-detail-list");
             var tableBody = $("tbody", table);
@@ -178,6 +259,9 @@
                 bind();
             });
             
+            $("#{{ form.isPurchaseWorkshopHeader.vars.id }}").on("change", function() {
+                setChoiceVisibility($(":checked", this));
+            });
             $("#supplier-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#supplier-dialog").modal("hide");
                 $("#{{ form.supplier.vars.id }}").val($(this).attr("data-field-id"));
@@ -194,6 +278,7 @@
                 $("[data-name=sale-order-vehicle-brand]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
                 $("[data-name=sale-order-vehicle-serial-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
                 $("[data-name=sale-order-vehicle-color]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                bind();
             });
             
             $("#add-purchase-invoice-detail-prototype").on("click", function() {
@@ -204,6 +289,7 @@
                     var quantityPrototype = prototype.find("#{{ form.purchaseInvoiceDetails.vars.prototype.quantity.vars.id }}");
                     quantityPrototype.attr("value", $("[data-name=purchase-invoice-detail-quantity]", "#purchase-invoice-header-info").text());
                 });
+                bind();
             });
         });
     </script>

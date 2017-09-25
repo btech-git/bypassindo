@@ -175,9 +175,9 @@ class SaleOrder extends CodeNumberEntity
      */
     private $vehicleModel;
     /**
-     * @ORM\OneToMany(targetEntity="ReceiveOrder", mappedBy="saleOrder")
+     * @ORM\OneToMany(targetEntity="PurchaseDeliveryOrder", mappedBy="saleOrder")
      */
-    private $receiveOrders;
+    private $purchaseDeliveryOrders;
     /**
      * @ORM\OneToMany(targetEntity="PurchaseWorkshopHeader", mappedBy="saleOrder")
      */
@@ -185,7 +185,7 @@ class SaleOrder extends CodeNumberEntity
     
     public function __construct()
     {
-        $this->receiveOrders = new ArrayCollection();
+        $this->purchaseDeliveryOrders = new ArrayCollection();
         $this->purchaseWorkshopHeaders = new ArrayCollection();
     }
     
@@ -286,8 +286,8 @@ class SaleOrder extends CodeNumberEntity
     public function getVehicleModel() { return $this->vehicleModel; }
     public function setVehicleModel(VehicleModel $vehicleModel = null) { $this->vehicleModel = $vehicleModel; }
 
-    public function getReceiveOrders() { return $this->receiveOrders; }
-    public function setReceiveOrders(Collection $receiveOrders) { $this->receiveOrders = $receiveOrders; }
+    public function getPurchaseDeliveryOrders() { return $this->purchaseDeliveryOrders; }
+    public function setPurchaseDeliveryOrders(Collection $purchaseDeliveryOrders) { $this->purchaseDeliveryOrders = $purchaseDeliveryOrders; }
 
     public function getPurchaseWorkshopHeaders() { return $this->purchaseWorkshopHeaders; }
     public function setPurchaseWorkshopHeaders(Collection $purchaseWorkshopHeaders) { $this->purchaseWorkshopHeaders = $purchaseWorkshopHeaders; }

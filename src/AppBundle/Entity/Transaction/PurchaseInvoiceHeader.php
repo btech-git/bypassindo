@@ -14,6 +14,7 @@ use AppBundle\Entity\Master\Supplier;
 /**
  * @ORM\Table(name="transaction_purchase_invoice_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository")
+ * @Assert\Expression("(this.getIsPurchaseWorkshopHeader() and this.getPurchaseWorkshopHeader() != null) or (!this.getIsPurchaseWorkshopHeader() and this.getPurchaseWorkshopHeader() == null)")
  */
 class PurchaseInvoiceHeader extends CodeNumberEntity
 {
@@ -36,6 +37,11 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $note;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isPurchaseWorkshopHeader;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -82,6 +88,7 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     
     public function __construct()
     {
+        $this->purchasePaymentHeaders = new ArrayCollection();
         $this->purchaseInvoiceDetails = new ArrayCollection();
     }
     
@@ -100,6 +107,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
+
+    public function getIsPurchaseWorkshopHeader() { return $this->isPurchaseWorkshopHeader; }
+    public function setIsPurchaseWorkshopHeader($isPurchaseWorkshopHeader = null) { $this->isPurchaseWorkshopHeader = $isPurchaseWorkshopHeader; }
 
     public function getGrandTotal() { return $this->grandTotal; }
     public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
@@ -132,6 +142,7 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     {
         $grandTotal = '0.00';
         foreach ($this->purchaseInvoiceDetails as $purchaseInvoiceDetail) {
+            $purchaseInvoiceDetail->sync();
             $grandTotal += $purchaseInvoiceDetail->getTotal();
         }
         $this->grandTotal = $grandTotal;

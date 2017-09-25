@@ -13,6 +13,8 @@
                     <div>{{ receiveOrder.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
+                {{ form_row(form.deliveryDate) }}
+                {{ form_row(form.deliveryNumber) }}
                 {{ form_row(form.vehicleProductionYear) }}
                 {{ form_row(form.vehicleChassisNumber) }}
                 {{ form_row(form.vehicleMachineNumber) }}
@@ -23,23 +25,23 @@
                 <div class="form-group" id="sale-order-info">
                     <div>
                         <label>Customer:</label>
-                        <span data-name="customer-name">{{ receiveOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="customer-name">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Brand:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                        <span data-name="sale-order-vehicle-brand">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                        <span data-name="sale-order-vehicle-serial-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Color:</label>
-                        <span data-name="sale-order-vehicle-color">{{ receiveOrder.saleOrder.vehicleColor|default }}</span>
+                        <span data-name="sale-order-vehicle-color">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
                         <label>Manufacture Code:</label>
-                        <span data-name="vehicle-model-manufacture-code">{{ receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                        <span data-name="vehicle-model-manufacture-code">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                 </div>
                 {{ form_row(form.serviceBookNumber) }}

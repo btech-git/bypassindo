@@ -66,4 +66,9 @@ class PurchaseInvoiceDetail
 
     public function getPurchaseInvoiceHeader() { return $this->purchaseInvoiceHeader; }
     public function setPurchaseInvoiceHeader(PurchaseInvoiceHeader $purchaseInvoiceHeader = null) { $this->purchaseInvoiceHeader = $purchaseInvoiceHeader; }
+
+    public function sync()
+    {
+        $this->total = $this->quantity * $this->unitPrice;
+    }
 }

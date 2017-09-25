@@ -17,6 +17,8 @@ class ReceiveOrderType extends AbstractType
     {
         $builder
             ->add('transactionDate', 'date')
+            ->add('deliveryDate', 'date')
+            ->add('deliveryNumber')
             ->add('vehicleProductionYear')
             ->add('vehicleChassisNumber')
             ->add('vehicleMachineNumber')
