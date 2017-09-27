@@ -22,9 +22,7 @@ class SaleOrderForm
             $lastSaleOrder = $this->saleOrderRepository->findRecentBy($year, $month);
             $currentSaleOrder = ($lastSaleOrder === null) ? $saleOrder : $lastSaleOrder;
             $saleOrder->setCodeNumberToNext($currentSaleOrder->getCodeNumber(), $year, $month);
-            
             $saleOrder->setStaffFirst($staff);
-            $saleOrder->setStaffApproval($staff);
             $saleOrder->setVehicleBrand('HINO');
         }
         $saleOrder->setStaffLast($staff);
@@ -39,8 +37,9 @@ class SaleOrderForm
     {
         $total = $saleOrder->getQuantity() * $saleOrder->getUnitPrice();
         $saleOrder->setTotal($total);
+        $saleOrder->setStaffApproval(null);
         if ($saleOrder->getIsCash() && !$saleOrder->getIsLeasing()) {
-            $saleOrder->setLeasingName('');
+            $saleOrder->setFinanceCompany(null);
             $saleOrder->setLeasingTerm('');
             $saleOrder->setLeasingMonthlyNominal('0.00');
         }

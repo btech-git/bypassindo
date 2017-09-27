@@ -152,12 +152,10 @@ class SaleOrder extends CodeNumberEntity
     private $staffLast;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
-     * @Assert\NotNull()
      */
     private $staffApproval;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
-     * @Assert\NotNull()
      */
     private $financeCompany;
     /**
