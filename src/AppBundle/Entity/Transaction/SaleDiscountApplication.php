@@ -115,7 +115,7 @@ class SaleDiscountApplication extends CodeNumberEntity
     private $salesmanPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThan(0)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $approvedPrice;
     /**

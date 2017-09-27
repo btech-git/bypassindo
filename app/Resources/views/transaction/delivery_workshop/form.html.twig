@@ -16,6 +16,10 @@
                 {{ form_row(form.purchaseWorkshopHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-workshop-header-dialog'} }) }}
                 <div class="form-group" id="purchase-workshop-header-info">
                     <div>
+                        <label>PO #:</label>
+                        <span data-name="code-number">{{ deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</span>
+                    </div>
+                    <div>
                         <label>SO #:</label>
                         <span data-name="sale-order-code-number">{{ deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
@@ -32,7 +36,7 @@
                         <span data-name="supplier-phone">{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.phone|default }}</span>
                     </div>
                     <div>
-                        <label>Office Address:</label>
+                        <label>Address:</label>
                         <span data-name="supplier-office-address">{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.officeAddress|default }}</span>
                     </div>
                 </div>
@@ -125,6 +129,7 @@
             $("#purchase-workshop-header-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#purchase-workshop-header-dialog").modal("hide");
                 $("#{{ form.purchaseWorkshopHeader.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-code-number"));
                 $("[data-name=sale-order-code-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-code-number"));
                 $("[data-name=supplier-name]", "#purchase-workshop-header-info").text($(this).attr("data-field-supplier-name"));
                 $("[data-name=supplier-contact-person]", "#purchase-workshop-header-info").text($(this).attr("data-field-supplier-contact-person"));

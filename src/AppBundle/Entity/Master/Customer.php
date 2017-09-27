@@ -25,23 +25,28 @@ class Customer
      */
     private $name;
     /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $birthDate;
+    /**
      * @ORM\Column(type="text")
      * @Assert\NotBlank()
      */
     private $officeAddress;
     /**
      * @ORM\Column(type="string", length=60)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $officeCity;
     /**
      * @ORM\Column(type="string", length=60)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $officeProvince;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $officeZipCode;
     /**
@@ -66,7 +71,7 @@ class Customer
     private $warehouseZipCode;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $phone;
     /**
@@ -76,7 +81,7 @@ class Customer
     private $fax;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotBlank()
      */
     private $mobilePhone;
     /**
@@ -193,6 +198,9 @@ class Customer
 
     public function getName() { return $this->name; }
     public function setName($name) { $this->name = $name; }
+    
+    public function getBirthDate() { return $this->birthDate; }
+    public function setBirthDate($birthDate) { $this->birthDate = $birthDate; }
 
     public function getOfficeAddress() { return $this->officeAddress; }
     public function setOfficeAddress($officeAddress) { $this->officeAddress = $officeAddress; }

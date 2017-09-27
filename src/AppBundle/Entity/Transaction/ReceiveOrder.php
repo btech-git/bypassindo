@@ -32,11 +32,6 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $deliveryDate;
     /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
-     */
-    private $deliveryNumber;
-    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(2010)
      */
@@ -112,9 +107,6 @@ class ReceiveOrder extends CodeNumberEntity
 
     public function getDeliveryDate() { return $this->deliveryDate; }
     public function setDeliveryDate($deliveryDate) { $this->deliveryDate = $deliveryDate; }
-
-    public function getDeliveryNumber() { return $this->deliveryNumber; }
-    public function setDeliveryNumber($deliveryNumber) { $this->deliveryNumber = $deliveryNumber; }
 
     public function getVehicleProductionYear() { return $this->vehicleProductionYear; }
     public function setVehicleProductionYear($vehicleProductionYear) { $this->vehicleProductionYear = $vehicleProductionYear; }

@@ -12,6 +12,14 @@
                     <label>SPK #</label>
                     <div>{{ saleOrder.codeNumber }}</div>
                 </div>
+                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.quotationNumber) }}
+                {{ form_row(form.purchaseOrderDate) }}
+                {{ form_row(form.purchaseOrderNumber) }}
+                {{ form_row(form.deliveryDate, {'label' : 'Janji Penyerahan' }) }}
+                
+            </div>
+            <div class="col-sm-6">
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div class="form-group" id="customer-info">
                     <div>
@@ -31,20 +39,18 @@
                         <span data-name="customer-office-address">{{ saleOrder.customer.officeAddress|default }}</span>
                     </div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.quotationNumber) }}
-                {{ form_row(form.purchaseOrderDate) }}
-                {{ form_row(form.purchaseOrderNumber) }}
-                {{ form_row(form.deliveryDate, {'label' : 'Janji Penyerahan' }) }}
                 {{ form_row(form.isCash, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Tunai' }) }}
                 {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Leasing' }) }}
-                {{ form_row(form.leasingName) }}
+                {{ form_row(form.financeCompany, {'label' : 'Leasing' }) }}
                 {{ form_row(form.leasingTerm, {'label': 'Tenor'}) }}
                 {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan'}) }}
                 {{ form_row(form.downPayment) }}
-                {{ form_row(form.employeeSale, {'label' : 'Salesman' }) }}
-                {{ form_row(form.employeeSaleHead, {'label' : 'Salesman Spv' }) }}
             </div>
+        </div>
+                  
+        <hr/>
+            
+        <div class="row">
             <div class="col-sm-6">
                 {{ form_row(form.invoiceRegistrationName, {'label' : 'STNK atas nama' }) }}
                 {{ form_row(form.isOffTheRoad, {'label': 'Off The Road'}) }}
@@ -66,6 +72,8 @@
                 {{ form_row(form.vehicleBrand) }}
                 {{ form_row(form.vehicleSerialNumber, {'label': 'Tahun Pembuatan'}) }}
                 {{ form_row(form.vehicleColor) }}
+            </div>
+            <div class="col-sm-6">
                 {{ form_row(form.vehicleOptionalInfo) }}
                 {{ form_row(form.vehicleAccessoriesInfo) }}
                 {{ form_row(form.vehicleOtherInfo) }}
@@ -81,6 +89,19 @@
                 </div>
             </div>
         </div>
+                      
+        <hr/>
+                  
+        <div class="row">
+            <div class="col-sm-6">
+                {{ form_row(form.employeeSale, {'label' : 'Salesman' }) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.employeeSaleHead, {'label' : 'Salesman Spv' }) }}
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.deliveryAddress) }}</div>
         
         <div>{{ form_row(form.note) }}</div>
         
@@ -132,12 +153,12 @@
                 });
             }
             function showLeasing() {
-                $("#{{ form.leasingName.vars.id }}").parent().show();
+                $("#{{ form.financeCompany.vars.id }}").parent().show();
                 $("#{{ form.leasingTerm.vars.id }}").parent().show();
                 $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().show();
             }
             function hideLeasing() {
-                $("#{{ form.leasingName.vars.id }}").parent().hide();
+                $("#{{ form.financeCompany.vars.id }}").parent().hide();
                 $("#{{ form.leasingTerm.vars.id }}").parent().hide();
                 $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().hide();
             }

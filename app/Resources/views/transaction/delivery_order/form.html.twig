@@ -13,18 +13,18 @@
                     <div>{{ deliveryOrder.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
-                {{ form_row(form.isNetworkBook) }}
-                {{ form_row(form.isSpareTire) }}
-                {{ form_row(form.isServiceBook) }}
-                {{ form_row(form.isOwnerManual) }}
-                {{ form_row(form.isJackHandle) }}
-                {{ form_row(form.isLighter) }}
-                {{ form_row(form.isToolSet) }}
-                {{ form_row(form.isFourHubcap) }}
-                {{ form_row(form.isPaintCan) }}
-                {{ form_row(form.isCarpetKit) }}
-                {{ form_row(form.isSafetyTriangle) }}
-                {{ form_row(form.isTwoVehicleKey) }}
+                {{ form_row(form.isNetworkBook, {'label': 'Satu Buku Jaringan'}) }}
+                {{ form_row(form.isSpareTire, {'label': 'Satu Ban Serep'}) }}
+                {{ form_row(form.isServiceBook, {'label': 'Satu Buku Service'}) }}
+                {{ form_row(form.isOwnerManual, {'label': 'Satu Owners Manual'}) }}
+                {{ form_row(form.isJackHandle, {'label': 'Satu Dongkrak + Handle'}) }}
+                {{ form_row(form.isLighter, {'label': 'Satu Lighter (khusus sedan)'}) }}
+                {{ form_row(form.isToolSet, {'label': 'Satu Set Tools (termasuk kunci roda)'}) }}
+                {{ form_row(form.isFourHubcap, {'label': 'Empat Buah Dop Roda'}) }}
+                {{ form_row(form.isPaintCan, {'label': 'Satu Kaleng Kecil Cat'}) }}
+                {{ form_row(form.isCarpetKit, {'label': 'Satu Karpet Dalam'}) }}
+                {{ form_row(form.isSafetyTriangle, {'label': 'Satu Segitiga Pengaman'}) }}
+                {{ form_row(form.isTwoVehicleKey, {'label': 'Dua Pcs Kunci Kontak'}) }}
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.deliveryInspectionHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-inspection-header-dialog'} }) }}

@@ -140,7 +140,7 @@ class SaleOrderController extends Controller
     }
     
     /**
-     * @Route("/{id}", name="transaction_sale_order_memo")
+     * @Route("/{id}/memo", name="transaction_sale_order_memo")
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */

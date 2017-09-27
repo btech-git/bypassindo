@@ -23,6 +23,7 @@ class SaleDiscountApplicationForm
             $currentSaleDiscountApplication = ($lastSaleDiscountApplication === null) ? $saleDiscountApplication : $lastSaleDiscountApplication;
             $saleDiscountApplication->setCodeNumberToNext($currentSaleDiscountApplication->getCodeNumber(), $year, $month);
             
+            $saleDiscountApplication->setApprovedPrice('0.00');
             $saleDiscountApplication->setStaffFirst($staff);
         }
         $saleDiscountApplication->setStaffLast($staff);

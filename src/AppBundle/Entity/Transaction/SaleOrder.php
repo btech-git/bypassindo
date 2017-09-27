@@ -12,6 +12,7 @@ use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Employee;
 use AppBundle\Entity\Master\Customer;
 use AppBundle\Entity\Master\VehicleModel;
+use AppBundle\Entity\Master\FinanceCompany;
 
 /**
  * @ORM\Table(name="transaction_sale_order")
@@ -75,17 +76,17 @@ class SaleOrder extends CodeNumberEntity
      */
     private $vehicleColor;
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      */
     private $vehicleOptionalInfo;
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      */
     private $vehicleAccessoriesInfo;
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      */
     private $vehicleOtherInfo;
@@ -115,11 +116,6 @@ class SaleOrder extends CodeNumberEntity
      */
     private $isLeasing;
     /**
-     * @ORM\Column(type="string", length=60)
-     * @Assert\NotNull()
-     */
-    private $leasingName;
-    /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
@@ -134,6 +130,11 @@ class SaleOrder extends CodeNumberEntity
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $downPayment;
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Assert\NotNull()
+     */
+    private $deliveryAddress;
     /**
      * @ORM\Column(type="text")
      * @Assert\NotNull()
@@ -154,6 +155,11 @@ class SaleOrder extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $staffApproval;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
+     * @Assert\NotNull()
+     */
+    private $financeCompany;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Employee")
      * @Assert\NotNull()
@@ -250,9 +256,6 @@ class SaleOrder extends CodeNumberEntity
     public function getIsLeasing() { return $this->isLeasing; }
     public function setIsLeasing($isLeasing) { $this->isLeasing = $isLeasing; }
 
-    public function getLeasingName() { return $this->leasingName; }
-    public function setLeasingName($leasingName) { $this->leasingName = $leasingName; }
-
     public function getLeasingTerm() { return $this->leasingTerm; }
     public function setLeasingTerm($leasingTerm) { $this->leasingTerm = $leasingTerm; }
 
@@ -261,6 +264,9 @@ class SaleOrder extends CodeNumberEntity
 
     public function getDownPayment() { return $this->downPayment; }
     public function setDownPayment($downPayment) { $this->downPayment = $downPayment; }
+
+    public function getDeliveryAddress() { return $this->deliveryAddress; }
+    public function setDeliveryAddress($deliveryAddress) { $this->deliveryAddress = $deliveryAddress; }
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
@@ -273,6 +279,9 @@ class SaleOrder extends CodeNumberEntity
 
     public function getStaffApproval() { return $this->staffApproval; }
     public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
+
+    public function getFinanceCompany() { return $this->financeCompany; }
+    public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }
 
     public function getEmployeeSale() { return $this->employeeSale; }
     public function setEmployeeSale(Employee $employeeSale = null) { $this->employeeSale = $employeeSale; }

@@ -47,7 +47,6 @@ class SaleDiscountApplicationType extends AbstractType
             ->add('financeCompany')
             ->add('customerPrice')
             ->add('salesmanPrice')
-            ->add('approvedPrice')
             ->add('competitorPrice')
             ->add('offTheRoadPrice')
             ->add('registrationPrice')
@@ -60,6 +59,12 @@ class SaleDiscountApplicationType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
                 $saleDiscountApplication = $event->getData();
                 $options['service']->initialize($saleDiscountApplication, $options['init']);
+                $form = $event->getForm();
+                $formOptions = array();
+                if (empty($saleDiscountApplication->getId())) {
+                    $formOptions['disabled'] = true;
+                }
+                $form->add('approvedPrice', null, $formOptions);
             })
             ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
                 $saleDiscountApplication = $event->getData();

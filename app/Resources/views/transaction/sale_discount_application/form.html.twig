@@ -12,6 +12,7 @@
                     <label>Pengajuan Discount #</label>
                     <div>{{ saleDiscountApplication.codeNumber }}</div>
                 </div>
+                {{ form_row(form.transactionDate) }}
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div class="form-group" id="customer-info">
                     <div>
@@ -81,7 +82,6 @@
                         </div>
                     </div>
                 </div>
-                {{ form_row(form.transactionDate) }}
                 {{ form_row(form.dealStatus) }}
                 {{ form_row(form.dealDate, {'label': false}) }}
                 {{ form_row(form.customerStatusType, {'label' : 'Customer Status' }) }}

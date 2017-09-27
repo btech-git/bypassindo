@@ -51,15 +51,15 @@
             </tr>
             <tr>
                 <th>Vehicle Optional Info</th>
-                <td>{{ saleOrder.vehicleOptionalInfo|default }}</td>
+                <td>{{ saleOrder.vehicleOptionalInfo|default|nl2br }}</td>
             </tr>
             <tr>
                 <th>Vehicle Accessories Info</th>
-                <td>{{ saleOrder.vehicleAccessoriesInfo|default }}</td>
+                <td>{{ saleOrder.vehicleAccessoriesInfo|default|nl2br }}</td>
             </tr>
             <tr>
                 <th>Vehicle Other Info</th>
-                <td>{{ saleOrder.vehicleOtherInfo|default }}</td>
+                <td>{{ saleOrder.vehicleOtherInfo|default|nl2br }}</td>
             </tr>
             <tr>
                 <th>Quantity</th>
@@ -74,16 +74,16 @@
                 <td>{{ saleOrder.total|default|number_format(2) }}</td>
             </tr>
             <tr>
-                <th>Is Cash</th>
+                <th>Cash</th>
                 <td>{{ saleOrder.isCash|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Leasing</th>
+                <th>Leasing</th>
                 <td>{{ saleOrder.isLeasing|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
                 <th>Leasing Name</th>
-                <td>{{ saleOrder.leasingName|default }}</td>
+                <td>{{ saleOrder.financeCompany.name|default }}</td>
             </tr>
             <tr>
                 <th>Leasing Term</th>
@@ -98,8 +98,12 @@
                 <td>{{ saleOrder.downPayment|default|number_format(2) }}</td>
             </tr>
             <tr>
+                <th>Alamat Kirim</th>
+                <td>{{ saleOrder.deliveryAddress|default|nl2br }}</td>
+            </tr>
+            <tr>
                 <th>Note</th>
-                <td>{{ saleOrder.note|default }}</td>
+                <td>{{ saleOrder.note|default|nl2br }}</td>
             </tr>
         </tbody>
     </table>

@@ -9,28 +9,24 @@
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label>Receive Order #</label>
+                    <label>Penerimaan #</label>
                     <div>{{ receiveOrder.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
                 {{ form_row(form.deliveryDate) }}
-                {{ form_row(form.deliveryNumber) }}
-                {{ form_row(form.vehicleProductionYear) }}
-                {{ form_row(form.vehicleChassisNumber) }}
-                {{ form_row(form.vehicleMachineNumber) }}
-                {{ form_row(form.vehicleDescription) }}
+                {{ form_row(form.serviceBookNumber) }}                
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.purchaseDeliveryOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-delivery-order-dialog'} }) }}
                 <div class="form-group" id="purchase-delivery-order-info">
                     <div>
                         <label>DO #:</label>
-                        <span data-name="code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="code-number">{{ receiveOrder.purchaseDeliveryOrder.reference|default }}</span>
                     </div>
                     
                     <div>
                         <label>SO #:</label>
-                        <span data-name="sale-order-code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="sale-order-code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Customer:</label>
@@ -45,9 +41,29 @@
                         <span data-name="sale-order-vehicle-color">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                 </div>
-                {{ form_row(form.serviceBookNumber) }}
             </div>
         </div>
+        
+        <hr />
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr class="bg-info">
+                    <th>Tahun Pembuatan</th>
+                    <th>Rangka #</th>
+                    <th>Mesin #</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ form_row(form.vehicleProductionYear) }}</td>
+                    <td>{{ form_row(form.vehicleChassisNumber) }}</td>
+                    <td>{{ form_row(form.vehicleMachineNumber) }}</td>
+                    <td>{{ form_row(form.vehicleDescription) }}</td>
+                </tr>
+            </tbody>
+        </table>
         
         <div>{{ form_row(form.note) }}</div>
         

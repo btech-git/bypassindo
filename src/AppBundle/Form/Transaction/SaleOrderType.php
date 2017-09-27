@@ -7,6 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\SaleOrder;
 use AppBundle\Entity\Master\Customer;
@@ -27,20 +28,21 @@ class SaleOrderType extends AbstractType
             ->add('vehicleBrand')
             ->add('vehicleSerialNumber')
             ->add('vehicleColor')
-            ->add('vehicleOptionalInfo')
-            ->add('vehicleAccessoriesInfo')
-            ->add('vehicleOtherInfo')
+            ->add('vehicleOptionalInfo', TextareaType::class)
+            ->add('vehicleAccessoriesInfo', TextareaType::class)
+            ->add('vehicleOtherInfo', TextareaType::class)
             ->add('quantity')
             ->add('unitPrice')
             ->add('isCash')
             ->add('isLeasing')
-            ->add('leasingName')
             ->add('leasingTerm')
             ->add('leasingMonthlyNominal')
             ->add('downPayment')
+            ->add('deliveryAddress', TextareaType::class)
             ->add('note')
             ->add('employeeSale')
             ->add('employeeSaleHead')
+            ->add('financeCompany')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))
             ->add('vehicleModel', EntityTextType::class, array('class' => VehicleModel::class))
         ;

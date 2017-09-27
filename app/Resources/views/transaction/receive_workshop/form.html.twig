@@ -13,13 +13,13 @@
                     <div>{{ receiveWorkshop.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate) }}
-                {{ form_row(form.supplierDeliveryNumber) }}
+                {{ form_row(form.supplierDeliveryNumber, {'label': 'SJ Supplier'}) }}
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.deliveryWorkshop, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-workshop-dialog'} }) }}
                 <div class="form-group" id="delivery-workshop-info">
                     <div>
-                        <label>SJ Karoseri #:</label>
+                        <label>SJ Kirim #:</label>
                         <span data-name="delivery-workshop-code-number">{{ receiveWorkshop.deliveryWorkshop.codeNumber|default }}</span>
                     </div>
                     <div>

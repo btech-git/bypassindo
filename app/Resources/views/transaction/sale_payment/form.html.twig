@@ -21,11 +21,11 @@
                 <div class="form-group" id="sale-invoice-info">
                     <div>
                         <label>SO #:</label>
-                        <span data-name="sale-order-code-number">{{ salePayment.saleInvoice.receiveOrder.saleOrder.codeNumber|default }}</span>
+                        <span data-name="sale-order-code-number">{{ salePayment.saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Customer:</label>
-                        <span data-name="customer-name">{{ salePayment.saleInvoice.receiveOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="customer-name">{{ salePayment.saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
                         <label>Invoice #:</label>

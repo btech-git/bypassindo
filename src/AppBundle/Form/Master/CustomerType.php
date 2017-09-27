@@ -13,6 +13,7 @@ class CustomerType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('birthDate', 'date')
             ->add('officeAddress')
             ->add('officeCity')
             ->add('officeProvince')
