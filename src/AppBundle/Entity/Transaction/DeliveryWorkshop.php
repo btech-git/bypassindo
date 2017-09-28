@@ -15,8 +15,8 @@ use AppBundle\Entity\Admin\Staff;
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\DeliveryWorkshopRepository")
  * @Assert\Expression("
        this.getPurchaseWorkshopHeader() !== null and this.getPurchaseWorkshopHeader().getSaleOrder() !== null and
-       this.getReceiveOrder() !== null and this.getReceiveOrder().getSaleOrder() !== null and
-       this.getPurchaseWorkshopHeader().getSaleOrder().getId() == this.getReceiveOrder().getSaleOrder().getId()
+       this.getReceiveOrder() !== null and this.getReceiveOrder().getPurchaseDeliveryOrder() !== null and this.getReceiveOrder().getPurchaseDeliveryOrder().getSaleOrder() !== null and
+       this.getPurchaseWorkshopHeader().getSaleOrder().getId() == this.getReceiveOrder().getPurchaseDeliveryOrder().getSaleOrder().getId()
    ")
  */
 class DeliveryWorkshop extends CodeNumberEntity

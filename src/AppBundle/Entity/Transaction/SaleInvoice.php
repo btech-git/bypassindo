@@ -126,7 +126,8 @@ class SaleInvoice extends CodeNumberEntity
     public function sync()
     {
         $receiveOrder = $this->getReceiveOrder();
-        $saleOrder = $receiveOrder === null ? null : $receiveOrder->getSaleOrder();
+        $purchaseDeliveryOrder = $receiveOrder === null ? null : $receiveOrder->getPurchaseDeliveryOrder();
+        $saleOrder = $purchaseDeliveryOrder === null ? null : $purchaseDeliveryOrder->getSaleOrder();
         $unitPrice = $saleOrder === null ? '0.00' : $saleOrder->getUnitPrice();
         $this->amount = $unitPrice;
         

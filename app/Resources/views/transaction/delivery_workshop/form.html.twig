@@ -46,23 +46,23 @@
                 <div class="form-group" id="receive-order-info">
                     <div>
                         <label>SO #:</label>
-                        <span data-name="sale-order-code-number">{{ deliveryWorkshop.receiveOrder.saleOrder.codeNumber|default }}</span>
+                        <span data-name="sale-order-code-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Customer:</label>
-                        <span data-name="customer-name">{{ deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="customer-name">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Brand:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                        <span data-name="sale-order-vehicle-brand">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                        <span data-name="sale-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Color:</label>
-                        <span data-name="sale-order-vehicle-color">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                        <span data-name="sale-order-vehicle-color">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
                         <label>Vehicle Production Year:</label>
@@ -82,7 +82,7 @@
                     </div>
                     <div>
                         <label>Manufacture Code:</label>
-                        <span data-name="vehicle-model-manufacture-code">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                        <span data-name="vehicle-model-manufacture-code">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                 </div>
             </div>

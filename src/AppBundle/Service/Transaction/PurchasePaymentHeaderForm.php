@@ -38,11 +38,11 @@ class PurchasePaymentHeaderForm
     
     private function sync(PurchasePaymentHeader $purchasePaymentHeader)
     {
-        $grandTotal = 0.00;
+        $totalAmount = 0.00;
         foreach ($purchasePaymentHeader->getPurchasePaymentDetails() as $purchasePaymentDetail) {
-            $grandTotal += $purchasePaymentDetail->getAmount();
+            $totalAmount += $purchasePaymentDetail->getAmount();
         }
-        $purchasePaymentHeader->setTotalAmount($grandTotal);
+        $purchasePaymentHeader->setTotalAmount($totalAmount);
     }
     
     public function save(PurchasePaymentHeader $purchasePaymentHeader)

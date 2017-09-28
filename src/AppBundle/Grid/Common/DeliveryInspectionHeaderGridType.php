@@ -77,8 +77,10 @@ class DeliveryInspectionHeaderGridType extends DataGridType
         $criteria2 = Criteria::create();
         $associations = array(
             'receiveOrder' => array('criteria' => null, 'associations' => array(
-                'saleOrder' => array('criteria' => null, 'associations' => array(
-                    'customer' => array('criteria' => $criteria2, 'merge' => true),
+                'purchaseDeliveryOrder' => array('criteria' => null, 'associations' => array(
+                    'saleOrder' => array('criteria' => null, 'associations' => array(
+                        'customer' => array('criteria' => $criteria2, 'merge' => true),
+                    )),
                 )),
             )),
         );

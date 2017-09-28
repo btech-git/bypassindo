@@ -116,25 +116,26 @@
                         </div>
                     </div>
                 </div>
-                     
             </div>
-             
-                <table class="table table-bordered">
-                    <thead>
-                        <tr class="bg-info">
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-right">{{ saleOrder.quantity|default|number_format(2) }}</td>
-                            <td class="text-right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
-                            <td class="text-right">{{ saleOrder.total|default|number_format(2) }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                        
+            <br />
+
+            <table class="detail">
+                <thead>
+                    <tr>
+                        <th class="center">Quantity</th>
+                        <th class="center">Price</th>
+                        <th class="center">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="center">{{ saleOrder.quantity|default|number_format(2) }}</td>
+                        <td class="right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
+                        <td class="right">{{ saleOrder.total|default|number_format(2) }}</td>
+                    </tr>
+                </tbody>
+            </table>
                         
             <div class="table">
                 <div class="cell label">Terbilang:</div>
@@ -152,11 +153,11 @@
                     <div class="table full">
                         <div class="row">
                             <div class="cell label">Cash</div>
-                            <div class="cell value">{{ saleOrder.isCash|default }}</div>
+                            <div class="cell value">{{ saleOrder.isCash|default ? '&#9745;' }}</div>
                         </div>
                         <div class="row">
                             <div class="cell label">Leasing</div>
-                            <div class="cell value">{{ saleOrder.isLeasing|default }}</div>
+                            <div class="cell value">{{ saleOrder.isLeasing|default ? '&#9745;' }}</div>
                         </div>                        
                     </div>
                 </div>
@@ -241,7 +242,7 @@
 {% endblock %}
 
 {% block stylesheets_include %}
-    <link rel="stylesheet" href="{{ asset('../app/Resources/public/css/memo.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/memo.css') }}" />
 {% endblock %}
 
 {% block javascripts_include %}{% endblock %}

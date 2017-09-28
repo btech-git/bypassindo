@@ -9,7 +9,7 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\ReceiveOrder;
-use AppBundle\Entity\Transaction\SaleOrder;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 
 class ReceiveOrderType extends AbstractType
 {

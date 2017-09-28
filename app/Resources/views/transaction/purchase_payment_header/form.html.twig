@@ -9,10 +9,10 @@
 {% macro details_row(object) %}
     <tr data-index="{{ object.vars.name }}">
         <td>
-            {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount'} }) }}
+            {{ form_row(object.memo, {'label': false}) }}
         </td>
         <td>
-            {{ form_row(object.memo, {'label': false}) }}
+            {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount'} }) }}
         </td>
         <td>
             <button type="button" class="btn btn-info remove-purchase-payment-detail-prototype">Delete</button>
@@ -92,7 +92,7 @@
             <tfoot>
                 <tr>
                     <td class="text-right">Grand Total</td>
-                    <td class="text-right"><span data-name="grand-total">{{ purchasePaymentHeader.grandTotal|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="total-amount">{{ purchasePaymentHeader.totalAmount|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>
@@ -127,10 +127,7 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $.each(data.purchasePaymentDetails, function(index, purchasePaymentDetail) {
-                            $("[data-name=total-" + index + "]", "#purchase-payment-detail-list").text(purchasePaymentDetail.total);
-                        });
-                        $("[data-name=grand-total]", "#purchase-payment-detail-list").text(data.grandTotal);
+                        $("[data-name=total-amount]", "#purchase-payment-detail-list").text(data.totalAmount);
                     }
                 });
             }
@@ -138,10 +135,7 @@
             var table = $("#purchase-payment-detail-list");
             var tableBody = $("tbody", table);
             
-            tableBody.on("change", "[data-name=quantity]", function() {
-                bind();
-            });
-            tableBody.on("change", "[data-name=price]", function() {
+            tableBody.on("change", "[data-name=amount]", function() {
                 bind();
             });
             tableBody.on("click", ".remove-purchase-payment-detail-prototype", function() {
@@ -149,11 +143,11 @@
                 bind();
             });
             
-            $("#purchase-invoice-grid").on("click", "table[data-role=table] tbody tr", function() {
-                $("#purchase-invoice-dialog").modal("hide");
+            $("#purchase-invoice-header-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#purchase-invoice-header-dialog").modal("hide");
                 $("#{{ form.purchaseInvoiceHeader.vars.id }}").val($(this).attr("data-field-id"));
                 $("[data-name=code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-code-number"));
-                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grandt-total"));
+                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grand-total"));
                 $("[data-name=supplier-name]", "#purchase-invoice-header-info").text($(this).attr("data-field-supplier-name"));
                 $("[data-name=sale-order-code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-code-number"));
                 $("[data-name=sale-order-vehicle-brand]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));

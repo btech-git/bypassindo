@@ -30,16 +30,16 @@
                 data-field-receive-order-vehicle-chassis-number="{{ deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}"
                 data-field-receive-order-vehicle-machine-number="{{ deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}"
                 data-field-receive-order-vehicle-description="{{ deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}"
-                data-field-customer-name="{{ deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}"
-                data-field-sale-order-vehicle-brand="{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}"
-                data-field-sale-order-vehicle-serial-number="{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}"
-                data-field-sale-order-vehicle-color="{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}"
-                data-field-vehicle-model-manufacture-code="{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}">
+                data-field-customer-name="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}"
+                data-field-sale-order-vehicle-brand="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
+                data-field-sale-order-vehicle-serial-number="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}"
+                data-field-sale-order-vehicle-color="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}"
+                data-field-vehicle-model-manufacture-code="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ deliveryInspectionHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.transactionDate|default ? deliveryInspectionHeader.transactionDate|date('Y-m-d') }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</td>
             </tr>
