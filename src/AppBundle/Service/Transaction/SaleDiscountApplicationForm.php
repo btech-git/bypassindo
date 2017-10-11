@@ -37,7 +37,7 @@ class SaleDiscountApplicationForm
     private function sync(SaleDiscountApplication $saleDiscountApplication)
     {
         $subTotal = $saleDiscountApplication->getOffTheRoadPrice() + $saleDiscountApplication->getRegistrationPrice();
-        $grandTotal = $subTotal + $saleDiscountApplication->getOtherPrice();
+        $grandTotal = $subTotal + $saleDiscountApplication->getOtherPricingAmount1() + $saleDiscountApplication->getOtherPricingAmount2() + $saleDiscountApplication->getOtherPricingAmount3() + $saleDiscountApplication->getOtherPricingAmount4() + $saleDiscountApplication->getOtherPricingAmount5();
         $saleDiscountApplication->setSubTotalPrice($subTotal);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
         $customerStatusType = $saleDiscountApplication->getCustomerStatusType();

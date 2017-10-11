@@ -139,10 +139,55 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $subTotalPrice;
     /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $otherPricingName1;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $otherPricingName2;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $otherPricingName3;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $otherPricingName4;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $otherPricingName5;
+    /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
-    private $otherPrice;
+    private $otherPricingAmount1;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $otherPricingAmount2;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $otherPricingAmount3;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $otherPricingAmount4;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $otherPricingAmount5;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -253,8 +298,35 @@ class SaleDiscountApplication extends CodeNumberEntity
     public function getSubTotalPrice() { return $this->subTotalPrice; }
     public function setSubTotalPrice($subTotalPrice) { $this->subTotalPrice = $subTotalPrice; }
 
-    public function getOtherPrice() { return $this->otherPrice; }
-    public function setOtherPrice($otherPrice) { $this->otherPrice = $otherPrice; }
+    public function getOtherPricingName1() { return $this->otherPricingName1; }
+    public function setOtherPricingName1($otherPricingName1) { $this->otherPricingName1 = $otherPricingName1; }
+
+    public function getOtherPricingName2() { return $this->otherPricingName2; }
+    public function setOtherPricingName2($otherPricingName2) { $this->otherPricingName2 = $otherPricingName2; }
+
+    public function getOtherPricingName3() { return $this->otherPricingName3; }
+    public function setOtherPricingName3($otherPricingName3) { $this->otherPricingName3 = $otherPricingName3; }
+
+    public function getOtherPricingName4() { return $this->otherPricingName4; }
+    public function setOtherPricingName4($otherPricingName4) { $this->otherPricingName4 = $otherPricingName4; }
+
+    public function getOtherPricingName5() { return $this->otherPricingName5; }
+    public function setOtherPricingName5($otherPricingName5) { $this->otherPricingName5 = $otherPricingName5; }
+
+    public function getOtherPricingAmount1() { return $this->otherPricingAmount1; }
+    public function setOtherPricingAmount1($otherPricingAmount1) { $this->otherPricingAmount1 = $otherPricingAmount1; }
+
+    public function getOtherPricingAmount2() { return $this->otherPricingAmount2; }
+    public function setOtherPricingAmount2($otherPricingAmount2) { $this->otherPricingAmount2 = $otherPricingAmount2; }
+
+    public function getOtherPricingAmount3() { return $this->otherPricingAmount3; }
+    public function setOtherPricingAmount3($otherPricingAmount3) { $this->otherPricingAmount3 = $otherPricingAmount3; }
+
+    public function getOtherPricingAmount4() { return $this->otherPricingAmount4; }
+    public function setOtherPricingAmount4($otherPricingAmount4) { $this->otherPricingAmount4 = $otherPricingAmount4; }
+
+    public function getOtherPricingAmount5() { return $this->otherPricingAmount5; }
+    public function setOtherPricingAmount5($otherPricingAmount5) { $this->otherPricingAmount5 = $otherPricingAmount5; }
 
     public function getGrandTotalPrice() { return $this->grandTotalPrice; }
     public function setGrandTotalPrice($grandTotalPrice) { $this->grandTotalPrice = $grandTotalPrice; }

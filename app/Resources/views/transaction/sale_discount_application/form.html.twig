@@ -122,8 +122,24 @@
                     <td><span id="sub-total-price">{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td>Other</td>
-                    <td>{{ form_widget(form.otherPrice) }}{{ form_errors(form.otherPrice) }}</td>
+                    <td>{{ form_widget(form.otherPricingName1) }}{{ form_errors(form.otherPricingName1) }}</td>
+                    <td>{{ form_widget(form.otherPricingAmount1) }}{{ form_errors(form.otherPricingAmount1) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.otherPricingName2) }}{{ form_errors(form.otherPricingName2) }}</td>
+                    <td>{{ form_widget(form.otherPricingAmount2) }}{{ form_errors(form.otherPricingAmount2) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.otherPricingName3) }}{{ form_errors(form.otherPricingName3) }}</td>
+                    <td>{{ form_widget(form.otherPricingAmount3) }}{{ form_errors(form.otherPricingAmount3) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.otherPricingName4) }}{{ form_errors(form.otherPricingName4) }}</td>
+                    <td>{{ form_widget(form.otherPricingAmount4) }}{{ form_errors(form.otherPricingAmount4) }}</td>
+                </tr>
+                <tr>
+                    <td>{{ form_widget(form.otherPricingName5) }}{{ form_errors(form.otherPricingName5) }}</td>
+                    <td>{{ form_widget(form.otherPricingAmount5) }}{{ form_errors(form.otherPricingAmount5) }}</td>
                 </tr>
                 <tr>
                     <td>Grand Total</td>
@@ -195,7 +211,19 @@
             $("#{{ form.registrationPrice.vars.id }}").on("change", function() {
                 bind();
             });
-            $("#{{ form.otherPrice.vars.id }}").on("change", function() {
+            $("#{{ form.otherPricingAmount1.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#{{ form.otherPricingAmount2.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#{{ form.otherPricingAmount3.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#{{ form.otherPricingAmount4.vars.id }}").on("change", function() {
+                bind();
+            });
+            $("#{{ form.otherPricingAmount5.vars.id }}").on("change", function() {
                 bind();
             });
             $("#{{ form.customerStatusType.vars.id }}").on("change", function() {
