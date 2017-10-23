@@ -119,19 +119,23 @@ class DataGridService
     {
         $list = array();
         $searchItems = $this->dataGridView->searchWidget;
-        foreach ($searchItems['groups'] as $groupName => $groupItems) {
-            $entityClass = $groupItems['entity'];
-            foreach ($groupItems['fields'] as $fieldName => $fieldItems) {
-                if ($entityClass !== null) {
-                    $searchFieldReferences = $this->dataGridReference->getSearchFieldReferences($groupName, $fieldName);
-                    $dataTransformers = $this->dataGridReference->getDataTransformers($groupName, $fieldName);
-                    foreach ($searchFieldReferences as $i => $searchFieldReference) {
-                        if (!isset($dataTransformers[$i])) {
-                            $fieldType = $this->getFieldType($om, $entityClass, $searchFieldReference);
-                            $dataTransformers[$i] = $this->getDataTransformer($fieldType, $list);
+        if (isset($searchItems['groups'])) {
+            foreach ($searchItems['groups'] as $groupName => $groupItems) {
+                $entityClass = $groupItems['entity'];
+                if (isset($groupItems['fields'])) {
+                    foreach ($groupItems['fields'] as $fieldName => $fieldItems) {
+                        if ($entityClass !== null) {
+                            $searchFieldReferences = $this->dataGridReference->getSearchFieldReferences($groupName, $fieldName);
+                            $dataTransformers = $this->dataGridReference->getDataTransformers($groupName, $fieldName);
+                            foreach ($searchFieldReferences as $i => $searchFieldReference) {
+                                if (!isset($dataTransformers[$i])) {
+                                    $fieldType = $this->getFieldType($om, $entityClass, $searchFieldReference);
+                                    $dataTransformers[$i] = $this->getDataTransformer($fieldType, $list);
+                                }
+                            }
+                            $this->dataGridReference->setDataTransformers($groupName, $fieldName, $dataTransformers);
                         }
                     }
-                    $this->dataGridReference->setDataTransformers($groupName, $fieldName, $dataTransformers);
                 }
             }
         }
@@ -177,18 +181,22 @@ class DataGridService
     private function transformGridSearch()
     {
         $searchItems = &$this->dataGridView->searchWidget;
-        foreach ($searchItems['groups'] as $groupName => &$groupItems) {
-            foreach ($groupItems['fields'] as $fieldName => &$fieldItems) {
-                $dataTransformers = $this->dataGridReference->getDataTransformers($groupName, $fieldName);
-                foreach ($fieldItems['operators'] as $operatorName => &$operatorItems) {
-                    $num = $operatorName::getNumberOfInput();
-                    foreach ($operatorItems['list'] as $i => &$list) {
-                        $index = intval($i / $num);
-                        if (isset($dataTransformers[$index])) {
-                            if ($list['choices'] !== null) {
-                                array_walk($list['choices'], array($this->dataGridReference, 'toView'), $dataTransformers[$index]);
+        if (isset($searchItems['groups'])) {
+            foreach ($searchItems['groups'] as $groupName => &$groupItems) {
+                if (isset($searchItems['fields'])) {
+                    foreach ($groupItems['fields'] as $fieldName => &$fieldItems) {
+                        $dataTransformers = $this->dataGridReference->getDataTransformers($groupName, $fieldName);
+                        foreach ($fieldItems['operators'] as $operatorName => &$operatorItems) {
+                            $num = $operatorName::getNumberOfInput();
+                            foreach ($operatorItems['list'] as $i => &$list) {
+                                $index = intval($i / $num);
+                                if (isset($dataTransformers[$index])) {
+                                    if ($list['choices'] !== null) {
+                                        array_walk($list['choices'], array($this->dataGridReference, 'toView'), $dataTransformers[$index]);
+                                    }
+                                    $list['value'] = $dataTransformers[$index]->toView($list['value']);
+                                }
                             }
-                            $list['value'] = $dataTransformers[$index]->toView($list['value']);
                         }
                     }
                 }

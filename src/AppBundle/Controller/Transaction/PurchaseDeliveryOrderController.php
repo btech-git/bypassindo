@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Form\Transaction\PurchaseDeliveryOrderType;
 use AppBundle\Grid\Transaction\PurchaseDeliveryOrderGridType;
+use AppBundle\Grid\Transaction\PurchaseDeliveryOrderOutstandingGridType;
 
 /**
  * @Route("/transaction/purchase_delivery_order")
@@ -42,6 +43,34 @@ class PurchaseDeliveryOrderController extends Controller
     public function indexAction()
     {
         return $this->render('transaction/purchase_delivery_order/index.html.twig');
+    }
+
+    /**
+     * @Route("/grid_outstanding", name="transaction_purchase_delivery_order_grid_outstanding", condition="request.isXmlHttpRequest()")
+     * @Method("POST")
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function gridOutstandingAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(PurchaseDeliveryOrder::class);
+
+        $grid = $this->get('lib.grid.datagrid');
+        $grid->build(PurchaseDeliveryOrderOutstandingGridType::class, $repository, $request);
+
+        return $this->render('transaction/purchase_delivery_order/grid_outstanding.html.twig', array(
+            'grid' => $grid->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/index_outstanding", name="transaction_purchase_delivery_order_index_outstanding")
+     * @Method("GET")
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function indexOutstandingAction()
+    {
+        return $this->render('transaction/purchase_delivery_order/index_outstanding.html.twig');
     }
 
     /**

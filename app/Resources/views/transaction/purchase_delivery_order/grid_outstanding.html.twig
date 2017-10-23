@@ -1,0 +1,30 @@
+{% set grid_layout = 'datagrid.html.twig' %}
+
+{{ grid_top(grid) }}
+
+<table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
+    <thead>
+        <tr class="alert alert-info">
+            <th>Transaction Date</th>
+            <th>Reference</th>
+            <th>Note</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for purchaseDeliveryOrder in grid.data %}
+            <tr data-field-id="{{ purchaseDeliveryOrder.id }}">
+                <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.reference|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.note|default }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3" class="alert alert-warning">
+                    <strong>There are no items to display.</strong>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{{ grid_bottom(grid) }}

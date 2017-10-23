@@ -19,4 +19,10 @@
     {% endfor %}
 
     <div id="purchase-delivery-order-grid" data-grid="{{ path('transaction_purchase_delivery_order_grid') }}"></div>
+    
+    <br />
+    
+    <div>
+        {{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_index_outstanding'), 'label': 'Check Outstanding', 'button': 'btn btn-info', 'icon': 'glyphicon glyphicon-info-sign'}) }}
+    </div>
 {% endblock %}
