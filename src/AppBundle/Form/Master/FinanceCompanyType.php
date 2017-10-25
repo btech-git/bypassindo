@@ -13,6 +13,16 @@ class FinanceCompanyType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('branchName')
+            ->add('address')
+            ->add('phone')
+            ->add('fax')
+            ->add('email')
+            ->add('contactPerson')
+            ->add('contactPersonMobilePhone')
+            ->add('directorName')
+            ->add('directorMobilePhone')
+            ->add('isBank')
             ->add('isActive')
         ;
     }

@@ -15,6 +15,16 @@ class Staff extends User
      */
     private $name;
     /**
+     * @ORM\Column(name="position", type="string", length=60)
+     * @Assert\NotBlank()
+     */
+    private $position;
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $joinDate;
+    /**
      * @ORM\Column(name="email", type="string", length=60, unique=true)
      * @Assert\NotNull() @Assert\Email()
      */
@@ -42,6 +52,12 @@ class Staff extends User
 
     public function getName() { return $this->name; }
     public function setName($name) { $this->name = $name; }
+    
+    public function getPosition() { return $this->position; }
+    public function setPosition($position) { $this->position = $position; }
+    
+    public function getJoinDate() { return $this->joinDate; }
+    public function setJoinDate($joinDate) { $this->joinDate = $joinDate; }
     
     public function getEmail() { return $this->email; }
     public function setEmail($email) { $this->email = $email; }

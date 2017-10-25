@@ -12,7 +12,7 @@
                     <label>Pengajuan Discount #</label>
                     <div>{{ saleDiscountApplication.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.transactionDate, {'label' : 'Tanggal'}) }}
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div class="form-group" id="customer-info">
                     <div>
@@ -96,13 +96,12 @@
                 {{ form_row(form.competitorType) }}
                 {{ form_row(form.competitorDealer) }}
                 {{ form_row(form.paymentMethodType, {'label' : 'Cara Pembayaran' }) }}
-                {{ form_row(form.bankingCompany, {'label': false}) }}
                 {{ form_row(form.financeCompany, {'label': false}) }}
-                {{ form_row(form.customerPrice, {'label' : 'Harga Permintaan Customer' }) }}
-                {{ form_row(form.salesmanPrice, {'label' : 'Sales ke Customer' }) }}
-                {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui' }) }}
-                {{ form_row(form.competitorPrice, {'label' : 'Kompetitor ke Customer' }) }}
-                {{ form_row(form.mediatorPrice, {'label' : 'Mediator Fee' }) }}
+                {{ form_row(form.customerPrice, {'label' : 'Harga Permintaan Customer (Rp.)' }) }}
+                {{ form_row(form.salesmanPrice, {'label' : 'Sales ke Customer (Rp.)' }) }}
+                {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui (Rp.)' }) }}
+                {{ form_row(form.competitorPrice, {'label' : 'Kompetitor ke Customer (Rp.)' }) }}
+                {{ form_row(form.mediatorPrice, {'label' : 'Mediator Fee (Rp.)' }) }}
             </div>
         </div>
             
@@ -110,15 +109,15 @@
             <caption>Break Down Harga</caption>
             <tbody>
                 <tr>
-                    <td>Harga Off The Road</td>
+                    <td>Harga Off The Road (Rp.)</td>
                     <td>{{ form_widget(form.offTheRoadPrice) }}{{ form_errors(form.offTheRoadPrice) }}</td>
                 </tr>
                 <tr>
-                    <td>BBN Notice</td>
+                    <td>BBN Notice (Rp.)</td>
                     <td>{{ form_widget(form.registrationPrice) }}{{ form_errors(form.registrationPrice) }}</td>
                 </tr>
                 <tr>
-                    <td>Sub Total</td>
+                    <td>Sub Total (Rp.)</td>
                     <td><span id="sub-total-price">{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
@@ -142,7 +141,7 @@
                     <td>{{ form_widget(form.otherPricingAmount5) }}{{ form_errors(form.otherPricingAmount5) }}</td>
                 </tr>
                 <tr>
-                    <td>Grand Total</td>
+                    <td>Grand Total (Rp.)</td>
                     <td><span id="grand-total-price">{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}</span></td>
                 </tr>
             </tbody>
@@ -192,12 +191,8 @@
                 }
             }
             function setCompaniesVisibility(sel) {
-                $("#{{ form.bankingCompany.vars.id }}").parent().hide();
                 $("#{{ form.financeCompany.vars.id }}").parent().hide();
-                if (sel.val() === "{{ constant('PAYMENT_METHOD_BANK', saleDiscountApplication) }}") {
-                    $("#{{ form.bankingCompany.vars.id }}").parent().show();
-                }
-                else if (sel.val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
+                if (sel.val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
                     $("#{{ form.financeCompany.vars.id }}").parent().show();
                 }
             }

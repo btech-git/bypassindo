@@ -12,15 +12,15 @@
                     <label>SJ Karoseri #</label>
                     <div>{{ deliveryWorkshop.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.purchaseWorkshopHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-workshop-header-dialog'} }) }}
+                {{ form_row(form.transactionDate, { 'label': 'Tanggal' }) }}
+                {{ form_row(form.purchaseWorkshopHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-workshop-header-dialog'}, 'label': 'PO Karoseri' }) }}
                 <div class="form-group" id="purchase-workshop-header-info">
                     <div>
                         <label>PO #:</label>
                         <span data-name="code-number">{{ deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</span>
                     </div>
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
@@ -36,16 +36,16 @@
                         <span data-name="supplier-phone">{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.phone|default }}</span>
                     </div>
                     <div>
-                        <label>Address:</label>
+                        <label>Alamat:</label>
                         <span data-name="supplier-office-address">{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.officeAddress|default }}</span>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'} }) }}
+                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'}, 'label': 'SPK' }) }}
                 <div class="form-group" id="receive-order-info">
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
@@ -53,32 +53,32 @@
                         <span data-name="customer-name">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Merk:</label>
                         <span data-name="sale-order-vehicle-brand">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
+                        <label>Serial Number:</label>
                         <span data-name="sale-order-vehicle-serial-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Production Year:</label>
-                        <span data-name="receive-order-vehicle-production-year">{{ deliveryWorkshop.receiveOrder.vehicleProductionYear|default }}</span>
+                        <label>Tahun Pembuatan:</label>
+                        <span data-name="receive-order-vehicle-production-year">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Chassis Number:</label>
-                        <span data-name="receive-order-vehicle-chassis-number">{{ deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}</span>
+                        <label>Rangka #:</label>
+                        <span data-name="receive-order-vehicle-chassis-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Machine Number:</label>
-                        <span data-name="receive-order-vehicle-machine-number">{{ deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}</span>
+                        <label>Mesin #:</label>
+                        <span data-name="receive-order-vehicle-machine-number">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Description:</label>
-                        <span data-name="receive-order-vehicle-description">{{ deliveryWorkshop.receiveOrder.vehicleDescription|default }}</span>
+                        <label>Deskripsi:</label>
+                        <span data-name="receive-order-vehicle-description">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
                     </div>
                     <div>
                         <label>Manufacture Code:</label>

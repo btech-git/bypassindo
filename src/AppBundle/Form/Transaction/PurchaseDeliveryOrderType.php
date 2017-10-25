@@ -18,6 +18,10 @@ class PurchaseDeliveryOrderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('reference')
+            ->add('vehicleProductionYear', null, array('label' => false))
+            ->add('vehicleChassisNumber', null, array('label' => false))
+            ->add('vehicleMachineNumber', null, array('label' => false))
+            ->add('vehicleDescription', null, array('label' => false))
             ->add('note')
             ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
         ;

@@ -6,15 +6,16 @@
     <thead>
         <tr data-action="sort" class="alert alert-info">
             <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
-            <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Transaction Date</th>
+            <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Tanggal</th>
             <th data-group="saleOrder" data-field="codeNumber">SO #</th>
             <th data-group="customer" data-field="name">Customer Name</th>
-            <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
-            <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">Merk</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
         </tr>
         <tr data-action="search">
             <th data-group="purchaseDeliveryOrder" data-field="codeNumber"></th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleProductionYear"></th>
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
             <th data-group="saleOrder" data-field="vehicleBrand"></th>
@@ -25,10 +26,15 @@
         {% for purchaseDeliveryOrder in grid.data %}
             <tr data-field-id="{{ purchaseDeliveryOrder.id }}"
                 data-field-code-number="{{ purchaseDeliveryOrder.codeNumber|default }}"
+                data-field-vehicle-production-year="{{ purchaseDeliveryOrder.vehicleProductionYear|default }}"
+                data-field-vehicle-chassis-number="{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}"
+                data-field-vehicle-machine-number="{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}"
+                data-field-vehicle-description="{{ purchaseDeliveryOrder.vehicleDescription|default }}"
                 data-field-customer-name="{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}"
                 data-field-sale-order-code-number="{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}"
                 data-field-sale-order-vehicle-brand="{{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-color="{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}">
+                
                 <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>

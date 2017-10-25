@@ -46,7 +46,7 @@ class Customer
     private $officeProvince;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Length(min=5, max=5)
      */
     private $officeZipCode;
     /**
@@ -66,12 +66,12 @@ class Customer
     private $warehouseProvince;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Length(min=5, max=5)
      */
     private $warehouseZipCode;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank() @Assert\Length(min=8, max=20)
      */
     private $phone;
     /**
@@ -101,7 +101,7 @@ class Customer
     private $email;
     /**
      * @ORM\Column(type="string", length=20, unique=true)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Regex("/^\d{2}-\d{3}-\d{3}-\d-\d{3}-\d{3}$/")
      */
     private $taxNumber;
     /**
@@ -114,6 +114,11 @@ class Customer
      * @Assert\NotNull()
      */
     private $businessField;
+    /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     */
+    private $creditDueDays;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -252,6 +257,9 @@ class Customer
 
     public function getBusinessField() { return $this->businessField; }
     public function setBusinessField($businessField) { $this->businessField = $businessField; }
+
+    public function getCreditDueDays() { return $this->creditDueDays; }
+    public function setCreditDueDays($creditDueDays) { $this->creditDueDays = $creditDueDays; }
 
     public function getCategoryTwoHinoPopulation() { return $this->categoryTwoHinoPopulation; }
     public function setCategoryTwoHinoPopulation($categoryTwoHinoPopulation) { $this->categoryTwoHinoPopulation = $categoryTwoHinoPopulation; }

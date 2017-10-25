@@ -32,10 +32,25 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $note;
     /**
+     * @ORM\Column(name="sub_total", type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $subTotal;
+    /**
+     * @ORM\Column(name="tax_nominal", type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $taxNominal;
+    /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $grandTotal;
+    /**
+     * @ORM\Column(name="is_tax", type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isTax;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
@@ -88,9 +103,18 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
 
+    public function getSubTotal() { return $this->subTotal; }
+    public function setSubTotal($subTotal) { $this->subTotal = $subTotal; }
+    
+    public function getTaxNominal() { return $this->taxNominal; }
+    public function setTaxNominal($taxNominal) { $this->taxNominal = $taxNominal; }
+    
     public function getGrandTotal() { return $this->grandTotal; }
     public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
 
+    public function getIsTax() { return $this->isTax; }
+    public function setIsTax($isTax) { $this->isTax = $isTax; }
+    
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
 

@@ -6,14 +6,14 @@
     <thead>
         <tr data-action="sort" class="alert alert-info">
             <th data-group="deliveryWorkshop" data-field="codeNumber">SJ Karoseri #</th>
-            <th data-group="deliveryWorkshop" data-field="transactionDate">Transaction Date</th>
+            <th data-group="deliveryWorkshop" data-field="transactionDate">Tanggal</th>
             <th data-group="supplier" data-field="supplier">Supplier Name</th>
-            <th data-group="saleOrder" data-field="saleOrderCodeNumber">SO #</th>
+            <th data-group="saleOrder" data-field="saleOrderCodeNumber">SPK #</th>
             <th data-group="saleOrder" data-field="customer">Customer</th>
-            <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
-            <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
-            <th data-group="saleOrder" data-field="vehicleChassisNumber">Vehicle Chassis Number</th>
-            <th data-group="saleOrder" data-field="vehicleMachineNumber">Vehicle Machine Number</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">Merk</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
+            <th data-group="saleOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="saleOrder" data-field="vehicleMachineNumber">Mesin #</th>
         </tr>
         <tr data-action="search">
             <th data-group="deliveryWorkshop" data-field="codeNumber"></th>
@@ -31,25 +31,28 @@
             <tr data-field-id="{{ deliveryWorkshop.id }}"
                 data-field-delivery-workshop-code-number="{{ deliveryWorkshop.codeNumber|default }}"
                 data-field-supplier-name="{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}"
-                data-field-sale-order-code-number="{{ deliveryWorkshop.receiveOrder.saleOrder.codeNumber|default }}"
-                data-field-customer-name="{{ deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}"
-                data-field-vehicle-brand="{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleBrand|default }}"
-                data-field-vehicle-serial-number="{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleSerialNumber|default }}"
-                data-field-vehicle-color="{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleColor|default }}"
-                data-field-vehicle-production-year="{{ deliveryWorkshop.receiveOrder.vehicleProductionYear|default }}"
-                data-field-vehicle-chassis-number="{{ deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}"
-                data-field-vehicle-machine-number="{{ deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}"
-                data-field-vehicle-description="{{ deliveryWorkshop.receiveOrder.vehicleDescription|default }}"
-                data-field-vehicle-model-manufacture-code="{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}">
+                data-field-supplier-contact-person="{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.contactPerson|default }}"
+                data-field-supplier-phone="{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.phone|default }}"
+                data-field-supplier-office-address="{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.officeAddress|default }}"
+                data-field-sale-order-code-number="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}"
+                data-field-customer-name="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}"
+                data-field-vehicle-brand="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
+                data-field-vehicle-serial-number="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}"
+                data-field-vehicle-color="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}"
+                data-field-vehicle-production-year="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}"
+                data-field-vehicle-chassis-number="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}"
+                data-field-vehicle-machine-number="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}"
+                data-field-vehicle-description="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}"
+                data-field-vehicle-model-manufacture-code="{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ deliveryWorkshop.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryWorkshop.transactionDate|default ? deliveryWorkshop.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.saleOrder.codeNumber|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleBrand|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.saleOrder.vehicleColor|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
         {% else %}
             <tr>

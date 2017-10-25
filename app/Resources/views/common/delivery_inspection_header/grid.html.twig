@@ -5,13 +5,14 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="deliveryInspectionHeader" data-field="codeNumber"></th>
-            <th data-group="deliveryInspectionHeader" data-field="transactionDate">Transaction Date</th>
+            <th data-group="deliveryInspectionHeader" data-field="codeNumber">P.D.I #</th>
+            <th data-group="deliveryInspectionHeader" data-field="transactionDate">Tanggal</th>
             <th data-group="customer" data-field="name">Customer</th>
-            <th data-group="saleOrder" data-field="vehicleBrand">Vehicle Brand</th>
-            <th data-group="saleOrder" data-field="vehicleColor">Vehicle Color</th>
-            <th data-group="receiveOrder" data-field="vehicleProductionYear">Vehicle Production Year</th>
-            <th data-group="receiveOrder" data-field="vehicleDescription">Vehicle Description</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">SPK #</th>
+            <th data-group="saleOrder" data-field="vehicleBrand">Merk</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
+            <th data-group="receiveOrder" data-field="vehicleProductionYear">Tahun Pembuatan</th>
+            <th data-group="receiveOrder" data-field="vehicleDescription">Deskripsi</th>
         </tr>
         <tr data-action="search">
             <th data-group="deliveryInspectionHeader" data-field="codeNumber"></th>
@@ -26,11 +27,12 @@
     <tbody>
         {% for deliveryInspectionHeader in grid.data %}
             <tr data-field-id="{{ deliveryInspectionHeader.id }}"
-                data-field-receive-order-vehicle-production-year="{{ deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}"
-                data-field-receive-order-vehicle-chassis-number="{{ deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}"
-                data-field-receive-order-vehicle-machine-number="{{ deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}"
-                data-field-receive-order-vehicle-description="{{ deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}"
+                data-field-receive-order-vehicle-production-year="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}"
+                data-field-receive-order-vehicle-chassis-number="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}"
+                data-field-receive-order-vehicle-machine-number="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}"
+                data-field-receive-order-vehicle-description="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}"
                 data-field-customer-name="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}"
+                data-field-sale-order-code-number="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-brand="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-serial-number="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}"
                 data-field-sale-order-vehicle-color="{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}"
@@ -38,10 +40,11 @@
                 <td class="text-left">{{ deliveryInspectionHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.transactionDate|default ? deliveryInspectionHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                <td class="text-left">{{ deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
             </tr>
         {% else %}
             <tr>

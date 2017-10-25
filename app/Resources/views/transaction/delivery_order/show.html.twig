@@ -10,7 +10,7 @@
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Transaction Date</th>
+                <th>Tanggal</th>
                 <td>{{ deliveryOrder.transactionDate|default ? deliveryOrder.transactionDate|date('Y-m-d') }}</td>
             </tr>
             <tr>
@@ -22,51 +22,83 @@
                 <td>{{ deliveryOrder.destinationPhone|default }}</td>
             </tr>
             <tr>
-                <th>Is Network Book</th>
+                <th>SPK #</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Merk</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Warna</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+            </tr>
+            <tr>
+                <th>Tahun Pembuatan</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+            </tr>
+            <tr>
+                <th>Rangka #</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Mesin #</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Deskripsi</th>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
+            </tr>
+            <tr>
+                <th>Satu Buku Jaringan</th>
                 <td>{{ deliveryOrder.isNetworkBook|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Spare Tire</th>
+                <th>Satu Ban Serep</th>
                 <td>{{ deliveryOrder.isSpareTire|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Service Book</th>
+                <th>Satu Buku Service</th>
                 <td>{{ deliveryOrder.isServiceBook|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Owner Manual</th>
+                <th>Satu Owners Manual</th>
                 <td>{{ deliveryOrder.isOwnerManual|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Jack Handle</th>
+                <th>Satu Dongkrak + Handle</th>
                 <td>{{ deliveryOrder.isJackHandle|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Lighter</th>
+                <th>Satu Lighter (khusus sedan)</th>
                 <td>{{ deliveryOrder.isLighter|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Tool Set</th>
+                <th>Satu Set Tools (termasuk kunci roda)</th>
                 <td>{{ deliveryOrder.isToolSet|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Four Hubcap</th>
+                <th>Empat Buah Dop Roda</th>
                 <td>{{ deliveryOrder.isFourHubcap|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Paint Can</th>
+                <th>Satu Kaleng Kecil Cat</th>
                 <td>{{ deliveryOrder.isPaintCan|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Carpet Kit</th>
+                <th>Satu Karpet Dalam</th>
                 <td>{{ deliveryOrder.isCarpetKit|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Safety Triangle</th>
+                <th>Satu Segitiga Pengaman</th>
                 <td>{{ deliveryOrder.isSafetyTriangle|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>
-                <th>Is Two Vehicle Key</th>
+                <th>Dua Pcs Kunci Kontak</th>
                 <td>{{ deliveryOrder.isTwoVehicleKey|default ? 'Yes' : 'No' }}</td>
             </tr>
             <tr>

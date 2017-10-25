@@ -10,16 +10,52 @@
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Transaction Date</th>
+                <th>Invoice #</th>
+                <td>{{ saleInvoice.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal</th>
                 <td>{{ saleInvoice.transactionDate|default ? saleInvoice.transactionDate|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>Tax Number Prefix</th>
+                <th>Faktur Pajak Prefix</th>
                 <td>{{ saleInvoice.taxNumberPrefix|default }}</td>
             </tr>
             <tr>
-                <th>Tax Number</th>
+                <th>Faktur Pajak #</th>
                 <td>{{ saleInvoice.taxNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>SPK #</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Merk</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Warna</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+            </tr>
+            <tr>
+                <th>Tahun Pembuatan</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+            </tr>
+            <tr>
+                <th>Rangka #</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Mesin #</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Deskripsi</th>
+                <td>{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
             </tr>
             <tr>
                 <th>Note</th>

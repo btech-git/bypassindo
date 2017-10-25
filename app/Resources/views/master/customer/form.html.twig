@@ -6,9 +6,92 @@
 
 {% block content %}
     {{ form_start(form) }}
-        {{ form_row(form.isPersonal, {'attr': {'data-choice-group': 'customer-type'},'label' : 'Perorangan' }) }}
-        {{ form_row(form.isCompany, {'attr': {'data-choice-group': 'customer-type'},'label' : 'Perusahaan' }) }}
-        {{ form_widget(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                {{ form_row(form.isPersonal, {'label' : 'Perorangan' }) }}
+                {{ form_row(form.isCompany, {'label' : 'Perusahaan' }) }}
+                {{ form_row(form.name) }}
+                {{ form_row(form.businessField) }}
+                {{ form_row(form.contactPerson) }}
+                {{ form_row(form.position) }}
+                {{ form_row(form.birthDate, {'label' : 'Tanggal Lahir' }) }}
+                {{ form_row(form.mobilePhone, {'label' : 'HP #' }) }}
+
+                <div class="form-group">
+                    <label>Cat 2:</label>
+                    <div style="padding-left: 25px">
+                        <div>
+                            <label>Hino:</label>
+                            {{ form_widget(form.categoryTwoHinoPopulation) }}{{ form_errors(form.categoryTwoHinoPopulation) }}
+                        </div>
+                        <div>
+                            <label>Mitsubishi:</label>
+                            {{ form_widget(form.categoryTwoMitsubishiPopulation) }}{{ form_errors(form.categoryTwoMitsubishiPopulation) }}
+                        </div>
+                        <div>
+                            <label>Toyota:</label>
+                            {{ form_widget(form.categoryTwoToyotaPopulation) }}{{ form_errors(form.categoryTwoToyotaPopulation) }}
+                        </div>
+                        <div>
+                            <label>Isuzu:</label>
+                            {{ form_widget(form.categoryTwoIsuzuPopulation) }}{{ form_errors(form.categoryTwoIsuzuPopulation) }}
+                        </div>
+                        <div>
+                            <label>Other:</label>
+                            {{ form_widget(form.categoryTwoOtherPopulation) }}{{ form_errors(form.categoryTwoOtherPopulation) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Cat 3:</label>
+                    <div style="padding-left: 25px">
+                        <div>
+                            <label>Hino:</label>
+                            {{ form_widget(form.categoryThreeHinoPopulation) }}{{ form_errors(form.categoryThreeHinoPopulation) }}
+                        </div>
+                        <div>
+                            <label>Mitsubishi:</label>
+                            {{ form_widget(form.categoryThreeMitsubishiPopulation) }}{{ form_errors(form.categoryThreeMitsubishiPopulation) }}
+                        </div>
+                        <div>
+                            <label>UD. Trucks:</label>
+                            {{ form_widget(form.categoryThreeNissanPopulation) }}{{ form_errors(form.categoryThreeNissanPopulation) }}
+                        </div>
+                        <div>
+                            <label>Isuzu:</label>
+                            {{ form_widget(form.categoryThreeIsuzuPopulation) }}{{ form_errors(form.categoryThreeIsuzuPopulation) }}
+                        </div>
+                        <div>
+                            <label>Benz:</label>
+                            {{ form_widget(form.categoryThreeBenzPopulation) }}{{ form_errors(form.categoryThreeBenzPopulation) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.creditDueDays, {'label' : 'Lama Kredit (hari)' }) }}
+                {{ form_row(form.officeAddress, {'label' : 'Alamat Kantor' }) }}
+                {{ form_row(form.officeCity, {'label' : 'Kota' }) }}
+                {{ form_row(form.officeProvince, {'label' : 'Propinsi' }) }}
+                {{ form_row(form.officeZipCode, {'label' : 'Kode Pos' }) }}
+                {{ form_row(form.warehouseAddress, {'label' : 'Alamat Pool Truck' }) }}
+                {{ form_row(form.warehouseCity, {'label' : 'Kota' }) }}
+                {{ form_row(form.warehouseProvince, {'label' : 'Propinsi' }) }}
+                {{ form_row(form.warehouseZipCode, {'label' : 'Kode Pos' }) }}
+                {{ form_row(form.phone) }}
+                {{ form_row(form.fax) }}
+                {{ form_row(form.email) }}
+                {{ form_row(form.taxNumber, {'label' : 'NPWP (XX - XXX - XXX - X - XXX - XXX)' }) }}
+                {{ form_row(form.webPage) }}
+            </div>
+        </div>
+            
+        <br />
+        
+        <div>{{ form_row(form.note) }}</div>
+        
+        {{ form_row(form.isActive) }}
+        
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
     {{ form_end(form) }}
 {% endblock %}

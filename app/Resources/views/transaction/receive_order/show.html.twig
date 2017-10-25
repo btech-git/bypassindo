@@ -10,28 +10,56 @@
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Transaction Date</th>
+                <th>Penerimaan #</th>
+                <td>{{ receiveOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal</th>
                 <td>{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>Vehicle Production Year</th>
-                <td>{{ receiveOrder.vehicleProductionYear|default }}</td>
+                <th>Tanggal Kirim</th>
+                <td>{{ receiveOrder.deliveryDate|default ? receiveOrder.deliveryDate|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>Vehicle Chassis Number</th>
-                <td>{{ receiveOrder.vehicleChassisNumber|default }}</td>
-            </tr>
-            <tr>
-                <th>Vehicle Machine Number</th>
-                <td>{{ receiveOrder.vehicleMachineNumber|default }}</td>
-            </tr>
-            <tr>
-                <th>Vehicle Description</th>
-                <td>{{ receiveOrder.vehicleDescription|default }}</td>
-            </tr>
-            <tr>
-                <th>Service Book Number</th>
+                <th>Buku Service #</th>
                 <td>{{ receiveOrder.serviceBookNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>DO HMSI #</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.reference|default }}</td>
+            </tr>
+            <tr>
+                <th>SPK #</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Merk</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Warna</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+            </tr>
+            <tr>
+                <th>Tahun Pembuatan</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+            </tr>
+            <tr>
+                <th>Rangka #</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Mesin #</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Deskripsi</th>
+                <td>{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
             </tr>
             <tr>
                 <th>Note</th>

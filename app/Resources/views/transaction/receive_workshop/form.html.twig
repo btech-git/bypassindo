@@ -12,14 +12,14 @@
                     <label>Penerimaan Karoseri #</label>
                     <div>{{ receiveWorkshop.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.supplierDeliveryNumber, {'label': 'SJ Supplier'}) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.supplierDeliveryNumber, {'label': 'SJ Supplier #'}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.deliveryWorkshop, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-workshop-dialog'} }) }}
+                {{ form_row(form.deliveryWorkshop, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-workshop-dialog'}, 'label': 'SJ Karoseri' }) }}
                 <div class="form-group" id="delivery-workshop-info">
                     <div>
-                        <label>SJ Kirim #:</label>
+                        <label>SJ Karoseri #:</label>
                         <span data-name="delivery-workshop-code-number">{{ receiveWorkshop.deliveryWorkshop.codeNumber|default }}</span>
                     </div>
                     <div>
@@ -27,39 +27,39 @@
                         <span data-name="supplier-name">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}</span>
                     </div>
                     <div>
-                        <label>SO #::</label>
-                        <span data-name="sale-order-code-number">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}</span>
+                        <label>SPK #:</label>
+                        <span data-name="sale-order-code-number">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Customer:</label>
                         <span data-name="customer-name">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Merk:</label>
                         <span data-name="sale-order-vehicle-brand">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
+                        <label>Serial Number:</label>
                         <span data-name="sale-order-vehicle-serial-number">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Production Year:</label>
+                        <label>Tahun Pembuatan:</label>
                         <span data-name="receive-order-vehicle-production-year">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Chassis Number:</label>
+                        <label>Rangka #:</label>
                         <span data-name="receive-order-vehicle-chassis-number">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Machine Number:</label>
+                        <label>Mesin #:</label>
                         <span data-name="receive-order-vehicle-machine-number">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Description:</label>
+                        <label>Deskripsi:</label>
                         <span data-name="receive-order-vehicle-description">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.vehicleDescription|default }}</span>
                     </div>
                     <div>

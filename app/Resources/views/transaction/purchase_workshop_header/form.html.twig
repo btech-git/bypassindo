@@ -34,7 +34,7 @@
                     <label>PO Karoseri #</label>
                     <div>{{ purchaseWorkshopHeader.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'} }) }}
                 <div class="form-group" id="supplier-info">
                     <div>
@@ -46,16 +46,16 @@
                         <span data-name="supplier-contact-person">{{ purchaseWorkshopHeader.supplier.contactPerson|default }}</span>
                     </div>
                     <div>
-                        <label>Office Address:</label>
+                        <label>Alamat:</label>
                         <span data-name="supplier-office-address">{{ purchaseWorkshopHeader.supplier.officeAddress|default }}</span>
                     </div>
                 </div>
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'} }) }}
+                {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'}, 'label': 'SPK' }) }}
                 <div class="form-group" id="sale-order-info">
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
@@ -63,19 +63,19 @@
                         <span data-name="customer-name">{{ purchaseWorkshopHeader.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Merk:</label>
                         <span data-name="sale-order-vehicle-brand">{{ purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
+                        <label>Serial Number:</label>
                         <span data-name="sale-order-vehicle-serial-number">{{ purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
-                        <label>Quantity:</label>
+                        <label>Quantity Pesanan:</label>
                         <span data-name="sale-order-quantity">{{ purchaseWorkshopHeader.saleOrder.quantity|default }}</span>
                     </div>
                 </div>
@@ -108,6 +108,19 @@
                 {% endfor %}
             </tbody>
             <tfoot>
+                <tr>
+                    <td class="text-right" colspan="3">Sub Total</td>
+                    <td class="text-right"><span data-name="sub-total">{{ purchaseWorkshopHeader.subTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="3">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseWorkshopHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td class="text-right" colspan="3">Grand Total</td>
                     <td class="text-right"><span data-name="grand-total">{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}</span></td>
@@ -162,6 +175,8 @@
                         $.each(data.purchaseWorkshopDetails, function(index, purchaseWorkshopDetail) {
                             $("[data-name=total-" + index + "]", "#purchase-workshop-detail-list").text(purchaseWorkshopDetail.total);
                         });
+                        $("[data-name=sub-total]", "#purchase-workshop-detail-list").text(data.subTotal);
+                        $("[data-name=tax-nominal]", "#purchase-workshop-detail-list").text(data.taxNominal);
                         $("[data-name=grand-total]", "#purchase-workshop-detail-list").text(data.grandTotal);
                     }
                 });
@@ -169,11 +184,15 @@
             
             var table = $("#purchase-workshop-detail-list");
             var tableBody = $("tbody", table);
+            var tableFoot = $("tfoot", table);
             
             tableBody.on("change", "[data-name=quantity]", function() {
                 bind();
             });
             tableBody.on("change", "[data-name=price]", function() {
+                bind();
+            });
+            tableFoot.on("change", "[data-name=is-tax]", function() {
                 bind();
             });
             tableBody.on("click", ".remove-purchase-workshop-detail-prototype", function() {

@@ -12,20 +12,19 @@
                     <label>Penerimaan #</label>
                     <div>{{ receiveOrder.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.deliveryDate) }}
-                {{ form_row(form.serviceBookNumber) }}                
+                {{ form_row(form.transactionDate, {'label' : 'Tanggal' }) }}
+                {{ form_row(form.deliveryDate, {'label' : 'Tanggal Kirim' }) }}
+                {{ form_row(form.serviceBookNumber, {'label' : 'Buku Service #' }) }}                
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.purchaseDeliveryOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-delivery-order-dialog'} }) }}
+                {{ form_row(form.purchaseDeliveryOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-delivery-order-dialog'}, 'label' : 'DO HMSI' }) }}
                 <div class="form-group" id="purchase-delivery-order-info">
                     <div>
                         <label>DO #:</label>
                         <span data-name="code-number">{{ receiveOrder.purchaseDeliveryOrder.reference|default }}</span>
                     </div>
-                    
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
@@ -33,37 +32,32 @@
                         <span data-name="customer-name">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Merk:</label>
                         <span data-name="sale-order-vehicle-brand">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
+                    </div>
+                    <div>
+                        <label>Tahun Pembuatan:</label>
+                        <span data-name="vehicle-production-year">{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
+                    </div>
+                    <div>
+                        <label>Rangka #:</label>
+                        <span data-name="vehicle-chassis-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Mesin #:</label>
+                        <span data-name="vehicle-machine-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Deskripsi:</label>
+                        <span data-name="vehicle-description">{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <hr />
-        
-        <table class="table table-bordered">
-            <thead>
-                <tr class="bg-info">
-                    <th>Tahun Pembuatan</th>
-                    <th>Rangka #</th>
-                    <th>Mesin #</th>
-                    <th>Deskripsi</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>{{ form_row(form.vehicleProductionYear) }}</td>
-                    <td>{{ form_row(form.vehicleChassisNumber) }}</td>
-                    <td>{{ form_row(form.vehicleMachineNumber) }}</td>
-                    <td>{{ form_row(form.vehicleDescription) }}</td>
-                </tr>
-            </tbody>
-        </table>
         
         <div>{{ form_row(form.note) }}</div>
         
@@ -97,6 +91,10 @@
                 $("[data-name=customer-name]", "#purchase-delivery-order-info").text($(this).attr("data-field-customer-name"));
                 $("[data-name=sale-order-vehicle-brand]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
                 $("[data-name=sale-order-vehicle-color]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=vehicle-production-year]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-production-year"));
+                $("[data-name=vehicle-chassis-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("[data-name=vehicle-machine-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-machine-number"));
+                $("[data-name=vehicle-description]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-description"));
             });
         });
     </script>

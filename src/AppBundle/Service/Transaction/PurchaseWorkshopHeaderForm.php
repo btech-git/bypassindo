@@ -38,12 +38,16 @@ class PurchaseWorkshopHeaderForm
     
     private function sync(PurchaseWorkshopHeader $purchaseWorkshopHeader)
     {
-        $grandTotal = 0.00;
+        $subTotal = 0.00;
         foreach ($purchaseWorkshopHeader->getPurchaseWorkshopDetails() as $purchaseWorkshopDetail) {
             $total = $purchaseWorkshopDetail->getQuantity() * $purchaseWorkshopDetail->getUnitPrice();
             $purchaseWorkshopDetail->setTotal($total);
-            $grandTotal += $total;
+            $subTotal += $total;
         }
+        $purchaseWorkshopHeader->setSubTotal($subTotal);
+        $taxNominal = $purchaseWorkshopHeader->getIsTax() ? $subTotal * 0.1 : 0;
+        $purchaseWorkshopHeader->setTaxNominal($taxNominal);
+        $grandTotal = $subTotal + $taxNominal;
         $purchaseWorkshopHeader->setGrandTotal($grandTotal);
     }
     

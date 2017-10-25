@@ -12,10 +12,10 @@
                     <label>SPK #</label>
                     <div>{{ saleOrder.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.quotationNumber) }}
-                {{ form_row(form.purchaseOrderDate) }}
-                {{ form_row(form.purchaseOrderNumber) }}
+                {{ form_row(form.transactionDate, {'label' : 'Tanggal SPK' }) }}
+                {{ form_row(form.quotationNumber, {'label' : 'Surat Penawaran #' }) }}
+                {{ form_row(form.purchaseOrderDate, {'label' : 'Tanggal PO' }) }}
+                {{ form_row(form.purchaseOrderNumber, {'label' : 'PO Customer #' }) }}
                 {{ form_row(form.deliveryDate, {'label' : 'Janji Penyerahan' }) }}
             </div>
             <div class="col-sm-6">
@@ -34,7 +34,7 @@
                         <span data-name="customer-phone">{{ saleOrder.customer.phone|default }}</span>
                     </div>
                     <div>
-                        <label>Office Address:</label>
+                        <label>Alamat Kantor:</label>
                         <span data-name="customer-office-address">{{ saleOrder.customer.officeAddress|default }}</span>
                     </div>
                 </div>
@@ -42,8 +42,8 @@
                 {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Leasing' }) }}
                 {{ form_row(form.financeCompany, {'label' : 'Leasing' }) }}
                 {{ form_row(form.leasingTerm, {'label': 'Tenor'}) }}
-                {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan'}) }}
-                {{ form_row(form.downPayment) }}
+                {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan (Rp.)'}) }}
+                {{ form_row(form.downPayment, {'label': 'DP (Rp.)'}) }}
             </div>
         </div>
                   
@@ -60,27 +60,27 @@
                         <span data-name="vehicle-model-manufacture-code">{{ saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                     <div>
-                        <label>VOS Model Name:</label>
+                        <label>VOS Model:</label>
                         <span data-name="vehicle-model-vos-model-name">{{ saleOrder.vehicleModel.vosModelName|default }}</span>
                     </div>
                     <div>
-                        <label>DMS Variant Name:</label>
+                        <label>DMS Variant:</label>
                         <span data-name="vehicle-model-dms-variant-name">{{ saleOrder.vehicleModel.dmsVariantName|default }}</span>
                     </div>
                 </div>
-                {{ form_row(form.vehicleBrand) }}
+                {{ form_row(form.vehicleBrand, {'label' : 'Merk' }) }}
                 {{ form_row(form.vehicleSerialNumber, {'label': 'Tahun Pembuatan'}) }}
-                {{ form_row(form.vehicleColor) }}
+                {{ form_row(form.vehicleColor, {'label' : 'Warna' }) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.vehicleOptionalInfo) }}
-                {{ form_row(form.vehicleAccessoriesInfo) }}
-                {{ form_row(form.vehicleOtherInfo) }}
+                {{ form_row(form.vehicleOptionalInfo, {'label' : 'Optional' }) }}
+                {{ form_row(form.vehicleAccessoriesInfo, {'label' : 'Karoseri' }) }}
+                {{ form_row(form.vehicleOtherInfo, {'label' : 'Lain-lain' }) }}
                 {{ form_row(form.quantity) }}
-                {{ form_row(form.unitPrice) }}
+                {{ form_row(form.unitPrice, {'label': 'Harga /unit (Rp.)'}) }}
                 <div class="row form-group">
                     <div class="col-sm-6 text-left">
-                        <label>Total</label>
+                        <label>Total (Rp.)</label>
                     </div>
                     <div class="col-sm-6 text-right">
                         <span id="total">{{ saleOrder.total|default|number_format(2) }}</span>
@@ -100,7 +100,7 @@
             </div>
         </div>
         
-        <div>{{ form_row(form.deliveryAddress) }}</div>
+        <div>{{ form_row(form.deliveryAddress, {'label' : 'Alamat Kirim' }) }}</div>
         
         <div>{{ form_row(form.note) }}</div>
         

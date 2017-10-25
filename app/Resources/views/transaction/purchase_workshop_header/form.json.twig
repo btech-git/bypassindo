@@ -1,4 +1,6 @@
 {
+    "subTotal": "{{ purchaseWorkshopHeader.subTotal|default|number_format(2) }}",
+    "taxNominal": "{{ purchaseWorkshopHeader.taxNominal|default|number_format(2) }}",
     "grandTotal": "{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}",
     "purchaseWorkshopDetails": {
         {%- for index, purchaseWorkshopDetail in purchaseWorkshopHeader.purchaseWorkshopDetails -%}

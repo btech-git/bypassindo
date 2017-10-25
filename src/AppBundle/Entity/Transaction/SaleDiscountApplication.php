@@ -10,13 +10,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Customer;
-use AppBundle\Entity\Master\BankingCompany;
 use AppBundle\Entity\Master\FinanceCompany;
 
 /**
  * @ORM\Table(name="transaction_sale_discount_application")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleDiscountApplicationRepository")
- * @Assert\Expression("this.getBankingCompany() == null or this.getFinanceCompany() == null")
  */
 class SaleDiscountApplication extends CodeNumberEntity
 {
@@ -31,7 +29,6 @@ class SaleDiscountApplication extends CodeNumberEntity
     const CUSTOMER_STATUS_BENZ = 'benz';
     const CUSTOMER_STATUS_OTHER = 'other';
     const PAYMENT_METHOD_CASH = 'cash';
-    const PAYMENT_METHOD_BANK = 'bank';
     const PAYMENT_METHOD_FINANCE_COMPANY = 'finance company';
     
     /**
@@ -219,10 +216,6 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $customer;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\BankingCompany")
-     */
-    private $bankingCompany;
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
      */
     private $financeCompany;
@@ -345,9 +338,6 @@ class SaleDiscountApplication extends CodeNumberEntity
 
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
-
-    public function getBankingCompany() { return $this->bankingCompany; }
-    public function setBankingCompany(BankingCompany $bankingCompany = null) { $this->bankingCompany = $bankingCompany; }
 
     public function getFinanceCompany() { return $this->financeCompany; }
     public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }

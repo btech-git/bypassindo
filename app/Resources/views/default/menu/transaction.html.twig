@@ -27,16 +27,6 @@
             <td>{{ include('action.html.twig', {'url': path('transaction_sale_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
         </tr>
         <tr>
-            <td>DO Pusat</td>
-            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
-            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
-        </tr>
-        <tr>
-            <td>Penerimaan Unit</td>
-            <td>{{ include('action.html.twig', {'url': path('transaction_receive_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
-            <td>{{ include('action.html.twig', {'url': path('transaction_receive_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
-        </tr>
-        <tr>
             <td>PO Karoseri</td>
             <td>{{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
             <td>{{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
@@ -57,7 +47,25 @@
             <td>{{ include('action.html.twig', {'url': path('transaction_delivery_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
         </tr>
     </table>
-            
+             
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th colspan="3" class="bg-info lead">
+                <strong>Pembelian Unit</strong>
+            </th>
+        </tr>
+        <tr>
+            <td>DO HMSI</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_purchase_delivery_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+        </tr>
+        <tr>
+            <td>Surat Jalan HMSI (Penerimaan Unit)</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_receive_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+            <td>{{ include('action.html.twig', {'url': path('transaction_receive_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+        </tr>
+    </table>
+           
     <table class="table table-bordered table-striped">
         <tr>
             <th colspan="3" class="bg-info lead">

@@ -31,6 +31,26 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      */
     private $reference;
     /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull() @Assert\GreaterThan(2010)
+     */
+    private $vehicleProductionYear;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $vehicleChassisNumber;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $vehicleMachineNumber;
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $vehicleDescription;
+    /**
      * @ORM\Column(type="text")
      * @Assert\NotNull()
      */
@@ -72,6 +92,18 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
 
     public function getReference() { return $this->reference; }
     public function setReference($reference) { $this->reference = $reference; }
+
+    public function getVehicleProductionYear() { return $this->vehicleProductionYear; }
+    public function setVehicleProductionYear($vehicleProductionYear) { $this->vehicleProductionYear = $vehicleProductionYear; }
+
+    public function getVehicleChassisNumber() { return $this->vehicleChassisNumber; }
+    public function setVehicleChassisNumber($vehicleChassisNumber) { $this->vehicleChassisNumber = $vehicleChassisNumber; }
+
+    public function getVehicleMachineNumber() { return $this->vehicleMachineNumber; }
+    public function setVehicleMachineNumber($vehicleMachineNumber) { $this->vehicleMachineNumber = $vehicleMachineNumber; }
+
+    public function getVehicleDescription() { return $this->vehicleDescription; }
+    public function setVehicleDescription($vehicleDescription) { $this->vehicleDescription = $vehicleDescription; }
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }

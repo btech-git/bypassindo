@@ -21,6 +21,8 @@ class StaffType extends AbstractType
     {
         $builder
             ->add('name')
+            ->add('position')
+            ->add('joinDate', 'date')
             ->add('email')
             ->add('address')
             ->add('phone')
@@ -44,7 +46,7 @@ class StaffType extends AbstractType
                     $form->add('username');
                     $form->add('plainPassword', RepeatedType::class, array(
                         'mapped' => false,
-                        'constraints' => array(new NotBlank(), new Length(array('min' => '6'))),
+                        'constraints' => array(new NotBlank(), new Length(array('min' => '8'))),
                         'type' => PasswordType::class,
                         'first_options'  => array('label' => 'New Password'),
                         'second_options' => array('label' => 'Confirm Password'),

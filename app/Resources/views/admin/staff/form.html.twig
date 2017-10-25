@@ -8,6 +8,8 @@
     {{ form_start(form) }}
         {% block content_username_password %}{% endblock %}
         {{ form_row(form.name) }}
+        {{ form_row(form.position) }}
+        {{ form_row(form.joinDate) }}
         {{ form_row(form.email) }}
         {{ form_row(form.address) }}
         {{ form_row(form.phone) }}

@@ -12,7 +12,7 @@
                     <label>Surat Jalan #</label>
                     <div>{{ deliveryOrder.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.isNetworkBook, {'label': 'Satu Buku Jaringan'}) }}
                 {{ form_row(form.isSpareTire, {'label': 'Satu Ban Serep'}) }}
                 {{ form_row(form.isServiceBook, {'label': 'Satu Buku Service'}) }}
@@ -27,38 +27,42 @@
                 {{ form_row(form.isTwoVehicleKey, {'label': 'Dua Pcs Kunci Kontak'}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.deliveryInspectionHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-inspection-header-dialog'} }) }}
+                {{ form_row(form.deliveryInspectionHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#delivery-inspection-header-dialog'}, 'label': 'P.D.I' }) }}
                 <div class="form-group" id="delivery-inspection-header-info">
+                    <div>
+                        <label>SPK #:</label>
+                        <span data-name="sale-order-code-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.codeNumber|default }}</span>
+                    </div>
                     <div>
                         <label>Customer:</label>
                         <span data-name="customer-name">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Merk:</label>
                         <span data-name="sale-order-vehicle-brand">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
+                        <label>Serial Number:</label>
                         <span data-name="sale-order-vehicle-serial-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Production Year:</label>
+                        <label>Tahun Pembuatan:</label>
                         <span data-name="receive-order-vehicle-production-year">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Chassis Number:</label>
+                        <label>Rangka #:</label>
                         <span data-name="receive-order-vehicle-chassis-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Machine Number:</label>
+                        <label>Mesin #:</label>
                         <span data-name="receive-order-vehicle-machine-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Description:</label>
+                        <label>Deskripsi:</label>
                         <span data-name="receive-order-vehicle-description">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</span>
                     </div>
                     <div>
@@ -101,6 +105,7 @@
                 $("[data-name=sale-order-vehicle-brand]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
                 $("[data-name=sale-order-vehicle-serial-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
                 $("[data-name=sale-order-vehicle-color]", "#delivery-inspection-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=receive-order-vehicle-code-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-code-number"));
                 $("[data-name=receive-order-vehicle-production-year]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-production-year"));
                 $("[data-name=receive-order-vehicle-chassis-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-chassis-number"));
                 $("[data-name=receive-order-vehicle-machine-number]", "#delivery-inspection-header-info").text($(this).attr("data-field-receive-order-vehicle-machine-number"));

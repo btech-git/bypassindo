@@ -12,44 +12,44 @@
                     <label>Invoice #</label>
                     <div>{{ saleInvoice.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.taxNumberPrefix) }}
-                {{ form_row(form.taxNumber) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.taxNumberPrefix, {'label': 'Faktur Pajak '}) }}
+                {{ form_row(form.taxNumber, {'label': 'Faktur Pajak #'}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'} }) }}
+                {{ form_row(form.receiveOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-order-dialog'}, 'label': 'SPK' }) }}
                 <div class="form-group" id="receive-order-info">
                     <div>
+                        <label>SPK #:</label>
+                        <span data-name="sale-order-code-number">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
+                    </div>
+                    <div>
                         <label>Customer:</label>
-                        <span data-name="customer-name">{{ saleInvoice.receiveOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="customer-name">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ saleInvoice.receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                        <label>Merk:</label>
+                        <span data-name="sale-order-vehicle-brand">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ saleInvoice.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                        <label>Warna:</label>
+                        <span data-name="sale-order-vehicle-color">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
-                        <span data-name="sale-order-vehicle-color">{{ saleInvoice.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                        <label>Tahun Pembuatan:</label>
+                        <span data-name="vehicle-production-year">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Production Year:</label>
-                        <span data-name="receive-order-vehicle-production-year">{{ saleInvoice.receiveOrder.vehicleProductionYear|default }}</span>
+                        <label>Rangka #:</label>
+                        <span data-name="vehicle-chassis-number">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Chassis Number:</label>
-                        <span data-name="receive-order-vehicle-chassis-number">{{ saleInvoice.receiveOrder.vehicleChassisNumber|default }}</span>
+                        <label>Mesin #:</label>
+                        <span data-name="vehicle-machine-number">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Machine Number:</label>
-                        <span data-name="receive-order-vehicle-machine-number">{{ saleInvoice.receiveOrder.vehicleMachineNumber|default }}</span>
-                    </div>
-                    <div>
-                        <label>Manufacture Code:</label>
-                        <span data-name="vehicle-model-manufacture-code">{{ saleInvoice.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                        <label>Deskripsi:</label>
+                        <span data-name="vehicle-description">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
                     </div>
                     <div>
                         <label>Jumlah:</label>

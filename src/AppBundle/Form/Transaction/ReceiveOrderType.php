@@ -18,10 +18,6 @@ class ReceiveOrderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('deliveryDate', 'date')
-            ->add('vehicleProductionYear', null, array('label' => false))
-            ->add('vehicleChassisNumber', null, array('label' => false))
-            ->add('vehicleMachineNumber', null, array('label' => false))
-            ->add('vehicleDescription', null, array('label' => false))
             ->add('serviceBookNumber')
             ->add('note')
             ->add('purchaseDeliveryOrder', EntityTextType::class, array('class' => PurchaseDeliveryOrder::class))

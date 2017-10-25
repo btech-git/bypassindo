@@ -73,6 +73,16 @@ class Supplier
      */
     private $email;
     /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $businessField;
+    /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull()
+     */
+    private $creditDueDays;
+    /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
@@ -87,6 +97,16 @@ class Supplier
      * @Assert\NotNull()
      */
     private $note;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isPersonal;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isCompany;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
@@ -137,6 +157,12 @@ class Supplier
     public function getEmail() { return $this->email; }
     public function setEmail($email) { $this->email = $email; }
 
+    public function getBusinessField() { return $this->businessField; }
+    public function setBusinessField($businessField) { $this->businessField = $businessField; }
+
+    public function getCreditDueDays() { return $this->creditDueDays; }
+    public function setCreditDueDays($creditDueDays) { $this->creditDueDays = $creditDueDays; }
+
     public function getTaxNumber() { return $this->taxNumber; }
     public function setTaxNumber($taxNumber) { $this->taxNumber = $taxNumber; }
 
@@ -145,6 +171,12 @@ class Supplier
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
+
+    public function getIsPersonal() { return $this->isPersonal; }
+    public function setIsPersonal($isPersonal) { $this->isPersonal = $isPersonal; }
+
+    public function getIsCompany() { return $this->isCompany; }
+    public function setIsCompany($isCompany) { $this->isCompany = $isCompany; }
 
     public function getIsActive() { return $this->isActive; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }

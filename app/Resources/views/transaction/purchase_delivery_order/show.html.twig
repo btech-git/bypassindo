@@ -10,16 +10,65 @@
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Transaction Date</th>
+                <th>DO #</th>
+                <td>{{ purchaseDeliveryOrder.codeNumber }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal</th>
                 <td>{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
             </tr>
             <tr>
-                <th>Reference</th>
+                <th>DO HMSI #</th>
                 <td>{{ purchaseDeliveryOrder.reference|default }}</td>
+            </tr>
+            <tr>
+                <th>SO #</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Merk</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
+            </tr>
+            <tr>
+                <th>Serial Number</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Warna</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+            </tr>
+            <tr>
+                <th>Jenis Kendaraan</th>
+                <td>{{ purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</td>
             </tr>
             <tr>
                 <th>Note</th>
                 <td>{{ purchaseDeliveryOrder.note|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+                
+    <hr />
+
+    <table class="table table-bordered">
+        <thead>
+            <tr class="bg-info">
+                <th>Tahun Pembuatan</th>
+                <th>Rangka #</th>
+                <th>Mesin #</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                <td>{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td>{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                <td>{{ purchaseDeliveryOrder.vehicleDescription|default }}</td>
             </tr>
         </tbody>
     </table>

@@ -21,6 +21,7 @@ class PurchaseWorkshopHeaderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('note')
+            ->add('isTax')
             ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
             ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
             ->add('purchaseWorkshopDetails', CollectionType::class, array(
