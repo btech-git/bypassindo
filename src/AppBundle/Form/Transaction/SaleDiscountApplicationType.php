@@ -50,66 +50,16 @@ class SaleDiscountApplicationType extends AbstractType
             ->add('competitorPrice')
             ->add('offTheRoadPrice')
             ->add('registrationPrice')
-            ->add('otherPricingName1', TextType::class, array(
-                'label' => "Lainlain1",
-                'attr' => array(
-                    'placeholder' => 'Biaya lain-lain 1'
-                )
-            ))
-            ->add('otherPricingName2', TextType::class, array(
-                'label' => "Lainlain2",
-                'attr' => array(
-                    'placeholder' => 'Biaya lain-lain 2'
-                )
-            ))
-            ->add('otherPricingName3', TextType::class, array(
-                'label' => "Lainlain3",
-                'attr' => array(
-                    'placeholder' => 'Biaya lain-lain 3'
-                )
-            ))
-            ->add('otherPricingName4', TextType::class, array(
-                'label' => "Lainlain4",
-                'attr' => array(
-                    'placeholder' => 'Biaya lain-lain 4'
-                )
-            ))
-            ->add('otherPricingName5', TextType::class, array(
-                'label' => "Lainlain5",
-                'attr' => array(
-                    'placeholder' => 'Biaya lain-lain 5'
-                )
-            ))
-            ->add('otherPricingAmount1', TextType::class, array(
-                'label' => "Lainlain1",
-                'attr' => array(
-                    'placeholder' => 'Jumlah lain-lain 1'
-                )
-            ))
-            ->add('otherPricingAmount2', TextType::class, array(
-                'label' => "Lainlain2",
-                'attr' => array(
-                    'placeholder' => 'Jumlah lain-lain 2'
-                )
-            ))
-            ->add('otherPricingAmount3', TextType::class, array(
-                'label' => "Lainlain3",
-                'attr' => array(
-                    'placeholder' => 'Jumlah lain-lain 3'
-                )
-            ))
-            ->add('otherPricingAmount4', TextType::class, array(
-                'label' => "Lainlain4",
-                'attr' => array(
-                    'placeholder' => 'Jumlah lain-lain 4'
-                )
-            ))
-            ->add('otherPricingAmount5', TextType::class, array(
-                'label' => "Lainlain5",
-                'attr' => array(
-                    'placeholder' => 'Jumlah lain-lain 5'
-                )
-            ))
+            ->add('otherPricingName1')
+            ->add('otherPricingName2')
+            ->add('otherPricingName3')
+            ->add('otherPricingName4')
+            ->add('otherPricingName5')
+            ->add('otherPricingAmount1')
+            ->add('otherPricingAmount2')
+            ->add('otherPricingAmount3')
+            ->add('otherPricingAmount4')
+            ->add('otherPricingAmount5')
             ->add('mediatorPrice')
             ->add('note')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))

@@ -1,4 +1,18 @@
 jQuery(function($) {
+    jQuery.numberFormat = function(number, precision, decimal, separator) {
+        precision = typeof precision === "undefined" ? 0 : precision;
+        decimal = typeof decimal === "undefined" ? "." : decimal;
+        separator = typeof separator === "undefined" ? "," : separator;
+        number = !isNaN(parseFloat(number)) && isFinite(number) ? number : 0;
+        var num = Math.round(number + "e" + precision) + "e-" + precision;
+        if (isNaN(num)) {
+            num = 0;
+        }
+        var parts = Number(num).toFixed(precision).toString().split(".");
+        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+        return parts.join(decimal);
+    };
+    
     jQuery.redirect = function(url, data, method, target) {
         data = typeof data === "undefined" ? {} : data;
         method = typeof method === "undefined" ? "" : method;
@@ -57,6 +71,29 @@ jQuery(function($) {
         return window.confirm($(this).attr("data-confirm"));
     });
     
+    $(document).on("keydown", "input[type=text][data-bind-target]", function() {
+        var self = this;
+        setTimeout(function() {
+            var el = $(self);
+            var value;
+            switch (el.attr("data-bind-format")) {
+                case undefined:
+                case "plain":
+                    value = el.val();
+                    break;
+                case "number":
+                    var precision = el.attr("data-option-precision");
+                    var decimal = el.attr("data-option-decimal-point");
+                    var separator = el.attr("data-option-thousand-separator");
+                    value = $.numberFormat(el.val(), precision, decimal, separator);
+                    break;
+                default:
+                    value = "";
+            }
+            $(el.attr("data-bind-target")).text(value);
+        }, 1);
+    });
+    
     $(document).on("focus", "input[type=text][data-pick]", function() {
         var el = $(this);
         var dateformat = "YYYY-MM-DD";
@@ -64,11 +101,14 @@ jQuery(function($) {
         var format;
         switch (el.attr("data-pick")) {
             case "datetime":
-                format = dateformat + " " + timeformat; break;
+                format = dateformat + " " + timeformat;
+                break;
             case "date":
-                format = dateformat; break;
+                format = dateformat;
+                break;
             case "time":
-                format = timeformat; break;
+                format = timeformat;
+                break;
             default:
                 format = "";
         }

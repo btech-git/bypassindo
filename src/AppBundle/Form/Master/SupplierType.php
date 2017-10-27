@@ -26,7 +26,7 @@ class SupplierType extends AbstractType
             ->add('taxNumber')
             ->add('webPage')
             ->add('businessField')
-            ->add('creditDueDays')
+            ->add('creditPaymentTerm')
             ->add('note')
             ->add('isPersonal')
             ->add('isCompany')

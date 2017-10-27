@@ -97,52 +97,134 @@
                 {{ form_row(form.competitorDealer) }}
                 {{ form_row(form.paymentMethodType, {'label' : 'Cara Pembayaran' }) }}
                 {{ form_row(form.financeCompany, {'label': false}) }}
-                {{ form_row(form.customerPrice, {'label' : 'Harga Permintaan Customer (Rp.)' }) }}
-                {{ form_row(form.salesmanPrice, {'label' : 'Sales ke Customer (Rp.)' }) }}
-                {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui (Rp.)' }) }}
-                {{ form_row(form.competitorPrice, {'label' : 'Kompetitor ke Customer (Rp.)' }) }}
-                {{ form_row(form.mediatorPrice, {'label' : 'Mediator Fee (Rp.)' }) }}
+                <div class="form-group">
+                    {{ form_row(form.customerPrice, {'label' : 'Harga Permintaan Customer (Rp.)', 'attr': {'data-bind-target': '[data-name=customer-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="customer-price-text">{{ saleDiscountApplication.customerPrice|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.salesmanPrice, {'label' : 'Sales ke Customer (Rp.)', 'attr': {'data-bind-target': '[data-name=salesman-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="salesman-price-text">{{ saleDiscountApplication.salesmanPrice|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui (Rp.)', 'attr': {'data-bind-target': '[data-name=approved-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="approved-price-text">{{ saleDiscountApplication.approvedPrice|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.competitorPrice, {'label' : 'Kompetitor ke Customer (Rp.)', 'attr': {'data-bind-target': '[data-name=competitor-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="competitor-price-text">{{ saleDiscountApplication.competitorPrice|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.mediatorPrice, {'label' : 'Mediator Fee (Rp.)', 'attr': {'data-bind-target': '[data-name=mediator-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="mediator-price-text">{{ saleDiscountApplication.mediatorPrice|default|number_format(2) }}</span>
+                </div>
             </div>
         </div>
             
-        <table class="table table-bordered">
-            <caption>Break Down Harga</caption>
+        <table class="table table-bordered" id="pricing-list">
+            <thead>
+                <tr class="alert alert-info">
+                    <td class="font-weight-bold lead">Break Down Harga</td>
+                    <td></td>
+                    <td style="width: 20%"></td>
+                </tr>
+            </thead>
             <tbody>
                 <tr>
                     <td>Harga Off The Road (Rp.)</td>
-                    <td>{{ form_widget(form.offTheRoadPrice) }}{{ form_errors(form.offTheRoadPrice) }}</td>
+                    <td>
+                        {{ form_widget(form.offTheRoadPrice, {'attr': {'data-bind-target': '[data-name=off-the-road-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.offTheRoadPrice) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="off-the-road-price-text">{{ saleDiscountApplication.offTheRoadPrice|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td>BBN Notice (Rp.)</td>
-                    <td>{{ form_widget(form.registrationPrice) }}{{ form_errors(form.registrationPrice) }}</td>
+                    <td>
+                        {{ form_widget(form.registrationPrice, {'attr': {'data-bind-target': '[data-name=registration-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.registrationPrice) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="registration-price-text">{{ saleDiscountApplication.registrationPrice|default|number_format(2) }}</span>
+                    </td>
+                </tr>
+                <tr class="alert alert-warning font-weight-bold">
+                    <td class="text-right" colspan="2">Sub Total (Rp.)</td>
+                    <td class="text-right">
+                        <span data-name="sub-total-price">{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>Sub Total (Rp.)</td>
-                    <td><span id="sub-total-price">{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}</span></td>
+                    <td>
+                        {{ form_widget(form.otherPricingName1, {'attr': {'placeholder': 'Biaya lain-lain 1'} }) }}
+                        {{ form_errors(form.otherPricingName1) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.otherPricingAmount1, {'attr': {'placeholder': 'Jumlah lain-lain 1', 'data-bind-target': '[data-name=other-pricing-amount1-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.otherPricingAmount1) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="other-pricing-amount1-text">{{ saleDiscountApplication.otherPricingAmount1|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{ form_widget(form.otherPricingName1) }}{{ form_errors(form.otherPricingName1) }}</td>
-                    <td>{{ form_widget(form.otherPricingAmount1) }}{{ form_errors(form.otherPricingAmount1) }}</td>
+                    <td>
+                        {{ form_widget(form.otherPricingName2, {'attr': {'placeholder': 'Biaya lain-lain 2'} }) }}
+                        {{ form_errors(form.otherPricingName2) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.otherPricingAmount2, {'attr': {'placeholder': 'Jumlah lain-lain 2', 'data-bind-target': '[data-name=other-pricing-amount2-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.otherPricingAmount2) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="other-pricing-amount2-text">{{ saleDiscountApplication.otherPricingAmount2|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{ form_widget(form.otherPricingName2) }}{{ form_errors(form.otherPricingName2) }}</td>
-                    <td>{{ form_widget(form.otherPricingAmount2) }}{{ form_errors(form.otherPricingAmount2) }}</td>
+                    <td>
+                        {{ form_widget(form.otherPricingName3, {'attr': {'placeholder': 'Biaya lain-lain 3'} }) }}
+                        {{ form_errors(form.otherPricingName3) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.otherPricingAmount3, {'attr': {'placeholder': 'Jumlah lain-lain 3', 'data-bind-target': '[data-name=other-pricing-amount3-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.otherPricingAmount3) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="other-pricing-amount3-text">{{ saleDiscountApplication.otherPricingAmount3|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{ form_widget(form.otherPricingName3) }}{{ form_errors(form.otherPricingName3) }}</td>
-                    <td>{{ form_widget(form.otherPricingAmount3) }}{{ form_errors(form.otherPricingAmount3) }}</td>
+                    <td>
+                        {{ form_widget(form.otherPricingName4, {'attr': {'placeholder': 'Biaya lain-lain 4'} }) }}
+                        {{ form_errors(form.otherPricingName4) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.otherPricingAmount4, {'attr': {'placeholder': 'Jumlah lain-lain 4', 'data-bind-target': '[data-name=other-pricing-amount4-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.otherPricingAmount4) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="other-pricing-amount4-text">{{ saleDiscountApplication.otherPricingAmount4|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
-                    <td>{{ form_widget(form.otherPricingName4) }}{{ form_errors(form.otherPricingName4) }}</td>
-                    <td>{{ form_widget(form.otherPricingAmount4) }}{{ form_errors(form.otherPricingAmount4) }}</td>
+                    <td>
+                        {{ form_widget(form.otherPricingName5, {'attr': {'placeholder': 'Biaya lain-lain 5'} }) }}
+                        {{ form_errors(form.otherPricingName5) }}
+                    </td>
+                    <td>
+                        {{ form_widget(form.otherPricingAmount5, {'attr': {'placeholder': 'Jumlah lain-lain 5', 'data-bind-target': '[data-name=other-pricing-amount5-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        {{ form_errors(form.otherPricingAmount5) }}
+                    </td>
+                    <td class="text-right">
+                        <span data-name="other-pricing-amount5-text">{{ saleDiscountApplication.otherPricingAmount5|default|number_format(2) }}</span>
+                    </td>
                 </tr>
-                <tr>
-                    <td>{{ form_widget(form.otherPricingName5) }}{{ form_errors(form.otherPricingName5) }}</td>
-                    <td>{{ form_widget(form.otherPricingAmount5) }}{{ form_errors(form.otherPricingAmount5) }}</td>
-                </tr>
-                <tr>
-                    <td>Grand Total (Rp.)</td>
-                    <td><span id="grand-total-price">{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}</span></td>
+                <tr class="alert alert-warning font-weight-bold">
+                    <td class="text-right" colspan="2">Grand Total (Rp.)</td>
+                    <td class="text-right">
+                        <span data-name="grand-total-price">{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}</span>
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -178,8 +260,8 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $("#sub-total-price").text(data.subTotalPrice);
-                        $("#grand-total-price").text(data.grandTotalPrice);
+                        $("[data-name=sub-total-price]", "#pricing-list").text(data.subTotalPrice);
+                        $("[data-name=grand-total-price]", "#pricing-list").text(data.grandTotalPrice);
                     }
                 });
             }

@@ -118,7 +118,7 @@ class Customer
      * @ORM\Column(type="smallint")
      * @Assert\NotNull()
      */
-    private $creditDueDays;
+    private $creditPaymentTerm;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -258,8 +258,8 @@ class Customer
     public function getBusinessField() { return $this->businessField; }
     public function setBusinessField($businessField) { $this->businessField = $businessField; }
 
-    public function getCreditDueDays() { return $this->creditDueDays; }
-    public function setCreditDueDays($creditDueDays) { $this->creditDueDays = $creditDueDays; }
+    public function getCreditPaymentTerm() { return $this->creditPaymentTerm; }
+    public function setCreditPaymentTerm($creditPaymentTerm) { $this->creditPaymentTerm = $creditPaymentTerm; }
 
     public function getCategoryTwoHinoPopulation() { return $this->categoryTwoHinoPopulation; }
     public function setCategoryTwoHinoPopulation($categoryTwoHinoPopulation) { $this->categoryTwoHinoPopulation = $categoryTwoHinoPopulation; }

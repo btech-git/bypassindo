@@ -31,7 +31,7 @@ class CustomerType extends AbstractType
             ->add('taxNumber')
             ->add('webPage')
             ->add('businessField')
-            ->add('creditDueDays')
+            ->add('creditPaymentTerm')
             ->add('categoryTwoHinoPopulation')
             ->add('categoryTwoMitsubishiPopulation')
             ->add('categoryTwoToyotaPopulation')
