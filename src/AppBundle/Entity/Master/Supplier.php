@@ -10,6 +10,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="master_supplier") @ORM\Entity
+ * @UniqueEntity("taxNumber")
+ * @Assert\Expression("(this.getIsPersonal() and !this.getIsCompany()) or (!this.getIsPersonal() and this.getIsCompany())")
  */
 class Supplier
 {
@@ -39,12 +41,12 @@ class Supplier
     private $officeProvince;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank() @Assert\Length(min=5, max=5)
      */
     private $officeZipCode;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Length(min=8, max=20)
      */
     private $phone;
     /**
@@ -84,7 +86,7 @@ class Supplier
     private $creditPaymentTerm;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Regex("/^\d{2}-\d{3}-\d{3}-\d-\d{3}-\d{3}$/")
      */
     private $taxNumber;
     /**

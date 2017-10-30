@@ -42,8 +42,14 @@
                 {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Leasing' }) }}
                 {{ form_row(form.financeCompany, {'label' : 'Leasing' }) }}
                 {{ form_row(form.leasingTerm, {'label': 'Tenor'}) }}
-                {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan (Rp.)'}) }}
-                {{ form_row(form.downPayment, {'label': 'DP (Rp.)'}) }}
+                <div class="form-group">
+                    {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan (Rp.)', 'attr': {'data-bind-target': '[data-name=leasing-monthly-nominal-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="leasing-monthly-nominal-text">{{ saleOrder.leasingMonthlyNominal|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.downPayment, {'label': 'DP (Rp.)', 'attr': {'data-bind-target': '[data-name=downpayment-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="downpayment-text">{{ saleOrder.downPayment|default|number_format(2) }}</span>
+                </div>
             </div>
         </div>
                   
@@ -77,7 +83,10 @@
                 {{ form_row(form.vehicleAccessoriesInfo, {'label' : 'Karoseri' }) }}
                 {{ form_row(form.vehicleOtherInfo, {'label' : 'Lain-lain' }) }}
                 {{ form_row(form.quantity) }}
-                {{ form_row(form.unitPrice, {'label': 'Harga /unit (Rp.)'}) }}
+                <div class="form-group">
+                    {{ form_row(form.unitPrice, {'label': 'Harga /unit (Rp.)', 'attr': {'data-bind-target': '[data-name=unit-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="unit-price-text">{{ saleOrder.unitPrice|default|number_format(2) }}</span>
+                </div>
                 <div class="row form-group">
                     <div class="col-sm-6 text-left">
                         <label>Total (Rp.)</label>
