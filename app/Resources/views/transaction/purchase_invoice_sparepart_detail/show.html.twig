@@ -1,0 +1,118 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Purchase Invoice Sparepart Detail' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Item Code</th>
+                <td>{{ purchaseInvoiceSparepartDetail.itemCode|default }}</td>
+            </tr>
+            <tr>
+                <th>Item Name</th>
+                <td>{{ purchaseInvoiceSparepartDetail.itemName|default }}</td>
+            </tr>
+            <tr>
+                <th>Supply Sys Number</th>
+                <td>{{ purchaseInvoiceSparepartDetail.supplySysNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Supply Slip Number</th>
+                <td>{{ purchaseInvoiceSparepartDetail.supplySlipNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Quantity</th>
+                <td>{{ purchaseInvoiceSparepartDetail.quantity|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Item Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.itemPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Service Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.servicePrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Material Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.materialPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Sparepart Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.sparepartPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Outsource Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.outsourcePrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Oil Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.oilPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Acc Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.accPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Package Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.packagePrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Souvenir Price</th>
+                <td>{{ purchaseInvoiceSparepartDetail.souvenirPrice|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Service Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.serviceDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Material Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.materialDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Sparepart Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.sparepartDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Outsource Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.outsourceDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Oil Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.oilDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Accessory Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.accessoryDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Package Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.packageDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Souvenir Discount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.souvenirDiscount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Before Tax</th>
+                <td>{{ purchaseInvoiceSparepartDetail.totalBeforeTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Tax</th>
+                <td>{{ purchaseInvoiceSparepartDetail.totalTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total After Tax</th>
+                <td>{{ purchaseInvoiceSparepartDetail.totalAfterTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Purchase Amount</th>
+                <td>{{ purchaseInvoiceSparepartDetail.purchaseAmount|default|number_format(2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

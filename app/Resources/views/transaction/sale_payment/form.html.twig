@@ -12,9 +12,12 @@
                     <label>Pelunasan #</label>
                     <div>{{ salePayment.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.amount) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.paymentMethod) }}
+                <div class="form-group">
+                    {{ form_row(form.amount, {'label': 'Jumlah Pelunasan (Rp.)', 'attr': {'data-bind-target': '[data-name=amount-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="amount-text">{{ salePayment.amount|default|number_format(2) }}</span>
+                </div>
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.saleInvoice, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-invoice-dialog'} }) }}

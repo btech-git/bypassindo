@@ -164,11 +164,13 @@
                 $("#{{ form.financeCompany.vars.id }}").parent().show();
                 $("#{{ form.leasingTerm.vars.id }}").parent().show();
                 $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().show();
+                $("[data-name=leasing-monthly-nominal-text]").show();
             }
             function hideLeasing() {
                 $("#{{ form.financeCompany.vars.id }}").parent().hide();
                 $("#{{ form.leasingTerm.vars.id }}").parent().hide();
                 $("#{{ form.leasingMonthlyNominal.vars.id }}").parent().hide();
+                $("[data-name=leasing-monthly-nominal-text]").hide();
             }
             
             if (!$("#{{ form.isLeasing.vars.id }}").is(":checked")) {

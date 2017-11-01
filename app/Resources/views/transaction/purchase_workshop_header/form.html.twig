@@ -15,7 +15,8 @@
             {{ form_row(object.quantity, {'label': false, 'attr': {'data-name': 'quantity'} }) }}
         </td>
         <td>
-            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price'} }) }}
+            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
         <td class="text-right">
             <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>

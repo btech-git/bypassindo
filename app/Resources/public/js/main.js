@@ -9,7 +9,7 @@ jQuery(function($) {
             num = 0;
         }
         var parts = Number(num).toFixed(precision).toString().split(".");
-        parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, separator);
+        parts[0] = parts[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, separator);
         return parts.join(decimal);
     };
     
@@ -71,7 +71,7 @@ jQuery(function($) {
         return window.confirm($(this).attr("data-confirm"));
     });
     
-    $(document).on("keydown", "input[type=text][data-bind-target]", function() {
+    $(document).on("keydown", "input[type=text][data-bind-target], input[type=number][data-bind-target]", function() {
         var self = this;
         setTimeout(function() {
             var el = $(self);

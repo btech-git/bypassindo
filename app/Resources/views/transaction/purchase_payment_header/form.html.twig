@@ -12,7 +12,10 @@
             {{ form_row(object.memo, {'label': false}) }}
         </td>
         <td>
-            {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount'} }) }}
+            {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount', 'data-bind-target': '[data-name=amount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+        </td>
+        <td class="text-right" >
+            <span data-name="amount-text-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(2) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove-purchase-payment-detail-prototype">Delete</button>
@@ -81,7 +84,8 @@
                 <tr class="bg-info">
                     <th>Memo</th>
                     <th>Amount</th>
-                    <th style="width: 0"></th>
+                    <th style="width: 15%"></th>
+                    <th style="width: 3%"></th>
                 </tr>
             </thead>
             <tbody data-prototype="{{ self.details_row(form.purchasePaymentDetails.vars.prototype)|e }}">
@@ -91,7 +95,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right">Grand Total</td>
+                    <td class="text-right" colspan="2">Grand Total</td>
                     <td class="text-right"><span data-name="total-amount">{{ purchasePaymentHeader.totalAmount|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>

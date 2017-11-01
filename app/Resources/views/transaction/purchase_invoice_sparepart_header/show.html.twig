@@ -1,0 +1,178 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Purchase Invoice Sparepart Header' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Invoice Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.invoiceNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Work Order Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.workOrderNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Transaction Date</th>
+                <td>{{ purchaseInvoiceSparepartHeader.transactionDate|default ? purchaseInvoiceSparepartHeader.transactionDate|date('Y-m-d') }}</td>
+            </tr>
+            <tr>
+                <th>Company Name</th>
+                <td>{{ purchaseInvoiceSparepartHeader.companyName|default }}</td>
+            </tr>
+            <tr>
+                <th>Tax Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.taxNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Prm Cpc</th>
+                <td>{{ purchaseInvoiceSparepartHeader.prmCpc|default }}</td>
+            </tr>
+            <tr>
+                <th>Prm Trx</th>
+                <td>{{ purchaseInvoiceSparepartHeader.prmTrx|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer Code</th>
+                <td>{{ purchaseInvoiceSparepartHeader.customerCode|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer Name</th>
+                <td>{{ purchaseInvoiceSparepartHeader.customerName|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Model</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehicleModel|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Chassis Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Engine Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehicleEngineNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle License Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehicleLicenseNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Claim Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehicleClaimNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Vehicle Policy Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.vehiclePolicyNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Total Package</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalPackage|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Opr</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalOpr|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Part</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalPart|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Oil</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalOil|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Material</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalMaterial|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Accessory</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalAccessory|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Sublet</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalSublet|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Souvenir</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalSouvenir|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Package</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountPackage|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Opr</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountOpr|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Part</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountPart|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Oil</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountOil|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Material</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountMaterial|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Accessory</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountAccessory|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Sublet</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountSublet|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Discount Souvenir</th>
+                <td>{{ purchaseInvoiceSparepartHeader.discountSouvenir|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total Before Tax</th>
+                <td>{{ purchaseInvoiceSparepartHeader.grandTotalBeforeTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total Tax</th>
+                <td>{{ purchaseInvoiceSparepartHeader.grandTotalTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total After Tax</th>
+                <td>{{ purchaseInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Purchase Amount</th>
+                <td>{{ purchaseInvoiceSparepartHeader.totalPurchaseAmount|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Payment Type</th>
+                <td>{{ purchaseInvoiceSparepartHeader.paymentType|default }}</td>
+            </tr>
+            <tr>
+                <th>Cpc Description</th>
+                <td>{{ purchaseInvoiceSparepartHeader.cpcDescription|default }}</td>
+            </tr>
+            <tr>
+                <th>Trx Description</th>
+                <td>{{ purchaseInvoiceSparepartHeader.trxDescription|default }}</td>
+            </tr>
+            <tr>
+                <th>Tax Invoice Document Number</th>
+                <td>{{ purchaseInvoiceSparepartHeader.taxInvoiceDocumentNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Production Year</th>
+                <td>{{ purchaseInvoiceSparepartHeader.productionYear|default }}</td>
+            </tr>
+            <tr>
+                <th>Service Mileage</th>
+                <td>{{ purchaseInvoiceSparepartHeader.serviceMileage|default }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
