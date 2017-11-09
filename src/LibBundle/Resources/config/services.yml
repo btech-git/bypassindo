@@ -78,3 +78,7 @@ services:
     lib.excel.xml_reader:
         class: LibBundle\Excel\PhpExcelXmlReader
         autowire: true
+
+    lib.excel.object_parser:
+        class: LibBundle\Excel\PhpExcelObjectParser
+        autowire: true

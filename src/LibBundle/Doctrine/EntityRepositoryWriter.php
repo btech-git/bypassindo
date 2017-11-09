@@ -87,7 +87,7 @@ class EntityRepositoryWriter implements RepositoryWriterInterface
             $remove = isset($item['remove']) ? $item['remove'] : false;
             $getter = 'get' . ucfirst($name);
             $data = ($parent === null) ? $root : $parent->$getter();
-            if ($data instanceof Collection) {
+            if ($this->isCollection($data)) {
                 foreach ($data as $object) {
                     $list[spl_object_hash($object)] = array('add' => $add, 'remove' => $remove, 'data' => $object);
                     if (!empty($item['associations'])) {
@@ -116,13 +116,10 @@ class EntityRepositoryWriter implements RepositoryWriterInterface
                 $entityClass = $fieldMappings[$name]['targetEntity'];
                 if (isset($fieldMappings[$name]['mappedBy'])) {
                     $parentName = $fieldMappings[$name]['mappedBy'];
-                    $oldData = $this->entityManager->getRepository($entityClass)->findBy(array($parentName => $parent));
+                    $oldData = ($parent->getId() === null) ? array() : $this->entityManager->getRepository($entityClass)->findBy(array($parentName => $parent));
                 } else if (isset($fieldMappings[$name]['inversedBy'])) {
                     $id = $parent->$getter()->getId();
-                    if ($id === null) {
-                        $id = '';
-                    }
-                    $oldData = $this->entityManager->getRepository($entityClass)->find($id);
+                    $oldData = ($id === null) ? null : $this->entityManager->getRepository($entityClass)->find($id);
                 }
             } else {
                 $oldData = $root;
