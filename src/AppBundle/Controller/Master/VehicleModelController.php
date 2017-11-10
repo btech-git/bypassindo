@@ -70,7 +70,7 @@ class VehicleModelController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="master_vehicle_model_show")
+     * @Route("/{id}", name="master_vehicle_model_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -82,7 +82,7 @@ class VehicleModelController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="master_vehicle_model_edit")
+     * @Route("/{id}/edit", name="master_vehicle_model_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -106,7 +106,7 @@ class VehicleModelController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="master_vehicle_model_delete")
+     * @Route("/{id}/delete", name="master_vehicle_model_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */

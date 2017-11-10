@@ -70,7 +70,7 @@ class PurchaseInvoiceSparepartDetailController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_purchase_invoice_sparepart_detail_show")
+     * @Route("/{id}", name="transaction_purchase_invoice_sparepart_detail_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -82,7 +82,7 @@ class PurchaseInvoiceSparepartDetailController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="transaction_purchase_invoice_sparepart_detail_edit")
+     * @Route("/{id}/edit", name="transaction_purchase_invoice_sparepart_detail_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -106,7 +106,7 @@ class PurchaseInvoiceSparepartDetailController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_purchase_invoice_sparepart_detail_delete")
+     * @Route("/{id}/delete", name="transaction_purchase_invoice_sparepart_detail_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

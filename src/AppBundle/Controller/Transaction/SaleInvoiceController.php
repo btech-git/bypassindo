@@ -73,7 +73,7 @@ class SaleInvoiceController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_sale_invoice_show")
+     * @Route("/{id}", name="transaction_sale_invoice_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -85,7 +85,7 @@ class SaleInvoiceController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="transaction_sale_invoice_edit")
+     * @Route("/{id}/edit", name="transaction_sale_invoice_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -111,7 +111,7 @@ class SaleInvoiceController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_sale_invoice_delete")
+     * @Route("/{id}/delete", name="transaction_sale_invoice_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

@@ -73,7 +73,7 @@ class SaleDiscountApplicationController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_sale_discount_application_show")
+     * @Route("/{id}", name="transaction_sale_discount_application_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -85,7 +85,7 @@ class SaleDiscountApplicationController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit.{_format}", name="transaction_sale_discount_application_edit")
+     * @Route("/{id}/edit.{_format}", name="transaction_sale_discount_application_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -111,7 +111,7 @@ class SaleDiscountApplicationController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_sale_discount_application_delete")
+     * @Route("/{id}/delete", name="transaction_sale_discount_application_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

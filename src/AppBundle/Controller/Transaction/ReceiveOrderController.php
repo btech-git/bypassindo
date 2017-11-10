@@ -73,7 +73,7 @@ class ReceiveOrderController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_receive_order_show")
+     * @Route("/{id}", name="transaction_receive_order_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -85,7 +85,7 @@ class ReceiveOrderController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit.{_format}", name="transaction_receive_order_edit")
+     * @Route("/{id}/edit.{_format}", name="transaction_receive_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -111,7 +111,7 @@ class ReceiveOrderController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_receive_order_delete")
+     * @Route("/{id}/delete", name="transaction_receive_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

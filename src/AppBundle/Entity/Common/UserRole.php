@@ -9,27 +9,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="common_user_role")
+ * @ORM\Entity
  */
 class UserRole implements RoleInterface
 {
     /**
-     * @ORM\Column(name="id", type="integer") @ORM\Id() @ORM\GeneratedValue
+     * @ORM\Column(type="integer") @ORM\Id() @ORM\GeneratedValue
      */
     private $id;
     /**
-     * @ORM\Column(name="name", type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=20, unique=true)
      * @Assert\NotBlank()
      */
     private $name;
     /**
-     * @ORM\Column(name="level", type="smallint")
+     * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
     private $level;
     /**
-     * @ORM\Column(name="ordinal", type="smallint")
+     * @ORM\Column(type="smallint")
      * @Assert\NotBlank()
      */
     private $ordinal;

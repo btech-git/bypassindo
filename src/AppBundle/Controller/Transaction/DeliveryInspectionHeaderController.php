@@ -75,7 +75,7 @@ class DeliveryInspectionHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_delivery_inspection_header_show")
+     * @Route("/{id}", name="transaction_delivery_inspection_header_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -87,7 +87,7 @@ class DeliveryInspectionHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="transaction_delivery_inspection_header_edit")
+     * @Route("/{id}/edit", name="transaction_delivery_inspection_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -114,7 +114,7 @@ class DeliveryInspectionHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_delivery_inspection_header_delete")
+     * @Route("/{id}/delete", name="transaction_delivery_inspection_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

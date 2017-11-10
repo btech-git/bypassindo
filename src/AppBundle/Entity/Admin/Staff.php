@@ -6,16 +6,18 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Common\User;
 
-/** @ORM\Entity */
+/**
+ * @ORM\Entity
+ */
 class Staff extends User
 {
     /**
-     * @ORM\Column(name="name", type="string", length=60)
+     * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank()
      */
     private $name;
     /**
-     * @ORM\Column(name="position", type="string", length=60)
+     * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank()
      */
     private $position;
@@ -25,22 +27,22 @@ class Staff extends User
      */
     private $joinDate;
     /**
-     * @ORM\Column(name="email", type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotNull() @Assert\Email()
      */
     private $email;
     /**
-     * @ORM\Column(name="address", type="string", length=60)
+     * @ORM\Column(type="string", length=60)
      * @Assert\NotNull()
      */
     private $address;
     /**
-     * @ORM\Column(name="phone", type="string", length=20)
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
     private $phone;
     /**
-     * @ORM\Column(name="note", type="text")
+     * @ORM\Column(type="text")
      * @Assert\NotNull()
      */
     private $note;
@@ -73,7 +75,7 @@ class Staff extends User
     
     public function getRoles()
     {
-        $defaultRoles = parent::getRoles();
+        $defaultRoles = array_merge(parent::getRoles(), array('ROLE_STAFF'));
         $assignedRoles = array_map(function($userRole) { return $userRole->getRole(); }, $this->getUserRoles()->toArray());
         $roles = array_unique(array_merge($defaultRoles, $assignedRoles));
         

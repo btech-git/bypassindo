@@ -73,7 +73,7 @@ class SalePaymentController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_sale_payment_show")
+     * @Route("/{id}", name="transaction_sale_payment_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -85,7 +85,7 @@ class SalePaymentController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit.{_format}", name="transaction_sale_payment_edit")
+     * @Route("/{id}/edit.{_format}", name="transaction_sale_payment_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -111,7 +111,7 @@ class SalePaymentController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_sale_payment_delete")
+     * @Route("/{id}/delete", name="transaction_sale_payment_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */

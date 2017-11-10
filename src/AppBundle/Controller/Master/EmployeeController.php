@@ -70,7 +70,7 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="master_employee_show")
+     * @Route("/{id}", name="master_employee_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -82,7 +82,7 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="master_employee_edit")
+     * @Route("/{id}/edit", name="master_employee_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -106,7 +106,7 @@ class EmployeeController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="master_employee_delete")
+     * @Route("/{id}/delete", name="master_employee_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */
