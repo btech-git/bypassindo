@@ -86,7 +86,7 @@ class Supplier
     private $creditPaymentTerm;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull() @Assert\Regex("/^\d{2}-\d{3}-\d{3}-\d-\d{3}-\d{3}$/")
+     * @Assert\NotNull() @Assert\Regex("/^\d{2}.\d{3}.\d{3}.\d-\d{3}.\d{3}$/")
      */
     private $taxNumber;
     /**
