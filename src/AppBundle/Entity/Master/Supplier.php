@@ -15,6 +15,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Supplier
 {
+    const BUSINESS_TYPE_UNIT = 'hino motor';
+    const BUSINESS_TYPE_WORKSHOP = 'karoseri';
+    const BUSINESS_TYPE_GENERAL = 'umum';
+    
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
      */
@@ -79,6 +83,11 @@ class Supplier
      * @Assert\NotNull()
      */
     private $businessField;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $businessType;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull()
@@ -161,6 +170,9 @@ class Supplier
 
     public function getBusinessField() { return $this->businessField; }
     public function setBusinessField($businessField) { $this->businessField = $businessField; }
+
+    public function getBusinessType() { return $this->businessType; }
+    public function setBusinessType($businessType) { $this->businessType = $businessType; }
 
     public function getCreditPaymentTerm() { return $this->creditPaymentTerm; }
     public function setCreditPaymentTerm($creditPaymentTerm) { $this->creditPaymentTerm = $creditPaymentTerm; }
