@@ -21,16 +21,16 @@ use Symfony\Component\Security\Core\User\EquatableInterface;
 abstract class User implements UserInterface, EquatableInterface, \Serializable
 {
     /**
-     * @ORM\Column(name="id", type="integer") @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
      */
     protected $id;
     /**
-     * @ORM\Column(name="username", type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=25, unique=true)
      * @Assert\NotBlank() @Assert\Length(max=25)
      */
     protected $username;
     /**
-     * @ORM\Column(name="password", type="string", length=64)
+     * @ORM\Column(type="string", length=64)
      * @Assert\NotBlank()
      */
     protected $password;

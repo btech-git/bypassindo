@@ -70,7 +70,7 @@ class StaffController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="admin_staff_show")
+     * @Route("/{id}", name="admin_staff_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -82,7 +82,7 @@ class StaffController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="admin_staff_edit")
+     * @Route("/{id}/edit", name="admin_staff_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */
@@ -106,7 +106,7 @@ class StaffController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="admin_staff_delete")
+     * @Route("/{id}/delete", name="admin_staff_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_ADMIN')")
      */

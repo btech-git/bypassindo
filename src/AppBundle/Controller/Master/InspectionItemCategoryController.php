@@ -70,7 +70,7 @@ class InspectionItemCategoryController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="master_inspection_item_category_show")
+     * @Route("/{id}", name="master_inspection_item_category_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -82,7 +82,7 @@ class InspectionItemCategoryController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="master_inspection_item_category_edit")
+     * @Route("/{id}/edit", name="master_inspection_item_category_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -106,7 +106,7 @@ class InspectionItemCategoryController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="master_inspection_item_category_delete")
+     * @Route("/{id}/delete", name="master_inspection_item_category_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */

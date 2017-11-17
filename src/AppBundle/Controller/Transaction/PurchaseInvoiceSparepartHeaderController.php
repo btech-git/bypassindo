@@ -19,44 +19,6 @@ use AppBundle\Grid\Transaction\PurchaseInvoiceSparepartHeaderGridType;
 class PurchaseInvoiceSparepartHeaderController extends Controller
 {
     /**
-     * @Route("/import", name="transaction_purchase_invoice_sparepart_header_import")
-     * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
-     */
-    public function importAction(Request $request)
-    {
-        $form = $this->createFormBuilder()
-            ->add('headerDataFile', FileType::class, array('constraints' => array(new NotNull())))
-            ->add('detailDataFile', FileType::class, array('constraints' => array(new NotNull())))
-            ->getForm();
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
-            if ($formData['headerDataFile']->isValid() && $formData['detailDataFile']->isValid()) {
-                $purchaseInvoiceSparepartHeaderSheet = $this->get('app.transaction.purchase_invoice_sparepart_header_sheet');
-
-                $headerMappingXml = $this->renderView('transaction/purchase_invoice_sparepart_header/import_mapping_header.xml.twig');
-                $detailMappingXml = $this->renderView('transaction/purchase_invoice_sparepart_header/import_mapping_detail.xml.twig');
-                $objects = $purchaseInvoiceSparepartHeaderSheet->parse($formData['headerDataFile']->getPathname(), $headerMappingXml, $formData['detailDataFile']->getPathname(), $detailMappingXml);
-
-                if ($purchaseInvoiceSparepartHeaderSheet->validate($objects)) {
-                    $purchaseInvoiceSparepartHeaderSheet->save($objects);
-                    $this->addFlash('success', array('title' => 'Success!', 'message' => 'The records was imported successfully.'));
-                } else {
-                    $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to import the records.'));
-                }
-
-                return $this->redirectToRoute('transaction_purchase_invoice_sparepart_header_index');
-            }
-        }
-
-        return $this->render('transaction/purchase_invoice_sparepart_header/import.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-
-    /**
      * @Route("/grid", name="transaction_purchase_invoice_sparepart_header_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
      * @Security("has_role('ROLE_TRANSACTION')")
@@ -110,7 +72,7 @@ class PurchaseInvoiceSparepartHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="transaction_purchase_invoice_sparepart_header_show")
+     * @Route("/{id}", name="transaction_purchase_invoice_sparepart_header_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -122,7 +84,7 @@ class PurchaseInvoiceSparepartHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="transaction_purchase_invoice_sparepart_header_edit")
+     * @Route("/{id}/edit", name="transaction_purchase_invoice_sparepart_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -146,7 +108,7 @@ class PurchaseInvoiceSparepartHeaderController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="transaction_purchase_invoice_sparepart_header_delete")
+     * @Route("/{id}/delete", name="transaction_purchase_invoice_sparepart_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -171,6 +133,44 @@ class PurchaseInvoiceSparepartHeaderController extends Controller
 
         return $this->render('transaction/purchase_invoice_sparepart_header/delete.html.twig', array(
             'purchaseInvoiceSparepartHeader' => $purchaseInvoiceSparepartHeader,
+            'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/import", name="transaction_purchase_invoice_sparepart_header_import")
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function importAction(Request $request)
+    {
+        $form = $this->createFormBuilder()
+            ->add('headerDataFile', FileType::class, array('constraints' => array(new NotNull())))
+            ->add('detailDataFile', FileType::class, array('constraints' => array(new NotNull())))
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
+            if ($formData['headerDataFile']->isValid() && $formData['detailDataFile']->isValid()) {
+                $purchaseInvoiceSparepartHeaderSheet = $this->get('app.transaction.purchase_invoice_sparepart_header_sheet');
+
+                $headerMappingXml = $this->renderView('transaction/purchase_invoice_sparepart_header/import_mapping_header.xml.twig');
+                $detailMappingXml = $this->renderView('transaction/purchase_invoice_sparepart_header/import_mapping_detail.xml.twig');
+                $objects = $purchaseInvoiceSparepartHeaderSheet->parse($formData['headerDataFile']->getPathname(), $headerMappingXml, $formData['detailDataFile']->getPathname(), $detailMappingXml);
+
+                if ($purchaseInvoiceSparepartHeaderSheet->validate($objects)) {
+                    $purchaseInvoiceSparepartHeaderSheet->save($objects);
+                    $this->addFlash('success', array('title' => 'Success!', 'message' => 'The records was imported successfully.'));
+                } else {
+                    $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to import the records.'));
+                }
+
+                return $this->redirectToRoute('transaction_purchase_invoice_sparepart_header_index');
+            }
+        }
+
+        return $this->render('transaction/purchase_invoice_sparepart_header/import.html.twig', array(
             'form' => $form->createView(),
         ));
     }

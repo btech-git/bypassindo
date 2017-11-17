@@ -4,7 +4,7 @@
 
 {% block phpdoc_method_annotations %}
 {% if 'annotation' == format %}
-     * @Route("/{id}/edit", name="{{ route_name_prefix }}_edit")
+     * @Route("/{id}/edit", name="{{ route_name_prefix }}_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_{{ entity_namespace|replace({'\\': '_'})|upper }}')")
 {% endif %}

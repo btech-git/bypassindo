@@ -12,7 +12,8 @@ class UserPassword
      */
     private $oldPassword;
     /**
-     * @Assert\NotBlank() @Assert\Length(min = 8, minMessage = "Password should be at least 8 characters long")
+     * @Assert\NotBlank()
+     * @Assert\Length(min = 8, minMessage = "Password should be at least 8 characters long")
      */
     private $newPassword;
 

@@ -70,7 +70,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * @Route("/{id}", name="master_payment_method_show")
+     * @Route("/{id}", name="master_payment_method_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -82,7 +82,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * @Route("/{id}/edit", name="master_payment_method_edit")
+     * @Route("/{id}/edit", name="master_payment_method_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */
@@ -106,7 +106,7 @@ class PaymentMethodController extends Controller
     }
 
     /**
-     * @Route("/{id}/delete", name="master_payment_method_delete")
+     * @Route("/{id}/delete", name="master_payment_method_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_MASTER')")
      */

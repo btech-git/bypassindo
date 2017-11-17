@@ -48,7 +48,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/profile_show/{id}", name="admin_default_profile_show")
+     * @Route("/profile_show/{id}", name="admin_default_profile_show", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_USER') and user.isEqualTo(staff)")
      */
@@ -60,7 +60,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/profile_edit/{id}", name="admin_default_profile_edit")
+     * @Route("/profile_edit/{id}", name="admin_default_profile_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER') and user.isEqualTo(staff)")
      */
@@ -84,7 +84,7 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route("/password_change/{id}", name="admin_default_password_change")
+     * @Route("/password_change/{id}", name="admin_default_password_change", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_USER') and user.isEqualTo(staff)")
      */
