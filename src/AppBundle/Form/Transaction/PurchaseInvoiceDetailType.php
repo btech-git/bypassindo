@@ -15,6 +15,7 @@ class PurchaseInvoiceDetailType extends AbstractType
             ->add('itemName')
             ->add('quantity')
             ->add('unitPrice')
+            ->add('discount')
         ;
     }
 

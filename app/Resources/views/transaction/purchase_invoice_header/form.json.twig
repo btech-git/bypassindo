@@ -1,4 +1,6 @@
 {
+    "subTotal": "{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}",
+    "taxNominal": "{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}",
     "grandTotal": "{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}",
     "purchaseInvoiceDetails": {
         {%- for index, purchaseInvoiceDetail in purchaseInvoiceHeader.purchaseInvoiceDetails -%}
@@ -6,6 +8,7 @@
                 "itemName": "{{ purchaseInvoiceDetail.itemName|default }}",
                 "quantity": "{{ purchaseInvoiceDetail.quantity|default }}",
                 "unitPrice": "{{ purchaseInvoiceDetail.unitPrice|default|number_format(2) }}",
+                "discount": "{{ purchaseInvoiceDetail.discount|default|number_format(2) }}",
                 "total": "{{ purchaseInvoiceDetail.total|default|number_format(2) }}"
             }
             {%- if not loop.last -%},{%- endif -%}

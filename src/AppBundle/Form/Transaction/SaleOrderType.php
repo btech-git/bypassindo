@@ -18,6 +18,7 @@ class SaleOrderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('codeNumberOrdinal')
             ->add('transactionDate', 'date')
             ->add('quotationNumber')
             ->add('purchaseOrderDate', 'date')

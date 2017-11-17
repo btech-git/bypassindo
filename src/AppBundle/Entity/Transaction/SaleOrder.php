@@ -96,6 +96,11 @@ class SaleOrder extends CodeNumberEntity
      */
     private $quantity;
     /**
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $remaining;
+    /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
@@ -195,7 +200,7 @@ class SaleOrder extends CodeNumberEntity
     
     public function getCodeNumberConstant()
     {
-        return 'SO';
+        return 'SPK';
     }
     
     public function getId() { return $this->id; }
@@ -241,6 +246,9 @@ class SaleOrder extends CodeNumberEntity
 
     public function getQuantity() { return $this->quantity; }
     public function setQuantity($quantity) { $this->quantity = $quantity; }
+
+    public function getRemaining() { return $this->remaining; }
+    public function setRemaining($remaining) { $this->remaining = $remaining; }
 
     public function getUnitPrice() { return $this->unitPrice; }
     public function setUnitPrice($unitPrice) { $this->unitPrice = $unitPrice; }

@@ -11,10 +11,10 @@ use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 
 /**
- * @ORM\Table(name="transaction_purchase_invoice_detail")
+ * @ORM\Table(name="transaction_purchase_invoice_detail_workshop")
  * @ORM\Entity
  */
-class PurchaseInvoiceDetail
+class PurchaseInvoiceDetailWorkshop
 {
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -37,11 +37,16 @@ class PurchaseInvoiceDetail
     private $unitPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $discount;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $total;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchaseInvoiceDetails")
+     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchaseInvoiceDetailWorkshops")
      * @Assert\NotNull()
      */
     private $purchaseInvoiceHeader;
@@ -61,6 +66,9 @@ class PurchaseInvoiceDetail
     public function getUnitPrice() { return $this->unitPrice; }
     public function setUnitPrice($unitPrice) { $this->unitPrice = $unitPrice; }
 
+    public function getDiscount() { return $this->discount; }
+    public function setDiscount($discount) { $this->discount = $discount; }
+
     public function getTotal() { return $this->total; }
     public function setTotal($total) { $this->total = $total; }
 
@@ -69,6 +77,6 @@ class PurchaseInvoiceDetail
 
     public function sync()
     {
-        $this->total = $this->quantity * $this->unitPrice;
+        $this->total = $this->quantity * $this->unitPrice - $this->discount;
     }
 }

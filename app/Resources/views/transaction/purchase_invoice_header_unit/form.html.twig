@@ -1,0 +1,156 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% import _self as self %}
+
+{% macro details_row(object) %}
+    <tr data-index="{{ object.vars.name }}">
+        <td>
+            {{ form_row(object.itemName, {'label': false}) }}
+        </td>
+        <td>
+            {{ form_row(object.quantity, {'label': false, 'attr': {'data-name': 'quantity'} }) }}
+        </td>
+        <td>
+            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
+        </td>
+        <td>
+            {{ form_row(object.discount, {'label': false, 'attr': {'data-name': 'discount', 'data-bind-target': '[data-name=discount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
+        </td>
+        <td class="text-right">
+            <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
+        </td>
+        <td>
+            <button type="button" class="btn btn-info remove-purchase-invoice-detail-unit-prototype">Delete</button>
+        </td>
+    </tr>
+{% endmacro %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label>Invoice Pembelian #</label>
+                    <div>{{ purchaseInvoiceHeader.codeNumber }}</div>
+                </div>
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.taxInvoiceNumber, {'label': 'Faktur Pajak Supplier'}) }}
+                {{ form_row(form.taxInvoiceDate, {'label': 'Tanggal Faktur Pajak'}) }}
+                {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}
+            </div>
+        </div>
+        
+        <div>{{ form_row(form.note) }}</div>
+            
+        <hr />
+        
+        <div>
+            <button type="button" class="btn btn-default" id="add-purchase-invoice-detail-unit-prototype">Add Detail</button>
+        </div>
+        
+        <br />
+        
+        <table class="table table-bordered" id="purchase-invoice-detail-unit-list">
+            <thead>
+                <tr class="bg-info">
+                    <th>Item Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Disc (Rp.)</th>
+                    <th>Total</th>
+                    <th style="width: 0"></th>
+                </tr>
+            </thead>
+            <tbody data-prototype="{{ self.details_row(form.purchaseInvoiceDetailUnits.vars.prototype)|e }}">
+                {% for purchaseInvoiceDetailUnit in form.purchaseInvoiceDetailUnits %}
+                    {{ self.details_row(purchaseInvoiceDetailUnit) }}
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">Grand Total</td>
+                    <td class="text-right"><span data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+               
+    {{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        jQuery(function($) {
+            function bind() {
+                $.ajax({
+                    method: "POST",
+                    url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
+                    data: $("form").serialize(),
+                    dataType: "JSON",
+                    success: function(data) {
+                        $.each(data.purchaseInvoiceDetailUnits, function(index, purchaseInvoiceDetailUnit) {
+                            $("[data-name=total-" + index + "]", "#purchase-invoice-detail-unit-list").text(purchaseInvoiceDetailUnit.total);
+                        });
+                        $("[data-name=sub-total]", "#purchase-invoice-detail-unit-list").text(data.subTotal);
+                        $("[data-name=tax-nominal]", "#purchase-invoice-detail-unit-list").text(data.taxNominal);
+                        $("[data-name=grand-total]", "#purchase-invoice-detail-unit-list").text(data.grandTotal);
+                    }
+                });
+            }
+            
+            var table = $("#purchase-invoice-detail-unit-list");
+            var tableBody = $("tbody", table);
+            var tableFoot = $("tfoot", table);
+            
+            tableBody.on("change", "[data-name=quantity]", function() {
+                bind();
+            });
+            tableBody.on("change", "[data-name=price]", function() {
+                bind();
+            });
+            tableBody.on("change", "[data-name=discount]", function() {
+                bind();
+            });
+            tableFoot.on("change", "[data-name=is-tax]", function() {
+                bind();
+            });
+            tableBody.on("click", ".remove-purchase-invoice-detail-unit-prototype", function() {
+                $(this).closest("tr").remove();
+                bind();
+            });
+            
+            $("#add-purchase-invoice-detail-unit-prototype").on("click", function() {
+                var name = "{{ form.purchaseInvoiceDetailUnits.vars.prototype.vars.name }}";
+                var rows = tableBody.children("tr");
+                var index = Math.max({{ purchaseInvoiceDetailUnitsCount }}, (rows.length > 0) ? parseInt(rows.last().attr("data-index")) + 1 : 0);
+                tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
+                    var quantityPrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.quantity.vars.id }}");
+                    quantityPrototype.attr("value", $("[data-name=purchase-invoice-detail-unit-quantity]", "#purchase-invoice-header-info").text());
+                });
+                bind();
+            });
+        });
+    </script>
+{% endblock %}

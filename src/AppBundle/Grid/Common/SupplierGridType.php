@@ -51,6 +51,10 @@ class SupplierGridType extends DataGridType
     {
         $criteria = Criteria::create();
 
+        if (array_key_exists('business_type', $options)) {
+            $criteria->andWhere($criteria->expr()->eq('businessType', $options['business_type']));
+        }
+        
         $builder->processSearch(function($values, $operator, $field) use ($criteria) {
             $operator::search($criteria, $field, $values);
         });

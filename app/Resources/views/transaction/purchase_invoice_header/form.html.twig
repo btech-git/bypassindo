@@ -18,6 +18,10 @@
             {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
             <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
+        <td>
+            {{ form_row(object.discount, {'label': false, 'attr': {'data-name': 'discount', 'data-bind-target': '[data-name=discount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
+        </td>
         <td class="text-right">
             <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
         </td>
@@ -32,6 +36,7 @@
         <td data-name="item-name">{{ object.itemName|default }}</td>
         <td data-name="quantity">{{ object.quantity|default }}</td>
         <td class="text-right" data-name="unit-price">{{ object.unitPrice|default|number_format(2) }}</td>
+        <td class="text-right" data-name="discount">{{ object.discount|default|number_format(2) }}</td>
         <td class="text-right" data-name="total">{{ object.total|default|number_format(2) }}</td>
     </tr>
 {% endmacro %}
@@ -44,8 +49,10 @@
                     <label>Invoice Pembelian #</label>
                     <div>{{ purchaseInvoiceHeader.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
-                {{ form_row(form.isPurchaseWorkshopHeader, {'label': false}) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.taxInvoiceNumber, {'label': 'Faktur Pajak Supplier'}) }}
+                {{ form_row(form.taxInvoiceDate, {'label': 'Tanggal Faktur Pajak'}) }}
+                {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}
                 {#<div class="form-group">
                     <button type="button" class="btn btn-default">Clear Selection</button>
                 </div>#}
@@ -62,7 +69,7 @@
                 </div>#}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.supplierInvoiceNumber) }}
+                {{ form_row(form.isPurchaseWorkshopHeader, {'label': false}) }}
                 {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'} }) }}
                 <div class="form-group" id="supplier-info">
                     <div>
@@ -85,19 +92,19 @@
                         <span data-name="code-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.codeNumber|default }}</span>
                     </div>
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
+                        <label>Brand:</label>
                         <span data-name="sale-order-vehicle-brand">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
+                        <label>Serial Number:</label>
                         <span data-name="sale-order-vehicle-serial-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
+                        <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
                     </div>
                 </div>
@@ -120,6 +127,7 @@
                     <th>Item Name</th>
                     <th>Quantity</th>
                     <th>Price</th>
+                    <th>Disc (Rp.)</th>
                     <th>Total</th>
                     <th style="width: 0"></th>
                 </tr>
@@ -131,7 +139,20 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="3">Grand Total</td>
+                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">Grand Total</td>
                     <td class="text-right"><span data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
@@ -144,6 +165,7 @@
                     <th>Item Name</th>
                     <th>Quantity</th>
                     <th>Price</th>
+                    <th>Disc (Rp.)</th>
                     <th>Total</th>
                 </tr>
             </thead>
@@ -154,7 +176,20 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="3">Grand Total</td>
+                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">Grand Total</td>
                     <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
                 </tr>
             </tfoot>
@@ -206,6 +241,8 @@
                         $.each(data.purchaseInvoiceDetails, function(index, purchaseInvoiceDetail) {
                             $("[data-name=total-" + index + "]", "#purchase-invoice-detail-list").text(purchaseInvoiceDetail.total);
                         });
+                        $("[data-name=sub-total]", "#purchase-invoice-detail-list").text(data.subTotal);
+                        $("[data-name=tax-nominal]", "#purchase-invoice-detail-list").text(data.taxNominal);
                         $("[data-name=grand-total]", "#purchase-invoice-detail-list").text(data.grandTotal);
                         var infoTable = $("#purchase-invoice-detail-info-list");
                         var infoTableBody = $("tbody", infoTable);
@@ -216,9 +253,12 @@
                                 $("[data-name=item-name]", prototype).text(purchaseInvoiceDetail.itemName);
                                 $("[data-name=quantity]", prototype).text(purchaseInvoiceDetail.quantity);
                                 $("[data-name=unit-price]", prototype).text(purchaseInvoiceDetail.unitPrice);
+                                $("[data-name=discount]", prototype).text(purchaseInvoiceDetail.discount);
                                 $("[data-name=total]", prototype).text(purchaseInvoiceDetail.total);
                             });
                         });
+                        $("[data-name=sub-total]", "#purchase-invoice-detail-list").text(data.subTotal);
+                        $("[data-name=tax-nominal]", "#purchase-invoice-detail-list").text(data.taxNominal);
                         $("[data-name=grand-total]", infoTable).text(data.grandTotal);
                     }
                 });
@@ -248,11 +288,18 @@
             
             var table = $("#purchase-invoice-detail-list");
             var tableBody = $("tbody", table);
+            var tableFoot = $("tfoot", table);
             
             tableBody.on("change", "[data-name=quantity]", function() {
                 bind();
             });
             tableBody.on("change", "[data-name=price]", function() {
+                bind();
+            });
+            tableBody.on("change", "[data-name=discount]", function() {
+                bind();
+            });
+            tableFoot.on("change", "[data-name=is-tax]", function() {
                 bind();
             });
             tableBody.on("click", ".remove-purchase-invoice-detail-prototype", function() {

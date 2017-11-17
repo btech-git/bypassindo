@@ -8,10 +8,7 @@
     {{ form_start(form) }}
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>SPK #</label>
-                    <div>{{ saleOrder.codeNumber }}</div>
-                </div>
+                {{ form_row(form.codeNumberOrdinal, {'label' : 'SPK #' }) }}
                 {{ form_row(form.transactionDate, {'label' : 'Tanggal SPK' }) }}
                 {{ form_row(form.quotationNumber, {'label' : 'Surat Penawaran #' }) }}
                 {{ form_row(form.purchaseOrderDate, {'label' : 'Tanggal PO' }) }}

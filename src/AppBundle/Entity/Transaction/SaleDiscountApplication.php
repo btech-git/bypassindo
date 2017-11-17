@@ -11,6 +11,8 @@ use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Customer;
 use AppBundle\Entity\Master\FinanceCompany;
+use AppBundle\Entity\Master\VehicleModel;
+use AppBundle\Entity\Master\Supplier;
 
 /**
  * @ORM\Table(name="transaction_sale_discount_application")
@@ -22,12 +24,12 @@ class SaleDiscountApplication extends CodeNumberEntity
     const DEAL_STATUS_NEGOTIATION = 'negotiation';
     const DEAL_STATUS_HOT = 'hot';
     const DEAL_STATUS_CONTRACT = 'contract';
-    const CUSTOMER_STATUS_HINO = 'hino';
-    const CUSTOMER_STATUS_MITSUBISHI = 'mitsubishi';
-    const CUSTOMER_STATUS_NISSAN = 'U D. Trucks';
-    const CUSTOMER_STATUS_ISUZU = 'isuzu';
-    const CUSTOMER_STATUS_BENZ = 'benz';
-    const CUSTOMER_STATUS_OTHER = 'other';
+    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
+    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
+    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
+    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
+    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
+    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
     const PAYMENT_METHOD_CASH = 'cash';
     const PAYMENT_METHOD_FINANCE_COMPANY = 'finance company';
     
@@ -61,11 +63,6 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $customerStatusName;
     /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
-     */
-    private $requestType;
-    /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
@@ -75,11 +72,6 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $requestUsageType;
-    /**
-     * @ORM\Column(type="string", length=60)
-     * @Assert\NotNull()
-     */
-    private $requestWorkshop;
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
@@ -219,6 +211,15 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
      */
     private $financeCompany;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
+     * @Assert\NotNull()
+     */
+    private $vehicleModel;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
+     */
+    private $supplier;
     
     public function __construct()
     {
@@ -246,17 +247,11 @@ class SaleDiscountApplication extends CodeNumberEntity
     public function getCustomerStatusName() { return $this->customerStatusName; }
     public function setCustomerStatusName($customerStatusName) { $this->customerStatusName = $customerStatusName; }
 
-    public function getRequestType() { return $this->requestType; }
-    public function setRequestType($requestType) { $this->requestType = $requestType; }
-
     public function getRequestQuantity() { return $this->requestQuantity; }
     public function setRequestQuantity($requestQuantity) { $this->requestQuantity = $requestQuantity; }
 
     public function getRequestUsageType() { return $this->requestUsageType; }
     public function setRequestUsageType($requestUsageType) { $this->requestUsageType = $requestUsageType; }
-
-    public function getRequestWorkshop() { return $this->requestWorkshop; }
-    public function setRequestWorkshop($requestWorkshop) { $this->requestWorkshop = $requestWorkshop; }
 
     public function getCompetitorBrand() { return $this->competitorBrand; }
     public function setCompetitorBrand($competitorBrand) { $this->competitorBrand = $competitorBrand; }
@@ -341,4 +336,10 @@ class SaleDiscountApplication extends CodeNumberEntity
 
     public function getFinanceCompany() { return $this->financeCompany; }
     public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }
+    
+    public function getVehicleModel() { return $this->vehicleModel; }
+    public function setVehicleModel(VehicleModel $vehicleModel = null) { $this->vehicleModel = $vehicleModel; }
+    
+    public function getSupplier() { return $this->supplier; }
+    public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
 }

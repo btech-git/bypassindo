@@ -11,7 +11,9 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
-use AppBundle\Entity\Transaction\PurchaseInvoiceDetail;
+use AppBundle\Entity\Transaction\PurchaseInvoiceDetailUnit;
+use AppBundle\Entity\Transaction\PurchaseInvoiceDetailGeneral;
+use AppBundle\Entity\Transaction\PurchaseInvoiceDetailWorkshop;
 use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
 use AppBundle\Entity\Master\Supplier;
 
@@ -22,7 +24,10 @@ class PurchaseInvoiceHeaderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('supplierInvoiceNumber')
+            ->add('taxInvoiceDate', 'date')
+            ->add('taxInvoiceNumber')
             ->add('note')
+            ->add('isTax')
             ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
             ->add('purchaseInvoiceDetails', CollectionType::class, array(
                 'entry_type' => PurchaseInvoiceDetailType::class,

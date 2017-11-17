@@ -88,10 +88,38 @@
                 {{ form_row(form.customerStatusName, {'label': false}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.requestType, {'label' : 'Type Permintaan' }) }}
+                {{ form_row(form.vehicleModel, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#vehicle-model-dialog'}, 'label' : 'Tipe Permintaan' }) }}
+                <div class="form-group" id="vehicle-model-info">
+                    <div>
+                        <label>Manufacture Code:</label>
+                        <span data-name="vehicle-model-manufacture-code">{{ saleDiscountApplication.vehicleModel.manufactureCode|default }}</span>
+                    </div>
+                    <div>
+                        <label>VOS Model:</label>
+                        <span data-name="vehicle-model-vos-model-name">{{ saleDiscountApplication.vehicleModel.vosModelName|default }}</span>
+                    </div>
+                    <div>
+                        <label>DMS Variant:</label>
+                        <span data-name="vehicle-model-dms-variant-name">{{ saleDiscountApplication.vehicleModel.dmsVariantName|default }}</span>
+                    </div>
+                </div>
                 {{ form_row(form.requestQuantity, {'label' : 'Quantity Permintaan' }) }}
                 {{ form_row(form.requestUsageType, {'label' : 'Type of Body / Usage' }) }}
-                {{ form_row(form.requestWorkshop, {'label' : 'Karoseri' }) }}
+                {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'}, 'label' : 'Karoseri' }) }}
+                <div class="form-group" id="supplier-info">
+                    <div>
+                        <label>Perusahaan:</label>
+                        <span data-name="supplier-name">{{ purchaseWorkshopHeader.supplier.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Contact Person:</label>
+                        <span data-name="supplier-contact-person">{{ purchaseWorkshopHeader.supplier.contactPerson|default }}</span>
+                    </div>
+                    <div>
+                        <label>Alamat:</label>
+                        <span data-name="supplier-office-address">{{ purchaseWorkshopHeader.supplier.officeAddress|default }}</span>
+                    </div>
+                </div>
                 {{ form_row(form.competitorBrand) }}
                 {{ form_row(form.competitorType) }}
                 {{ form_row(form.competitorDealer) }}
@@ -246,6 +274,35 @@
                 </div>
             </div>
         </div>
+                    
+        <div id="vehicle-model-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Vehicle Model List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="vehicle-model-grid" data-grid="{{ path('common_vehicle_model_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                    
+        <div id="supplier-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Supplier List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="supplier-grid" data-grid="{{ path('common_supplier_grid', {'business_type': constant('AppBundle\\Entity\\Master\\Supplier::BUSINESS_TYPE_WORKSHOP') }) }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+              
     {{ form_end(form) }}
 {% endblock %}
 
@@ -268,7 +325,7 @@
             
             function setCustomerStatusVisibility(sel) {
                 $("#{{ form.customerStatusName.vars.id }}").parent().hide();
-                if (sel.val() === "{{ constant('CUSTOMER_STATUS_OTHER', saleDiscountApplication) }}") {
+                if (sel.val() === "{{ constant('CUSTOMER_STATUS_TYPE_OTHER', saleDiscountApplication) }}") {
                     $("#{{ form.customerStatusName.vars.id }}").parent().show();
                 }
             }
@@ -326,6 +383,20 @@
                 $("[data-name=customer-category-three-nissan-population]", "#customer-info").text($(this).attr("data-field-category-three-nissan-population"));
                 $("[data-name=customer-category-three-isuzu-population]", "#customer-info").text($(this).attr("data-field-category-three-isuzu-population"));
                 $("[data-name=customer-category-three-benz-population]", "#customer-info").text($(this).attr("data-field-category-three-benz-population"));
+            });
+            $("#vehicle-model-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#vehicle-model-dialog").modal("hide");
+                $("#{{ form.vehicleModel.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=vehicle-model-manufacture-code]", "#vehicle-model-info").text($(this).attr("data-field-manufacture-code"));
+                $("[data-name=vehicle-model-vos-model-name]", "#vehicle-model-info").text($(this).attr("data-field-vos-model-name"));
+                $("[data-name=vehicle-model-dms-variant-name]", "#vehicle-model-info").text($(this).attr("data-field-dms-variant-name"));
+            });
+            $("#supplier-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#supplier-dialog").modal("hide");
+                $("#{{ form.supplier.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=supplier-name]", "#supplier-info").text($(this).attr("data-field-name"));
+                $("[data-name=supplier-contact-person]", "#supplier-info").text($(this).attr("data-field-contact-person"));
+                $("[data-name=supplier-office-address]", "#supplier-info").text($(this).attr("data-field-office-address"));
             });
         });
     </script>

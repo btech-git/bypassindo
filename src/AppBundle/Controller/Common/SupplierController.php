@@ -22,11 +22,17 @@ class SupplierController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Supplier::class);
 
+        if ($request->query->has('business_type')) {
+            $options['business_type'] = $request->query->get('business_type');
+        }
+        
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(SupplierGridType::class, $repository, $request);
+        $grid->build(SupplierGridType::class, $repository, $request, $options);
 
         return $this->render('common/supplier/grid.html.twig', array(
             'grid' => $grid->createView(),

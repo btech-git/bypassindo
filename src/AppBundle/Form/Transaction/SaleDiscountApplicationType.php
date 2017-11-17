@@ -13,6 +13,8 @@ use LibBundle\Form\Type\EntityTextType;
 use LibBundle\Util\ConstantValueList;
 use AppBundle\Entity\Transaction\SaleDiscountApplication;
 use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Master\VehicleModel;
+use AppBundle\Entity\Master\Supplier;
 
 class SaleDiscountApplicationType extends AbstractType
 {
@@ -28,14 +30,12 @@ class SaleDiscountApplicationType extends AbstractType
             ->add('dealDate', 'date')
             ->add('customerStatusType', ChoiceType::class, array(
                 'expanded' => true,
-                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'CUSTOMER_STATUS'),
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'CUSTOMER_STATUS_TYPE'),
                 'choices_as_values' => true,
             ))
             ->add('customerStatusName')
-            ->add('requestType')
             ->add('requestQuantity')
             ->add('requestUsageType')
-            ->add('requestWorkshop')
             ->add('competitorBrand')
             ->add('competitorType')
             ->add('competitorDealer')
@@ -63,6 +63,8 @@ class SaleDiscountApplicationType extends AbstractType
             ->add('mediatorPrice')
             ->add('note')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))
+            ->add('vehicleModel', EntityTextType::class, array('class' => VehicleModel::class))
+            ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {

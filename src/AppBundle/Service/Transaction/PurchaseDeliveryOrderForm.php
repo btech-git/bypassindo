@@ -4,6 +4,7 @@ namespace AppBundle\Service\Transaction;
 
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Repository\Transaction\PurchaseDeliveryOrderRepository;
+use AppBundle\Repository\Transaction\SaleOrderRepository;
 
 class PurchaseDeliveryOrderForm
 {
@@ -35,6 +36,14 @@ class PurchaseDeliveryOrderForm
     
     private function sync(PurchaseDeliveryOrder $purchaseDeliveryOrder)
     {
+        $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
+        $currentPurchaseDeliveryOrders = $saleOrder->getPurchaseDeliveryOrders();
+        $oldPurchaseDeliveryOrders = $currentPurchaseDeliveryOrders->getValues();
+        if (!in_array($purchaseDeliveryOrder, $oldPurchaseDeliveryOrders)) {
+            $currentPurchaseDeliveryOrders->add($purchaseDeliveryOrder);
+        }
+        $purchaseDeliveryOrdersCount = $currentPurchaseDeliveryOrders->count();
+        $saleOrder->setRemaining($saleOrder->getQuantity() - $purchaseDeliveryOrdersCount);
     }
     
     public function save(PurchaseDeliveryOrder $purchaseDeliveryOrder)
@@ -56,6 +65,13 @@ class PurchaseDeliveryOrderForm
     
     protected function beforeDelete(PurchaseDeliveryOrder $purchaseDeliveryOrder)
     {
-        $this->sync($purchaseDeliveryOrder);
+        $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
+        $currentPurchaseDeliveryOrders = $saleOrder->getPurchaseDeliveryOrders();
+        $oldPurchaseDeliveryOrders = $currentPurchaseDeliveryOrders->getValues();
+        if (in_array($purchaseDeliveryOrder, $oldPurchaseDeliveryOrders)) {
+            $currentPurchaseDeliveryOrders->removeElement($purchaseDeliveryOrder);
+        }
+        $purchaseDeliveryOrdersCount = $currentPurchaseDeliveryOrders->count();
+        $saleOrder->setRemaining($saleOrder->getQuantity() - $purchaseDeliveryOrdersCount);
     }
 }

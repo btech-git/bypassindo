@@ -38,13 +38,18 @@ class PurchaseInvoiceHeaderForm
     
     private function sync(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
-//        $grandTotal = 0.00;
-//        foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetails() as $purchaseInvoiceDetail) {
-//            $total = $purchaseInvoiceDetail->getQuantity() * $purchaseInvoiceDetail->getUnitPrice();
-//            $purchaseInvoiceDetail->setTotal($total);
-//            $grandTotal += $total;
-//        }
-//        $purchaseInvoiceHeader->setGrandTotal($grandTotal);
+        $subTotal = 0.00;
+        foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetails() as $purchaseInvoiceDetail) {
+            $total = $purchaseInvoiceDetail->getQuantity() * $purchaseInvoiceDetail->getUnitPrice();
+            $purchaseInvoiceDetail->setTotal($total);
+            $subTotal += $total;
+        }
+        $purchaseInvoiceHeader->setSubTotal($subTotal);
+        $taxNominal = $purchaseInvoiceHeader->getIsTax() ? $subTotal * 0.1 : 0;
+        $purchaseInvoiceHeader->setTaxNominal($taxNominal);
+        $grandTotal = $subTotal + $taxNominal;
+        $purchaseInvoiceHeader->setGrandTotal($grandTotal);
+        
         $purchaseWorkshopHeader = $purchaseInvoiceHeader->getPurchaseWorkshopHeader();
         if ($purchaseInvoiceHeader->getIsPurchaseWorkshopHeader() && $purchaseWorkshopHeader !== null) {
             $purchaseInvoiceHeader->setSupplier($purchaseWorkshopHeader->getSupplier());

@@ -19,9 +19,11 @@ class SaleOrderForm
         list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
         
         if (empty($saleOrder->getId())) {
-            $lastSaleOrder = $this->saleOrderRepository->findRecentBy($year, $month);
-            $currentSaleOrder = ($lastSaleOrder === null) ? $saleOrder : $lastSaleOrder;
-            $saleOrder->setCodeNumberToNext($currentSaleOrder->getCodeNumber(), $year, $month);
+//            $lastSaleOrder = $this->saleOrderRepository->findRecentBy($year, $month);
+//            $currentSaleOrder = ($lastSaleOrder === null) ? $saleOrder : $lastSaleOrder;
+//            $saleOrder->setCodeNumberToNext($saleOrder->getCodeNumber(), $year, $month);
+            $saleOrder->setCodeNumberMonth($month);
+            $saleOrder->setCodeNumberYear($year);
             $saleOrder->setStaffFirst($staff);
             $saleOrder->setVehicleBrand('HINO');
         }
@@ -43,6 +45,8 @@ class SaleOrderForm
             $saleOrder->setLeasingTerm('');
             $saleOrder->setLeasingMonthlyNominal('0.00');
         }
+        $purchaseDeliveryOrdersCount = $saleOrder->getPurchaseDeliveryOrders()->count();
+        $saleOrder->setRemaining($saleOrder->getQuantity() - $purchaseDeliveryOrdersCount);
     }
     
     public function save(SaleOrder $saleOrder)
