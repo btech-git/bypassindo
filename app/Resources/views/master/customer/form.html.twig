@@ -8,8 +8,8 @@
     {{ form_start(form) }}
         <div class="row">
             <div class="col-sm-6">
-                {{ form_row(form.isPersonal, {'label' : 'Perorangan' }) }}
-                {{ form_row(form.isCompany, {'label' : 'Perusahaan' }) }}
+                {{ form_row(form.isPersonal, {'label' : 'Perorangan', 'attr': {'data-choice-group': 'category-type'} }) }}
+                {{ form_row(form.isCompany, {'label' : 'Perusahaan', 'attr': {'data-choice-group': 'category-type'} }) }}
                 {{ form_row(form.name) }}
                 {{ form_row(form.businessField) }}
                 {{ form_row(form.contactPerson) }}
