@@ -4,6 +4,7 @@ namespace AppBundle\Form\Master;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use AppBundle\Entity\Master\Customer;
 
@@ -13,7 +14,7 @@ class CustomerType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('birthDate', 'date')
+            ->add('birthDate', BirthdayType::class)
             ->add('officeAddress')
             ->add('officeCity')
             ->add('officeProvince')
