@@ -1,0 +1,80 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Sale Order Stock Referring' %}
+
+{% block content %}
+    {{ form_start(form) }}
+        <div class="col-sm-6">
+            <div>
+                <label>SPK #</label>
+                <div>{{ saleOrder.codeNumber|default }}</div>
+            </div>
+            <div>
+                <label>Customer</label>
+                <div>{{ saleOrder.customer.name|default }}</div>
+            </div>
+            <div>
+                <label>Contact Person</label>
+                <div>{{ saleOrder.customer.contactPerson|default }}</div>
+            </div>
+            <div>
+                <label>Quantity</label>
+                <div>{{ saleOrder.quantity|default }}</div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div>
+                <label>Manufacture Code</label>
+                <div>{{ saleOrder.vehicleModel.manufactureCode|default }}</div>
+            </div>
+            <div>
+                <label>VOS Model</label>
+                <div>{{ saleOrder.vehicleModel.vosModelName|default }}</div>
+            </div>
+            <div>
+                <label>DMS Variant</label>
+                <div>{{ saleOrder.vehicleModel.dmsVariantName|default }}</div>
+            </div>
+            <div>
+                <label>Tahun Pembuatan </label>
+                <div>{{ saleOrder.vehicleSerialNumber|default }}</div>
+            </div>
+            <div>
+                <label>Warna</label>
+                <div>{{ saleOrder.vehicleColor|default }}</div>
+            </div>
+        </div>
+                
+        <br />
+        <hr />
+        <br />
+        
+        <table class="table table-bordered">
+            <thead>
+                <tr class="bg-info">
+                    <th style="width: 0"></th>
+                    <th>DO #</th>
+                    <th>Year</th>
+                    <th>Rangka #</th>
+                    <th>Mesin #</th>
+                    <th>Deskripsi</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, detailForm in form.details %}
+                    {% set purchaseDeliveryOrder = form.details.vars.choices[index].data %}
+                    <tr>
+                        <td>{{ form_widget(detailForm, {'label': false}) }}</td>
+                        <td>{{ purchaseDeliveryOrder.codeNumber|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.vehicleDescription|default }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
+    {{ form_end(form) }}
+{% endblock %}

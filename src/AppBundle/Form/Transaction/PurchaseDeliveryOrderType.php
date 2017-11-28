@@ -7,6 +7,10 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Transaction\SaleOrder;
@@ -23,7 +27,22 @@ class PurchaseDeliveryOrderType extends AbstractType
             ->add('vehicleMachineNumber', null, array('label' => false))
             ->add('vehicleDescription', null, array('label' => false))
             ->add('note')
-            ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
+            ->add('isStock', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => array('Non-stok' => false, 'Stok' => true),
+                'choices_as_values' => true,
+            ))  
+            ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class, 'constraints' => array(
+                new Callback(function($object, ExecutionContextInterface $context) {
+                    $purchaseDeliveryOrder = $context->getRoot()->getData();
+                    if (!$purchaseDeliveryOrder->getIsStock()) {
+                        $violations = $context->getValidator()->inContext($context)->validate($object, new NotNull());
+                        foreach ($violations as $violation) {
+                            $context->getViolations()->add($violation);
+                        }
+                    }
+                }),
+            )))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {

@@ -7,8 +7,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Common\CodeNumberEntity;
-use AppBundle\Entity\Admin\Staff;
 
 /**
  * @ORM\Table(name="transaction_purchase_invoice_detail_unit")
@@ -51,10 +49,10 @@ class PurchaseInvoiceDetailUnit
      */
     private $purchaseInvoiceHeader;
     /**
-     * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="purchaseInvoiceDetailUnits")
+     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="purchaseInvoiceDetailUnits")
      * @Assert\NotNull()
      */
-    private $receiveOrder;
+    private $purchaseDeliveryOrder;
     
     public function __construct()
     {
@@ -80,8 +78,8 @@ class PurchaseInvoiceDetailUnit
     public function getPurchaseInvoiceHeader() { return $this->purchaseInvoiceHeader; }
     public function setPurchaseInvoiceHeader(PurchaseInvoiceHeader $purchaseInvoiceHeader = null) { $this->purchaseInvoiceHeader = $purchaseInvoiceHeader; }
 
-    public function getReceiveOrder() { return $this->receiveOrder; }
-    public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
+    public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
+    public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
 
     public function sync()
     {

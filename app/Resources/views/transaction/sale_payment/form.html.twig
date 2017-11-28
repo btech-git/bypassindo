@@ -23,7 +23,7 @@
                 {{ form_row(form.saleInvoice, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-invoice-dialog'} }) }}
                 <div class="form-group" id="sale-invoice-info">
                     <div>
-                        <label>SO #:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ salePayment.saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>

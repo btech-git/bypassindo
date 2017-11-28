@@ -16,6 +16,7 @@
                 {{ form_row(form.reference, {'label': 'DO HMSI #'}) }}
             </div>
             <div class="col-sm-6">
+                {{ form_row(form.isStock, {'label' : 'Unit yang dijual' }) }}
                 {{ form_row(form.saleOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-order-dialog'}, 'label': 'SPK' }) }}
                 <div class="form-group" id="sale-order-info">
                     <div>
@@ -91,6 +92,20 @@
     {{ parent() }}
     <script>
         jQuery(function($) {
+            function setSaleOrderVisibility(sel) {
+                $("#{{ form.saleOrder.vars.id }}").parent().hide();
+                $("#sale-order-info").hide();
+                if (sel.val() === "0") {
+                    $("#{{ form.saleOrder.vars.id }}").parent().show();
+                    $("#sale-order-info").show();
+                }
+            }
+            
+            setSaleOrderVisibility($(":checked", "#{{ form.isStock.vars.id }}"));
+            $("#{{ form.isStock.vars.id }}").on("change", function() {
+                setSaleOrderVisibility($(":checked", this));
+            });
+            
             $("#sale-order-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#sale-order-dialog").modal("hide");
                 $("#{{ form.saleOrder.vars.id }}").val($(this).attr("data-field-id"));

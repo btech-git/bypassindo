@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Doctrine\Common\Collections\ArrayCollection;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\DeliveryInspectionHeader;
 use AppBundle\Entity\Transaction\DeliveryInspectionDetail;
@@ -48,7 +49,7 @@ class DeliveryInspectionHeaderType extends AbstractType
                     $deliveryInspectionDetailList[] = $deliveryInspectionDetail;
                 }
                 $inspectionItems = $options['inspectionItemRepository']->findAll();
-                $details = new \Doctrine\Common\Collections\ArrayCollection();
+                $details = new ArrayCollection();
                 foreach ($inspectionItems as $inspectionItem) {
                     if (($key = array_search($inspectionItem, $inspectionItemList)) !== false) {
                         $details->add($deliveryInspectionDetailList[$key]);

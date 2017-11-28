@@ -9,9 +9,12 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Constraints\Count;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Transaction\PurchaseInvoiceDetailUnit;
+use AppBundle\Entity\Master\Supplier;
 
 class PurchaseInvoiceHeaderUnitType extends AbstractType
 {
@@ -24,6 +27,7 @@ class PurchaseInvoiceHeaderUnitType extends AbstractType
             ->add('taxInvoiceNumber')
             ->add('note')
             ->add('isTax')
+            ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
             ->add('purchaseInvoiceDetailUnits', CollectionType::class, array(
                 'entry_type' => PurchaseInvoiceDetailUnitType::class,
                 'allow_add' => true,
@@ -31,6 +35,10 @@ class PurchaseInvoiceHeaderUnitType extends AbstractType
                 'by_reference' => false,
                 'prototype_data' => new PurchaseInvoiceDetailUnit(),
                 'label' => false,
+                'constraints' => array(
+                    new Valid(),
+                    new Count(array('min' => 1)),
+                ),
             ))
         ;
         $builder

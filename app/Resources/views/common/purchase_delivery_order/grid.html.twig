@@ -7,8 +7,8 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Tanggal</th>
-            <th data-group="saleOrder" data-field="codeNumber">SO #</th>
-            <th data-group="customer" data-field="name">Customer Name</th>
+            <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
+            <th data-group="customer" data-field="name">Customer</th>
             <th data-group="saleOrder" data-field="vehicleBrand">Merk</th>
             <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
         </tr>
@@ -33,8 +33,10 @@
                 data-field-customer-name="{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}"
                 data-field-sale-order-code-number="{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}"
                 data-field-sale-order-vehicle-brand="{{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}"
-                data-field-sale-order-vehicle-color="{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}">
-                
+                data-field-sale-order-vehicle-color="{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}"
+                data-field-sale-order-quantity="{{ purchaseDeliveryOrder.saleOrder.quantity|default }}"
+                data-field-sale-order-unit-price="{{ purchaseDeliveryOrder.saleOrder.unitPrice|default }}"
+                data-field-vehicle-model-manufacture-code="{{ purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>

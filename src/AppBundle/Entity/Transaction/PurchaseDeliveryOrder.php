@@ -56,6 +56,11 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      */
     private $note;
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isStock;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
      */
@@ -67,17 +72,21 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     private $staffLast;
     /**
      * @ORM\ManyToOne(targetEntity="SaleOrder", inversedBy="purchaseDeliveryOrders")
-     * @Assert\NotNull()
      */
     private $saleOrder;
     /**
      * @ORM\OneToMany(targetEntity="ReceiveOrder", mappedBy="purchaseDeliveryOrder")
      */
     private $receiveOrders;
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
+     */
+    private $purchaseInvoiceDetailUnits;
     
     public function __construct()
     {
         $this->receiveOrders = new ArrayCollection();
+        $this->purchaseInvoiceDetailUnits = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -108,6 +117,9 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
 
+    public function getIsStock() { return $this->isStock; }
+    public function setIsStock($isStock) { $this->isStock = $isStock; }
+
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
 
@@ -117,6 +129,16 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     public function getSaleOrder() { return $this->saleOrder; }
     public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
 
+    public function getPurchaseInvoiceDetailUnits() { return $this->purchaseInvoiceDetailUnits; }
+    public function setPurchaseInvoiceDetailUnits(Collection $purchaseInvoiceDetailUnits) { $this->purchaseInvoiceDetailUnits = $purchaseInvoiceDetailUnits; }
+
     public function getReceiveOrders() { return $this->receiveOrders; }
     public function setReceiveOrders(Collection $receiveOrders) { $this->receiveOrders = $receiveOrders; }
+    
+    public function sync()
+    {
+        if ($this->isStock) {
+            $this->saleOrder = null;
+        }
+    }
 }

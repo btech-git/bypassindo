@@ -37,9 +37,9 @@ class PurchaseInvoiceDetailWorkshop
     private $unitPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     * @Assert\NotNull() @Assert\EqualTo(0)
      */
-    private $discount;
+    private $discount = '0.00';
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -67,7 +67,6 @@ class PurchaseInvoiceDetailWorkshop
     public function setUnitPrice($unitPrice) { $this->unitPrice = $unitPrice; }
 
     public function getDiscount() { return $this->discount; }
-    public function setDiscount($discount) { $this->discount = $discount; }
 
     public function getTotal() { return $this->total; }
     public function setTotal($total) { $this->total = $total; }

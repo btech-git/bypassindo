@@ -9,10 +9,11 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\NotNull;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Transaction\PurchaseInvoiceDetailWorkshop;
-use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
+use AppBundle\Entity\Transaction\ReceiveWorkshop;
 
 class PurchaseInvoiceHeaderWorkshopType extends AbstractType
 {
@@ -24,14 +25,6 @@ class PurchaseInvoiceHeaderWorkshopType extends AbstractType
             ->add('taxInvoiceDate', 'date')
             ->add('taxInvoiceNumber')
             ->add('note')
-            ->add('purchaseInvoiceDetailWorkshops', CollectionType::class, array(
-                'entry_type' => PurchaseInvoiceDetailWorkshopType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype_data' => new PurchaseInvoiceDetailWorkshop(),
-                'label' => false,
-            ))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
@@ -39,13 +32,13 @@ class PurchaseInvoiceHeaderWorkshopType extends AbstractType
                 $options['service']->initialize($purchaseInvoiceHeader, $options['init']);
                 $form = $event->getForm();
                 $formOptions = array(
-                    'class' => PurchaseWorkshopHeader::class,
-                    'constraints' => array(new \Symfony\Component\Validator\Constraints\NotNull()),
+                    'class' => ReceiveWorkshop::class,
+                    'constraints' => array(new NotNull()),
                 );
                 if (!empty($purchaseInvoiceHeader->getId())) {
                     $formOptions['disabled'] = true;
                 }
-                $form->add('purchaseWorkshopHeader', EntityTextType::class, $formOptions);
+                $form->add('receiveWorkshop', EntityTextType::class, $formOptions);
             })
             ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
                 $purchaseInvoiceHeader = $event->getData();

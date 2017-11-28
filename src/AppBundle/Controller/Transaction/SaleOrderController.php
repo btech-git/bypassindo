@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Transaction\SaleOrder;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Form\Transaction\SaleOrderType;
+use AppBundle\Form\Transaction\SaleOrderStockHeaderType;
 use AppBundle\Grid\Transaction\SaleOrderGridType;
 
 /**
@@ -140,7 +142,7 @@ class SaleOrderController extends Controller
     }
     
     /**
-     * @Route("/{id}/memo", name="transaction_sale_order_memo")
+     * @Route("/{id}/memo", name="transaction_sale_order_memo", requirements={"id": "\d+"})
      * @Method("GET")
      * @Security("has_role('ROLE_TRANSACTION')")
      */
@@ -150,5 +152,33 @@ class SaleOrderController extends Controller
             'saleOrder' => $saleOrder,
         ));
     }
+    
+    /**
+     * @Route("/{id}/stock_referring", name="transaction_sale_order_stock_referring", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function stockReferringAction(Request $request, SaleOrder $saleOrder)
+    {
+        $saleOrderStockService = $this->get('app.transaction.sale_order_stock_form');
+        if (!$saleOrderStockService->isValidForStockReferring($saleOrder)) {
+            return $this->redirectToRoute('transaction_sale_order_index');
+        }
+        $form = $this->createForm(SaleOrderStockHeaderType::class, $saleOrder, array(
+            'service' => $saleOrderStockService,
+            'purchaseDeliveryOrderRepository' => $this->getDoctrine()->getManager()->getRepository(PurchaseDeliveryOrder::class),
+        ));
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $saleOrderStockService->save($saleOrder);
+
+            return $this->redirectToRoute('transaction_sale_order_show', array('id' => $saleOrder->getId()));
+        }
+
+        return $this->render('transaction/sale_order/stock_referring.html.twig', array(
+            'saleOrder' => $saleOrder,
+            'form' => $form->createView(),
+        ));
+    }
 }

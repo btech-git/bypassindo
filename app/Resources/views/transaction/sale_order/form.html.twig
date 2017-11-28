@@ -35,9 +35,9 @@
                         <span data-name="customer-office-address">{{ saleOrder.customer.officeAddress|default }}</span>
                     </div>
                 </div>
-                {{ form_row(form.isCash, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Tunai' }) }}
-                {{ form_row(form.isLeasing, {'attr': {'data-choice-group': 'payment-type'},'label' : 'Leasing' }) }}
-                {{ form_row(form.financeCompany, {'label' : 'Leasing' }) }}
+                {{ form_row(form.isCash, {'label': 'Tunai', 'attr': {'data-choice-group': 'payment-type'} }) }}
+                {{ form_row(form.isLeasing, {'label': 'Leasing', 'attr': {'data-choice-group': 'payment-type'} }) }}
+                {{ form_row(form.financeCompany, {'label': 'Leasing' }) }}
                 {{ form_row(form.leasingTerm, {'label': 'Tenor'}) }}
                 <div class="form-group">
                     {{ form_row(form.leasingMonthlyNominal, {'label': 'Angsuran /bulan (Rp.)', 'attr': {'data-bind-target': '[data-name=leasing-monthly-nominal-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}

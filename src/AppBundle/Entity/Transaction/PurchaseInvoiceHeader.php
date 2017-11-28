@@ -14,7 +14,6 @@ use AppBundle\Entity\Master\Supplier;
 /**
  * @ORM\Table(name="transaction_purchase_invoice_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository")
- * @Assert\Expression("(this.getIsPurchaseWorkshopHeader() and this.getPurchaseWorkshopHeader() != null) or (!this.getIsPurchaseWorkshopHeader() and this.getPurchaseWorkshopHeader() == null)")
  */
 class PurchaseInvoiceHeader extends CodeNumberEntity
 {
@@ -56,11 +55,6 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $note;
-    /**
-     * @ORM\Column(type="boolean")
-     * @Assert\NotNull()
-     */
-    private $isPurchaseWorkshopHeader;
     /**
      * @ORM\Column(name="sub_total", type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -107,9 +101,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $supplier;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseWorkshopHeader", inversedBy="purchaseInvoiceHeaders")
+     * @ORM\ManyToOne(targetEntity="ReceiveWorkshop", inversedBy="purchaseInvoiceHeaders")
      */
-    private $purchaseWorkshopHeader;
+    private $receiveWorkshop;
     /**
      * @ORM\OneToMany(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
      */
@@ -160,9 +154,6 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
 
-    public function getIsPurchaseWorkshopHeader() { return $this->isPurchaseWorkshopHeader; }
-    public function setIsPurchaseWorkshopHeader($isPurchaseWorkshopHeader = null) { $this->isPurchaseWorkshopHeader = $isPurchaseWorkshopHeader; }
-
     public function getSubTotal() { return $this->subTotal; }
     public function setSubTotal($subTotal) { $this->subTotal = $subTotal; }
     
@@ -190,8 +181,8 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getSupplier() { return $this->supplier; }
     public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
 
-    public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
-    public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }
+    public function getReceiveWorkshop() { return $this->receiveWorkshop; }
+    public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }
 
     public function getPurchasePaymentHeaders() { return $this->purchasePaymentHeaders; }
     public function setPurchasePaymentHeaders(Collection $purchasePaymentHeaders) { $this->purchasePaymentHeaders = $purchasePaymentHeaders; }

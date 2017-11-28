@@ -9,6 +9,8 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Valid;
+use Symfony\Component\Validator\Constraints\Count;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Transaction\PurchaseInvoiceDetailGeneral;
@@ -33,6 +35,10 @@ class PurchaseInvoiceHeaderGeneralType extends AbstractType
                 'by_reference' => false,
                 'prototype_data' => new PurchaseInvoiceDetailGeneral(),
                 'label' => false,
+                'constraints' => array(
+                    new Valid(),
+                    new Count(array('min' => 1)),
+                ),
             ))
         ;
         $builder

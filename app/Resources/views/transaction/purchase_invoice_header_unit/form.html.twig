@@ -8,19 +8,21 @@
 
 {% macro details_row(object) %}
     <tr data-index="{{ object.vars.name }}">
-        <td>
-            {{ form_row(object.itemName, {'label': false}) }}
+        <td class="hide">
+            {{ form_row(object.purchaseDeliveryOrder, {'label': false}) }}
         </td>
         <td>
-            {{ form_row(object.quantity, {'label': false, 'attr': {'data-name': 'quantity'} }) }}
+            <span data-name="item-name-{{ object.vars.name }}">{{ object.vars.value.itemName|default }}</span>
+        </td>
+        <td>
+            <span data-name="quantity-{{ object.vars.name }}">{{ object.vars.value.quantity|default|number_format(0) }}</span>
         </td>
         <td>
             {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
             <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
-        <td>
-            {{ form_row(object.discount, {'label': false, 'attr': {'data-name': 'discount', 'data-bind-target': '[data-name=discount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
+        <td class="text-right">
+            <span data-name="discount-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
         </td>
         <td class="text-right">
             <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
@@ -40,9 +42,26 @@
                     <div>{{ purchaseInvoiceHeader.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}
+            </div>
+            <div class="col-sm-6">
+                {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'} }) }}
+                <div class="form-group" id="supplier-info">
+                    <div>
+                        <label>Supplier:</label>
+                        <span data-name="supplier-name">{{ purchaseInvoiceHeader.supplier.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Contact Person:</label>
+                        <span data-name="supplier-contact-person">{{ purchaseInvoiceHeader.supplier.contactPerson|default }}</span>
+                    </div>
+                    <div>
+                        <label>Office Address:</label>
+                        <span data-name="supplier-office-address">{{ purchaseInvoiceHeader.supplier.officeAddress|default }}</span>
+                    </div>
+                </div>
                 {{ form_row(form.taxInvoiceNumber, {'label': 'Faktur Pajak Supplier'}) }}
                 {{ form_row(form.taxInvoiceDate, {'label': 'Tanggal Faktur Pajak'}) }}
-                {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}
             </div>
         </div>
         
@@ -51,7 +70,7 @@
         <hr />
         
         <div>
-            <button type="button" class="btn btn-default" id="add-purchase-invoice-detail-unit-prototype">Add Detail</button>
+            <button type="button" class="btn btn-default" id="add-purchase-invoice-detail-unit-prototype" data-toggle="modal" data-target="#purchase-delivery-order-dialog">Add Detail</button>
         </div>
         
         <br />
@@ -96,7 +115,34 @@
         
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
                
+        <div id="supplier-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Supplier List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="supplier-grid" data-grid="{{ path('common_supplier_grid') }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {{ form_end(form) }}
+    
+    <div id="purchase-delivery-order-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">DO Pusat List</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="purchase-delivery-order-grid" data-grid="{{ path('common_purchase_delivery_order_grid') }}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -141,13 +187,31 @@
                 bind();
             });
             
-            $("#add-purchase-invoice-detail-unit-prototype").on("click", function() {
+            $("#supplier-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#supplier-dialog").modal("hide");
+                $("#{{ form.supplier.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=supplier-name]", "#supplier-info").text($(this).attr("data-field-name"));
+                $("[data-name=supplier-contact-person]", "#supplier-info").text($(this).attr("data-field-contact-person"));
+                $("[data-name=supplier-office-address]", "#supplier-info").text($(this).attr("data-field-office-address"));
+            });
+            
+            $("#purchase-delivery-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#purchase-delivery-order-dialog").modal("hide");
+                var context = $(this);
                 var name = "{{ form.purchaseInvoiceDetailUnits.vars.prototype.vars.name }}";
                 var rows = tableBody.children("tr");
                 var index = Math.max({{ purchaseInvoiceDetailUnitsCount }}, (rows.length > 0) ? parseInt(rows.last().attr("data-index")) + 1 : 0);
                 tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
-                    var quantityPrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.quantity.vars.id }}");
-                    quantityPrototype.attr("value", $("[data-name=purchase-invoice-detail-unit-quantity]", "#purchase-invoice-header-info").text());
+                    var purchaseDeliveryOrderPrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.purchaseDeliveryOrder.vars.id }}");
+                    purchaseDeliveryOrderPrototype.val(context.attr("data-field-id"));
+                    var itemNamePrototype = prototype.find("[data-name=item-name-" + name + "]");
+                    itemNamePrototype.text(context.attr("data-field-vehicle-model-manufacture-code"));
+                    var quantityPrototype = prototype.find("[data-name=quantity-" + name + "]");
+                    quantityPrototype.text(context.attr("data-field-sale-order-quantity"));
+                    var unitPricePrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.unitPrice.vars.id }}");
+                    unitPricePrototype.attr("value", context.attr("data-field-sale-order-unit-price"));
+                    var unitPriceTextPrototype = prototype.find("[data-name=unit-price-text-" + name + "]");
+                    unitPriceTextPrototype.text($.numberFormat(context.attr("data-field-sale-order-unit-price"), 2));
                 });
                 bind();
             });

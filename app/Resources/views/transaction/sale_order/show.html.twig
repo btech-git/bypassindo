@@ -114,4 +114,7 @@
     <a target="_blank" class="btn btn-info" href="{{ path('transaction_sale_order_memo', {'id': saleOrder.id}) }}">
         <span class="glyphicon glyphicon-print"></span> Print SPK
     </a>
+    <a target="_blank" class="btn btn-warning" href="{{ path('transaction_sale_order_stock_referring', {'id': saleOrder.id}) }}">
+        <span class="glyphicon glyphicon-plus"></span> Stock Unit
+    </a>
 {% endblock %}

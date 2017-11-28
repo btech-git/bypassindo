@@ -76,10 +76,6 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $deliveryWorkshops;
     /**
-     * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="purchaseWorkshopHeader")
-     */
-    private $purchaseInvoiceHeaders;
-    /**
      * @ORM\OneToMany(targetEntity="PurchaseWorkshopDetail", mappedBy="purchaseWorkshopHeader")
      * @Assert\Valid() @Assert\Count(min=1)
      */
@@ -129,9 +125,6 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
 
     public function getDeliveryWorkshops() { return $this->deliveryWorkshops; }
     public function setDeliveryWorkshops(Collection $deliveryWorkshops) { $this->deliveryWorkshops = $deliveryWorkshops; }
-
-    public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
-    public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
 
     public function getPurchaseWorkshopDetails() { return $this->purchaseWorkshopDetails; }
     public function setPurchaseWorkshopDetails(Collection $purchaseWorkshopDetails) { $this->purchaseWorkshopDetails = $purchaseWorkshopDetails; }

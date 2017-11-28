@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Customer;
 
 /**
  * @ORM\Table(name="transaction_receive_workshop")
@@ -51,6 +50,10 @@ class ReceiveWorkshop extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $deliveryWorkshop;
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="receiveWorkshop")
+     */
+    private $purchaseInvoiceHeaders;
     
     public function __construct()
     {
@@ -77,6 +80,9 @@ class ReceiveWorkshop extends CodeNumberEntity
 
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
+
+    public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
+    public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
 
     public function getDeliveryWorkshop() { return $this->deliveryWorkshop; }
     public function setDeliveryWorkshop(DeliveryWorkshop $deliveryWorkshop = null) { $this->deliveryWorkshop = $deliveryWorkshop; }

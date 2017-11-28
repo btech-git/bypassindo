@@ -146,6 +146,11 @@ class SaleOrder extends CodeNumberEntity
      */
     private $note;
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isStock = false;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
      */
@@ -276,6 +281,9 @@ class SaleOrder extends CodeNumberEntity
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
+
+    public function getIsStock() { return $this->isStock; }
+    public function setIsStock($isStock) { $this->isStock = $isStock; }
 
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }

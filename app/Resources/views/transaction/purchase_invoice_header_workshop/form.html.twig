@@ -30,27 +30,27 @@
                 {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.purchaseWorkshopHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-workshop-header-dialog'} }) }}
-                <div class="form-group" id="purchase-workshop-header-info">
+                {{ form_row(form.receiveWorkshop, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#receive-workshop-dialog'} }) }}
+                <div class="form-group" id="receive-workshop-info">
                     <div>
                         <label>PO #:</label>
-                        <span data-name="code-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.codeNumber|default }}</span>
+                        <span data-name="code-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>SPK #:</label>
-                        <span data-name="sale-order-code-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
+                        <span data-name="sale-order-code-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Brand:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
+                        <span data-name="sale-order-vehicle-brand">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
                         <label>Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
+                        <span data-name="sale-order-vehicle-serial-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
                         <label>Warna:</label>
-                        <span data-name="sale-order-vehicle-color">{{ purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
+                        <span data-name="sale-order-vehicle-color">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
                     </div>
                 </div>
             </div>
@@ -95,7 +95,7 @@
         
         <input class="btn btn-primary navbar-inverse" type="submit" value="Save" data-confirm="Do you want to proceed?" />
                  
-        <div id="purchase-workshop-header-dialog" class="modal fade" role="dialog">
+        <div id="receive-workshop-dialog" class="modal fade" role="dialog">
             <div class="modal-dialog modal-lg" style="width: 90%">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -103,7 +103,7 @@
                         <h4 class="modal-title">PO Karoseri List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="purchase-workshop-header-grid" data-grid="{{ path('common_purchase_workshop_header_grid') }}"></div>
+                        <div id="receive-workshop-grid" data-grid="{{ path('common_receive_workshop_grid') }}"></div>
                     </div>
                 </div>
             </div>
@@ -143,15 +143,15 @@
                 });
             }
             
-            $("#purchase-workshop-header-grid").on("click", "table[data-role=table] tbody tr", function() {
-                $("#purchase-workshop-header-dialog").modal("hide");
-                $("#{{ form.purchaseWorkshopHeader.vars.id }}").val($(this).attr("data-field-id"));
-                $("[data-name=code-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-code-number"));
-                $("[data-name=sale-order-code-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-code-number"));
-                $("[data-name=supplier-name]", "#purchase-workshop-header-info").text($(this).attr("data-field-supplier-name"));
-                $("[data-name=sale-order-vehicle-brand]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("[data-name=sale-order-vehicle-serial-number]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
-                $("[data-name=sale-order-vehicle-color]", "#purchase-workshop-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+            $("#receive-workshop-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#receive-workshop-dialog").modal("hide");
+                $("#{{ form.receiveWorkshop.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#receive-workshop-info").text($(this).attr("data-field-code-number"));
+                $("[data-name=sale-order-code-number]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-code-number"));
+                $("[data-name=supplier-name]", "#receive-workshop-info").text($(this).attr("data-field-supplier-name"));
+                $("[data-name=sale-order-vehicle-brand]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-serial-number]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
+                $("[data-name=sale-order-vehicle-color]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-color"));
                 bind();
             });
         });

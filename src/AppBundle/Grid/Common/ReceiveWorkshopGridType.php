@@ -12,18 +12,17 @@ use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
-use AppBundle\Entity\Transaction\SaleOrder;
-use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Transaction\ReceiveWorkshop;
 
-class SaleOrderGridType extends DataGridType
+class ReceiveWorkshopGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
         $months = array_flip(array(1 => 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'));
 
         $builder->searchWidget()
-            ->addGroup('saleOrder')
-                ->setEntityName(SaleOrder::class)
+            ->addGroup('receiveWorkshop')
+                ->setEntityName(ReceiveWorkshop::class)
                 ->addField('codeNumber')
                     ->setReferences(array('codeNumberOrdinal', 'codeNumberMonth', 'codeNumberYear'))
                     ->addOperator(EqualNonEmptyType::class)
@@ -40,25 +39,16 @@ class SaleOrderGridType extends DataGridType
                     ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
-            ->addGroup('customer')
-                ->setEntityName(Customer::class)
-                ->addField('name')
-                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()
-            ->addGroup('saleOrder')
+            ->addGroup('receiveWorkshop')
                 ->addField('codeNumber')
                     ->setReferences(array('codeNumberYear', 'codeNumberMonth', 'codeNumberOrdinal'))
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
                 ->addField('transactionDate')
-                    ->addOperator(SortBlankType::class)
-                    ->addOperator(AscendingType::class)
-                    ->addOperator(DescendingType::class)
-            ->addGroup('customer')
-                ->addField('name')
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
@@ -74,28 +64,25 @@ class SaleOrderGridType extends DataGridType
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
         $criteria = Criteria::create();
-        $criteria2 = Criteria::create();
+//        $criteria2 = Criteria::create();
         $associations = array(
-            'customer' => array('criteria' => $criteria2, 'merge' => true),
+//            'supplier' => array('criteria' => $criteria2, 'merge' => true),
         );
 
-        $criteria->andWhere($criteria->expr()->gt('remaining', 0));
-        $criteria->andWhere($criteria->expr()->eq('isStock', false));
-        
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::search($criteria2, $field, $values);
-            } else {
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria) {
+//            if ($group === 'supplier') {
+//                $operator::search($criteria2, $field, $values);
+//            } else {
                 $operator::search($criteria, $field, $values);
-            }
+//            }
         });
 
-        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::sort($criteria2, $field);
-            } else {
+        $builder->processSort(function($operator, $field, $group) use ($criteria) {
+//            if ($group === 'supplier') {
+//                $operator::sort($criteria2, $field);
+//            } else {
                 $operator::sort($criteria, $field);
-            }
+//            }
         });
 
         $builder->processPage($repository->count($criteria, $associations), function($offset, $size) use ($criteria) {

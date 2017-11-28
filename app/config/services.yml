@@ -27,6 +27,10 @@ services:
         class: AppBundle\Service\Transaction\SaleOrderForm
         arguments: ["@app.transaction.sale_order_repository"]
 
+    app.transaction.sale_order_stock_form:
+        class: AppBundle\Service\Transaction\SaleOrderStockForm
+        arguments: ["@app.transaction.sale_order_repository"]
+
     app.transaction.delivery_inspection_header_repository:
         class: AppBundle\Repository\Transaction\DeliveryInspectionHeaderRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]

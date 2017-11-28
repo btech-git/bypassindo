@@ -31,11 +31,11 @@
                     <label>Pelunasan Pembelian #</label>
                     <div>{{ purchasePaymentHeader.codeNumber }}</div>
                 </div>
-                {{ form_row(form.transactionDate) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.paymentMethod) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.purchaseInvoiceHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-invoice-header-dialog'} }) }}
+                {{ form_row(form.purchaseInvoiceHeader, {'label': 'Invoice Pembelian', 'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-invoice-header-dialog'} }) }}
                 <div class="form-group" id="purchase-invoice-header-info">
                     <div>
                         <label>Invoice #:</label>
@@ -50,7 +50,7 @@
                         <span data-name="supplier-name">{{ purchasePaymentHeader.purchaseInvoiceHeader.supplier.name|default }}</span>
                     </div>
                     <div>
-                        <label>SO#:</label>
+                        <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
