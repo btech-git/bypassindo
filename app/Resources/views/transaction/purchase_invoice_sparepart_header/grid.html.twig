@@ -9,41 +9,10 @@
             <th data-group="purchaseInvoiceSparepartHeader" data-field="workOrderNumber">Work Order Number</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="transactionDate">Transaction Date</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="companyName">Company Name</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="taxNumber">Tax Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="prmCpc">Prm Cpc</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="prmTrx">Prm Trx</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="customerCode">Customer Code</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="customerName">Customer Name</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleModel">Vehicle Model</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleChassisNumber">Vehicle Chassis Number</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleEngineNumber">Vehicle Engine Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleLicenseNumber">Vehicle License Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleClaimNumber">Vehicle Claim Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehiclePolicyNumber">Vehicle Policy Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalPackage">Total Package</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalOpr">Total Opr</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalPart">Total Part</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalOil">Total Oil</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalMaterial">Total Material</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalAccessory">Total Accessory</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalSublet">Total Sublet</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalSouvenir">Total Souvenir</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountPackage">Discount Package</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountOpr">Discount Opr</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountPart">Discount Part</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountOil">Discount Oil</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountMaterial">Discount Material</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountAccessory">Discount Accessory</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountSublet">Discount Sublet</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="discountSouvenir">Discount Souvenir</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="grandTotalBeforeTax">Grand Total Before Tax</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="grandTotalTax">Grand Total Tax</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="grandTotalAfterTax">Grand Total After Tax</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="totalPurchaseAmount">Total Purchase Amount</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="paymentType">Payment Type</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="cpcDescription">Cpc Description</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="trxDescription">Trx Description</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="taxInvoiceDocumentNumber">Tax Invoice Document Number</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="productionYear">Production Year</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="serviceMileage">Service Mileage</th>
             <th></th>
@@ -56,41 +25,10 @@
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.workOrderNumber|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.transactionDate|default ? purchaseInvoiceSparepartHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.companyName|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.taxNumber|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.prmCpc|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.prmTrx|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.customerCode|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.customerName|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleModel|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleEngineNumber|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleLicenseNumber|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleClaimNumber|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehiclePolicyNumber|default }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalPackage|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalOpr|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalPart|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalOil|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalMaterial|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalAccessory|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalSublet|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalSouvenir|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountPackage|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountOpr|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountPart|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountOil|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountMaterial|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountAccessory|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountSublet|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.discountSouvenir|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.grandTotalBeforeTax|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.grandTotalTax|default|number_format(2) }}</td>
                 <td class="text-right">{{ purchaseInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(2) }}</td>
-                <td class="text-right">{{ purchaseInvoiceSparepartHeader.totalPurchaseAmount|default|number_format(2) }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.paymentType|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.cpcDescription|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.trxDescription|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.taxInvoiceDocumentNumber|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.productionYear|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.serviceMileage|default }}</td>
                 <td class="text-left">
@@ -107,7 +45,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="42" class="alert alert-warning">
+                <td colspan="10" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>
