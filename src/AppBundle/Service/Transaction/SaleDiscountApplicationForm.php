@@ -41,7 +41,7 @@ class SaleDiscountApplicationForm
         $saleDiscountApplication->setSubTotalPrice($subTotal);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
         $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
-        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_OTHER) {
+        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_TYPE_OTHER) {
             $saleDiscountApplication->setCustomerStatusName($customerStatusType);
         }
         $paymentMethodType = $saleDiscountApplication->getPaymentMethodType();
