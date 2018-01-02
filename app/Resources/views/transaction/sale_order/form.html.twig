@@ -6,6 +6,7 @@
 
 {% block content %}
     {{ form_start(form) }}
+        <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
                 {{ form_row(form.codeNumberOrdinal, {'label' : 'SPK #' }) }}
@@ -77,6 +78,7 @@
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.vehicleOptionalInfo, {'label' : 'Optional' }) }}
+                {{ form_row(form.isWorkshopNeeded, {'label': 'Kirim ke Karoseri'}) }}
                 {{ form_row(form.vehicleAccessoriesInfo, {'label' : 'Karoseri' }) }}
                 {{ form_row(form.vehicleOtherInfo, {'label' : 'Lain-lain' }) }}
                 {{ form_row(form.quantity) }}
@@ -96,16 +98,7 @@
         </div>
                       
         <hr/>
-                  
-        <div class="row">
-            <div class="col-sm-6">
-                {{ form_row(form.employeeSale, {'label' : 'Salesman' }) }}
-            </div>
-            <div class="col-sm-6">
-                {{ form_row(form.employeeSaleHead, {'label' : 'Salesman Spv' }) }}
-            </div>
-        </div>
-        
+
         <div>{{ form_row(form.deliveryAddress, {'label' : 'Alamat Kirim' }) }}</div>
         
         <div>{{ form_row(form.note) }}</div>

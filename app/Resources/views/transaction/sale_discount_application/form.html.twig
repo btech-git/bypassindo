@@ -6,6 +6,7 @@
 
 {% block content %}
     {{ form_start(form) }}
+        <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="form-group">
@@ -84,8 +85,14 @@
                 </div>
                 {{ form_row(form.dealStatus) }}
                 {{ form_row(form.dealDate, {'label': false}) }}
-                {{ form_row(form.customerStatusType, {'label' : 'Customer Status' }) }}
-                {{ form_row(form.customerStatusName, {'label': false}) }}
+                <label>Customer Status</label>
+                {{ form_row(form.isHinoCustomer, {'label': 'Hino' }) }}
+                {{ form_row(form.isMitsubishiCustomer, {'label': 'Mitsubishi' }) }}
+                {{ form_row(form.isNissanCustomer, {'label': 'U.D. Trucks' }) }}
+                {{ form_row(form.isIsuzuCustomer, {'label': 'Isuzu' }) }}
+                {{ form_row(form.isBenzCustomer, {'label': 'Benz' }) }}
+                {{ form_widget(form.otherBrandCustomer, {'attr': {'placeholder': 'Other'} }) }}
+                {{ form_errors(form.otherBrandCustomer) }}
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.vehicleModel, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#vehicle-model-dialog'}, 'label' : 'Tipe Permintaan' }) }}
@@ -323,12 +330,6 @@
                 });
             }
             
-            function setCustomerStatusVisibility(sel) {
-                $("#{{ form.customerStatusName.vars.id }}").parent().hide();
-                if (sel.val() === "{{ constant('CUSTOMER_STATUS_TYPE_OTHER', saleDiscountApplication) }}") {
-                    $("#{{ form.customerStatusName.vars.id }}").parent().show();
-                }
-            }
             function setCompaniesVisibility(sel) {
                 $("#{{ form.financeCompany.vars.id }}").parent().hide();
                 if (sel.val() === "{{ constant('PAYMENT_METHOD_FINANCE_COMPANY', saleDiscountApplication) }}") {
@@ -336,7 +337,6 @@
                 }
             }
             
-            setCustomerStatusVisibility($(":checked", "#{{ form.customerStatusType.vars.id }}"));
             setCompaniesVisibility($(":checked", "#{{ form.paymentMethodType.vars.id }}"));
             
             $("#{{ form.offTheRoadPrice.vars.id }}").on("change", function() {
@@ -359,9 +359,6 @@
             });
             $("#{{ form.otherPricingAmount5.vars.id }}").on("change", function() {
                 bind();
-            });
-            $("#{{ form.customerStatusType.vars.id }}").on("change", function() {
-                setCustomerStatusVisibility($(":checked", this));
             });
             $("#{{ form.paymentMethodType.vars.id }}").on("change", function() {
                 setCompaniesVisibility($(":checked", this));

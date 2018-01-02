@@ -58,6 +58,10 @@
                 <td>{{ saleOrder.vehicleOptionalInfo|default|nl2br }}</td>
             </tr>
             <tr>
+                <th>Kirim ke Karoseri</th>
+                <td>{{ saleOrder.isWorkshopNeeded|default ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
                 <th>Karoseri</th>
                 <td>{{ saleOrder.vehicleAccessoriesInfo|default|nl2br }}</td>
             </tr>

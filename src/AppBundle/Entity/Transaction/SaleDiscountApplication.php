@@ -24,12 +24,12 @@ class SaleDiscountApplication extends CodeNumberEntity
     const DEAL_STATUS_NEGOTIATION = 'negotiation';
     const DEAL_STATUS_HOT = 'hot';
     const DEAL_STATUS_CONTRACT = 'contract';
-    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
-    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
-    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
-    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
-    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
-    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
+//    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
+//    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
+//    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
+//    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
+//    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
+//    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
     const PAYMENT_METHOD_CASH = 'cash';
     const PAYMENT_METHOD_FINANCE_COMPANY = 'finance company';
     
@@ -53,15 +53,35 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $dealDate;
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
-    private $customerStatusType;
+    private $isHinoCustomer;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isMitsubishiCustomer;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isNissanCustomer;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isIsuzuCustomer;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isBenzCustomer;
     /**
      * @ORM\Column(type="string", length=60)
      * @Assert\NotBlank()
      */
-    private $customerStatusName;
+    private $otherBrandCustomer;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -241,11 +261,23 @@ class SaleDiscountApplication extends CodeNumberEntity
     public function getDealDate() { return $this->dealDate; }
     public function setDealDate($dealDate) { $this->dealDate = $dealDate; }
 
-    public function getCustomerStatusType() { return $this->customerStatusType; }
-    public function setCustomerStatusType($customerStatusType) { $this->customerStatusType = $customerStatusType; }
+    public function getIsHinoCustomer() { return $this->isHinoCustomer; }
+    public function setIsHinoCustomer($isHinoCustomer) { $this->isHinoCustomer = $isHinoCustomer; }
 
-    public function getCustomerStatusName() { return $this->customerStatusName; }
-    public function setCustomerStatusName($customerStatusName) { $this->customerStatusName = $customerStatusName; }
+    public function getIsMitsubishiCustomer() { return $this->isMitsubishiCustomer; }
+    public function setIsMitsubishiCustomer($isMitsubishiCustomer) { $this->isMitsubishiCustomer = $isMitsubishiCustomer; }
+
+    public function getIsNissanCustomer() { return $this->isNissanCustomer; }
+    public function setIsNissanCustomer($isNissanCustomer) { $this->isNissanCustomer = $isNissanCustomer; }
+
+    public function getIsIsuzuCustomer() { return $this->isIsuzuCustomer; }
+    public function setIsIsuzuCustomer($isIsuzuCustomer) { $this->isIsuzuCustomer = $isIsuzuCustomer; }
+
+    public function getIsBenzCustomer() { return $this->isBenzCustomer; }
+    public function setIsBenzCustomer($isBenzCustomer) { $this->isBenzCustomer = $isBenzCustomer; }
+
+    public function getOtherBrandCustomer() { return $this->otherBrandCustomer; }
+    public function setOtherBrandCustomer($otherBrandCustomer) { $this->otherBrandCustomer = $otherBrandCustomer; }
 
     public function getRequestQuantity() { return $this->requestQuantity; }
     public function setRequestQuantity($requestQuantity) { $this->requestQuantity = $requestQuantity; }

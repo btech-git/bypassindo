@@ -76,6 +76,11 @@ class SaleOrder extends CodeNumberEntity
      */
     private $vehicleColor;
     /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isWorkshopNeeded;
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      */
@@ -169,16 +174,6 @@ class SaleOrder extends CodeNumberEntity
      */
     private $financeCompany;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Employee")
-     * @Assert\NotNull()
-     */
-    private $employeeSale;
-    /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Employee")
-     * @Assert\NotNull()
-     */
-    private $employeeSaleHead;
-    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
      * @Assert\NotNull()
      */
@@ -240,6 +235,9 @@ class SaleOrder extends CodeNumberEntity
     public function getVehicleColor() { return $this->vehicleColor; }
     public function setVehicleColor($vehicleColor) { $this->vehicleColor = $vehicleColor; }
 
+    public function getIsWorkshopNeeded() { return $this->isWorkshopNeeded; }
+    public function setIsWorkshopNeeded($isWorkshopNeeded) { $this->isWorkshopNeeded = $isWorkshopNeeded; }
+
     public function getVehicleOptionalInfo() { return $this->vehicleOptionalInfo; }
     public function setVehicleOptionalInfo($vehicleOptionalInfo) { $this->vehicleOptionalInfo = $vehicleOptionalInfo; }
 
@@ -296,12 +294,6 @@ class SaleOrder extends CodeNumberEntity
 
     public function getFinanceCompany() { return $this->financeCompany; }
     public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }
-
-    public function getEmployeeSale() { return $this->employeeSale; }
-    public function setEmployeeSale(Employee $employeeSale = null) { $this->employeeSale = $employeeSale; }
-
-    public function getEmployeeSaleHead() { return $this->employeeSaleHead; }
-    public function setEmployeeSaleHead(Employee $employeeSaleHead = null) { $this->employeeSaleHead = $employeeSaleHead; }
 
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }

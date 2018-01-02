@@ -28,12 +28,12 @@ class SaleDiscountApplicationType extends AbstractType
                 'choices_as_values' => true,
             ))
             ->add('dealDate', 'date')
-            ->add('customerStatusType', ChoiceType::class, array(
-                'expanded' => true,
-                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'CUSTOMER_STATUS_TYPE'),
-                'choices_as_values' => true,
-            ))
-            ->add('customerStatusName')
+            ->add('isHinoCustomer')
+            ->add('isMitsubishiCustomer')
+            ->add('isNissanCustomer')
+            ->add('isIsuzuCustomer')
+            ->add('isBenzCustomer')
+            ->add('otherBrandCustomer')
             ->add('requestQuantity')
             ->add('requestUsageType')
             ->add('competitorBrand')

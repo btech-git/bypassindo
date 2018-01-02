@@ -78,8 +78,8 @@ class DeliveryWorkshopGridType extends DataGridType
         $associations = array(
             'purchaseWorkshopHeader' => array('criteria' => null, 'associations' => array(
                 'supplier' => array('criteria' => $criteria2, 'merge' => true),
-                )),
-            );
+            )),
+        );
 
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
             if ($group === 'supplier') {
