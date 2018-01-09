@@ -73,27 +73,39 @@ class ReceiveOrderGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
+        $expr = Criteria::expr();
         $criteria = Criteria::create();
         $criteria2 = Criteria::create();
+        $criteria3 = Criteria::create();
         $associations = array(
             'purchaseDeliveryOrder' => array('criteria' => null, 'associations' => array(
-                'saleOrder' => array('criteria' => null, 'associations' => array(
-                    'customer' => array('criteria' => $criteria2, 'merge' => true),
+                'saleOrder' => array('criteria' => $criteria2, 'associations' => array(
+                    'customer' => array('criteria' => $criteria3),
                 )),
             )),
         );
 
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
+        if (array_key_exists('form', $options)) {
+            if ($options['form'] === 'delivery_inspection_header') {
+                $criteria->andWhere($expr->eq('SIZE(deliveryInspectionHeaders)', 0));
+            } else if ($options['form'] === 'delivery_workshop') {
+                $criteria2->andWhere($expr->eq('isWorkshopNeeded', true));
+                $criteria->andWhere($expr->eq('SIZE(deliveryWorkshops)', 0));
+            } else if ($options['form'] === 'sale_invoice') {
+            }
+        }
+
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria3) {
             if ($group === 'customer') {
-                $operator::search($criteria2, $field, $values);
+                $operator::search($criteria3, $field, $values);
             } else {
                 $operator::search($criteria, $field, $values);
             }
         });
 
-        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
+        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria3) {
             if ($group === 'customer') {
-                $operator::sort($criteria2, $field);
+                $operator::sort($criteria3, $field);
             } else {
                 $operator::sort($criteria, $field);
             }

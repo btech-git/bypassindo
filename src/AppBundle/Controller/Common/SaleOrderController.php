@@ -22,11 +22,16 @@ class SaleOrderController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(SaleOrder::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(SaleOrderGridType::class, $repository, $request);
+        $grid->build(SaleOrderGridType::class, $repository, $request, $options);
 
         return $this->render('common/sale_order/grid.html.twig', array(
             'grid' => $grid->createView(),

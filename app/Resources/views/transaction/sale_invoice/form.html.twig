@@ -69,10 +69,10 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Sale Order List</h4>
+                        <h4 class="modal-title">Receive Order List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid') }}"></div>
+                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>

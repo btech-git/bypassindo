@@ -18,6 +18,7 @@ class SaleOrderStockHeaderType extends AbstractType
         $builder
             ->add('details', EntityType::class, array(
                 'mapped' => false,
+                'label' => false,
                 'class' => PurchaseDeliveryOrder::class,
                 'expanded' => true,
                 'multiple' => true,

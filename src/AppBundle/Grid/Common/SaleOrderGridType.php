@@ -73,14 +73,22 @@ class SaleOrderGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
+        $expr = Criteria::expr();
         $criteria = Criteria::create();
         $criteria2 = Criteria::create();
         $associations = array(
-            'customer' => array('criteria' => $criteria2, 'merge' => true),
+            'customer' => array('criteria' => $criteria2),
         );
 
-        $criteria->andWhere($criteria->expr()->gt('remaining', 0));
-        $criteria->andWhere($criteria->expr()->eq('isStock', false));
+        if (array_key_exists('form', $options)) {
+            if ($options['form'] === 'purchase_delivery_order') {
+                $criteria->andWhere($expr->gt('remaining', 0));
+                $criteria->andWhere($expr->eq('isStock', false));
+            } else if ($options['form'] === 'purchase_workshop_header') {
+                $criteria->andWhere($expr->eq('isWorkshopNeeded', true));
+                $criteria->andWhere($expr->eq('SIZE(purchaseWorkshopHeaders)', 0));
+            }
+        }
         
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
             if ($group === 'customer') {

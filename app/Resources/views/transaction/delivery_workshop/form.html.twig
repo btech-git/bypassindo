@@ -101,7 +101,7 @@
                         <h4 class="modal-title">Purchase Workshop List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="purchase-workshop-header-grid" data-grid="{{ path('common_purchase_workshop_header_grid') }}"></div>
+                        <div id="purchase-workshop-header-grid" data-grid="{{ path('common_purchase_workshop_header_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                         <h4 class="modal-title">Receive Order List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid') }}"></div>
+                        <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>
