@@ -40,10 +40,10 @@ class SaleDiscountApplicationForm
         $grandTotal = $subTotal + $saleDiscountApplication->getOtherPricingAmount1() + $saleDiscountApplication->getOtherPricingAmount2() + $saleDiscountApplication->getOtherPricingAmount3() + $saleDiscountApplication->getOtherPricingAmount4() + $saleDiscountApplication->getOtherPricingAmount5();
         $saleDiscountApplication->setSubTotalPrice($subTotal);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
-        $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
-        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_TYPE_OTHER) {
-            $saleDiscountApplication->setCustomerStatusName($customerStatusType);
-        }
+//        $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
+//        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_TYPE_OTHER) {
+//            $saleDiscountApplication->setCustomerStatusName($customerStatusType);
+//        }
         $paymentMethodType = $saleDiscountApplication->getPaymentMethodType();
         if ($paymentMethodType !== SaleDiscountApplication::PAYMENT_METHOD_FINANCE_COMPANY) {
             $saleDiscountApplication->setFinanceCompany(null);

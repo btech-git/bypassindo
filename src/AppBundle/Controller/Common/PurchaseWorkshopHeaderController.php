@@ -22,11 +22,16 @@ class PurchaseWorkshopHeaderController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(PurchaseWorkshopHeader::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(PurchaseWorkshopHeaderGridType::class, $repository, $request);
+        $grid->build(PurchaseWorkshopHeaderGridType::class, $repository, $request, $options);
 
         return $this->render('common/purchase_workshop_header/grid.html.twig', array(
             'grid' => $grid->createView(),

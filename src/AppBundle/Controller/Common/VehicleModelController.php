@@ -22,11 +22,16 @@ class VehicleModelController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(VehicleModel::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(VehicleModelGridType::class, $repository, $request);
+        $grid->build(VehicleModelGridType::class, $repository, $request, $options);
 
         return $this->render('common/vehicle_model/grid.html.twig', array(
             'grid' => $grid->createView(),

@@ -81,6 +81,10 @@ class DeliveryWorkshopGridType extends DataGridType
             )),
         );
 
+        if (array_key_exists('form', $options)) {
+            
+        }
+        
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
             if ($group === 'supplier') {
                 $operator::search($criteria2, $field, $values);

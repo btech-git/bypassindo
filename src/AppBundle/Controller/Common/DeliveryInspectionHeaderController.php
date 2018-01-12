@@ -22,11 +22,16 @@ class DeliveryInspectionHeaderController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(DeliveryInspectionHeader::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(DeliveryInspectionHeaderGridType::class, $repository, $request);
+        $grid->build(DeliveryInspectionHeaderGridType::class, $repository, $request, $options);
 
         return $this->render('common/delivery_inspection_header/grid.html.twig', array(
             'grid' => $grid->createView(),

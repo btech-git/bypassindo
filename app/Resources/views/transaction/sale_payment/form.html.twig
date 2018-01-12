@@ -59,7 +59,7 @@
                         <h4 class="modal-title">Sale Invoice List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="sale-invoice-grid" data-grid="{{ path('common_sale_invoice_grid') }}"></div>
+                        <div id="sale-invoice-grid" data-grid="{{ path('common_sale_invoice_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>

@@ -22,11 +22,16 @@ class DeliveryWorkshopController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(DeliveryWorkshop::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(DeliveryWorkshopGridType::class, $repository, $request);
+        $grid->build(DeliveryWorkshopGridType::class, $repository, $request, $options);
 
         return $this->render('common/delivery_workshop/grid.html.twig', array(
             'grid' => $grid->createView(),

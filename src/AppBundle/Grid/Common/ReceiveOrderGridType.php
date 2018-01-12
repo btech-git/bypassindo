@@ -92,6 +92,7 @@ class ReceiveOrderGridType extends DataGridType
                 $criteria2->andWhere($expr->eq('isWorkshopNeeded', true));
                 $criteria->andWhere($expr->eq('SIZE(deliveryWorkshops)', 0));
             } else if ($options['form'] === 'sale_invoice') {
+                
             }
         }
 

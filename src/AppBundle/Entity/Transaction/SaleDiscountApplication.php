@@ -24,12 +24,12 @@ class SaleDiscountApplication extends CodeNumberEntity
     const DEAL_STATUS_NEGOTIATION = 'negotiation';
     const DEAL_STATUS_HOT = 'hot';
     const DEAL_STATUS_CONTRACT = 'contract';
-//    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
-//    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
-//    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
-//    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
-//    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
-//    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
+    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
+    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
+    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
+    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
+    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
+    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
     const PAYMENT_METHOD_CASH = 'cash';
     const PAYMENT_METHOD_FINANCE_COMPANY = 'finance company';
     

@@ -122,7 +122,7 @@
                         <h4 class="modal-title">Supplier List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="supplier-grid" data-grid="{{ path('common_supplier_grid') }}"></div>
+                        <div id="supplier-grid" data-grid="{{ path('common_supplier_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>

@@ -22,11 +22,16 @@ class CustomerController extends Controller
      */
     public function gridAction(Request $request)
     {
+        $options = array();
+        if ($request->query->has('form')) {
+            $options['form'] = $request->query->get('form');
+        }
+        
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(Customer::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(CustomerGridType::class, $repository, $request);
+        $grid->build(CustomerGridType::class, $repository, $request, $options);
 
         return $this->render('common/customer/grid.html.twig', array(
             'grid' => $grid->createView(),

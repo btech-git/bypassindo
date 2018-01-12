@@ -113,7 +113,7 @@
                         <h4 class="modal-title">Customer List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="customer-grid" data-grid="{{ path('common_customer_grid') }}"></div>
+                        <div id="customer-grid" data-grid="{{ path('common_customer_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                         <h4 class="modal-title">Vehicle Model List</h4>
                     </div>
                     <div class="modal-body">
-                        <div id="vehicle-model-grid" data-grid="{{ path('common_vehicle_model_grid') }}"></div>
+                        <div id="vehicle-model-grid" data-grid="{{ path('common_vehicle_model_grid', {'form': form.vars.id}) }}"></div>
                     </div>
                 </div>
             </div>

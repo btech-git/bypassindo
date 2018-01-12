@@ -55,6 +55,10 @@ class VehicleModelGridType extends DataGridType
     {
         $criteria = Criteria::create();
 
+        if (array_key_exists('form', $options)) {
+            
+        }
+        
         $builder->processSearch(function($values, $operator, $field) use ($criteria) {
             $operator::search($criteria, $field, $values);
         });

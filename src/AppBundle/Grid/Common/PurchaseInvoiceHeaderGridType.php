@@ -79,6 +79,10 @@ class PurchaseInvoiceHeaderGridType extends DataGridType
             'supplier' => array('criteria' => $criteria2, 'merge' => true),
         );
 
+        if (array_key_exists('form', $options)) {
+            
+        }
+        
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
             if ($group === 'supplier') {
                 $operator::search($criteria2, $field, $values);
