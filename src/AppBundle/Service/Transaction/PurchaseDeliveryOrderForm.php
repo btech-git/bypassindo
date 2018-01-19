@@ -39,6 +39,7 @@ class PurchaseDeliveryOrderForm
         
         $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
         if ($saleOrder !== null) {
+            $purchaseDeliveryOrder->setVehicleModel($saleOrder->getVehicleModel());
             $currentPurchaseDeliveryOrders = $saleOrder->getPurchaseDeliveryOrders();
             $oldPurchaseDeliveryOrders = $currentPurchaseDeliveryOrders->getValues();
             if (!in_array($purchaseDeliveryOrder, $oldPurchaseDeliveryOrders)) {
@@ -72,6 +73,7 @@ class PurchaseDeliveryOrderForm
         
         $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
         if ($saleOrder !== null) {
+            $purchaseDeliveryOrder->setVehicleModel($saleOrder->getVehicleModel());
             $currentPurchaseDeliveryOrders = $saleOrder->getPurchaseDeliveryOrders();
             $oldPurchaseDeliveryOrders = $currentPurchaseDeliveryOrders->getValues();
             if (in_array($purchaseDeliveryOrder, $oldPurchaseDeliveryOrders)) {

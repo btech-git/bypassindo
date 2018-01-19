@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Master\VehicleModel;
 
 /**
  * @ORM\Table(name="transaction_purchase_delivery_order")
@@ -60,6 +61,11 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $isStock;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
+     * @Assert\NotNull()
+     */
+    private $vehicleModel;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
@@ -119,6 +125,9 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
 
     public function getIsStock() { return $this->isStock; }
     public function setIsStock($isStock) { $this->isStock = $isStock; }
+
+    public function getVehicleModel() { return $this->vehicleModel; }
+    public function setVehicleModel(VehicleModel $vehicleModel = null) { $this->vehicleModel = $vehicleModel; }
 
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }

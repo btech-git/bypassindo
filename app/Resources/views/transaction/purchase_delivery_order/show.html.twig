@@ -22,7 +22,7 @@
                 <td>{{ purchaseDeliveryOrder.reference|default }}</td>
             </tr>
             <tr>
-                <th>SO #</th>
+                <th>SPK #</th>
                 <td>{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
             </tr>
             <tr>
@@ -43,7 +43,15 @@
             </tr>
             <tr>
                 <th>Jenis Kendaraan</th>
-                <td>{{ purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</td>
+                <td>{{ purchaseDeliveryOrder.vehicleModel.manufactureCode|default }}</td>
+            </tr>
+            <tr>
+                <th>VOS Model:</th>
+                <td>{{ purchaseDeliveryOrder.vehicleModel.vosModelName|default }}</td>
+            </tr>
+            <tr>
+                <th>DMS Variant:</th>
+                <td>{{ purchaseDeliveryOrder.vehicleModel.dmsVariantName|default }}</td>
             </tr>
             <tr>
                 <th>Note</th>

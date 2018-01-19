@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use LibBundle\Form\Type\EntityTextType;
+use AppBundle\Entity\Master\VehicleModel;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Transaction\SaleOrder;
 
@@ -32,6 +33,7 @@ class PurchaseDeliveryOrderType extends AbstractType
                 'choices' => array('Non-stok' => false, 'Stok' => true),
                 'choices_as_values' => true,
             ))  
+            ->add('vehicleModel', EntityTextType::class, array('class' => VehicleModel::class))
             ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class, 'constraints' => array(
                 new Callback(function($object, ExecutionContextInterface $context) {
                     $purchaseDeliveryOrder = $context->getRoot()->getData();

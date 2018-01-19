@@ -5,8 +5,10 @@ namespace AppBundle\Form\Transaction;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use AppBundle\Entity\Transaction\SaleOrder;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
@@ -16,6 +18,7 @@ class SaleOrderStockHeaderType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('remaining', HiddenType::class, array('disabled' => true, 'constraints' => array(new GreaterThanOrEqual(0))))
             ->add('details', EntityType::class, array(
                 'mapped' => false,
                 'label' => false,
@@ -23,7 +26,7 @@ class SaleOrderStockHeaderType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 'choice_label' => 'codeNumber',
-                'choices' => $options['purchaseDeliveryOrderRepository']->findBy(array('saleOrder' => null)),
+                'choices' => $options['purchaseDeliveryOrderRepository']->findBy(array('saleOrder' => null, 'vehicleModel' => $options['vehicleModel'])),
             ))
         ;
         $builder
@@ -50,6 +53,6 @@ class SaleOrderStockHeaderType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => SaleOrder::class,
         ));
-        $resolver->setRequired(array('service', 'purchaseDeliveryOrderRepository'));
+        $resolver->setRequired(array('service', 'purchaseDeliveryOrderRepository', 'vehicleModel'));
     }
 }

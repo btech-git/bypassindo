@@ -15,6 +15,21 @@
                 </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.reference, {'label': 'DO HMSI #'}) }}
+                {{ form_row(form.vehicleModel, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#vehicle-model-dialog'} }) }}
+                <div class="form-group" id="vehicle-model-info">
+                    <div>
+                        <label>Manufacture Code:</label>
+                        <span data-name="vehicle-model-manufacture-code">{{ purchaseDeliveryOrder.vehicleModel.manufactureCode|default }}</span>
+                    </div>
+                    <div>
+                        <label>VOS Model:</label>
+                        <span data-name="vehicle-model-vos-model-name">{{ purchaseDeliveryOrder.vehicleModel.vosModelName|default }}</span>
+                    </div>
+                    <div>
+                        <label>DMS Variant:</label>
+                        <span data-name="vehicle-model-dms-variant-name">{{ purchaseDeliveryOrder.vehicleModel.dmsVariantName|default }}</span>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.isStock, {'label' : 'Unit yang dijual' }) }}
@@ -86,6 +101,20 @@
                 </div>
             </div>
         </div>
+                    
+        <div id="vehicle-model-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Vehicle Model List</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="vehicle-model-grid" data-grid="{{ path('common_vehicle_model_grid', {'form': form.vars.id}) }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {{ form_end(form) }}
 {% endblock %}
 
@@ -101,10 +130,20 @@
                     $("#sale-order-info").show();
                 }
             }
+            function setVehicleModelVisibility(sel) {
+                $("#{{ form.vehicleModel.vars.id }}").parent().hide();
+                $("#vehicle-model-info").hide();
+                if (sel.val() === "1") {
+                    $("#{{ form.vehicleModel.vars.id }}").parent().show();
+                    $("#vehicle-model-info").show();                    
+                }
+            }
             
             setSaleOrderVisibility($(":checked", "#{{ form.isStock.vars.id }}"));
+            setVehicleModelVisibility($(":checked", "#{{ form.isStock.vars.id }}"));
             $("#{{ form.isStock.vars.id }}").on("change", function() {
                 setSaleOrderVisibility($(":checked", this));
+                setVehicleModelVisibility($(":checked", this));
             });
             
             $("#sale-order-grid").on("click", "table[data-role=table] tbody tr", function() {
@@ -116,6 +155,13 @@
                 $("[data-name=sale-order-vehicle-serial-number]", "#sale-order-info").text($(this).attr("data-field-vehicle-serial-number"));
                 $("[data-name=sale-order-vehicle-color]", "#sale-order-info").text($(this).attr("data-field-vehicle-color"));
                 $("[data-name=vehicle-model-manufacture-code]", "#sale-order-info").text($(this).attr("data-field-vehicle-model-manufacture-code"));
+            });
+            $("#vehicle-model-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#vehicle-model-dialog").modal("hide");
+                $("#{{ form.vehicleModel.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=vehicle-model-manufacture-code]", "#vehicle-model-info").text($(this).attr("data-field-manufacture-code"));
+                $("[data-name=vehicle-model-vos-model-name]", "#vehicle-model-info").text($(this).attr("data-field-vos-model-name"));
+                $("[data-name=vehicle-model-dms-variant-name]", "#vehicle-model-info").text($(this).attr("data-field-dms-variant-name"));
             });
         });
     </script>

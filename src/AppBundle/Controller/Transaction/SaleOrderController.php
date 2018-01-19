@@ -81,8 +81,12 @@ class SaleOrderController extends Controller
      */
     public function showAction(SaleOrder $saleOrder)
     {
+        $saleOrderStockService = $this->get('app.transaction.sale_order_stock_form');
+        $stockValid = $saleOrderStockService->isValidForStockReferring($saleOrder);
+        
         return $this->render('transaction/sale_order/show.html.twig', array(
             'saleOrder' => $saleOrder,
+            'stockValid' => $stockValid,
         ));
     }
 
@@ -167,6 +171,7 @@ class SaleOrderController extends Controller
         $form = $this->createForm(SaleOrderStockHeaderType::class, $saleOrder, array(
             'service' => $saleOrderStockService,
             'purchaseDeliveryOrderRepository' => $this->getDoctrine()->getManager()->getRepository(PurchaseDeliveryOrder::class),
+            'vehicleModel' => $saleOrder->getVehicleModel(),
         ));
         $form->handleRequest($request);
 

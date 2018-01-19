@@ -37,11 +37,15 @@ class SaleOrderStockForm
     
     public function isValidForStockReferring(SaleOrder $saleOrder)
     {
-        foreach ($saleOrder->getPurchaseDeliveryOrders() as $purchaseDeliveryOrder) {
-            if (!$purchaseDeliveryOrder->getIsStock()) {
-                return false;
+        if ($saleOrder->getRemaining() === 0) {
+            return false;
+        } else {
+            foreach ($saleOrder->getPurchaseDeliveryOrders() as $purchaseDeliveryOrder) {
+                if (!$purchaseDeliveryOrder->getIsStock()) {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
     }
 }
