@@ -73,46 +73,55 @@ class SaleOrderGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $expr = Criteria::expr();
-        $criteria = Criteria::create();
-        $criteria2 = Criteria::create();
+        list($criteria, $associations) = $this->getSpecifications($options);
+
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            if ($group === 'customer' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['customer']['merge'] = true;
+            }
+            $operator::search($criteria[$group], $field, $values);
+        });
+
+        $builder->processSort(function($operator, $field, $group) use ($criteria) {
+            $operator::sort($criteria[$group], $field);
+        });
+
+        $builder->processPage($repository->count($criteria['saleOrder'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['saleOrder']->setMaxResults($size);
+            $criteria['saleOrder']->setFirstResult($offset);
+        });
+        
+        $objects = $repository->match($criteria['saleOrder'], $associations);
+
+        $builder->setData($objects);
+    }
+
+    private function getSpecifications(array $options)
+    {
+        $names = array('saleOrder', 'customer');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
         $associations = array(
-            'customer' => array('criteria' => $criteria2),
+            'customer' => array('criteria' => $criteria['customer']),
         );
 
         if (array_key_exists('form', $options)) {
-            if ($options['form'] === 'purchase_delivery_order') {
-                $criteria->andWhere($expr->gt('remaining', 0));
-                $criteria->andWhere($expr->eq('isStock', false));
-            } else if ($options['form'] === 'purchase_workshop_header') {
-                $criteria->andWhere($expr->eq('isWorkshopNeeded', true));
-                $criteria->andWhere($expr->eq('SIZE(purchaseWorkshopHeaders)', 0));
+            $expr = Criteria::expr();
+            switch ($options['form']) {
+                case 'purchase_delivery_order':
+                    $criteria['saleOrder']->andWhere($expr->eq('isStock', false));
+                    $criteria['saleOrder']->andWhere($expr->gt('remaining', 0));
+                    break;
+                case 'purchase_workshop_header':
+                    $criteria['saleOrder']->andWhere($expr->eq('isWorkshopNeeded', true));
+                    $associations['purchaseWorkshopHeaders']['merge'] = false;
+                    break;
             }
         }
-        
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::search($criteria2, $field, $values);
-            } else {
-                $operator::search($criteria, $field, $values);
-            }
-        });
 
-        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::sort($criteria2, $field);
-            } else {
-                $operator::sort($criteria, $field);
-            }
-        });
-
-        $builder->processPage($repository->count($criteria, $associations), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
-        });
-        
-        $objects = $repository->match($criteria, $associations);
-
-        $builder->setData($objects);
+        return array($criteria, $associations);
     }
 }

@@ -73,41 +73,51 @@ class DeliveryWorkshopGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $criteria = Criteria::create();
-        $criteria2 = Criteria::create();
+        list($criteria, $associations) = $this->getSpecifications($options);
+
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            if ($group === 'supplier' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['purchaseWorkshopHeader']['associations']['supplier']['merge'] = true;
+            }
+            $operator::search($criteria[$group], $field, $values);
+        });
+
+        $builder->processSort(function($operator, $field, $group) use ($criteria) {
+            $operator::sort($criteria[$group], $field);
+        });
+
+        $builder->processPage($repository->count($criteria['deliveryWorkshop'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['deliveryWorkshop']->setMaxResults($size);
+            $criteria['deliveryWorkshop']->setFirstResult($offset);
+        });
+        
+        $objects = $repository->match($criteria['deliveryWorkshop'], $associations);
+
+        $builder->setData($objects);
+    }
+
+    private function getSpecifications(array $options)
+    {
+        $names = array('deliveryWorkshop', 'supplier');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
         $associations = array(
             'purchaseWorkshopHeader' => array('criteria' => null, 'associations' => array(
-                'supplier' => array('criteria' => $criteria2, 'merge' => true),
+                'supplier' => array('criteria' => $criteria['supplier']),
             )),
         );
 
         if (array_key_exists('form', $options)) {
-            
+            switch ($options['form']) {
+                case 'receive_workshop':
+                    $associations['receiveWorkshop']['merge'] = false;
+                    break;
+            }
         }
-        
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'supplier') {
-                $operator::search($criteria2, $field, $values);
-            } else {
-                $operator::search($criteria, $field, $values);
-            }
-        });
 
-        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'supplier') {
-                $operator::sort($criteria2, $field);
-            } else {
-                $operator::sort($criteria, $field);
-            }
-        });
-
-        $builder->processPage($repository->count($criteria, $associations), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
-        });
-        
-        $objects = $repository->match($criteria, $associations);
-
-        $builder->setData($objects);
+        return array($criteria, $associations);
     }
 }
