@@ -136,18 +136,21 @@ class EntityRepositoryReader implements RepositoryReaderInterface
                     }
                 }
             } else {
-                $join = empty($merge) ? 'leftJoin' : 'innerJoin';
                 if ($criteria !== null) {
                     if (($whereExpression = $criteria->getWhereExpression())) {
-                        $qb->$join($parentAlias . '.' . $name, $alias, Join::WITH, $visitor->dispatch($whereExpression));
+                        $qb->leftJoin($parentAlias . '.' . $name, $alias, Join::WITH, $visitor->dispatch($whereExpression));
                         foreach ($visitor->getParameters() as $parameter) {
                             $params->add($parameter);
                         }
                     } else {
-                        $qb->$join($parentAlias . '.' . $name, $alias);
+                        $qb->leftJoin($parentAlias . '.' . $name, $alias);
                     }
                 } else {
-                    $qb->$join($parentAlias . '.' . $name, $alias);
+                    $qb->leftJoin($parentAlias . '.' . $name, $alias);
+                }
+                if ($merge !== null) {
+                    $s = $merge ? 'NOT ' : '';
+                    $qb->andWhere("{$alias}.id IS {$s}NULL");
                 }
                 $qb->addSelect($alias);
             }
@@ -193,7 +196,7 @@ class EntityRepositoryReader implements RepositoryReaderInterface
         foreach ($associations as $name => $item) {
             $index = isset($item['index']) ? $item['index'] : 0;
             $criteria = isset($item['criteria']) ? $item['criteria'] : null;
-            $merge = isset($item['merge']) ? $item['merge'] : false;
+            $merge = isset($item['merge']) ? $item['merge'] : null;
             $list[] = array($index, $name, $criteria, $merge, $parentIndex, $parentName);
             if (!empty($item['associations'])) {
                 $this->searchFilter($item['associations'], $index, $name, $list);

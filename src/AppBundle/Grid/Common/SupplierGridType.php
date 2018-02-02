@@ -49,32 +49,51 @@ class SupplierGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $expr = Criteria::expr();
-        $criteria = Criteria::create();
+        list($criteria, $associations) = $this->getSpecifications($options);
 
-        if (array_key_exists('form', $options)) {
-            
-        }
-        
-        if (array_key_exists('business_type', $options)) {
-            $criteria->andWhere($expr()->eq('businessType', $options['business_type']));
-        }
-        
-        $builder->processSearch(function($values, $operator, $field) use ($criteria) {
-            $operator::search($criteria, $field, $values);
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            $operator::search($criteria[$group], $field, $values);
         });
 
-        $builder->processSort(function($operator, $field) use ($criteria) {
-            $operator::sort($criteria, $field);
+        $builder->processSort(function($operator, $field, $group) use ($criteria) {
+            $operator::sort($criteria[$group], $field);
         });
 
-        $builder->processPage($repository->count($criteria), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
+        $builder->processPage($repository->count($criteria['supplier'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['supplier']->setMaxResults($size);
+            $criteria['supplier']->setFirstResult($offset);
         });
         
-        $objects = $repository->match($criteria);
+        $objects = $repository->match($criteria['supplier'], $associations);
 
         $builder->setData($objects);
+    }
+
+    private function getSpecifications(array $options)
+    {
+        $names = array('supplier');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
+        $associations = array();
+
+        if (array_key_exists('form', $options)) {
+            $expr = Criteria::expr();
+            switch ($options['form']) {
+                case 'purchase_invoice_header_general':
+                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_GENERAL));
+                    break;
+                case 'purchase_invoice_header_unit':
+                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_UNIT));
+                    break;
+                case 'purchase_invoice_header_workshop':
+                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    break;
+            }
+        }
+
+        return array($criteria, $associations);
     }
 }

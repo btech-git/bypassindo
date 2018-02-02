@@ -73,45 +73,56 @@ class DeliveryInspectionHeaderGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $criteria = Criteria::create();
-        $criteria2 = Criteria::create();
+        list($criteria, $associations) = $this->getSpecifications($options);
+
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            if ($group === 'customer' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
+            }
+            $operator::search($criteria[$group], $field, $values);
+        });
+
+        $builder->processSort(function($operator, $field, $group) use ($criteria) {
+            $operator::sort($criteria[$group], $field);
+        });
+
+        $builder->processPage($repository->count($criteria['deliveryInspectionHeader'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['deliveryInspectionHeader']->setMaxResults($size);
+            $criteria['deliveryInspectionHeader']->setFirstResult($offset);
+        });
+        
+        $objects = $repository->match($criteria['deliveryInspectionHeader'], $associations);
+
+        $builder->setData($objects);
+    }
+
+    private function getSpecifications(array $options)
+    {
+        $names = array('deliveryInspectionHeader', 'customer');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
         $associations = array(
             'receiveOrder' => array('criteria' => null, 'associations' => array(
                 'purchaseDeliveryOrder' => array('criteria' => null, 'associations' => array(
                     'saleOrder' => array('criteria' => null, 'associations' => array(
-                        'customer' => array('criteria' => $criteria2, 'merge' => true),
+                        'customer' => array('criteria' => $criteria['customer']),
                     )),
                 )),
             )),
         );
 
         if (array_key_exists('form', $options)) {
-            
+            switch ($options['form']) {
+                case 'delivery_order':
+                    $associations['deliveryOrder']['merge'] = false;
+                    $associations['receiveOrder']['associations']['saleInvoice']['associations']['salePayment']['merge'] = true;
+                    break;
+            }
         }
-            
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::search($criteria2, $field, $values);
-            } else {
-                $operator::search($criteria, $field, $values);
-            }
-        });
 
-        $builder->processSort(function($operator, $field, $group) use ($criteria, $criteria2) {
-            if ($group === 'customer') {
-                $operator::sort($criteria2, $field);
-            } else {
-                $operator::sort($criteria, $field);
-            }
-        });
-
-        $builder->processPage($repository->count($criteria, $associations), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
-        });
-        
-        $objects = $repository->match($criteria, $associations);
-
-        $builder->setData($objects);
+        return array($criteria, $associations);
     }
 }

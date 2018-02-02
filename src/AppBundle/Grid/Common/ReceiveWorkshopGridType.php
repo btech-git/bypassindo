@@ -39,6 +39,10 @@ class ReceiveWorkshopGridType extends DataGridType
                     ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
+            ->addGroup('supplier')
+                ->setEntityName(Supplier::class)
+                ->addField('name')
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()
@@ -49,6 +53,11 @@ class ReceiveWorkshopGridType extends DataGridType
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
                 ->addField('transactionDate')
+                    ->addOperator(SortBlankType::class)
+                    ->addOperator(AscendingType::class)
+                    ->addOperator(DescendingType::class)
+            ->addGroup('supplier')
+                ->addField('name')
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
@@ -63,39 +72,53 @@ class ReceiveWorkshopGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $criteria = Criteria::create();
-//        $criteria2 = Criteria::create();
-        $associations = array(
-//            'supplier' => array('criteria' => $criteria2, 'merge' => true),
-        );
+        list($criteria, $associations) = $this->getSpecifications($options);
 
-        if (array_key_exists('form', $options)) {
-            
-        }
-        
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria) {
-//            if ($group === 'supplier') {
-//                $operator::search($criteria2, $field, $values);
-//            } else {
-                $operator::search($criteria, $field, $values);
-//            }
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            if ($group === 'supplier' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['deliveryWorkshop']['associations']['purchaseWorkshopHeader']['associations']['supplier']['merge'] = true;
+            }
+            $operator::search($criteria[$group], $field, $values);
         });
 
         $builder->processSort(function($operator, $field, $group) use ($criteria) {
-//            if ($group === 'supplier') {
-//                $operator::sort($criteria2, $field);
-//            } else {
-                $operator::sort($criteria, $field);
-//            }
+            $operator::sort($criteria[$group], $field);
         });
 
-        $builder->processPage($repository->count($criteria, $associations), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
+        $builder->processPage($repository->count($criteria['receiveWorkshop'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['receiveWorkshop']->setMaxResults($size);
+            $criteria['receiveWorkshop']->setFirstResult($offset);
         });
         
-        $objects = $repository->match($criteria, $associations);
+        $objects = $repository->match($criteria['receiveWorkshop'], $associations);
 
         $builder->setData($objects);
+    }
+
+    private function getSpecifications(array $options)
+    {
+        $names = array('receiveWorkshop', 'supplier');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
+        $associations = array(
+            'deliveryWorkshop' => array('criteria' => null, 'associations' => array(
+                'purchaseWorkshopHeader' => array('criteria' => null, 'associations' => array(
+                    'supplier' => array('criteria' => $criteria['supplier']),
+                )),
+            )),
+        );
+
+        if (array_key_exists('form', $options)) {
+            switch ($options['form']) {
+                case 'purchase_invoice_header':
+                    $associations['purchaseInvoiceHeaders']['merge'] = false;
+                    break;
+            }
+        }
+
+        return array($criteria, $associations);
     }
 }
