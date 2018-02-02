@@ -115,6 +115,28 @@
             </tr>
         </tbody>
     </table>
+                    
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-info">
+                <th>Tahun Pembuatan</th>
+                <th>Rangka #</th>
+                <th>Mesin #</th>
+                <th>Deskripsi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchaseDeliveryOrder in saleOrder.purchaseDeliveryOrders %}
+                <tr>
+                    <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                    <td>{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                    <td>{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                    <td>{{ purchaseDeliveryOrder.vehicleDescription|default }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
     <a target="_blank" class="btn btn-info" href="{{ path('transaction_sale_order_memo', {'id': saleOrder.id}) }}">
         <span class="glyphicon glyphicon-print"></span> Print SPK
     </a>

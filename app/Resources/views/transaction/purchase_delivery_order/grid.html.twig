@@ -5,18 +5,22 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Transaction Date</th>
-            <th data-group="purchaseDeliveryOrder" data-field="reference">Reference</th>
-            <th data-group="purchaseDeliveryOrder" data-field="note">Note</th>
+            <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Tanggal</th>
+            <th data-group="purchaseDeliveryOrder" data-field="chassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="machineNumber">Mesin #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="reference">DO HMSI #</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for purchaseDeliveryOrder in grid.data %}
             <tr data-field-id="{{ purchaseDeliveryOrder.id }}">
+                <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.reference|default }}</td>
-                <td class="text-left">{{ purchaseDeliveryOrder.note|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {
@@ -31,7 +35,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="alert alert-warning">
+                <td colspan="6" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

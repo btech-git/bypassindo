@@ -59,9 +59,9 @@
                 <tr class="bg-info">
                     <th style="width: 0"></th>
                     <th>DO #</th>
-                    <th>Year</th>
-                    <th>Manufacture Code</th>
+                    <th>Tanggal DO</th>
                     <th>VOS Model</th>
+                    <th>Tahun</th>
                     <th>Rangka #</th>
                     <th>Mesin #</th>
                     <th>Deskripsi</th>
@@ -73,9 +73,9 @@
                     <tr>
                         <td>{{ form_widget(detailForm, {'label': false}) }}</td>
                         <td>{{ purchaseDeliveryOrder.codeNumber|default }}</td>
-                        <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
-                        <td>{{ purchaseDeliveryOrder.vehicleModel.manufactureCode|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.transactionDate|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleModel.vosModelName|default }}</td>
+                        <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleDescription|default }}</td>
