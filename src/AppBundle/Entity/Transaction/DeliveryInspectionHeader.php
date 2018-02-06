@@ -52,7 +52,7 @@ class DeliveryInspectionHeader extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="deliveryInspectionHeaders")
+     * @ORM\OneToOne(targetEntity="ReceiveOrder", inversedBy="deliveryInspectionHeader")
      * @Assert\NotNull()
      */
     private $receiveOrder;

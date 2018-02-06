@@ -52,7 +52,7 @@ class SalePayment extends CodeNumberEntity
      */
     private $paymentMethod;
     /**
-     * @ORM\ManyToOne(targetEntity="SaleInvoice", inversedBy="salePayments")
+     * @ORM\OneToOne(targetEntity="SaleInvoice", inversedBy="salePayment")
      * @Assert\NotNull()
      */
     private $saleInvoice;

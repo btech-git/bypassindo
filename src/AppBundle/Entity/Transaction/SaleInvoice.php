@@ -69,9 +69,9 @@ class SaleInvoice extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\OneToMany(targetEntity="SalePayment", mappedBy="saleInvoice")
+     * @ORM\OneToOne(targetEntity="SalePayment", mappedBy="saleInvoice")
      */
-    private $salePayments;
+    private $salePayment;
     /**
      * @ORM\OneToOne(targetEntity="ReceiveOrder", inversedBy="saleInvoice")
      * @Assert\NotNull()
@@ -80,7 +80,7 @@ class SaleInvoice extends CodeNumberEntity
     
     public function __construct()
     {
-        $this->salePayments = new ArrayCollection();
+        
     }
     
     public function getCodeNumberConstant()
@@ -117,8 +117,8 @@ class SaleInvoice extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getSalePayments() { return $this->salePayments; }
-    public function setSalePayments(Collection $salePayments) { $this->salePayments = $salePayments; }
+    public function getSalePayment() { return $this->salePayment; }
+    public function setSalePayment(SalePayment $salePayment = null) { $this->salePayment = $salePayment; }
 
     public function getReceiveOrder() { return $this->receiveOrder; }
     public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }

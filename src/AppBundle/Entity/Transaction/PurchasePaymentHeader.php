@@ -52,7 +52,7 @@ class PurchasePaymentHeader extends CodeNumberEntity
      */
     private $paymentMethod;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchasePaymentHeaders")
+     * @ORM\OneToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchasePaymentHeader")
      * @Assert\NotNull()
      */
     private $purchaseInvoiceHeader;

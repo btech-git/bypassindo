@@ -101,13 +101,13 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $supplier;
     /**
-     * @ORM\ManyToOne(targetEntity="ReceiveWorkshop", inversedBy="purchaseInvoiceHeaders")
+     * @ORM\OneToOne(targetEntity="ReceiveWorkshop", inversedBy="purchaseInvoiceHeader")
      */
     private $receiveWorkshop;
     /**
-     * @ORM\OneToMany(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
+     * @ORM\OneToOne(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
      */
-    private $purchasePaymentHeaders;
+    private $purchasePaymentHeader;
     /**
      * @ORM\OneToMany(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseInvoiceHeader")
      */
@@ -123,7 +123,6 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     
     public function __construct()
     {
-        $this->purchasePaymentHeaders = new ArrayCollection();
         $this->purchaseInvoiceDetailUnits = new ArrayCollection();
         $this->purchaseInvoiceDetailWorkshops = new ArrayCollection();
         $this->purchaseInvoiceDetailGenerals = new ArrayCollection();
@@ -184,8 +183,8 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getReceiveWorkshop() { return $this->receiveWorkshop; }
     public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }
 
-    public function getPurchasePaymentHeaders() { return $this->purchasePaymentHeaders; }
-    public function setPurchasePaymentHeaders(Collection $purchasePaymentHeaders) { $this->purchasePaymentHeaders = $purchasePaymentHeaders; }
+    public function getPurchasePaymentHeader() { return $this->purchasePaymentHeader; }
+    public function setPurchasePaymentHeader(PurchasePaymentHeader $purchasePaymentHeader = null) { $this->purchasePaymentHeader = $purchasePaymentHeader; }
 
     public function getPurchaseInvoiceDetailUnits() { return $this->purchaseInvoiceDetailUnits; }
     public function setPurchaseInvoiceDetailUnits(Collection $purchaseInvoiceDetailUnits) { $this->purchaseInvoiceDetailUnits = $purchaseInvoiceDetailUnits; }

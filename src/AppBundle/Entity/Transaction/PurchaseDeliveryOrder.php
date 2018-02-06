@@ -81,18 +81,17 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      */
     private $saleOrder;
     /**
-     * @ORM\OneToMany(targetEntity="ReceiveOrder", mappedBy="purchaseDeliveryOrder")
+     * @ORM\OneToOne(targetEntity="ReceiveOrder", mappedBy="purchaseDeliveryOrder")
      */
-    private $receiveOrders;
+    private $receiveOrder;
     /**
-     * @ORM\OneToMany(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
+     * @ORM\OneToOne(targetEntity="purchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
      */
-    private $purchaseInvoiceDetailUnits;
+    private $purchaseInvoiceDetailUnit;
     
     public function __construct()
     {
-        $this->receiveOrders = new ArrayCollection();
-        $this->purchaseInvoiceDetailUnits = new ArrayCollection();
+        
     }
     
     public function getCodeNumberConstant()
@@ -138,11 +137,11 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     public function getSaleOrder() { return $this->saleOrder; }
     public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
 
-    public function getPurchaseInvoiceDetailUnits() { return $this->purchaseInvoiceDetailUnits; }
-    public function setPurchaseInvoiceDetailUnits(Collection $purchaseInvoiceDetailUnits) { $this->purchaseInvoiceDetailUnits = $purchaseInvoiceDetailUnits; }
+    public function getPurchaseInvoiceDetailUnit() { return $this->purchaseInvoiceDetailUnit; }
+    public function setPurchaseInvoiceDetailUnit(PurchaseInvoiceDetailUnit $purchaseInvoiceDetailUnit = null) { $this->purchaseInvoiceDetailUnit = $purchaseInvoiceDetailUnit; }
 
-    public function getReceiveOrders() { return $this->receiveOrders; }
-    public function setReceiveOrders(Collection $receiveOrders) { $this->receiveOrders = $receiveOrders; }
+    public function getReceiveOrder() { return $this->receiveOrder; }
+    public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
     
     public function sync()
     {

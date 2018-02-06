@@ -51,7 +51,7 @@ class DeliveryWorkshop extends CodeNumberEntity
      */
     private $purchaseWorkshopHeader;
     /**
-     * @ORM\ManyToOne(targetEntity="ReceiveOrder", inversedBy="deliveryWorkshops")
+     * @ORM\OneToOne(targetEntity="ReceiveOrder", inversedBy="deliveryWorkshop")
      * @Assert\NotNull()
      */
     private $receiveOrder;
@@ -62,6 +62,7 @@ class DeliveryWorkshop extends CodeNumberEntity
     
     public function __construct()
     {
+        
     }
     
     public function getCodeNumberConstant()

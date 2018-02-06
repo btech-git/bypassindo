@@ -67,7 +67,7 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $supplier;
     /**
-     * @ORM\ManyToOne(targetEntity="SaleOrder", inversedBy="purchaseWorkshopHeaders")
+     * @ORM\OneToOne(targetEntity="SaleOrder", inversedBy="purchaseWorkshopHeader")
      * @Assert\NotNull()
      */
     private $saleOrder;
@@ -84,6 +84,7 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     public function __construct()
     {
         $this->purchaseWorkshopDetails = new ArrayCollection();
+        $this->deliveryWorkshops = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()

@@ -51,9 +51,9 @@ class ReceiveWorkshop extends CodeNumberEntity
      */
     private $deliveryWorkshop;
     /**
-     * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="receiveWorkshop")
+     * @ORM\OneToOne(targetEntity="PurchaseInvoiceHeader", mappedBy="receiveWorkshop")
      */
-    private $purchaseInvoiceHeaders;
+    private $purchaseInvoiceHeader;
     
     public function __construct()
     {
@@ -81,8 +81,8 @@ class ReceiveWorkshop extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
-    public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
+    public function getPurchaseInvoiceHeader() { return $this->purchaseInvoiceHeader; }
+    public function setPurchaseInvoiceHeader(PurchaseInvoiceHeader $purchaseInvoiceHeader = null) { $this->purchaseInvoiceHeader = $purchaseInvoiceHeader; }
 
     public function getDeliveryWorkshop() { return $this->deliveryWorkshop; }
     public function setDeliveryWorkshop(DeliveryWorkshop $deliveryWorkshop = null) { $this->deliveryWorkshop = $deliveryWorkshop; }

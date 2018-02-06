@@ -52,18 +52,18 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="receiveOrders")
+     * @ORM\OneToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="receiveOrders")
      * @Assert\NotNull()
      */
     private $purchaseDeliveryOrder;
     /**
-     * @ORM\OneToMany(targetEntity="DeliveryWorkshop", mappedBy="receiveOrder")
+     * @ORM\OneToOne(targetEntity="DeliveryWorkshop", mappedBy="receiveOrder")
      */
-    private $deliveryWorkshops;
+    private $deliveryWorkshop;
     /**
-     * @ORM\OneToMany(targetEntity="DeliveryInspectionHeader", mappedBy="receiveOrder")
+     * @ORM\OneToOne(targetEntity="DeliveryInspectionHeader", mappedBy="receiveOrder")
      */
-    private $deliveryInspectionHeaders;
+    private $deliveryInspectionHeader;
     /**
      * @ORM\OneToOne(targetEntity="SaleInvoice", mappedBy="receiveOrder")
      */
@@ -72,7 +72,6 @@ class ReceiveOrder extends CodeNumberEntity
     public function __construct()
     {
         $this->deliveryWorkshops = new ArrayCollection();
-        $this->deliveryInspectionHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -103,11 +102,11 @@ class ReceiveOrder extends CodeNumberEntity
     public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
     public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
 
-    public function getDeliveryWorkshops() { return $this->deliveryWorkshops; }
-    public function setDeliveryWorkshops(Collection $deliveryWorkshops) { $this->deliveryWorkshops = $deliveryWorkshops; }
+    public function getDeliveryWorkshop() { return $this->deliveryWorkshop; }
+    public function setDeliveryWorkshop(DeliveryWorkshop $deliveryWorkshop = null) { $this->deliveryWorkshop = $deliveryWorkshop; }
 
-    public function getDeliveryInspectionHeaders() { return $this->deliveryInspectionHeaders; }
-    public function setDeliveryInspectionHeaders(Collection $deliveryInspectionHeaders) { $this->deliveryInspectionHeaders = $deliveryInspectionHeaders; }
+    public function getDeliveryInspectionHeader() { return $this->deliveryInspectionHeader; }
+    public function setDeliveryInspectionHeader(DeliveryInspectionHeader $deliveryInspectionHeader = null) { $this->deliveryInspectionHeader = $deliveryInspectionHeader; }
 
     public function getSaleInvoice() { return $this->saleInvoice; }
     public function setSaleInvoice(SaleInvoice $saleInvoice = null) { $this->saleInvoice = $saleInvoice; }
