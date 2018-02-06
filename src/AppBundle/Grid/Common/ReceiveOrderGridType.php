@@ -116,11 +116,11 @@ class ReceiveOrderGridType extends DataGridType
             $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'delivery_inspection_header':
-                    $associations['deliveryInspectionHeaders']['merge'] = false;
+                    $associations['deliveryInspectionHeader']['merge'] = false;
                     break;
                 case 'delivery_workshop':
                     $criteria['saleOrder']->andWhere($expr->eq('isWorkshopNeeded', true));
-                    $associations['deliveryWorkshops']['merge'] = false;
+                    $associations['deliveryWorkshop']['merge'] = false;
                     break;
                 case 'sale_invoice':
                     $associations['saleInvoice']['merge'] = false;

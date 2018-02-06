@@ -52,7 +52,7 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\OneToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="receiveOrders")
+     * @ORM\OneToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="receiveOrder")
      * @Assert\NotNull()
      */
     private $purchaseDeliveryOrder;

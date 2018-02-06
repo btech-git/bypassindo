@@ -113,7 +113,7 @@ class PurchaseDeliveryOrderGridType extends DataGridType
         if (array_key_exists('form', $options)) {
             switch ($options['form']) {
                 case 'receive_order':
-                    $associations['receiveOrders']['merge'] = false;
+                    $associations['receiveOrder']['merge'] = false;
                     break;
             }
         }

@@ -85,7 +85,7 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      */
     private $receiveOrder;
     /**
-     * @ORM\OneToOne(targetEntity="purchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
+     * @ORM\OneToOne(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
      */
     private $purchaseInvoiceDetailUnit;
     

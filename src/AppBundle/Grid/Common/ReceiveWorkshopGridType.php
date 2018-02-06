@@ -114,7 +114,7 @@ class ReceiveWorkshopGridType extends DataGridType
         if (array_key_exists('form', $options)) {
             switch ($options['form']) {
                 case 'purchase_invoice_header':
-                    $associations['purchaseInvoiceHeaders']['merge'] = false;
+                    $associations['purchaseInvoiceHeader']['merge'] = false;
                     break;
             }
         }

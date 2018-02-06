@@ -117,7 +117,7 @@ class SaleInvoiceGridType extends DataGridType
         if (array_key_exists('form', $options)) {
             switch ($options['form']) {
                 case 'sale_payment':
-                    $associations['salePayments']['merge'] = false;
+                    $associations['salePayment']['merge'] = false;
                     break;
             }
         }

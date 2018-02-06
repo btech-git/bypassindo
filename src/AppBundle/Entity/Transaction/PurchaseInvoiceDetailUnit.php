@@ -49,7 +49,7 @@ class PurchaseInvoiceDetailUnit
      */
     private $purchaseInvoiceHeader;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="purchaseInvoiceDetailUnits")
+     * @ORM\OneToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="purchaseInvoiceDetailUnit")
      * @Assert\NotNull()
      */
     private $purchaseDeliveryOrder;

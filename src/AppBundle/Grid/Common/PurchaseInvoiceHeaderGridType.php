@@ -111,7 +111,7 @@ class PurchaseInvoiceHeaderGridType extends DataGridType
         if (array_key_exists('form', $options)) {
             switch ($options['form']) {
                 case 'purchase_payment_header':
-                    $associations['purchasePaymentHeaders']['merge'] = false;
+                    $associations['purchasePaymentHeader']['merge'] = false;
                     break;
             }
         }

@@ -79,7 +79,7 @@ class SaleDiscountApplication extends CodeNumberEntity
     private $isBenzCustomer;
     /**
      * @ORM\Column(type="string", length=60)
-     * @Assert\NotBlank()
+     * @Assert\NotNull()
      */
     private $otherBrandCustomer;
     /**
