@@ -5,26 +5,30 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="receiveOrder" data-field="transactionDate">Transaction Date</th>
-            <th data-group="receiveOrder" data-field="vehicleProductionYear">Vehicle Production Year</th>
-            <th data-group="receiveOrder" data-field="vehicleChassisNumber">Vehicle Chassis Number</th>
-            <th data-group="receiveOrder" data-field="vehicleMachineNumber">Vehicle Machine Number</th>
-            <th data-group="receiveOrder" data-field="vehicleDescription">Vehicle Description</th>
-            <th data-group="receiveOrder" data-field="serviceBookNumber">Service Book Number</th>
-            <th data-group="receiveOrder" data-field="note">Note</th>
+            <th data-group="receiveOrder" data-field="transactionDate">Penerimaan #</th>
+            <th data-group="receiveOrder" data-field="transactionDate">Tanggal Terima</th>
+            <th data-group="receiveOrder" data-field="transactionDate">SPK #</th>
+            <th data-group="receiveOrder" data-field="transactionDate">Customer</th>
+            <th data-group="receiveOrder" data-field="vehicleProductionYear">Production Year</th>
+            <th data-group="receiveOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="receiveOrder" data-field="vehicleMachineNumber">Mesin #</th>
+            <th data-group="receiveOrder" data-field="vehicleDescription">Description</th>
+            <th data-group="receiveOrder" data-field="serviceBookNumber">Buku Service #</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for receiveOrder in grid.data %}
             <tr data-field-id="{{ receiveOrder.id }}">
+                <td class="text-left">{{ receiveOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
-                <td class="text-left">{{ receiveOrder.vehicleProductionYear|default }}</td>
-                <td class="text-left">{{ receiveOrder.vehicleChassisNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.vehicleMachineNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.vehicleDescription|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
                 <td class="text-left">{{ receiveOrder.serviceBookNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.note|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {
