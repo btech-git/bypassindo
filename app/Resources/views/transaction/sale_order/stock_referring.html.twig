@@ -79,7 +79,7 @@
                     <tr>
                         <td>{{ form_widget(detailForm, {'label': false}) }}</td>
                         <td>{{ purchaseDeliveryOrder.codeNumber|default }}</td>
-                        <td>{{ purchaseDeliveryOrder.transactionDate|default ? saleOrder.transactionDate|date('j F Y') }}</td>
+                        <td>{{ purchaseDeliveryOrder.transactionDate|default ? saleOrder.transactionDate|date('j M Y') }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleModel.vosModelName|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
                         <td>{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
