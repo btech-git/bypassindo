@@ -5,16 +5,23 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="invoiceNumber">Invoice Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="workOrderNumber">Work Order Number</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="transactionDate">Transaction Date</th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="invoiceNumber">Invoice #</th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="transactionDate">Tanggal</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="companyName">Company Name</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleModel">Vehicle Model</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleChassisNumber">Vehicle Chassis Number</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleEngineNumber">Vehicle Engine Number</th>
             <th data-group="purchaseInvoiceSparepartHeader" data-field="grandTotalAfterTax">Grand Total After Tax</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="productionYear">Production Year</th>
-            <th data-group="purchaseInvoiceSparepartHeader" data-field="serviceMileage">Service Mileage</th>
+            <th></th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="invoiceNumber"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="transactionDate"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="companyName"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleModel"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="vehicleEngineNumber"></th>
+            <th data-group="purchaseInvoiceSparepartHeader" data-field="grandTotalAfterTax"></th>
             <th></th>
         </tr>
     </thead>
@@ -22,15 +29,12 @@
         {% for purchaseInvoiceSparepartHeader in grid.data %}
             <tr data-field-id="{{ purchaseInvoiceSparepartHeader.id }}">
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.invoiceNumber|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.workOrderNumber|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.transactionDate|default ? purchaseInvoiceSparepartHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.companyName|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleModel|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ purchaseInvoiceSparepartHeader.vehicleEngineNumber|default }}</td>
                 <td class="text-right">{{ purchaseInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(2) }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.productionYear|default }}</td>
-                <td class="text-left">{{ purchaseInvoiceSparepartHeader.serviceMileage|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {
@@ -45,7 +49,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="10" class="alert alert-warning">
+                <td colspan="8" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

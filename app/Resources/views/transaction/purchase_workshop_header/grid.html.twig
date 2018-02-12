@@ -5,17 +5,23 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="purchaseWorkshopHeader" data-field="transactionDate">Transaction Date</th>
-            <th data-group="purchaseWorkshopHeader" data-field="note">Note</th>
+            <th data-group="purchaseWorkshopHeader" data-field="codeNumber">PO Karoseri #</th>
+            <th data-group="purchaseWorkshopHeader" data-field="transactionDate">Tanggal</th>
             <th data-group="purchaseWorkshopHeader" data-field="grandTotal">Grand Total</th>
+            <th></th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="purchaseWorkshopHeader" data-field="codeNumber"></th>
+            <th data-group="purchaseWorkshopHeader" data-field="transactionDate"></th>
+            <th data-group="purchaseWorkshopHeader" data-field="grandTotal"></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for purchaseWorkshopHeader in grid.data %}
             <tr data-field-id="{{ purchaseWorkshopHeader.id }}">
+                <td class="text-left">{{ purchaseWorkshopHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseWorkshopHeader.transactionDate|default ? purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
-                <td class="text-left">{{ purchaseWorkshopHeader.note|default }}</td>
                 <td class="text-right">{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {

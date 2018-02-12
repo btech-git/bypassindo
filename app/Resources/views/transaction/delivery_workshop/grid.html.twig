@@ -5,14 +5,22 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="deliveryWorkshop" data-field="transactionDate">Transaction Date</th>
+            <th data-group="deliveryWorkshop" data-field="codeNumber">SJ Karoseri #</th>
+            <th data-group="deliveryWorkshop" data-field="transactionDate">Tanggal</th>
             <th data-group="deliveryWorkshop" data-field="note">Note</th>
+            <th></th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="deliveryWorkshop" data-field="codeNumber"></th>
+            <th data-group="deliveryWorkshop" data-field="transactionDate"></th>
+            <th data-group="deliveryWorkshop" data-field="note"></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for deliveryWorkshop in grid.data %}
             <tr data-field-id="{{ deliveryWorkshop.id }}">
+                <td class="text-left">{{ deliveryWorkshop.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryWorkshop.transactionDate|default ? deliveryWorkshop.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ deliveryWorkshop.note|default }}</td>
                 <td class="text-left">
@@ -29,7 +37,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="3" class="alert alert-warning">
+                <td colspan="4" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

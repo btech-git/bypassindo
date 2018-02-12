@@ -10,6 +10,7 @@ use LibBundle\Grid\DataBuilder;
 use LibBundle\Grid\SortOperator\BlankType as SortBlankType;
 use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
+use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
 use LibBundle\Grid\SearchOperator\ContainType;
@@ -19,21 +20,31 @@ class SalePaymentGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
+        $months = array_flip(array(1 => 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'));
+        
         $builder->searchWidget()
             ->addGroup('salePayment')
                 ->setEntityName(SalePayment::class)
+                ->addField('codeNumber')
+                    ->setReferences(array('codeNumberOrdinal', 'codeNumberMonth', 'codeNumberYear'))
+                    ->addOperator(EqualNonEmptyType::class)
+                        ->getInput(1, 1)
+                            ->setPlaceHolder('Number')
+                            ->setAttributes(array('size' => 5, 'maxlength' => 4))
+                        ->getInput(1, 2)
+                            ->setListData($months)
+                            ->setPlaceHolder('Month')
+                        ->getInput(1, 3)
+                            ->setPlaceHolder('Year')
+                            ->setAttributes(array('size' => 3, 'maxlength' => 2))
                 ->addField('transactionDate')
-                    ->addOperator(SearchBlankType::class)
-                    ->addOperator(EqualType::class)
+                    ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('amount')
-                    ->addOperator(SearchBlankType::class)
-                    ->addOperator(EqualType::class)
+                    ->addOperator(EqualNonEmptyType::class)
                 ->addField('note')
-                    ->addOperator(SearchBlankType::class)
-                    ->addOperator(EqualType::class)
-                    ->addOperator(ContainType::class)
+                    ->addOperator(EqualNonEmptyType::class)
         ;
 
         $builder->sortWidget()

@@ -5,19 +5,23 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="deliveryInspectionHeader" data-field="transactionDate">Transaction Date</th>
-            <th data-group="deliveryInspectionHeader" data-field="isVehicleComplete">Is Vehicle Complete</th>
-            <th data-group="deliveryInspectionHeader" data-field="isBodyBuilderExecuted">Is Body Builder Executed</th>
+            <th data-group="deliveryInspectionHeader" data-field="codeNumber">Inspection #</th>
+            <th data-group="deliveryInspectionHeader" data-field="transactionDate">Tanggal</th>
             <th data-group="deliveryInspectionHeader" data-field="note">Note</th>
+            <th></th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="deliveryInspectionHeader" data-field="codeNumber"></th>
+            <th data-group="deliveryInspectionHeader" data-field="transactionDate"></th>
+            <th data-group="deliveryInspectionHeader" data-field="note"></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for deliveryInspectionHeader in grid.data %}
             <tr data-field-id="{{ deliveryInspectionHeader.id }}">
+                <td class="text-left">{{ deliveryInspectionHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.transactionDate|default ? deliveryInspectionHeader.transactionDate|date('Y-m-d') }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.isVehicleComplete|default ? 'Yes' : 'No' }}</td>
-                <td class="text-left">{{ deliveryInspectionHeader.isBodyBuilderExecuted|default ? 'Yes' : 'No' }}</td>
                 <td class="text-left">{{ deliveryInspectionHeader.note|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
@@ -33,7 +37,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5" class="alert alert-warning">
+                <td colspan="4" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

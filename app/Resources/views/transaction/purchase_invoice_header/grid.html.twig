@@ -13,6 +13,17 @@
             <th data-group="purchaseInvoiceHeader" data-field="remaining">Remaining</th>
             <th></th>
         </tr>
+        <tr data-action="search">
+            <th data-group="saleOrder" data-field="codeNumber"></th>
+            <th data-group="saleOrder" data-field="transactionDate"></th>
+            <th data-group="saleOrder" data-field="vehicleBrand"></th>
+            <th data-group="saleOrder" data-field="vehicleSerialNumber"></th>
+            <th data-group="saleOrder" data-field="vehicleColor"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
     </thead>
     <tbody>
         {% for purchaseInvoiceHeader in grid.data %}

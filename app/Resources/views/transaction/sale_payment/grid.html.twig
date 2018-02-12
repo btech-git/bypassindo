@@ -5,15 +5,24 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="salePayment" data-field="transactionDate">Transaction Date</th>
+            <th data-group="salePayment" data-field="codeNumber">Pelunasan #</th>
+            <th data-group="salePayment" data-field="transactionDate">Tanggal</th>
             <th data-group="salePayment" data-field="amount">Amount</th>
             <th data-group="salePayment" data-field="note">Note</th>
+            <th></th>
+        </tr>
+        <tr data-action="search">
+            <th data-group="salePayment" data-field="codeNumber"></th>
+            <th data-group="salePayment" data-field="transactionDate"></th>
+            <th data-group="salePayment" data-field="amount"></th>
+            <th data-group="salePayment" data-field="note"></th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         {% for salePayment in grid.data %}
             <tr data-field-id="{{ salePayment.id }}">
+                <td class="text-left">{{ salePayment.codeNumber|default }}</td>
                 <td class="text-left">{{ salePayment.transactionDate|default ? salePayment.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-right">{{ salePayment.amount|default|number_format(2) }}</td>
                 <td class="text-left">{{ salePayment.note|default }}</td>
@@ -31,7 +40,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="alert alert-warning">
+                <td colspan="5" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

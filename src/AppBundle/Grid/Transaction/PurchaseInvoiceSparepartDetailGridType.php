@@ -10,6 +10,7 @@ use LibBundle\Grid\DataBuilder;
 use LibBundle\Grid\SortOperator\BlankType as SortBlankType;
 use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
+use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
 use LibBundle\Grid\SearchOperator\ContainType;
@@ -23,13 +24,9 @@ class PurchaseInvoiceSparepartDetailGridType extends DataGridType
             ->addGroup('purchaseInvoiceSparepartDetail')
                 ->setEntityName(PurchaseInvoiceSparepartDetail::class)
                 ->addField('itemCode')
-                    ->addOperator(SearchBlankType::class)
-                    ->addOperator(EqualType::class)
-                    ->addOperator(ContainType::class)
+                    ->addOperator(EqualNonEmptyType::class)
                 ->addField('itemName')
-                    ->addOperator(SearchBlankType::class)
-                    ->addOperator(EqualType::class)
-                    ->addOperator(ContainType::class)
+                    ->addOperator(EqualNonEmptyType::class)
                 ->addField('supplySysNumber')
                     ->addOperator(SearchBlankType::class)
                     ->addOperator(EqualType::class)
