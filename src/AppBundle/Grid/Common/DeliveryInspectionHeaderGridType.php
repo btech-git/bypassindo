@@ -118,7 +118,6 @@ class DeliveryInspectionHeaderGridType extends DataGridType
             switch ($options['form']) {
                 case 'delivery_order':
                     $associations['deliveryOrder']['merge'] = false;
-                    $associations['receiveOrder']['associations']['saleInvoice']['associations']['salePayment']['merge'] = true;
                     break;
             }
         }
