@@ -68,7 +68,7 @@
         
         <hr />
         
-        <div class="form-group">
+        <div class="form-group {{ deliveryInspectionHeader.id ? 'show' : 'hide' }}">
             <button type="button" class="btn btn-default" id="check-all-details">Check All</button>
             <button type="button" class="btn btn-default" id="uncheck-all-details">Unheck All</button>
         </div>
@@ -85,7 +85,7 @@
             {% set last_id = id %}
         {% endfor %}
         
-        <div id="item-list">
+        <div id="item-list" class="{{ deliveryInspectionHeader.id ? 'show' : 'hide' }}">
             {% for detail in form.details %}
                 {% set id = detail.vars.value.inspectionItem.inspectionItemCategory.id %}
                 {% set diff = ends['0' ~ id] - starts['0' ~ id] + 1 %}
@@ -106,7 +106,7 @@
             {% endfor %}
         </div>
         
-        <div id="input-check-list">
+        <div id="input-check-list" class="{{ deliveryInspectionHeader.id ? 'show' : 'hide' }}">
             {% for key, name in names %}
                 <div class="row">
                     <div class="col-sm-12">

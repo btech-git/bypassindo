@@ -69,39 +69,48 @@
             <h1 class="panel-title">Inspection Items</h1>
         </div>
         <div class="panel-body">
-            {% set currentIndex = 0 %}
             {% set lastId = '' %}
-            {% for deliveryInspectionDetail in deliveryInspectionHeader.deliveryInspectionDetails %}
+            {% for deliveryInspectionDetail in deliveryInspectionDetails %}
                 {% set inspectionItem = deliveryInspectionDetail.inspectionItem %}
                 {% set inspectionItemCategory = inspectionItem.inspectionItemCategory %}
                 {% if lastId != inspectionItemCategory.id %}
-                    {% if currentIndex % 3 > 0 and currentIndex % 3 < 3 %}
-                        {{ '</div>' }}
+                    {% if lastId != '' %}
+                        <div>&nbsp;</div>
                     {% endif %}
-                    <div>&nbsp;</div>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <span class="lead">
-                                <strong>{{ inspectionItemCategory.name }}</strong>
-                            </span>
-                        </div>
+                    <div class="item-label">
+                        <strong>{{ inspectionItemCategory.name }}</strong>
                     </div>
-                    {% set currentIndex = 0 %}
                 {% endif %}
-                {% if currentIndex % 3 == 0 %}
-                    <div class="row">
-                {% endif %}
-                <div class="col-sm-4" style="padding-top: 5px; padding-bottom: 5px">
+                <div class="item-value">
                     {{ inspectionItem.name }}
                 </div>
-                {% if currentIndex % 3 == 2 %}
-                    </div>
-                {% endif %}
                 {% if lastId != inspectionItemCategory.id %}
                     {% set lastId = inspectionItemCategory.id %}
                 {% endif %}
-                {% set currentIndex = currentIndex + 1 %}
             {% endfor %}
         </div>
     </div>
+    
+    <a target="_blank" class="btn btn-info" href="{{ path('transaction_delivery_inspection_header_memo', {'id': deliveryInspectionHeader.id}) }}">
+        <span class="glyphicon glyphicon-print"></span> Print
+    </a>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .item-label, .item-value {
+            display: inline-block;
+            vertical-align: top;
+        }
+        .item-label {
+            width: 100%;
+            padding: 5px 0;
+            font-size: 1.25em;
+            text-decoration: underline;
+        }
+        .item-value {
+            width: 32.5%;
+            padding: 2.5px 0;
+        }
+    </style>
 {% endblock %}

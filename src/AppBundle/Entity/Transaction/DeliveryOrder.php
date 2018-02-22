@@ -112,6 +112,10 @@ class DeliveryOrder extends CodeNumberEntity
      */
     private $staffLast;
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     */
+    private $staffApproval;
+    /**
      * @ORM\OneToOne(targetEntity="DeliveryInspectionHeader", inversedBy="deliveryOrder")
      * @Assert\NotNull()
      */
@@ -181,6 +185,9 @@ class DeliveryOrder extends CodeNumberEntity
 
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
+
+    public function getStaffApproval() { return $this->staffApproval; }
+    public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
 
     public function getDeliveryInspectionHeader() { return $this->deliveryInspectionHeader; }
     public function setDeliveryInspectionHeader(DeliveryInspectionHeader $deliveryInspectionHeader = null) { $this->deliveryInspectionHeader = $deliveryInspectionHeader; }

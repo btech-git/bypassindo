@@ -58,7 +58,6 @@ class DeliveryInspectionHeader extends CodeNumberEntity
     private $receiveOrder;
     /**
      * @ORM\OneToMany(targetEntity="DeliveryInspectionDetail", mappedBy="deliveryInspectionHeader")
-     * @Assert\Valid() @Assert\Count(min=1)
      */
     private $deliveryInspectionDetails;
     /**

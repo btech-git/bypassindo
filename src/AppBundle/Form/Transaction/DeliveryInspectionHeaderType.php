@@ -24,22 +24,29 @@ class DeliveryInspectionHeaderType extends AbstractType
             ->add('isBodyBuilderExecuted')
             ->add('note')
             ->add('receiveOrder', EntityTextType::class, array('class' => ReceiveOrder::class))
-            ->add('details', CollectionType::class, array(
-                'mapped' => false,
-                'entry_type' => DeliveryInspectionDetailType::class,
-                'allow_add' => true,
-                'allow_delete' => true,
-                'by_reference' => false,
-                'prototype_data' => new DeliveryInspectionDetail(),
-                'label' => false,
-            ))
         ;
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
+                $deliveryInspectionHeader = $event->getData();
+                $options['service']->initialize($deliveryInspectionHeader, $options['init']);
+                $form = $event->getForm();
+                $formOptions = array(
+                    'mapped' => false,
+                    'entry_type' => DeliveryInspectionDetailType::class,
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'by_reference' => false,
+                    'prototype_data' => new DeliveryInspectionDetail(),
+                    'label' => false,
+                );
+                if (empty($deliveryInspectionHeader->getId())) {
+                    $formOptions['disabled'] = true;
+                }
+                $form->add('details', CollectionType::class, $formOptions);
+            })
             ->addEventListener(FormEvents::POST_SET_DATA, function(FormEvent $event) use ($options) {
                 $deliveryInspectionHeader = $event->getData();
                 $form = $event->getForm();
-                
-                $options['service']->initialize($deliveryInspectionHeader, $options['init']);
                 
                 $deliveryInspectionDetails = $deliveryInspectionHeader->getDeliveryInspectionDetails();
                 $inspectionItemList = array();
