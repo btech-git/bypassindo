@@ -22,7 +22,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/grid", name="transaction_delivery_inspection_header_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_NEW') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_EDIT') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -40,7 +40,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/", name="transaction_delivery_inspection_header_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_NEW') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_EDIT') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_DELETE')")
      */
     public function indexAction()
     {
@@ -50,7 +50,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/new", name="transaction_delivery_inspection_header_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_NEW')")
      */
     public function newAction(Request $request)
     {
@@ -79,7 +79,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/{id}", name="transaction_delivery_inspection_header_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_NEW') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_EDIT') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_DELETE')")
      */
     public function showAction(DeliveryInspectionHeader $deliveryInspectionHeader)
     {
@@ -109,7 +109,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/{id}/edit", name="transaction_delivery_inspection_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_EDIT')")
      */
     public function editAction(Request $request, DeliveryInspectionHeader $deliveryInspectionHeader)
     {
@@ -136,7 +136,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_delivery_inspection_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_DELETE')")
      */
     public function deleteAction(Request $request, DeliveryInspectionHeader $deliveryInspectionHeader)
     {
@@ -165,7 +165,7 @@ class DeliveryInspectionHeaderController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_delivery_inspection_header_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_INSPECTION_HEADER_NEW') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_EDIT') or has_role('ROLE_DELIVERY_INSPECTION_HEADER_DELETE')")
      */
     public function memoAction(DeliveryInspectionHeader $deliveryInspectionHeader)
     {

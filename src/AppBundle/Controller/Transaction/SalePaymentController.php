@@ -19,7 +19,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_payment_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_NEW') or has_role('ROLE_SALE_PAYMENT_EDIT') or has_role('ROLE_SALE_PAYMENT_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/", name="transaction_sale_payment_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_NEW') or has_role('ROLE_SALE_PAYMENT_EDIT') or has_role('ROLE_SALE_PAYMENT_DELETE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_payment_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_payment_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_NEW') or has_role('ROLE_SALE_PAYMENT_EDIT') or has_role('ROLE_SALE_PAYMENT_DELETE')")
      */
     public function showAction(SalePayment $salePayment)
     {
@@ -87,7 +87,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_sale_payment_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_EDIT')")
      */
     public function editAction(Request $request, SalePayment $salePayment, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class SalePaymentController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_payment_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_PAYMENT_DELETE')")
      */
     public function deleteAction(Request $request, SalePayment $salePayment)
     {

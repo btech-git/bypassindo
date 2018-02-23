@@ -20,7 +20,7 @@ class PurchaseDeliveryOrderController extends Controller
     /**
      * @Route("/grid", name="transaction_purchase_delivery_order_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -38,7 +38,7 @@ class PurchaseDeliveryOrderController extends Controller
     /**
      * @Route("/", name="transaction_purchase_delivery_order_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
      */
     public function indexAction()
     {
@@ -46,37 +46,9 @@ class PurchaseDeliveryOrderController extends Controller
     }
 
     /**
-     * @Route("/grid_outstanding", name="transaction_purchase_delivery_order_grid_outstanding", condition="request.isXmlHttpRequest()")
-     * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
-     */
-    public function gridOutstandingAction(Request $request)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(PurchaseDeliveryOrder::class);
-
-        $grid = $this->get('lib.grid.datagrid');
-        $grid->build(PurchaseDeliveryOrderOutstandingGridType::class, $repository, $request);
-
-        return $this->render('transaction/purchase_delivery_order/grid_outstanding.html.twig', array(
-            'grid' => $grid->createView(),
-        ));
-    }
-
-    /**
-     * @Route("/index_outstanding", name="transaction_purchase_delivery_order_index_outstanding")
-     * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
-     */
-    public function indexOutstandingAction()
-    {
-        return $this->render('transaction/purchase_delivery_order/index_outstanding.html.twig');
-    }
-
-    /**
      * @Route("/new.{_format}", name="transaction_purchase_delivery_order_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -104,7 +76,7 @@ class PurchaseDeliveryOrderController extends Controller
     /**
      * @Route("/{id}", name="transaction_purchase_delivery_order_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
      */
     public function showAction(PurchaseDeliveryOrder $purchaseDeliveryOrder)
     {
@@ -116,7 +88,7 @@ class PurchaseDeliveryOrderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_purchase_delivery_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT')")
      */
     public function editAction(Request $request, PurchaseDeliveryOrder $purchaseDeliveryOrder, $_format = 'html')
     {
@@ -142,7 +114,7 @@ class PurchaseDeliveryOrderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_purchase_delivery_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
      */
     public function deleteAction(Request $request, PurchaseDeliveryOrder $purchaseDeliveryOrder)
     {
@@ -166,5 +138,33 @@ class PurchaseDeliveryOrderController extends Controller
             'purchaseDeliveryOrder' => $purchaseDeliveryOrder,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * @Route("/grid_outstanding", name="transaction_purchase_delivery_order_grid_outstanding", condition="request.isXmlHttpRequest()")
+     * @Method("POST")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
+     */
+    public function gridOutstandingAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(PurchaseDeliveryOrder::class);
+
+        $grid = $this->get('lib.grid.datagrid');
+        $grid->build(PurchaseDeliveryOrderOutstandingGridType::class, $repository, $request);
+
+        return $this->render('transaction/purchase_delivery_order/grid_outstanding.html.twig', array(
+            'grid' => $grid->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/index_outstanding", name="transaction_purchase_delivery_order_index_outstanding")
+     * @Method("GET")
+     * @Security("has_role('ROLE_PURCHASE_DELIVERY_ORDER_NEW') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_EDIT') or has_role('ROLE_PURCHASE_DELIVERY_ORDER_DELETE')")
+     */
+    public function indexOutstandingAction()
+    {
+        return $this->render('transaction/purchase_delivery_order/index_outstanding.html.twig');
     }
 }

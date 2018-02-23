@@ -19,7 +19,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/grid", name="transaction_purchase_invoice_header_general_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/", name="transaction_purchase_invoice_header_general_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_purchase_invoice_header_general_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -76,7 +76,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}", name="transaction_purchase_invoice_header_general_show")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
      */
     public function showAction(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
@@ -88,7 +88,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_purchase_invoice_header_general_edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT')")
      */
     public function editAction(Request $request, PurchaseInvoiceHeader $purchaseInvoiceHeader, $_format = 'html')
     {
@@ -117,7 +117,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_purchase_invoice_header_general_delete")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
      */
     public function deleteAction(Request $request, PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {

@@ -19,7 +19,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/grid", name="transaction_delivery_order_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_NEW') or has_role('ROLE_DELIVERY_ORDER_EDIT') or has_role('ROLE_DELIVERY_ORDER_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/", name="transaction_delivery_order_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_NEW') or has_role('ROLE_DELIVERY_ORDER_EDIT') or has_role('ROLE_DELIVERY_ORDER_DELETE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_delivery_order_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/{id}", name="transaction_delivery_order_show", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_NEW') or has_role('ROLE_DELIVERY_ORDER_EDIT') or has_role('ROLE_DELIVERY_ORDER_DELETE')")
      */
     public function showAction(Request $request, DeliveryOrder $deliveryOrder)
     {
@@ -103,7 +103,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_delivery_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_EDIT')")
      */
     public function editAction(Request $request, DeliveryOrder $deliveryOrder, $_format = 'html')
     {
@@ -129,7 +129,7 @@ class DeliveryOrderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_delivery_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_DELETE')")
      */
     public function deleteAction(Request $request, DeliveryOrder $deliveryOrder)
     {

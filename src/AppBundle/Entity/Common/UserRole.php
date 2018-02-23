@@ -19,7 +19,7 @@ class UserRole implements RoleInterface
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=20, unique=true)
+     * @ORM\Column(type="string", length=60, unique=true)
      * @Assert\NotBlank()
      */
     private $name;

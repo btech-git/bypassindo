@@ -8,6 +8,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Common\UserRole;
 use AppBundle\Form\Admin\StaffType;
 use AppBundle\Grid\Admin\StaffGridType;
 
@@ -52,7 +53,10 @@ class StaffController extends Controller
     public function newAction(Request $request)
     {
         $staff = new Staff();
-        $form = $this->createForm(StaffType::class, $staff, array('encoder' => $this->get('security.password_encoder')));
+        $form = $this->createForm(StaffType::class, $staff, array(
+            'encoder' => $this->get('security.password_encoder'),
+            'userRoleRepository' => $this->getDoctrine()->getManager()->getRepository(UserRole::class),
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -88,7 +92,10 @@ class StaffController extends Controller
      */
     public function editAction(Request $request, Staff $staff)
     {
-        $form = $this->createForm(StaffType::class, $staff, array('encoder' => $this->get('security.password_encoder')));
+        $form = $this->createForm(StaffType::class, $staff, array(
+            'encoder' => $this->get('security.password_encoder'),
+            'userRoleRepository' => $this->getDoctrine()->getManager()->getRepository(UserRole::class),
+        ));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

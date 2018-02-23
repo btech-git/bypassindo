@@ -19,7 +19,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_invoice_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_NEW') or has_role('ROLE_SALE_INVOICE_EDIT') or has_role('ROLE_SALE_INVOICE_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/", name="transaction_sale_invoice_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_NEW') or has_role('ROLE_SALE_INVOICE_EDIT') or has_role('ROLE_SALE_INVOICE_DELETE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_invoice_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_invoice_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_NEW') or has_role('ROLE_SALE_INVOICE_EDIT') or has_role('ROLE_SALE_INVOICE_DELETE')")
      */
     public function showAction(SaleInvoice $saleInvoice)
     {
@@ -87,7 +87,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/{id}/edit", name="transaction_sale_invoice_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_EDIT')")
      */
     public function editAction(Request $request, SaleInvoice $saleInvoice, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class SaleInvoiceController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_invoice_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_INVOICE_DELETE')")
      */
     public function deleteAction(Request $request, SaleInvoice $saleInvoice)
     {

@@ -21,7 +21,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_order_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -39,7 +39,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/", name="transaction_sale_order_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
      */
     public function indexAction()
     {
@@ -49,7 +49,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_order_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -77,7 +77,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_order_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
      */
     public function showAction(SaleOrder $saleOrder)
     {
@@ -93,7 +93,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_sale_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_EDIT')")
      */
     public function editAction(Request $request, SaleOrder $saleOrder, $_format = 'html')
     {
@@ -119,7 +119,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_DELETE')")
      */
     public function deleteAction(Request $request, SaleOrder $saleOrder)
     {
@@ -148,7 +148,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_sale_order_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
      */
     public function memoAction(SaleOrder $saleOrder)
     {
@@ -160,7 +160,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/stock_referring", name="transaction_sale_order_stock_referring", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT')")
      */
     public function stockReferringAction(Request $request, SaleOrder $saleOrder)
     {

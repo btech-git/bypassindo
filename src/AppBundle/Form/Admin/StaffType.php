@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+use Doctrine\Common\Collections\Criteria;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Common\UserRole;
 
@@ -36,6 +37,7 @@ class StaffType extends AbstractType
                 'label' => 'Roles',
                 'expanded' => true,
                 'multiple' => true,
+                'choices' => $options['userRoleRepository']->findBy(array(), array('ordinal' => Criteria::ASC)),
             ))
         ;
         $builder
@@ -70,6 +72,6 @@ class StaffType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Staff::class,
         ));
-        $resolver->setRequired(array('encoder'));
+        $resolver->setRequired(array('encoder', 'userRoleRepository'));
     }
 }

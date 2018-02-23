@@ -19,7 +19,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/grid", name="transaction_receive_order_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_NEW') or has_role('ROLE_RECEIVE_ORDER_EDIT') or has_role('ROLE_RECEIVE_ORDER_DELETE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/", name="transaction_receive_order_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_NEW') or has_role('ROLE_RECEIVE_ORDER_EDIT') or has_role('ROLE_RECEIVE_ORDER_DELETE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_receive_order_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_NEW')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/{id}", name="transaction_receive_order_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_NEW') or has_role('ROLE_RECEIVE_ORDER_EDIT') or has_role('ROLE_RECEIVE_ORDER_DELETE')")
      */
     public function showAction(ReceiveOrder $receiveOrder)
     {
@@ -87,7 +87,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_receive_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_EDIT')")
      */
     public function editAction(Request $request, ReceiveOrder $receiveOrder, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class ReceiveOrderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_receive_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_RECEIVE_ORDER_DELETE')")
      */
     public function deleteAction(Request $request, ReceiveOrder $receiveOrder)
     {
