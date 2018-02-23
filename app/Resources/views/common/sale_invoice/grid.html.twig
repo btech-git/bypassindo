@@ -10,6 +10,9 @@
             <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
             <th data-group="customer" data-field="name">Customer</th>
             <th data-group="saleInvoice" data-field="taxNumber">Faktur Pajak #</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th data-group="saleInvoice" data-field="amount">Amount</th>
         </tr>
         <tr data-action="search">
@@ -18,6 +21,9 @@
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
             <th data-group="saleInvoice" data-field="taxNumber"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th data-group="saleInvoice" data-field="amount"></th>
         </tr>
     </thead>
@@ -34,11 +40,14 @@
                 <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ saleInvoice.taxNumber|default }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-right">{{ saleInvoice.amount|default|number_format(2) }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6" class="alert alert-warning">
+                <td colspan="10" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

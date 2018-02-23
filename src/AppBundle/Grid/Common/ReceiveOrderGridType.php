@@ -13,6 +13,7 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\ReceiveOrder;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Master\Customer;
 
 class ReceiveOrderGridType extends DataGridType
@@ -44,6 +45,12 @@ class ReceiveOrderGridType extends DataGridType
                 ->setEntityName(Customer::class)
                 ->addField('name')
                     ->addOperator(ContainNonEmptyType::class)
+            ->addGroup('purchaseDeliveryOrder')
+                ->setEntityName(PurchaseDeliveryOrder::class)
+                ->addField('vehicleChassisNumber')
+                    ->addOperator(EqualNonEmptyType::class)
+                ->addField('vehicleMachineNumber')
+                    ->addOperator(EqualNonEmptyType::class)
         ;
 
         $builder->sortWidget()
@@ -79,6 +86,12 @@ class ReceiveOrderGridType extends DataGridType
             if ($group === 'customer' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
                 $associations['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
             }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleChassisNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['purchaseDeliveryOrder']['merge'] = true;
+            }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleMachineNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['purchaseDeliveryOrder']['merge'] = true;
+            }
             $operator::search($criteria[$group], $field, $values);
         });
 
@@ -98,14 +111,14 @@ class ReceiveOrderGridType extends DataGridType
 
     private function getSpecifications(array $options)
     {
-        $names = array('receiveOrder', 'saleOrder', 'customer');
+        $names = array('receiveOrder', 'purchaseDeliveryOrder', 'saleOrder', 'customer');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
         }
 
         $associations = array(
-            'purchaseDeliveryOrder' => array('criteria' => null, 'associations' => array(
+            'purchaseDeliveryOrder' => array('criteria' => $criteria['purchaseDeliveryOrder'], 'associations' => array(
                 'saleOrder' => array('criteria' => $criteria['saleOrder'], 'associations' => array(
                     'customer' => array('criteria' => $criteria['customer']),
                 )),

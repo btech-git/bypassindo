@@ -10,8 +10,10 @@
             <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
             <th data-group="saleOrder" data-field="codeNumber">Penerimaan #</th>
             <th data-group="supplier" data-field="name">Supplier</th>
-            <th data-group="saleOrder" data-field="vehicleBrand">Brand</th>
             <th data-group="saleOrder" data-field="vehicleColor">Color</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
         </tr>
         <tr data-action="search">
             <th data-group="purchaseWorkshopHeader" data-field="codeNumber"></th>
@@ -19,8 +21,10 @@
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="receiveWorkshop" data-field="codeNumber"></th>
             <th data-group="supplier" data-field="name"></th>
-            <th data-group="saleOrder" data-field="vehicleBrand"></th>
             <th data-group="saleOrder" data-field="vehicleColor"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
         </tr>
     </thead>
     <tbody>
@@ -41,12 +45,14 @@
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|default ? receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}</td>
-                <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</td>
+                <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="6" class="alert alert-warning">
+                <td colspan="10" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

@@ -7,13 +7,17 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="deliveryWorkshop" data-field="codeNumber">SJ Karoseri #</th>
             <th data-group="deliveryWorkshop" data-field="transactionDate">Tanggal</th>
-            <th data-group="deliveryWorkshop" data-field="note">Note</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th></th>
         </tr>
         <tr data-action="search">
             <th data-group="deliveryWorkshop" data-field="codeNumber"></th>
             <th data-group="deliveryWorkshop" data-field="transactionDate"></th>
-            <th data-group="deliveryWorkshop" data-field="note"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th></th>
         </tr>
     </thead>
@@ -22,7 +26,9 @@
             <tr data-field-id="{{ deliveryWorkshop.id }}">
                 <td class="text-left">{{ deliveryWorkshop.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryWorkshop.transactionDate|default ? deliveryWorkshop.transactionDate|date('Y-m-d') }}</td>
-                <td class="text-left">{{ deliveryWorkshop.note|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {
@@ -37,7 +43,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="4" class="alert alert-warning">
+                <td colspan="5" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

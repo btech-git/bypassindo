@@ -8,16 +8,18 @@
             <th data-group="deliveryOrder" data-field="codeNumber">Pengiriman #</th>
             <th data-group="deliveryOrder" data-field="transactionDate">Tanggal</th>
             <th data-group="deliveryOrder" data-field="destinationAddress">Alamat</th>
-            <th data-group="deliveryOrder" data-field="destinationPhone">Phone</th>
-            <th data-group="deliveryOrder" data-field="note">Note</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th></th>
         </tr>
         <tr data-action="search">
             <th data-group="deliveryOrder" data-field="codeNumber"></th>
             <th data-group="deliveryOrder" data-field="transactionDate"></th>
             <th data-group="deliveryOrder" data-field="destinationAddress"></th>
-            <th data-group="deliveryOrder" data-field="destinationPhone"></th>
-            <th data-group="deliveryOrder" data-field="note"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th></th>
         </tr>
     </thead>
@@ -27,8 +29,9 @@
                 <td class="text-left">{{ deliveryOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ deliveryOrder.transactionDate|default ? deliveryOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ deliveryOrder.destinationAddress|default }}</td>
-                <td class="text-left">{{ deliveryOrder.destinationPhone|default }}</td>
-                <td class="text-left">{{ deliveryOrder.note|default }}</td>
+                <td class="text-left">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {

@@ -13,6 +13,7 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\SaleInvoice;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Master\Customer;
 
 class SaleInvoiceGridType extends DataGridType
@@ -44,6 +45,12 @@ class SaleInvoiceGridType extends DataGridType
                 ->setEntityName(Customer::class)
                 ->addField('name')
                     ->addOperator(ContainNonEmptyType::class)
+            ->addGroup('purchaseDeliveryOrder')
+                ->setEntityName(PurchaseDeliveryOrder::class)
+                ->addField('vehicleChassisNumber')
+                    ->addOperator(EqualNonEmptyType::class)
+                ->addField('vehicleMachineNumber')
+                    ->addOperator(EqualNonEmptyType::class)
         ;
 
         $builder->sortWidget()
@@ -79,6 +86,12 @@ class SaleInvoiceGridType extends DataGridType
             if ($group === 'customer' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
                 $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
             }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleChassisNumber' && $operator === EqualNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['merge'] = true;
+            }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleMachineNumber' && $operator === EqualNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['merge'] = true;
+            }
             $operator::search($criteria[$group], $field, $values);
         });
 
@@ -98,7 +111,7 @@ class SaleInvoiceGridType extends DataGridType
 
     private function getSpecifications(array $options)
     {
-        $names = array('saleInvoice', 'customer');
+        $names = array('saleInvoice', 'customer', 'purchaseDeliveryOrder');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
@@ -106,7 +119,7 @@ class SaleInvoiceGridType extends DataGridType
 
         $associations = array(
             'receiveOrder' => array('criteria' => null, 'associations' => array(
-                'purchaseDeliveryOrder' => array('criteria' => null, 'associations' => array(
+                'purchaseDeliveryOrder' => array('criteria' => $criteria['purchaseDeliveryOrder'], 'associations' => array(
                     'saleOrder' => array('criteria' => null, 'associations' => array(
                         'customer' => array('criteria' => $criteria['customer']),
                     )),
