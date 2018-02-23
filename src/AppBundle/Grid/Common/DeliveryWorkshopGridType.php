@@ -13,6 +13,7 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\DeliveryWorkshop;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Master\Supplier;
 
 class DeliveryWorkshopGridType extends DataGridType
@@ -44,6 +45,12 @@ class DeliveryWorkshopGridType extends DataGridType
                 ->setEntityName(Supplier::class)
                 ->addField('name')
                     ->addOperator(ContainNonEmptyType::class)
+            ->addGroup('purchaseDeliveryOrder')
+                ->setEntityName(PurchaseDeliveryOrder::class)
+                ->addField('vehicleChassisNumber')
+                    ->addOperator(EqualNonEmptyType::class)
+                ->addField('vehicleMachineNumber')
+                    ->addOperator(EqualNonEmptyType::class)
         ;
 
         $builder->sortWidget()
@@ -79,6 +86,12 @@ class DeliveryWorkshopGridType extends DataGridType
             if ($group === 'supplier' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
                 $associations['purchaseWorkshopHeader']['associations']['supplier']['merge'] = true;
             }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleChassisNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['merge'] = true;
+            }
+            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleMachineNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['merge'] = true;
+            }
             $operator::search($criteria[$group], $field, $values);
         });
 
@@ -98,7 +111,7 @@ class DeliveryWorkshopGridType extends DataGridType
 
     private function getSpecifications(array $options)
     {
-        $names = array('deliveryWorkshop', 'supplier');
+        $names = array('deliveryWorkshop', 'supplier', 'purchaseDeliveryOrder');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
@@ -107,6 +120,9 @@ class DeliveryWorkshopGridType extends DataGridType
         $associations = array(
             'purchaseWorkshopHeader' => array('criteria' => null, 'associations' => array(
                 'supplier' => array('criteria' => $criteria['supplier']),
+            )),
+            'receiveOrder' => array('criteria' => null, 'associations' => array(
+                'purchaseDeliveryOrder' => array('criteria' => $criteria['purchaseDeliveryOrder']),
             )),
         );
 

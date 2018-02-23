@@ -7,6 +7,9 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="saleInvoice" data-field="codeNumber">Invoice #</th>
             <th data-group="saleInvoice" data-field="transactionDate">Tanggal</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th data-group="saleInvoice" data-field="amount">Amount</th>
             <th data-group="saleInvoice" data-field="totalPayment">Total Payment</th>
             <th data-group="saleInvoice" data-field="remaining">Remaining</th>
@@ -15,6 +18,9 @@
         <tr data-action="search">
             <th data-group="saleInvoice" data-field="codeNumber"></th>
             <th data-group="saleInvoice" data-field="transactionDate"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th data-group="saleInvoice" data-field="amount"></th>
             <th data-group="saleInvoice" data-field="totalPayment"></th>
             <th data-group="saleInvoice" data-field="remaining"></th>
@@ -26,6 +32,9 @@
             <tr data-field-id="{{ saleInvoice.id }}">
                 <td class="text-left">{{ saleInvoice.codeNumber|default }}</td>
                 <td class="text-left">{{ saleInvoice.transactionDate|default ? saleInvoice.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ saleInvoice.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-right">{{ saleInvoice.amount|default|number_format(2) }}</td>
                 <td class="text-right">{{ saleInvoice.totalPayment|default|number_format(2) }}</td>
                 <td class="text-right">{{ saleInvoice.remaining|default|number_format(2) }}</td>
@@ -43,7 +52,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="6" class="alert alert-warning">
+                <td colspan="8" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

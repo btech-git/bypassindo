@@ -9,20 +9,20 @@
             <th data-group="receiveOrder" data-field="transactionDate">Tanggal</th>
             <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
             <th data-group="customer" data-field="name">Customer </th>
-            <th data-group="saleOrder" data-field="vehicleBrand">Merk</th>
             <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
-            <th data-group="receiveOrder" data-field="vehicleProductionYear">Tahun Pembuatan</th>
-            <th data-group="receiveOrder" data-field="vehicleDescription">Deskripsi</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
         </tr>
         <tr data-action="search">
             <th data-group="receiveOrder" data-field="codeNumber"></th>
             <th data-group="receiveOrder" data-field="transactionDate"></th>
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
-            <th data-group="saleOrder" data-field="vehicleBrand"></th>
             <th data-group="saleOrder" data-field="vehicleColor"></th>
-            <th data-group="receiveOrder" data-field="vehicleProductionYear"></th>
-            <th data-group="receiveOrder" data-field="vehicleDescription"></th>
+            <th></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
         </tr>
     </thead>
     <tbody>
@@ -43,14 +43,14 @@
                 <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="8" class="alert alert-warning">
+                <td colspan="9" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>

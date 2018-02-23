@@ -7,22 +7,22 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="receiveOrder" data-field="codeNumber">Penerimaan #</th>
             <th data-group="receiveOrder" data-field="transactionDate">Tanggal</th>
-            <th data-group="receiveOrder" data-field="codeNumber">SPK #</th>
-            <th data-group="receiveOrder" data-field="codeNumber">Customer</th>
-            <th data-group="receiveOrder" data-field="codeNumber">Production Year</th>
-            <th data-group="receiveOrder" data-field="codeNumber">Rangka #</th>
-            <th data-group="receiveOrder" data-field="codeNumber">Mesin #</th>
+            <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
+            <th data-group="customer" data-field="codeNumber">Customer</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th data-group="receiveOrder" data-field="serviceBookNumber">Buku Service #</th>
             <th></th>
         </tr>
         <tr data-action="search">
             <th data-group="receiveOrder" data-field="codeNumber"></th>
             <th data-group="receiveOrder" data-field="transactionDate"></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
+            <th data-group="saleOrder" data-field="codeNumber"></th>
+            <th data-group="customer" data-field="codeNumber"></th>
+            <th data-group="vehicleModel" data-field="vosModel"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th data-group="receiveOrder" data-field="serviceBookNumber"></th>
             <th></th>
         </tr>
@@ -34,7 +34,7 @@
                 <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.vosModelName|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.serviceBookNumber|default }}</td>
@@ -52,7 +52,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="9" class="alert alert-warning">
+                <td colspan="8" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>
