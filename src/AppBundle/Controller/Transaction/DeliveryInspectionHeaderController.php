@@ -7,7 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Doctrine\Common\Collections\Criteria;
 use AppBundle\Entity\Transaction\DeliveryInspectionHeader;
+use AppBundle\Entity\Transaction\DeliveryInspectionDetail;
 use AppBundle\Entity\Master\InspectionItem;
 use AppBundle\Form\Transaction\DeliveryInspectionHeaderType;
 use AppBundle\Grid\Transaction\DeliveryInspectionHeaderGridType;
@@ -81,8 +83,26 @@ class DeliveryInspectionHeaderController extends Controller
      */
     public function showAction(DeliveryInspectionHeader $deliveryInspectionHeader)
     {
+        $names = array('deliveryInspectionDetail', 'inspectionItem', 'inspectionItemCategory');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+        $expr = Criteria::expr();
+        $associations = array(
+            'inspectionItem' => array('criteria' => $criteria['inspectionItem'], 'order' => 2, 'associations' => array(
+                'inspectionItemCategory' => array('criteria' => $criteria['inspectionItemCategory'], 'order' => 1),
+            )),
+        );
+        $criteria['deliveryInspectionDetail']->andWhere($expr->eq('deliveryInspectionHeader', $deliveryInspectionHeader));
+        $criteria['inspectionItemCategory']->orderBy(array('id' => Criteria::ASC));
+        $criteria['inspectionItem']->orderBy(array('id' => Criteria::ASC));
+        $deliveryInspectionDetailRepository = $this->getDoctrine()->getManager()->getRepository(DeliveryInspectionDetail::class);
+        $deliveryInspectionDetails = $deliveryInspectionDetailRepository->match($criteria['deliveryInspectionDetail'], $associations);
+
         return $this->render('transaction/delivery_inspection_header/show.html.twig', array(
             'deliveryInspectionHeader' => $deliveryInspectionHeader,
+            'deliveryInspectionDetails' => $deliveryInspectionDetails,
         ));
     }
 
@@ -139,6 +159,32 @@ class DeliveryInspectionHeaderController extends Controller
         return $this->render('transaction/delivery_inspection_header/delete.html.twig', array(
             'deliveryInspectionHeader' => $deliveryInspectionHeader,
             'form' => $form->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/{id}/memo", name="transaction_delivery_inspection_header_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function memoAction(DeliveryInspectionHeader $deliveryInspectionHeader)
+    {
+        $names = array('inspectionItem', 'inspectionItemCategory');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+        $associations = array(
+            'inspectionItemCategory' => array('criteria' => $criteria['inspectionItemCategory'], 'order' => 1),
+        );
+        $criteria['inspectionItemCategory']->orderBy(array('id' => Criteria::ASC));
+        $criteria['inspectionItem']->orderBy(array('id' => Criteria::ASC));
+        $inspectionItemRepository = $this->getDoctrine()->getManager()->getRepository(InspectionItem::class);
+        $inspectionItems = $inspectionItemRepository->match($criteria['inspectionItem'], $associations);
+
+        return $this->render('transaction/delivery_inspection_header/memo.html.twig', array(
+            'deliveryInspectionHeader' => $deliveryInspectionHeader,
+            'inspectionItems' => $inspectionItems,
         ));
     }
 }

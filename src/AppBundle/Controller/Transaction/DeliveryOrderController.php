@@ -74,13 +74,29 @@ class DeliveryOrderController extends Controller
 
     /**
      * @Route("/{id}", name="transaction_delivery_order_show", requirements={"id": "\d+"})
-     * @Method("GET")
+     * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
-    public function showAction(DeliveryOrder $deliveryOrder)
+    public function showAction(Request $request, DeliveryOrder $deliveryOrder)
     {
+        $deliveryOrderService = $this->get('app.transaction.delivery_order_form');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $deliveryOrder->setStaffApproval($this->getUser());
+                $deliveryOrderService->save($deliveryOrder);
+
+                $this->addFlash('success', array('title' => 'Success!', 'message' => 'The record was updated successfully.'));
+            } else {
+                $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to update the record.'));
+            }
+        }
+
         return $this->render('transaction/delivery_order/show.html.twig', array(
             'deliveryOrder' => $deliveryOrder,
+            'form' => $form->createView(),
         ));
     }
 
