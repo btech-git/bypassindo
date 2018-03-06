@@ -139,4 +139,17 @@ class SaleInvoiceController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_sale_invoice_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_SALE_INVOICE_NEW') or has_role('ROLE_SALE_INVOICE_EDIT') or has_role('ROLE_SALE_INVOICE_DELETE')")
+     */
+    public function memoAction(SaleInvoice $saleInvoice)
+    {
+        return $this->render('transaction/sale_invoice/memo.html.twig', array(
+            'saleInvoice' => $saleInvoice,
+        ));
+    }
+    
 }

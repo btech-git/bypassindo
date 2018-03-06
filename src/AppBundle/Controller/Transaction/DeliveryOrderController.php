@@ -154,4 +154,17 @@ class DeliveryOrderController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_delivery_order_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_DELIVERY_ORDER_NEW') or has_role('ROLE_DELIVERY_ORDER_EDIT') or has_role('ROLE_DELIVERY_ORDER_DELETE')")
+     */
+    public function memoAction(DeliveryOrder $deliveryOrder)
+    {
+        return $this->render('transaction/delivery_order/memo.html.twig', array(
+            'deliveryOrder' => $deliveryOrder,
+        ));
+    }
+    
 }

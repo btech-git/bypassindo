@@ -118,6 +118,12 @@
             </tr>
         </tbody>
     </table>
+        
+    {% if deliveryOrder.staffApproval is not null %}
+        <a target="_blank" class="btn btn-info" href="{{ path('transaction_delivery_order_memo', {'id': deliveryOrder.id}) }}">
+            <span class="glyphicon glyphicon-print"></span> Print Surat Jalan
+        </a>
+    {% endif %}
 
     <div>
         {{ form_start(form) }}

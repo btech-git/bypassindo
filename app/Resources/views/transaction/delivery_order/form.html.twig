@@ -32,43 +32,43 @@
                 <div class="form-group" id="delivery-inspection-header-info">
                     <div>
                         <label>SPK #:</label>
-                        <span data-name="sale-order-code-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.codeNumber|default }}</span>
+                        <span data-name="sale-order-code-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
                         <label>Customer:</label>
-                        <span data-name="customer-name">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.customer.name|default }}</span>
+                        <span data-name="customer-name">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</span>
                     </div>
                     <div>
                         <label>Merk:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleBrand|default }}</span>
+                        <span data-name="sale-order-vehicle-brand">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}</span>
                     </div>
                     <div>
                         <label>Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleSerialNumber|default }}</span>
+                        <span data-name="sale-order-vehicle-serial-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
                         <label>Warna:</label>
-                        <span data-name="sale-order-vehicle-color">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleColor|default }}</span>
+                        <span data-name="sale-order-vehicle-color">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
                         <label>Tahun Pembuatan:</label>
-                        <span data-name="receive-order-vehicle-production-year">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleProductionYear|default }}</span>
+                        <span data-name="receive-order-vehicle-production-year">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
                         <label>Rangka #:</label>
-                        <span data-name="receive-order-vehicle-chassis-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleChassisNumber|default }}</span>
+                        <span data-name="receive-order-vehicle-chassis-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
                         <label>Mesin #:</label>
-                        <span data-name="receive-order-vehicle-machine-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleMachineNumber|default }}</span>
+                        <span data-name="receive-order-vehicle-machine-number">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
                         <label>Deskripsi:</label>
-                        <span data-name="receive-order-vehicle-description">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.vehicleDescription|default }}</span>
+                        <span data-name="receive-order-vehicle-description">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
                     </div>
                     <div>
                         <label>Manufacture Code:</label>
-                        <span data-name="vehicle-model-manufacture-code">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
+                        <span data-name="vehicle-model-manufacture-code">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
                 </div>
                 {{ form_row(form.destinationAddress) }}
