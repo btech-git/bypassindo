@@ -138,4 +138,17 @@ class DeliveryWorkshopController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_delivery_workshop_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW') or has_role('ROLE_DELIVERY_WORKSHOP_EDIT') or has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     */
+    public function memoAction(DeliveryWorkshop $deliveryWorkshop)
+    {
+        return $this->render('transaction/delivery_workshop/memo.html.twig', array(
+            'deliveryWorkshop' => $deliveryWorkshop,
+        ));
+    }
+    
 }
