@@ -71,6 +71,6 @@ class UserRole implements RoleInterface
     
     public function getRole()
     {
-        return 'ROLE_' . strtoupper($this->name);
+        return str_replace(' ', '_', 'ROLE_' . strtoupper($this->name));
     }
 }

@@ -19,18 +19,18 @@ security:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-        login:
-            pattern: /login$
+        staff_login:
+            pattern: /staff/secured/$
             anonymous: ~
-        secured_area:
-            pattern: ^/
+        staff_secured_area:
+            pattern: ^/(admin|common|master|report|staff|transaction)/
             form_login:
-                login_path: admin_default_login
-                check_path: admin_default_login_check
-                default_target_path: /
+                login_path: staff_secured_index
+                check_path: staff_secured_login
+                default_target_path: /staff/profile/
             logout:
-                path: admin_default_logout
-                target: /
+                path: staff_secured_logout
+                target: /staff/secured/
         # main:
             # anonymous: ~
             # activate different ways to authenticate
