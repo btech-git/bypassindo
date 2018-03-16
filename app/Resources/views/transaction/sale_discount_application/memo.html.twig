@@ -1,0 +1,336 @@
+{% extends 'base.html.twig' %}
+
+{% block title 'Memo' %}
+
+{% block body %}
+    <div class="memo">
+        <div class="header top-category">
+            <h1 class="title">PROPOSAL PENJUALAN UNIT</h1>
+        </div>
+        <div class="table content">
+            <div class="row">
+                <div class="cell width-3">
+                    Cabang: 
+                </div>
+                <div class="cell width-3">
+                    No. : 
+                </div>
+                <div class="cell width-3">
+                    Tanggal: 
+                </div>
+            </div>
+        </div>
+        <div class="header category">
+            <h2 class="title left">I. PERSETUJUAN HARGA JUAL</h2>
+        </div>
+        <div class="table content">
+            <div class="row">
+                <div class="cell emphasis">Data Customer</div>
+            </div>
+            <div class="row">
+                <div class="table full">
+                    <div class="cell width-2 left">
+                        Nama: 
+                    </div>
+                    <div class="cell width-2 right">
+                        Status Pembelian: <span class="box">&nbsp;</span> Repeat <span class="box">&nbsp;</span> New
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <table class="detail">
+                        <thead>
+                            <th class="width-4">Struktur Harga Per Unit</th>
+                            <th class="width-4">Type</th>
+                            <th class="width-4">Jumlah</th>
+                            <th class="width-4">Harga Jual / Unit Incl PPN</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Harga Chassis + Cabin</td>
+                                <td></td>
+                                <td></td>
+                                <td>
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Nama Karoseri:</td>
+                                <td>Rek. / Ref. / Cust.</td>
+                                <td>
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Off TR / On TR / Keur</td>
+                                <td>Hitam / Kuning</td>
+                                <td>PT / Perorangan</td>
+                                <td>
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="right label" colspan="3">Sub Total Harga Jual</td>
+                                <td class="right label">
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">Komisi a/n:</td>
+                                <td>Hub:</td>
+                                <td>
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ongkos Kirim</td>
+                                <td colspan="2">
+                                    <div class="table full">
+                                        <div class="cell">Tujuan 1: Karoseri, Tujuan 2: Keur, Tujuan 3: Customer</div>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="table full">
+                                        <div class="cell width-2 left">Rp.</div>
+                                        <div class="cell width-2 right"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="header category">
+            <h2 class="title left">II. CARA PEMBAYARAN</h2>
+        </div>
+        <div class="table content content-2">
+            <div class="row">
+                <div class="cell">1.</div>
+                <div class="cell">Tunai</div>
+                <div class="cell">:</div>
+                <div class="cell">CBD, unit dikirim setelah pelunasan 100 %, KPU</div>
+            </div>
+            <div class="row">
+                <div class="cell">2.</div>
+                <div class="cell">Kredit</div>
+                <div class="cell">:</div>
+                <div class="cell">diisi nama Leasing, Tenor: th</div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell">Rek. / Ref. / Cust.</div>
+            </div>
+        </div>
+        <div class="header category">
+            <h2 class="title left">III. TANGGAL TRANSAKSI</h2>
+        </div>
+        <div class="table content content-3">
+            <div class="row">
+                <div class="cell">1.</div>
+                <div class="cell">Tanda Jadi</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+                <div class="cell">Tanggal</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell">2.</div>
+                <div class="cell">Total DP I</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+                <div class="cell">Tanggal</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell">3.</div>
+                <div class="cell">Total DP II</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+                <div class="cell">Tanggal</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell">4.</div>
+                <div class="cell">Pelunasan</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+                <div class="cell">Tanggal</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+            </div>
+            <div class="row label">
+                <div class="cell"></div>
+                <div class="cell">Total</div>
+                <div class="cell">:</div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell">5.</div>
+                <div class="cell">Term of payment</div>
+                <div class="cell">:</div>
+                <div class="cell">
+                    {% for i in 1..20 %}&nbsp;{% endfor %} hari
+                </div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+        </div>
+        <div class="header category">
+            <h2 class="title left">IV. CATATAN</h2>
+        </div>
+        <div class="table content content-4">
+            <div class="row">
+                <div class="cell emphasis">Syarat KPU</div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <span class="box">&nbsp;</span> Tunai
+                </div>
+                <div class="cell">:</div>
+                <div class="cell">Minimum TDP 30 %</div>
+            </div>
+            <div class="row">
+                <div class="cell">
+                    <span class="box">&nbsp;</span> Kredit
+                </div>
+                <div class="cell">:</div>
+                <div class="cell">Ada PO Leasing & TDP Cair 100 %</div>
+            </div>
+        </div>
+        <div class="header category">
+            <h2 class="title left">V. PERSETUJUAN</h2>
+        </div>
+        <div class="table content">
+            <div class="row signature">
+                <div class="table full">
+                    <div class="cell sig">
+                        <div>SALESMAN</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>SS / SM</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>KACAB</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>ADH</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>GM</div>
+                        <div class="blank"></div>
+                        <div>Hery</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>COO</div>
+                        <div class="blank"></div>
+                        <div>Ferry S</div>
+                    </div>
+                    <div class="cell sig">
+                        <div>DIREKTUR</div>
+                        <div class="blank"></div>
+                        <div>Vivi K</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block stylesheets_include %}
+    <link rel="stylesheet" href="{{ asset('css/memo.css') }}" />
+{% endblock %}
+
+{% block javascripts_include %}{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        .emphasis {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+        .width-2 {
+            width: 50%;
+        }
+        .width-3 {
+            width: 33%;
+        }
+        .width-4 {
+            width: 25%;
+        }
+        .memo {
+            border: 1pt solid;
+        }
+        .memo .table .row .cell {
+            padding: 4pt 0;
+        }
+        .top-category {
+            padding: 5pt 0;
+            background-color: #999999;
+        }
+        .category {
+            width: 98%;
+            padding: 2.5pt 1%;
+            background-color: #CCCCCC;
+        }
+        .content {
+            width: 96%;
+            padding: 0 2%;
+        }
+        .box {
+            display: inline-block;
+            border: 1pt solid;
+            width: 12.5pt;
+            height: 12.5pt;
+        }
+        table.detail td {
+            border: 1pt solid;
+            padding: 0 2.5pt;
+        }
+        .sig {
+            width: 14%;
+        }
+        
+        .content-2 > .row > .cell:nth-child(1) { width: 2% }
+        .content-2 > .row > .cell:nth-child(2) { width: 10% }
+        .content-2 > .row > .cell:nth-child(3) { width: 2% }
+        .content-2 > .row > .cell:nth-child(4) { width: 86% }
+        
+        .content-3 > .row > .cell:nth-child(1) { width: 2% }
+        .content-3 > .row > .cell:nth-child(2) { width: 20% }
+        .content-3 > .row > .cell:nth-child(3) { width: 2% }
+        .content-3 > .row > .cell:nth-child(4) { width: 30% }
+        .content-3 > .row > .cell:nth-child(5) { width: 10% }
+        .content-3 > .row > .cell:nth-child(6) { width: 2% }
+        .content-3 > .row > .cell:nth-child(7) { width: 34% }
+        
+        .content-4 > .row > .cell:nth-child(1) { width: 15% }
+        .content-4 > .row > .cell:nth-child(2) { width: 2% }
+        .content-4 > .row > .cell:nth-child(3) { width: 83% }
+    </style>
+{% endblock %}

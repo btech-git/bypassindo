@@ -138,4 +138,16 @@ class SaleDiscountApplicationController extends Controller
             'form' => $form->createView(),
         ));
     }
+
+    /**
+     * @Route("/{id}/memo", name="transaction_sale_discount_application_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     */
+    public function memoAction(SaleDiscountApplication $saleDiscountApplication)
+    {
+        return $this->render('transaction/sale_discount_application/memo.html.twig', array(
+            'saleDiscountApplication' => $saleDiscountApplication,
+        ));
+    }
 }

@@ -217,9 +217,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         $this->grandTotal = $grandTotal;
         
         $totalPayment = '0.00';
-        foreach ($this->purchasePaymentHeaders as $purchasePaymentHeader) {
-            $purchasePaymentHeader->sync();
-            $totalPayment += $purchasePaymentHeader->getTotalAmount();
+        if ($this->purchasePaymentHeader !== null) {
+            $this->purchasePaymentHeader->sync();
+            $totalPayment = $this->purchasePaymentHeader->getTotalAmount();
         }
         $this->totalPayment = $totalPayment;
         
