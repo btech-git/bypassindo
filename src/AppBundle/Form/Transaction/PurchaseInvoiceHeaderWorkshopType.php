@@ -7,12 +7,9 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\NotNull;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
-use AppBundle\Entity\Transaction\PurchaseInvoiceDetailWorkshop;
 use AppBundle\Entity\Transaction\ReceiveWorkshop;
 
 class PurchaseInvoiceHeaderWorkshopType extends AbstractType

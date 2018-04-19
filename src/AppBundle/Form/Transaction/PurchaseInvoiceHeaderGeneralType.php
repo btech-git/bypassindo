@@ -7,13 +7,13 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Constraints\Count;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Transaction\PurchaseInvoiceDetailGeneral;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Master\Supplier;
 
 class PurchaseInvoiceHeaderGeneralType extends AbstractType
@@ -45,6 +45,14 @@ class PurchaseInvoiceHeaderGeneralType extends AbstractType
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {
                 $purchaseInvoiceHeader = $event->getData();
                 $options['service']->initialize($purchaseInvoiceHeader, $options['init']);
+                $form = $event->getForm();
+                $formOptions = array(
+                    'class' => PurchaseDeliveryOrder::class,
+                );
+                if (!empty($purchaseInvoiceHeader->getId())) {
+                    $formOptions['disabled'] = true;
+                }
+                $form->add('purchaseDeliveryOrder', EntityTextType::class, $formOptions);
             })
             ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
                 $purchaseInvoiceHeader = $event->getData();

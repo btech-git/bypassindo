@@ -40,7 +40,9 @@
                 data-field-sale-order-vehicle-brand="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}"
                 data-field-sale-order-vehicle-serial-number="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}"
                 data-field-sale-order-vehicle-color="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}"
-                data-field-vehicle-model-manufacture-code="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleModel.manufactureCode|default }}">
+                data-field-vehicle-model-manufacture-code="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleModel.manufactureCode|default }}"
+                data-field-vehicle-chassis-number="{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}"
+                data-field-vehicle-machine-number="{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}">
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|default ? receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</td>

@@ -14,6 +14,7 @@ use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\ReceiveWorkshop;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
+use AppBundle\Entity\Master\Supplier;
 
 class ReceiveWorkshopGridType extends DataGridType
 {
@@ -129,7 +130,7 @@ class ReceiveWorkshopGridType extends DataGridType
 
         if (array_key_exists('form', $options)) {
             switch ($options['form']) {
-                case 'purchase_invoice_header':
+                case 'purchase_invoice_header_workshop':
                     $associations['purchaseInvoiceHeader']['merge'] = false;
                     break;
             }

@@ -101,6 +101,10 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $supplier;
     /**
+     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="purchaseInvoiceHeaders")
+     */
+    private $purchaseDeliveryOrder;
+    /**
      * @ORM\OneToOne(targetEntity="ReceiveWorkshop", inversedBy="purchaseInvoiceHeader")
      */
     private $receiveWorkshop;
@@ -179,6 +183,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
 
     public function getSupplier() { return $this->supplier; }
     public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
+
+    public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
+    public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
 
     public function getReceiveWorkshop() { return $this->receiveWorkshop; }
     public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }

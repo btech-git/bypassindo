@@ -132,8 +132,8 @@ class SaleInvoice extends CodeNumberEntity
         $this->amount = $unitPrice;
         
         $totalPayment = '0.00';
-        foreach ($this->getSalePayments() as $salePayment) {
-            $totalPayment += $salePayment->getAmount();
+        if ($this->salePayment !== null) {
+            $totalPayment = $this->salePayment->getAmount();
         }
         $this->totalPayment = $totalPayment;
         

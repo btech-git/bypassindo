@@ -42,16 +42,20 @@
                         <span data-name="sale-order-code-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Brand:</label>
+                        <label>Model:</label>
                         <span data-name="sale-order-vehicle-brand">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
-                    </div>
-                    <div>
-                        <label>Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
                     </div>
                     <div>
                         <label>Warna:</label>
                         <span data-name="sale-order-vehicle-color">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
+                    </div>
+                    <div>
+                        <label>Rangka #:</label>
+                        <span data-name="vehicle-chassis-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Mesin #:</label>
+                        <span data-name="vehicle-machine-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
                     </div>
                 </div>
             </div>
@@ -153,6 +157,8 @@
                 $("[data-name=sale-order-vehicle-brand]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
                 $("[data-name=sale-order-vehicle-serial-number]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
                 $("[data-name=sale-order-vehicle-color]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=vehicle-chassis-number]", "#receive-workshop-info").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("[data-name=vehicle-machine-number]", "#receive-workshop-info").text($(this).attr("data-field-vehicle-machine-number"));
                 bind();
             });
         });

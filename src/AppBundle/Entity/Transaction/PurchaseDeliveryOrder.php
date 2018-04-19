@@ -88,10 +88,14 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      * @ORM\OneToOne(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseDeliveryOrder")
      */
     private $purchaseInvoiceDetailUnit;
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="purchaseDeliveryOrder")
+     */
+    private $purchaseInvoiceHeaders;
     
     public function __construct()
     {
-        
+        $this->purchaseInvoiceHeaders = new ArrayCollection();        
     }
     
     public function getCodeNumberConstant()
@@ -143,6 +147,9 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     public function getReceiveOrder() { return $this->receiveOrder; }
     public function setReceiveOrder(ReceiveOrder $receiveOrder = null) { $this->receiveOrder = $receiveOrder; }
     
+    public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
+    public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
+
     public function sync()
     {
         if ($this->isStock) {
