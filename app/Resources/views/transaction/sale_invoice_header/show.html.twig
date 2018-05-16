@@ -1,0 +1,81 @@
+{% extends 'transaction/layout.html.twig' %}
+
+{% block title 'Show Sale Invoice' %}
+
+{% block actions %}
+    {{ include('transaction/actions.html.twig') }}
+{% endblock %}
+
+{% block content %}
+    <table class="table table-bordered table-striped">
+        <tbody>
+            <tr>
+                <th>Invoice #</th>
+                <td>{{ saleInvoiceHeader.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal</th>
+                <td>{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('j F Y') }}</td>
+            </tr>
+            <tr>
+                <th>Faktur Pajak #</th>
+                <td>{{ saleInvoiceHeader.taxNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Customer</th>
+                <td>{{ saleInvoiceHeader.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Note</th>
+                <td>{{ saleInvoiceHeader.note|default }}</td>
+            </tr>
+            <tr>
+                <th>Grand Total</th>
+                <td>{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Total Payment</th>
+                <td>{{ saleInvoiceHeader.totalPayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <th>Remaining</th>
+                <td>{{ saleInvoiceHeader.remaining|default|number_format(2) }}</td>
+            </tr>
+        </tbody>
+    </table>
+          
+   <hr />
+           
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-info">
+                <th>Rangka #</th>
+                <th>Mesin #</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for saleInvoiceDetail in saleInvoiceHeader.saleInvoiceDetails %}
+                <tr>
+                    <td class="text-left">{{ saleInvoiceDetail.vehicleChassisNumber|default }}</td>
+                    <td class="text-left">{{ saleInvoiceDetail.vehicleMachineNumber|default }}</td>
+                    <td class="text-center">{{ saleInvoiceDetail.quantity|default|number_format(0) }}</td>
+                    <td class="text-right">{{ saleInvoiceDetail.unitPrice|default|number_format(2) }}</td>
+                    <td class="text-right">{{ saleInvoiceDetail.total|default|number_format(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-right" colspan="4">Grand Total</td>
+                <td class="text-right">{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+            </tr>
+        </tfoot>
+    </table>
+  
+    <a target="_blank" class="btn btn-info" href="{{ path('transaction_sale_invoice_header_memo', {'id': saleInvoiceHeader.id}) }}">
+        <span class="glyphicon glyphicon-print"></span> Print Invoice
+    </a>
+{% endblock %}

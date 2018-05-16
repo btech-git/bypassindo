@@ -142,4 +142,16 @@ class PurchasePaymentHeaderController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_purchase_payment_header_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_PURCHASE_HEADER_PAYMENT_NEW') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     */
+    public function memoAction(PurchasePaymentHeader $purchasePaymentHeader)
+    {
+        return $this->render('transaction/purchase_payment_header/memo.html.twig', array(
+            'purchasePaymentHeader' => $purchasePaymentHeader,
+        ));
+    }
 }

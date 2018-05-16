@@ -19,10 +19,15 @@ class PurchaseInvoiceDetailUnit
      */
     private $id;
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank()
      */
-    private $itemName;
+    private $vehicleChassisNumber;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $vehicleMachineNumber;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -60,8 +65,11 @@ class PurchaseInvoiceDetailUnit
     
     public function getId() { return $this->id; }
 
-    public function getItemName() { return $this->itemName; }
-    public function setItemName($itemName) { $this->itemName = $itemName; }
+    public function getVehicleChassisNumber() { return $this->vehicleChassisNumber; }
+    public function setVehicleChassisNumber($vehicleChassisNumber) { $this->vehicleChassisNumber = $vehicleChassisNumber; }
+
+    public function getVehicleMachineNumber() { return $this->vehicleMachineNumber; }
+    public function setVehicleMachineNumber($vehicleMachineNumber) { $this->vehicleMachineNumber = $vehicleMachineNumber; }
 
     public function getQuantity() { return $this->quantity; }
     public function setQuantity($quantity) { $this->quantity = $quantity; }

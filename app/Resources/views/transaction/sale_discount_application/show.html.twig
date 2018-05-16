@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th>Transaction Date</th>
-                <td>{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('Y-m-d') }}</td>
+                <td>{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>Deal Status</th>
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Deal Date</th>
-                <td>{{ saleDiscountApplication.dealDate|default ? saleDiscountApplication.dealDate|date('Y-m-d') }}</td>
+                <td>{{ saleDiscountApplication.dealDate|default ? saleDiscountApplication.dealDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>Customer Status Type</th>

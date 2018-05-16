@@ -8,8 +8,20 @@
 
 {% macro details_row(object) %}
     <tr data-index="{{ object.vars.name }}">
+        <td class="hide">
+            {{ form_row(object.account, {'label': false}) }}
+        </td>
+        <td>
+            <span data-name="account-code-{{ object.vars.name }}">{{ object.vars.value.account.code|default }}</span>
+        </td>
+        <td>
+            <span data-name="account-name-{{ object.vars.name }}">{{ object.vars.value.account.name|default }}</span>
+        </td>
         <td>
             {{ form_row(object.memo, {'label': false}) }}
+        </td>
+        <td>
+            {{ form_row(object.paymentMethod, {'label': false}) }}
         </td>
         <td>
             {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount', 'data-bind-target': '[data-name=amount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
@@ -33,7 +45,6 @@
                     <div>{{ purchasePaymentHeader.codeNumber }}</div>
                 </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
-                {{ form_row(form.paymentMethod) }}
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.purchaseInvoiceHeader, {'label': 'Invoice Pembelian', 'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-invoice-header-dialog'} }) }}
@@ -43,28 +54,32 @@
                         <span data-name="code-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.codeNumber|default }}</span>
                     </div>
                     <div>
-                        <label> Grand Total:</label>
-                        <span data-name="grand-total">{{ purchasePaymentHeader.purchaseInvoiceHeader.grandTotal|default }}</span>
+                        <label>Tanggal:</label>
+                        <span data-name="transaction-date">{{ purchasePaymentHeader.purchaseInvoiceHeader.transactionDate|default|date('j M Y') }}</span>
                     </div>
                     <div>
                         <label>Supplier:</label>
                         <span data-name="supplier-name">{{ purchasePaymentHeader.purchaseInvoiceHeader.supplier.name|default }}</span>
                     </div>
                     <div>
-                        <label>SPK #:</label>
-                        <span data-name="sale-order-code-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
+                        <label>Supplier Invoice #:</label>
+                        <span data-name="supplier-invoice-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.supplierInvoiceNumber|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Brand:</label>
-                        <span data-name="sale-order-vehicle-brand">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleBrand|default }}</span>
+                        <label>Jenis Invoice:</label>
+                        <span data-name="business-type">{{ purchasePaymentHeader.purchaseInvoiceHeader.businessType|default }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Serial Number:</label>
-                        <span data-name="sale-order-vehicle-serial-number">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleSerialNumber|default }}</span>
+                        <label> Grand Total:</label>
+                        <span data-name="grand-total">{{ purchasePaymentHeader.purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</span>
                     </div>
                     <div>
-                        <label>Vehicle Color:</label>
-                        <span data-name="sale-order-vehicle-color">{{ purchasePaymentHeader.purchaseInvoiceHeader.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}</span>
+                        <label>Total Payment:</label>
+                        <span data-name="total-payment">{{ purchasePaymentHeader.purchaseInvoiceHeader.totalPayment|default|number_format(2) }}</span>
+                    </div>
+                    <div>
+                        <label>Sisa:</label>
+                        <span data-name="remaining">{{ purchasePaymentHeader.purchaseInvoiceHeader.remaining|default|number_format(2) }}</span>
                     </div>
                 </div>
             </div>
@@ -75,7 +90,7 @@
         <hr />
         
         <div>
-            <button type="button" class="btn btn-default" id="add-purchase-payment-detail-prototype">Add Detail</button>
+            <button type="button" class="btn btn-default" id="add-account-prototype" data-toggle="modal" data-target="#account-dialog">Add Account</button>
         </div>
         
         <br />
@@ -83,10 +98,13 @@
         <table class="table table-bordered" id="purchase-payment-detail-list">
             <thead>
                 <tr class="bg-info">
+                    <th style="width: 10%">Kode</th>
+                    <th style="width: 15%">Akun</th>
                     <th>Memo</th>
-                    <th>Amount</th>
+                    <th style="width: 15%">Jenis Bayar</th>
+                    <th style="width: 15%">Amount</th>
                     <th style="width: 15%"></th>
-                    <th style="width: 3%"></th>
+                    <th style="width: 5%"></th>
                 </tr>
             </thead>
             <tbody data-prototype="{{ self.details_row(form.purchasePaymentDetails.vars.prototype)|e }}">
@@ -96,7 +114,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="2">Grand Total</td>
+                    <td class="text-right" colspan="5">Grand Total</td>
                     <td class="text-right"><span data-name="total-amount">{{ purchasePaymentHeader.totalAmount|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
@@ -119,6 +137,19 @@
             </div>
         </div>
     {{ form_end(form) }}
+    <div id="account-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Chart of Account List</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="account-grid" data-grid="{{ path('common_account_grid', {'form': form.vars.id}) }}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -152,21 +183,28 @@
                 $("#purchase-invoice-header-dialog").modal("hide");
                 $("#{{ form.purchaseInvoiceHeader.vars.id }}").val($(this).attr("data-field-id"));
                 $("[data-name=code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-code-number"));
-                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grand-total"));
                 $("[data-name=supplier-name]", "#purchase-invoice-header-info").text($(this).attr("data-field-supplier-name"));
-                $("[data-name=sale-order-code-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-code-number"));
-                $("[data-name=sale-order-vehicle-brand]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
-                $("[data-name=sale-order-vehicle-serial-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-serial-number"));
-                $("[data-name=sale-order-vehicle-color]", "#purchase-invoice-header-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=transaction-date]", "#purchase-invoice-header-info").text($(this).attr("data-field-transaction-date"));
+                $("[data-name=supplier-invoice-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-supplier-invoice-number"));
+                $("[data-name=business-type]", "#purchase-invoice-header-info").text($(this).attr("data-field-business-type"));
+                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grand-total"));
+                $("[data-name=total-payment]", "#purchase-invoice-header-info").text($(this).attr("data-field-total-payment"));
+                $("[data-name=remaining]", "#purchase-invoice-header-info").text($(this).attr("data-field-remaining"));
             });
             
-            $("#add-purchase-payment-detail-prototype").on("click", function() {
+            $("#account-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#account-dialog").modal("hide");
+                var context = $(this);
                 var name = "{{ form.purchasePaymentDetails.vars.prototype.vars.name }}";
                 var rows = tableBody.children("tr");
                 var index = Math.max({{ purchasePaymentDetailsCount }}, (rows.length > 0) ? parseInt(rows.last().attr("data-index")) + 1 : 0);
                 tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
-                    var amountPrototype = prototype.find("#{{ form.purchasePaymentDetails.vars.prototype.amount.vars.id }}");
-                    amountPrototype.attr("value", $("[data-name=purchase-invoice-detail-amount]", "#purchase-invoice-header-info").text());
+                    var accountPrototype = prototype.find("#{{ form.purchasePaymentDetails.vars.prototype.account.vars.id }}");
+                    accountPrototype.val(context.attr("data-field-id"));
+                    var accountCodePrototype = prototype.find("[data-name=account-code-" + name + "]");
+                    accountCodePrototype.text(context.attr("data-field-account-code"));
+                    var accountNamePrototype = prototype.find("[data-name=account-name-" + name + "]");
+                    accountNamePrototype.text(context.attr("data-field-account-name"));
                 });
             });
         });

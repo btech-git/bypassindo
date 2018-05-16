@@ -1,0 +1,142 @@
+<?php
+
+namespace AppBundle\Entity\Transaction;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use AppBundle\Entity\Common\CodeNumberEntity;
+use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Master\Customer;
+
+/**
+ * @ORM\Table(name="transaction_sale_invoice_header")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleInvoiceHeaderRepository")
+ * @UniqueEntity({"taxNumber"})
+ */
+class SaleInvoiceHeader extends CodeNumberEntity
+{
+    /**
+     * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
+     */
+    private $id;
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $transactionDate;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $taxNumber;
+    /**
+     * @ORM\Column(type="text")
+     * @Assert\NotNull()
+     */
+    private $note;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $grandTotal;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $totalPayment;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $remaining;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     * @Assert\NotNull()
+     */
+    private $staffFirst;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     * @Assert\NotNull()
+     */
+    private $staffLast;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
+     * @Assert\NotNull()
+     */
+    private $customer;
+    /**
+     * @ORM\OneToOne(targetEntity="SalePaymentHeader", mappedBy="saleInvoiceHeader")
+     */
+    private $salePaymentHeader;
+    /**
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDetail", mappedBy="saleInvoiceHeader")
+     * @Assert\Valid() @Assert\Count(min=1)
+     */
+    private $saleInvoiceDetails;
+    
+    public function __construct()
+    {
+        $this->saleInvoiceDetails = new ArrayCollection();        
+    }
+    
+    public function getCodeNumberConstant()
+    {
+        return 'SINV';
+    }
+    
+    public function getId() { return $this->id; }
+    
+    public function getTransactionDate() { return $this->transactionDate; }
+    public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
+
+    public function getTaxNumber() { return $this->taxNumber; }
+    public function setTaxNumber($taxNumber) { $this->taxNumber = $taxNumber; }
+
+    public function getNote() { return $this->note; }
+    public function setNote($note) { $this->note = $note; }
+
+    public function getGrandTotal() { return $this->grandTotal; }
+    public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
+
+    public function getTotalPayment() { return $this->totalPayment; }
+    public function setTotalPayment($totalPayment) { $this->totalPayment = $totalPayment; }
+
+    public function getRemaining() { return $this->remaining; }
+    public function setRemaining($remaining) { $this->remaining = $remaining; }
+
+    public function getStaffFirst() { return $this->staffFirst; }
+    public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
+
+    public function getStaffLast() { return $this->staffLast; }
+    public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
+
+    public function getCustomer() { return $this->customer; }
+    public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
+
+    public function getSalePaymentHeader() { return $this->salePaymentHeader; }
+    public function setSalePaymentHeader(SalePaymentHeader $salePaymentHeader = null) { $this->salePaymentHeader = $salePaymentHeader; }
+
+    public function getSaleInvoiceDetails() { return $this->saleInvoiceDetails; }
+    public function setSaleInvoiceDetails(Collection $saleInvoiceDetails) { $this->saleInvoiceDetails = $saleInvoiceDetails; }
+
+    public function sync()
+    {
+        $grandTotal = 0.00;
+        foreach ($this->saleInvoiceDetails as $saleInvoiceDetail) {
+            $saleInvoiceDetail->sync();
+            $grandTotal += $saleInvoiceDetail->getTotal();
+        }
+        $this->grandTotal = $grandTotal;
+        
+        $totalPayment = '0.00';
+        if ($this->salePaymentHeader !== null) {
+            $totalPayment = $this->salePaymentHeader->getTotalAmount();
+        }
+        $this->totalPayment = $totalPayment;
+        
+        $this->remaining = $this->grandTotal - $this->totalPayment;
+    }
+}

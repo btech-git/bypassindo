@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchasePaymentHeader;
 use AppBundle\Entity\Transaction\PurchasePaymentDetail;
+use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 
 class PurchasePaymentHeaderType extends AbstractType
 {
@@ -19,7 +20,6 @@ class PurchasePaymentHeaderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('note')
-            ->add('paymentMethod')
             ->add('purchaseInvoiceHeader', EntityTextType::class, array('class' => PurchaseInvoiceHeader::class))
             ->add('purchasePaymentDetails', CollectionType::class, array(
                 'entry_type' => PurchasePaymentDetailType::class,

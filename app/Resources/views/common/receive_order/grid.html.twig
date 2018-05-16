@@ -38,9 +38,9 @@
                 data-field-sale-order-vehicle-serial-number="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleSerialNumber|default }}"
                 data-field-sale-order-vehicle-color="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}"
                 data-field-vehicle-model-manufacture-code="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}"
-                data-field-sale-order-unit-price="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.unitPrice|default|number_format(2) }}">
+                data-field-sale-order-total="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.total|default|number_format(2) }}">
                 <td class="text-left">{{ receiveOrder.codeNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>

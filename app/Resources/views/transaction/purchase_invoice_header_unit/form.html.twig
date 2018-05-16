@@ -12,7 +12,10 @@
             {{ form_row(object.purchaseDeliveryOrder, {'label': false}) }}
         </td>
         <td>
-            <span data-name="item-name-{{ object.vars.name }}">{{ object.vars.value.itemName|default }}</span>
+            <span data-name="vehicle-chassis-number-{{ object.vars.name }}">{{ object.vars.value.vehicleChassisNumber|default }}</span>
+        </td>
+        <td>
+            <span data-name="vehicle-machine-number-{{ object.vars.name }}">{{ object.vars.value.vebicleMachineNumber|default }}</span>
         </td>
         <td>
             <span data-name="quantity-{{ object.vars.name }}">{{ object.vars.value.quantity|default|number_format(0) }}</span>
@@ -22,7 +25,8 @@
             <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
         <td class="text-right">
-            <span data-name="discount-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
+            {{ form_row(object.discount, {'label': false, 'attr': {'data-name': 'discount', 'data-bind-target': '[data-name=discount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
         </td>
         <td class="text-right">
             <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
@@ -79,11 +83,12 @@
         <table class="table table-bordered" id="purchase-invoice-detail-unit-list">
             <thead>
                 <tr class="bg-info">
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Disc (Rp.)</th>
-                    <th>Total</th>
+                    <th>Rangka #</th>
+                    <th>Mesin #</th>
+                    <th style="width: 10%">Quantity</th>
+                    <th style="width: 15%">Price</th>
+                    <th style="width: 10%">Disc (Rp.)</th>
+                    <th style="width: 15%">Total</th>
                     <th style="width: 0"></th>
                 </tr>
             </thead>
@@ -94,12 +99,12 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right" colspan="5">Sub Total</td>
                     <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="4">
+                    <td class="text-right" colspan="5">
                         <span style="display: inline-block">PPn 10%</span>
                         <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
                     </td>
@@ -107,7 +112,7 @@
                     <td></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="4">Grand Total</td>
+                    <td class="text-right" colspan="5">Grand Total</td>
                     <td class="text-right"><span data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
@@ -205,14 +210,15 @@
                 tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
                     var purchaseDeliveryOrderPrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.purchaseDeliveryOrder.vars.id }}");
                     purchaseDeliveryOrderPrototype.val(context.attr("data-field-id"));
-                    var itemNamePrototype = prototype.find("[data-name=item-name-" + name + "]");
-                    itemNamePrototype.text(context.attr("data-field-vehicle-model-manufacture-code"));
-                    var quantityPrototype = prototype.find("[data-name=quantity-" + name + "]");
-                    quantityPrototype.text(context.attr("data-field-sale-order-quantity"));
-                    var unitPricePrototype = prototype.find("#{{ form.purchaseInvoiceDetailUnits.vars.prototype.unitPrice.vars.id }}");
-                    unitPricePrototype.attr("value", context.attr("data-field-sale-order-unit-price"));
-                    var unitPriceTextPrototype = prototype.find("[data-name=unit-price-text-" + name + "]");
-                    unitPriceTextPrototype.text($.numberFormat(context.attr("data-field-sale-order-unit-price"), 2));
+                    var vehicleChassisNumberPrototype = prototype.find("[data-name=vehicle-chassis-number-" + name + "]");
+                    vehicleChassisNumberPrototype.text(context.attr("data-field-vehicle-chassis-number"));
+                    var vehicleMachineNumberPrototype = prototype.find("[data-name=vehicle-machine-number-" + name + "]");
+                    vehicleMachineNumberPrototype.text(context.attr("data-field-vehicle-machine-number"));
+                    //var quantityPrototype = prototype.find("[data-name=quantity-" + name + "]");
+                    //quantityPrototype.text(context.attr("data-field-sale-order-quantity"));
+                    //unitPricePrototype.attr("value", context.attr("data-field-sale-order-unit-price"));
+                    //var unitPriceTextPrototype = prototype.find("[data-name=unit-price-text-" + name + "]");
+                    //unitPriceTextPrototype.text($.numberFormat(context.attr("data-field-sale-order-unit-price"), 2));
                 });
                 bind();
             });

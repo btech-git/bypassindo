@@ -134,7 +134,7 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     
     public function getCodeNumberConstant()
     {
-        return 'PIN';
+        return 'PINV';
     }
     
     public function getId() { return $this->id; }

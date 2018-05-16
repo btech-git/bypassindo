@@ -15,7 +15,7 @@
             </tr>
             <tr>
                 <th>Tanggal</th>
-                <td>{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>
+                <td>{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>Surat Penawaran #</th>
@@ -23,7 +23,7 @@
             </tr>
             <tr>
                 <th>Tanggal PO</th>
-                <td>{{ saleOrder.purchaseOrderDate|default ? saleOrder.purchaseOrderDate|date('Y-m-d') }}</td>
+                <td>{{ saleOrder.purchaseOrderDate|default ? saleOrder.purchaseOrderDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>PO #</th>
@@ -31,7 +31,7 @@
             </tr>
             <tr>
                 <th>Janji Penyerahan</th>
-                <td>{{ saleOrder.deliveryDate|default ? saleOrder.deliveryDate|date('Y-m-d') }}</td>
+                <td>{{ saleOrder.deliveryDate|default ? saleOrder.deliveryDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>STNK Atas Nama</th>

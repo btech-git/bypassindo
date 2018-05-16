@@ -40,6 +40,8 @@ class PurchaseInvoiceHeaderGridType extends DataGridType
                     ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
+                ->addField('supplierInvoiceNumber')
+                    ->addOperator(ContainNonEmptyType::class)
             ->addGroup('supplier')
                 ->setEntityName(Supplier::class)
                 ->addField('name')

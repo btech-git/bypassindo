@@ -29,7 +29,7 @@
         {% for saleDiscountApplication in grid.data %}
             <tr data-field-id="{{ saleDiscountApplication.id }}">
                 <td class="text-left">{{ saleDiscountApplication.codeNumber|default }}</td>
-                <td class="text-left">{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleDiscountApplication.customer.name|default }}</td>
                 <td class="text-left">{{ saleDiscountApplication.vehicleModel.vosModelName|default }}</td>
                 <td class="text-right">{{ saleDiscountApplication.salesmanPrice|default|number_format(2) }}</td>

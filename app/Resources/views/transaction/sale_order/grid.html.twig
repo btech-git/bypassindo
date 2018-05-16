@@ -31,7 +31,7 @@
         {% for saleOrder in grid.data %}
             <tr data-field-id="{{ saleOrder.id }}">
                 <td class="text-left">{{ saleOrder.codeNumber|default }}</td>
-                <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleSerialNumber|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleColor|default }}</td>

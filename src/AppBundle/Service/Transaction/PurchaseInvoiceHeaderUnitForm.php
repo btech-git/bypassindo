@@ -41,10 +41,9 @@ class PurchaseInvoiceHeaderUnitForm
     private function sync(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
         foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetailUnits() as $purchaseInvoiceDetailUnit) {
-            $saleOrder = $purchaseInvoiceDetailUnit->getPurchaseDeliveryOrder()->getSaleOrder();
-            $purchaseInvoiceDetailUnit->setItemName($saleOrder->getVehicleModel()->getManufactureCode());
-            $purchaseInvoiceDetailUnit->setQuantity($saleOrder->getQuantity());
-            $purchaseInvoiceDetailUnit->setDiscount('0.00');
+            $purchaseInvoiceDetailUnit->setVehicleChassisNumber($purchaseInvoiceDetailUnit->getPurchaseDeliveryOrder()->getVehicleChassisNumber());
+            $purchaseInvoiceDetailUnit->setVehicleMachineNumber($purchaseInvoiceDetailUnit->getPurchaseDeliveryOrder()->getVehicleMachineNumber());
+            $purchaseInvoiceDetailUnit->setQuantity('1');
         }
         $purchaseInvoiceHeader->sync();
     }

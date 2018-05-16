@@ -38,6 +38,10 @@
                         <span data-name="code-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</span>
                     </div>
                     <div>
+                        <label>Supplier:</label>
+                        <span data-name="supplier-name">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}</span>
+                    </div>
+                    <div>
                         <label>SPK #:</label>
                         <span data-name="sale-order-code-number">{{ purchaseInvoiceHeader.receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</span>
                     </div>
@@ -70,11 +74,11 @@
         <table class="table table-bordered" id="purchase-invoice-detail-workshop-info-list">
             <thead>
                 <tr class="bg-info">
-                    <th>Item Name</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Disc (Rp.)</th>
-                    <th>Total</th>
+                    <th>Nama Barang</th>
+                    <th style="width: 10%">Quantity</th>
+                    <th style="width: 15%">Price</th>
+                    <th style="width: 15%">Disc (Rp.)</th>
+                    <th style="width: 15%">Total</th>
                 </tr>
             </thead>
             <tbody data-prototype="{{ self.info_details_row(null)|e }}">

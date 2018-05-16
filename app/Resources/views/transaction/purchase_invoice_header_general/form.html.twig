@@ -65,23 +65,23 @@
                 <div class="form-group" id="purchase-delivery-order-info">
                     <div>
                         <label>Warna:</label>
-                        <span data-name="sale-order-vehicle-color">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
+                        <span data-name="sale-order-vehicle-color">{{ purchaseInvoiceHeader.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</span>
                     </div>
                     <div>
                         <label>Tahun Pembuatan:</label>
-                        <span data-name="vehicle-production-year">{{ receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
+                        <span data-name="vehicle-production-year">{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleProductionYear|default }}</span>
                     </div>
                     <div>
                         <label>Rangka #:</label>
-                        <span data-name="vehicle-chassis-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
+                        <span data-name="vehicle-chassis-number">{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
                     </div>
                     <div>
                         <label>Mesin #:</label>
-                        <span data-name="vehicle-machine-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
+                        <span data-name="vehicle-machine-number">{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
                     </div>
                     <div>
                         <label>Deskripsi:</label>
-                        <span data-name="vehicle-description">{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
+                        <span data-name="vehicle-description">{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleDescription|default }}</span>
                     </div>
                 </div>
             </div>
@@ -100,11 +100,11 @@
         <table class="table table-bordered" id="purchase-invoice-detail-general-list">
             <thead>
                 <tr class="bg-info">
-                    <th>Item Name</th>
+                    <th>Nama Barang</th>
                     <th style="width: 10%">Quantity</th>
-                    <th>Price</th>
-                    <th>Disc (Rp.)</th>
-                    <th>Total</th>
+                    <th style="width: 15%">Price</th>
+                    <th style="width: 15%">Disc (Rp.)</th>
+                    <th style="width: 15%">Total</th>
                     <th style="width: 0"></th>
                 </tr>
             </thead>

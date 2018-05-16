@@ -21,7 +21,7 @@
         {% for purchaseWorkshopHeader in grid.data %}
             <tr data-field-id="{{ purchaseWorkshopHeader.id }}">
                 <td class="text-left">{{ purchaseWorkshopHeader.codeNumber|default }}</td>
-                <td class="text-left">{{ purchaseWorkshopHeader.transactionDate|default ? purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ purchaseWorkshopHeader.transactionDate|default ? purchaseWorkshopHeader.transactionDate|date('j M Y') }}</td>
                 <td class="text-right">{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {

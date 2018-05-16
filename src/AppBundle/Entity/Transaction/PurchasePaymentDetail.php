@@ -4,11 +4,8 @@ namespace AppBundle\Entity\Transaction;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Common\CodeNumberEntity;
-use AppBundle\Entity\Admin\Staff;
+use AppBundle\Entity\Master\Account;
+use AppBundle\Entity\Master\PaymentMethod;
 
 /**
  * @ORM\Table(name="transaction_purchase_payment_detail")
@@ -35,6 +32,16 @@ class PurchasePaymentDetail
      * @Assert\NotNull()
      */
     private $purchasePaymentHeader;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Account")
+     * @Assert\NotNull()
+     */
+    private $account;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\PaymentMethod")
+     * @Assert\NotNull()
+     */
+    private $paymentMethod;
     
     public function __construct()
     {
@@ -47,6 +54,12 @@ class PurchasePaymentDetail
 
     public function getMemo() { return $this->memo; }
     public function setMemo($memo) { $this->memo = $memo; }
+
+    public function getPaymentMethod() { return $this->paymentMethod; }
+    public function setPaymentMethod(PaymentMethod $paymentMethod = null) { $this->paymentMethod = $paymentMethod; }
+
+    public function getAccount() { return $this->account; }
+    public function setAccount(Account $account = null) { $this->account = $account; }
 
     public function getPurchasePaymentHeader() { return $this->purchasePaymentHeader; }
     public function setPurchasePaymentHeader(PurchasePaymentHeader $purchasePaymentHeader = null) { $this->purchasePaymentHeader = $purchasePaymentHeader; }

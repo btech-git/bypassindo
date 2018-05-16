@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\PaymentMethod;
 
 /**
  * @ORM\Table(name="transaction_purchase_payment_header")
@@ -47,11 +46,6 @@ class PurchasePaymentHeader extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\PaymentMethod")
-     * @Assert\NotNull()
-     */
-    private $paymentMethod;
-    /**
      * @ORM\OneToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchasePaymentHeader")
      * @Assert\NotNull()
      */
@@ -88,9 +82,6 @@ class PurchasePaymentHeader extends CodeNumberEntity
 
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
-
-    public function getPaymentMethod() { return $this->paymentMethod; }
-    public function setPaymentMethod(PaymentMethod $paymentMethod = null) { $this->paymentMethod = $paymentMethod; }
 
     public function getPurchaseInvoiceHeader() { return $this->purchaseInvoiceHeader; }
     public function setPurchaseInvoiceHeader(PurchaseInvoiceHeader $purchaseInvoiceHeader = null) { $this->purchaseInvoiceHeader = $purchaseInvoiceHeader; }

@@ -5,7 +5,8 @@
     "purchaseInvoiceDetailUnits": {
         {%- for index, purchaseInvoiceDetailUnit in purchaseInvoiceHeader.purchaseInvoiceDetailUnits -%}
             "{{ index }}": {
-                "itemName": "{{ purchaseInvoiceDetailUnit.itemName|default }}",
+                "vehicleChassisNumber": "{{ purchaseInvoiceDetailUnit.vehicleChassisNumber|default }}",
+                "vehicleMachineNumber": "{{ purchaseInvoiceDetailUnit.vehicleMachineNumber|default }}",
                 "quantity": "{{ purchaseInvoiceDetailUnit.quantity|default }}",
                 "unitPrice": "{{ purchaseInvoiceDetailUnit.unitPrice|default|number_format(2) }}",
                 "discount": "{{ purchaseInvoiceDetailUnit.discount|default|number_format(2) }}",

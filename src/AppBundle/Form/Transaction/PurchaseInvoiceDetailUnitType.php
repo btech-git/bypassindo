@@ -15,6 +15,7 @@ class PurchaseInvoiceDetailUnitType extends AbstractType
     {
         $builder
             ->add('unitPrice')
+            ->add('discount')
             ->add('purchaseDeliveryOrder', EntityHiddenType::class, array('class' => PurchaseDeliveryOrder::class))
         ;
     }

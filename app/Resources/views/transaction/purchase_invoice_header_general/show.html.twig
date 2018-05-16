@@ -10,12 +10,36 @@
     <table class="table table-bordered table-striped">
         <tbody>
             <tr>
-                <th>Transaction Date</th>
-                <td>{{ purchaseInvoiceHeader.transactionDate|default ? purchaseInvoiceHeader.transactionDate|date('Y-m-d') }}</td>
+                <th>Invoice #</th>
+                <td>{{ purchaseInvoiceHeader.codeNumber|default }}</td>
             </tr>
             <tr>
-                <th>Supplier Invoice Number</th>
+                <th>Tanggal</th>
+                <td>{{ purchaseInvoiceHeader.transactionDate|default ? purchaseInvoiceHeader.transactionDate|date('j F Y') }}</td>
+            </tr>
+            <tr>
+                <th>Supplier Invoice #</th>
                 <td>{{ purchaseInvoiceHeader.supplierInvoiceNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Supplier</th>
+                <td>{{ purchaseInvoiceHeader.supplier.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Faktur Pajak Supplier</th>
+                <td>{{ purchaseInvoiceHeader.taxInvoiceNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Tanggal Faktur Pajak</th>
+                <td>{{ purchaseInvoiceHeader.taxInvoiceDate|default ? purchaseInvoiceHeader.taxInvoiceDate|date('j F Y') }}</td>
+            </tr>
+            <tr>
+                <th>Rangka #</th>
+                <td>{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+            </tr>
+            <tr>
+                <th>Mesin #</th>
+                <td>{{ purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
             <tr>
                 <th>Note</th>
@@ -34,5 +58,44 @@
                 <td>{{ purchaseInvoiceHeader.remaining|default|number_format(2) }}</td>
             </tr>
         </tbody>
+    </table>
+                         
+    <hr />
+           
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-info">
+                <th>Nama Barang</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Disc (Rp.)</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for purchaseInvoiceDetailGeneral in purchaseInvoiceHeader.purchaseInvoiceDetailGenerals %}
+                <tr>
+                    <td class="text-left">{{ purchaseInvoiceDetailGeneral.itemName|default }}</td>
+                    <td class="text-center">{{ purchaseInvoiceDetailGeneral.quantity|default|number_format(0) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.unitPrice|default|number_format(2) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.discount|default|number_format(2) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td class="text-right" colspan="4">Sub Total</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="4">PPn</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="4">Grand Total</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+            </tr>
+        </tfoot>
     </table>
 {% endblock %}

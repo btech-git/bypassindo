@@ -25,7 +25,7 @@
         {% for deliveryWorkshop in grid.data %}
             <tr data-field-id="{{ deliveryWorkshop.id }}">
                 <td class="text-left">{{ deliveryWorkshop.codeNumber|default }}</td>
-                <td class="text-left">{{ deliveryWorkshop.transactionDate|default ? deliveryWorkshop.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ deliveryWorkshop.transactionDate|default ? deliveryWorkshop.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
                 <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
