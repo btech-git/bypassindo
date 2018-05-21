@@ -17,7 +17,7 @@
         <td>
             <span data-name="vehicle-machine-number-{{ object.vars.name }}">{{ object.vars.value.vehicleMachineNumber|default }}</span>
         </td>
-        <td>
+        <td class="text-center">
             <span data-name="quantity-{{ object.vars.name }}">{{ object.vars.value.quantity|default|number_format(0) }}</span>
         </td>
         <td class="text-right">
@@ -175,11 +175,12 @@
                     vehicleChassisNumberPrototype.text(context.attr("data-field-vehicle-chassis-number"));
                     var vehicleMachineNumberPrototype = prototype.find("[data-name=vehicle-machine-number-" + name + "]");
                     vehicleMachineNumberPrototype.text(context.attr("data-field-vehicle-machine-number"));
-                    //var quantityPrototype = prototype.find("[data-name=quantity-" + name + "]");
-                    //quantityPrototype.text(context.attr("data-field-sale-order-quantity"));
-                    //unitPricePrototype.attr("value", context.attr("data-field-sale-order-unit-price"));
-                    var unitPriceTextPrototype = prototype.find("[data-name=unit-price-" + name + "]");
-                    unitPriceTextPrototype.text($.numberFormat(context.attr("data-field-sale-order-total"), 2));
+                    var quantityPrototype = prototype.find("[data-name=quantity-" + name + "]");
+                    quantityPrototype.text(context.attr("data-field-sale-order-quantity"));
+                    var unitPricePrototype = prototype.find("[data-name=unit-price-" + name + "]");
+                    unitPricePrototype.attr("value", context.attr("data-field-sale-order-unit-price"));
+                    var totalPrototype = prototype.find("[data-name=total-" + name + "]");
+                    totalPrototype.attr("value", context.attr("data-field-sale-order-total"));
                 });
                 bind();
             });

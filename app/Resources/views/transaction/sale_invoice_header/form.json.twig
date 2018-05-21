@@ -1,3 +1,15 @@
 {
     "grandTotal": "{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}",
+    "saleInvoiceDetails": {
+        {%- for index, saleInvoiceDetail in saleInvoiceHeader.saleInvoiceDetails -%}
+            "{{ index }}": {
+                "vehicleChassisNumber": "{{ saleInvoiceDetail.vehicleChassisNumber|default }}",
+                "vehicleMachineNumber": "{{ saleInvoiceDetail.vehicleMachineNumber|default }}",
+                "quantity": "{{ saleInvoiceDetail.quantity|default }}",
+                "unitPrice": "{{ saleInvoiceDetail.unitPrice|default }}",
+                "total": "{{ saleInvoiceDetail.total|default }}"
+            }
+            {%- if not loop.last -%},{%- endif -%}
+        {%- endfor -%}
+    }
 }

@@ -16,13 +16,9 @@ class SaleDiscountApplicationForm
     
     public function initialize(SaleDiscountApplication $saleDiscountApplication, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($saleDiscountApplication->getId())) {
-            $lastSaleDiscountApplication = $this->saleDiscountApplicationRepository->findRecentBy($year, $month);
-            $currentSaleDiscountApplication = ($lastSaleDiscountApplication === null) ? $saleDiscountApplication : $lastSaleDiscountApplication;
-            $saleDiscountApplication->setCodeNumberToNext($currentSaleDiscountApplication->getCodeNumber(), $year, $month);
-            
             $saleDiscountApplication->setApprovedPrice('0.00');
             $saleDiscountApplication->setStaffFirst($staff);
         }
@@ -31,6 +27,16 @@ class SaleDiscountApplicationForm
     
     public function finalize(SaleDiscountApplication $saleDiscountApplication, array $params = array())
     {
+        if (empty($saleDiscountApplication->getId())) {
+            $transactionDate = $saleDiscountApplication->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastSaleDiscountApplication = $this->saleDiscountApplicationRepository->findRecentBy($year, $month);
+                $currentSaleDiscountApplication = ($lastSaleDiscountApplication === null) ? $saleDiscountApplication : $lastSaleDiscountApplication;
+                $saleDiscountApplication->setCodeNumberToNext($currentSaleDiscountApplication->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($saleDiscountApplication);
     }
     

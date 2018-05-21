@@ -56,7 +56,7 @@ class SaleDiscountApplicationController extends Controller
         $saleDiscountApplicationService = $this->get('app.transaction.sale_discount_application_form');
         $form = $this->createForm(SaleDiscountApplicationType::class, $saleDiscountApplication, array(
             'service' => $saleDiscountApplicationService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class SaleDiscountApplicationController extends Controller
         $saleDiscountApplicationService = $this->get('app.transaction.sale_discount_application_form');
         $form = $this->createForm(SaleDiscountApplicationType::class, $saleDiscountApplication, array(
             'service' => $saleDiscountApplicationService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

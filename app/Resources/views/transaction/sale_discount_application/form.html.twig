@@ -9,10 +9,6 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Pengajuan Discount #</label>
-                    <div>{{ saleDiscountApplication.codeNumber }}</div>
-                </div>
                 {{ form_row(form.transactionDate, {'label' : 'Tanggal'}) }}
                 {{ form_row(form.customer, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#customer-dialog'} }) }}
                 <div class="form-group" id="customer-info">
