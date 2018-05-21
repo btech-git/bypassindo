@@ -26,7 +26,7 @@ class DepositHeaderType extends AbstractType
                 'class' => Account::class,
                 'query_builder' => function (EntityRepository $er) {
                     $qb = $er->createQueryBuilder('u');
-//                    return $qb->where($qb->expr()->in('IDENTITY(u.accountCategory)', array(8, 9)));
+                    return $qb->where($qb->expr()->in('IDENTITY(u.accountCategory)', array(10)));
                 },
             ))
             ->add('depositDetails', CollectionType::class, array(

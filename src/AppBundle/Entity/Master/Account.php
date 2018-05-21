@@ -30,6 +30,11 @@ class Account
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
+    private $isCashOrBank = false;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
     private $isActive = true;
     /**
      * @ORM\ManyToOne(targetEntity="AccountCategory", inversedBy="accounts")
@@ -53,6 +58,9 @@ class Account
 
     public function getName() { return $this->name; }
     public function setName($name) { $this->name = $name; }
+
+    public function getIsCashOrBank() { return $this->isCashOrBank; }
+    public function setIsCashOrBank($isCashOrBank) { $this->isCashOrBank = $isCashOrBank; }
 
     public function getIsActive() { return $this->isActive; }
     public function setIsActive($isActive) { $this->isActive = $isActive; }
