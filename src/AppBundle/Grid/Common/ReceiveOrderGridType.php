@@ -137,7 +137,7 @@ class ReceiveOrderGridType extends DataGridType
                     $associations['purchaseDeliveryOrder']['associations']['saleOrder']['merge'] = true;
                     break;
                 case 'sale_invoice':
-                    $associations['saleInvoice']['merge'] = false;
+                    $associations['saleInvoiceDetail']['merge'] = false;
                     break;
             }
         }
