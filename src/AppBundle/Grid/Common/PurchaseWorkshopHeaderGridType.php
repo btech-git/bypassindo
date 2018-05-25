@@ -109,9 +109,11 @@ class PurchaseWorkshopHeaderGridType extends DataGridType
         );
 
         if (array_key_exists('form', $options)) {
+            $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'delivery_workshop':
-                    $associations['deliveryWorkshops']['merge'] = false;
+//                    $associations['deliveryWorkshops']['merge'] = false;
+                    $criteria['purchaseWorkshopHeader']->andWhere($expr->gt('quantityOrder - SIZE(deliveryWorkshops)', 0));
                     break;
             }
         }

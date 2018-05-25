@@ -12,10 +12,7 @@ class PurchaseInvoiceDetailWorkshopType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('itemName')
-            ->add('quantity')
             ->add('unitPrice')
-            ->add('discount')
         ;
     }
 

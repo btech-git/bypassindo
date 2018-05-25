@@ -41,6 +41,10 @@ class DepositHeader extends CodeNumberEntity
      */
     private $staff;
     /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     */
+    private $staffApproval;
+    /**
      * @ORM\OneToMany(targetEntity="DepositDetail", mappedBy="depositHeader")
      * @Assert\Valid() @Assert\Count(min=1)
      */
@@ -66,6 +70,9 @@ class DepositHeader extends CodeNumberEntity
     
     public function getStaff() { return $this->staff; }
     public function setStaff(Staff $staff = null) { $this->staff = $staff; }
+    
+    public function getStaffApproval() { return $this->staffApproval; }
+    public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
     
     public function getDepositDetails() { return $this->depositDetails; }
     public function setDepositDetails(Collection $depositDetails) { $this->depositDetails = $depositDetails; }

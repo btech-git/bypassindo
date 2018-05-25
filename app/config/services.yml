@@ -97,6 +97,16 @@ services:
         class: AppBundle\Service\Transaction\ReceiveWorkshopForm
         arguments: ["@app.transaction.receive_workshop_repository"]
 
+    app.transaction.sale_invoice_downpayment_repository:
+        class: AppBundle\Repository\Transaction\SaleInvoiceDownpaymentRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Transaction\SaleInvoiceDownpayment
+
+    app.transaction.sale_invoice_downpayment_form:
+        class: AppBundle\Service\Transaction\SaleInvoiceDownpaymentForm
+        arguments: ["@app.transaction.sale_invoice_downpayment_repository"]
+
     app.transaction.sale_invoice_header_repository:
         class: AppBundle\Repository\Transaction\SaleInvoiceHeaderRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -159,15 +169,15 @@ services:
         class: AppBundle\Service\Transaction\PurchaseDeliveryOrderForm
         arguments: ["@app.transaction.purchase_delivery_order_repository"]
 
-    app.transaction.purchase_invoice_sparepart_header_repository:
+    app.transaction.sale_invoice_sparepart_header_repository:
         class: LibBundle\Doctrine\EntityRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
         arguments:
-            - AppBundle\Entity\Transaction\PurchaseInvoiceSparepartHeader
+            - AppBundle\Entity\Transaction\SaleInvoiceSparepartHeader
 
-    app.transaction.purchase_invoice_sparepart_header_sheet:
-        class: AppBundle\Service\Transaction\PurchaseInvoiceSparepartHeaderSheet
-        arguments: ["@validator",  "@lib.excel.object_parser", "@app.transaction.purchase_invoice_sparepart_header_repository"]
+    app.transaction.sale_invoice_sparepart_header_sheet:
+        class: AppBundle\Service\Transaction\SaleInvoiceSparepartHeaderSheet
+        arguments: ["@validator",  "@lib.excel.object_parser", "@app.transaction.sale_invoice_sparepart_header_repository"]
 
     app.report.journal_ledger_repository:
         class: AppBundle\Repository\Report\JournalLedgerRepository

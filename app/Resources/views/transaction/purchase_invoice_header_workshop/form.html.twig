@@ -6,13 +6,21 @@
 
 {% import _self as self %}
 
-{% macro info_details_row(object) %}
-    <tr>
-        <td data-name="item-name">{{ object.itemName|default }}</td>
-        <td data-name="quantity">{{ object.quantity|default }}</td>
-        <td class="text-right" data-name="unit-price">{{ object.unitPrice|default|number_format(2) }}</td>
-        <td class="text-right" data-name="discount">{{ object.discount|default|number_format(2) }}</td>
-        <td class="text-right" data-name="total">{{ object.total|default|number_format(2) }}</td>
+{% macro details_row(object) %}
+    <tr data-index="{{ object.vars.name }}">
+        <td class="text-left">
+            <span data-name="item-name-{{ object.vars.name }}">{{ object.vars.value.itemName|default }}</span>
+        </td>
+        <td class="text-center">
+            <span data-name="quantity-{{ object.vars.name }}">{{ object.vars.value.quantity|default }}</span>
+        </td>
+        <td class="text-right">
+            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-group-name': 'unit-price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
+        </td>
+        <td class="text-right">
+            <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
+        </td>
     </tr>
 {% endmacro %}
 
@@ -77,26 +85,25 @@
                     <th>Nama Barang</th>
                     <th style="width: 10%">Quantity</th>
                     <th style="width: 15%">Price</th>
-                    <th style="width: 15%">Disc (Rp.)</th>
                     <th style="width: 15%">Total</th>
                 </tr>
             </thead>
-            <tbody data-prototype="{{ self.info_details_row(null)|e }}">
-                {% for purchaseInvoiceDetailWorkshop in purchaseInvoiceHeader.purchaseInvoiceDetailWorkshops %}
-                    {{ self.info_details_row(purchaseInvoiceDetailWorkshop) }}
+            <tbody data-prototype="{{ self.details_row(form.purchaseInvoiceDetailWorkshops.vars.prototype)|e }}">
+                {% for purchaseInvoiceDetailWorkshop in form.purchaseInvoiceDetailWorkshops %}
+                    {{ self.details_row(purchaseInvoiceDetailWorkshop) }}
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right" colspan="3">Sub Total</td>
                     <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="4">PPn</td>
+                    <td class="text-right" colspan="3">PPn</td>
                     <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="4">Grand Total</td>
+                    <td class="text-right" colspan="3">Grand Total</td>
                     <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
                 </tr>
             </tfoot>
@@ -131,26 +138,27 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        var infoTable = $("#purchase-invoice-detail-workshop-info-list");
-                        var infoTableBody = $("tbody", infoTable);
-                        var infoTableFoot = $("tfoot", infoTable);
-                        infoTableBody.empty();
+                        var table = $("#purchase-invoice-detail-workshop-info-list");
+                        var tableBody = $("tbody", table);
+                        var tableFoot = $("tfoot", table);
                         $.each(data.purchaseInvoiceDetailWorkshops, function(index, purchaseInvoiceDetailWorkshop) {
-                            var name = "__index__";
-                            infoTableBody.appendByPrototype(infoTableBody.attr("data-prototype"), name, index, function(prototype) {
-                                $("[data-name=item-name]", prototype).text(purchaseInvoiceDetailWorkshop.itemName);
-                                $("[data-name=quantity]", prototype).text(purchaseInvoiceDetailWorkshop.quantity);
-                                $("[data-name=unit-price]", prototype).text(purchaseInvoiceDetailWorkshop.unitPrice);
-                                $("[data-name=discount]", prototype).text(purchaseInvoiceDetailWorkshop.discount);
-                                $("[data-name=total]", prototype).text(purchaseInvoiceDetailWorkshop.total);
-                            });
+                            $("[data-name=item-name-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.itemName);
+                            $("[data-name=quantity-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.quantity);
+                            $("[data-name=total-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.total);
                         });
-                        $("[data-name=sub-total]", infoTableFoot).text(data.subTotal);
-                        $("[data-name=tax-nominal]", infoTableFoot).text(data.taxNominal);
-                        $("[data-name=grand-total]", infoTableFoot).text(data.grandTotal);
+                        $("[data-name=sub-total]", tableFoot).text(data.subTotal);
+                        $("[data-name=tax-nominal]", tableFoot).text(data.taxNominal);
+                        $("[data-name=grand-total]", tableFoot).text(data.grandTotal);
                     }
                 });
             }
+            
+            var table = $("#purchase-invoice-detail-workshop-info-list");
+            var tableBody = $("tbody", table);
+            
+            tableBody.on("change", "[data-group-name=unit-price]", function() {
+                bind();
+            });
             
             $("#receive-workshop-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#receive-workshop-dialog").modal("hide");
@@ -163,6 +171,19 @@
                 $("[data-name=sale-order-vehicle-color]", "#receive-workshop-info").text($(this).attr("data-field-sale-order-vehicle-color"));
                 $("[data-name=vehicle-chassis-number]", "#receive-workshop-info").text($(this).attr("data-field-vehicle-chassis-number"));
                 $("[data-name=vehicle-machine-number]", "#receive-workshop-info").text($(this).attr("data-field-vehicle-machine-number"));
+                tableBody.empty();
+                var context = $(this);
+                var name = "{{ form.purchaseInvoiceDetailWorkshops.vars.prototype.vars.name }}";
+                var purchaseWorkshopDetailsCount = parseInt(context.attr("data-field-purchase-workshop-details-count"));
+                var purchaseWorkshopDetailUnitPriceList = $.parseJSON(context.attr("data-field-purchase-workshop-detail-unit-price-list"));
+                for (var i = 0; i < purchaseWorkshopDetailsCount; i++) {
+                    tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, i, function(prototype) {
+                        var unitPricePrototype = prototype.find("#{{ form.purchaseInvoiceDetailWorkshops.vars.prototype.unitPrice.vars.id }}");
+                        unitPricePrototype.attr("value", purchaseWorkshopDetailUnitPriceList[i]);
+                        var unitPriceTextPrototype = prototype.find("[data-name=unit-price-text-" + name + "]");
+                        unitPriceTextPrototype.text($.numberFormat(purchaseWorkshopDetailUnitPriceList[i], 2));
+                    });
+                }
                 bind();
             });
         });

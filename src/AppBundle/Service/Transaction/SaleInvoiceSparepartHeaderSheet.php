@@ -6,17 +6,17 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 use LibBundle\Excel\PhpExcelObjectParser;
 use LibBundle\Doctrine\EntityRepository;
 
-class PurchaseInvoiceSparepartHeaderSheet
+class SaleInvoiceSparepartHeaderSheet
 {
     private $validator;
     private $parser;
-    private $purchaseInvoiceSparepartHeaderRepository;
+    private $saleInvoiceSparepartHeaderRepository;
     
-    public function __construct(ValidatorInterface $validator, PhpExcelObjectParser $parser, EntityRepository $purchaseInvoiceSparepartHeaderRepository)
+    public function __construct(ValidatorInterface $validator, PhpExcelObjectParser $parser, EntityRepository $saleInvoiceSparepartHeaderRepository)
     {
         $this->validator = $validator;
         $this->parser = $parser;
-        $this->purchaseInvoiceSparepartHeaderRepository = $purchaseInvoiceSparepartHeaderRepository;
+        $this->saleInvoiceSparepartHeaderRepository = $saleInvoiceSparepartHeaderRepository;
     }
     
     public function parse($headerDataFile, $headerMappingXml, $detailDataFile, $detailMappingXml)
@@ -39,9 +39,9 @@ class PurchaseInvoiceSparepartHeaderSheet
                 foreach ($detailData['references']['invoiceNumber'] as $detailInvoiceNumber => $detailIndexes) {
                     foreach ($detailIndexes as $detailIndex) {
                         if ($headerInvoiceNumber === $detailInvoiceNumber) {
-                            $details = $headerObject->getPurchaseInvoiceSparepartDetails();
+                            $details = $headerObject->getSaleInvoiceSparepartDetails();
                             $detailObject = $detailData['objects'][$detailIndex];
-                            $detailObject->setPurchaseInvoiceSparepartHeader($headerObject);
+                            $detailObject->setSaleInvoiceSparepartHeader($headerObject);
                             $details->add($detailObject);
                         }
                     }
@@ -52,18 +52,18 @@ class PurchaseInvoiceSparepartHeaderSheet
         return $headerData['objects'];
     }
     
-    public function validate(array $purchaseInvoiceSparepartHeaders)
+    public function validate(array $saleInvoiceSparepartHeaders)
     {
-        if (empty($purchaseInvoiceSparepartHeaders)) {
+        if (empty($saleInvoiceSparepartHeaders)) {
             return false;
         }
-        foreach ($purchaseInvoiceSparepartHeaders as $purchaseInvoiceSparepartHeader) {
-            $errors = $this->validator->validate($purchaseInvoiceSparepartHeader);
+        foreach ($saleInvoiceSparepartHeaders as $saleInvoiceSparepartHeader) {
+            $errors = $this->validator->validate($saleInvoiceSparepartHeader);
             if (count($errors) > 0) {
                 return false;
             }
-            foreach ($purchaseInvoiceSparepartHeader->getPurchaseInvoiceSparepartDetails() as $purchaseInvoiceSparepartDetail) {
-                $errors = $this->validator->validate($purchaseInvoiceSparepartDetail);
+            foreach ($saleInvoiceSparepartHeader->getSaleInvoiceSparepartDetails() as $saleInvoiceSparepartDetail) {
+                $errors = $this->validator->validate($saleInvoiceSparepartDetail);
                 if (count($errors) > 0) {
                     return false;
                 }
@@ -73,10 +73,10 @@ class PurchaseInvoiceSparepartHeaderSheet
         return true;
     }
     
-    public function save(array $purchaseInvoiceSparepartHeaders)
+    public function save(array $saleInvoiceSparepartHeaders)
     {
-        $this->purchaseInvoiceSparepartHeaderRepository->add($purchaseInvoiceSparepartHeaders, array(
-            'purchaseInvoiceSparepartDetails' => array('add' => true),
+        $this->saleInvoiceSparepartHeaderRepository->add($saleInvoiceSparepartHeaders, array(
+            'saleInvoiceSparepartDetails' => array('add' => true),
         ));
     }
 }

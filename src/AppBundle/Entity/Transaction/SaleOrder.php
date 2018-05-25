@@ -188,6 +188,10 @@ class SaleOrder extends CodeNumberEntity
      */
     private $purchaseDeliveryOrders;
     /**
+     * @ORM\OneToOne(targetEntity="SaleInvoiceDownpayment", mappedBy="saleOrder")
+     */
+    private $saleInvoiceDownpayment;
+    /**
      * @ORM\OneToOne(targetEntity="PurchaseWorkshopHeader", mappedBy="saleOrder")
      */
     private $purchaseWorkshopHeader;
@@ -303,6 +307,9 @@ class SaleOrder extends CodeNumberEntity
     public function getPurchaseDeliveryOrders() { return $this->purchaseDeliveryOrders; }
     public function setPurchaseDeliveryOrders(Collection $purchaseDeliveryOrders) { $this->purchaseDeliveryOrders = $purchaseDeliveryOrders; }
 
+    public function getSaleInvoiceDownpayment() { return $this->saleInvoiceDownpayment; }
+    public function setSaleInvoiceDownpayment(SaleInvoiceDownpayment $saleInvoiceDownpayment = null) { $this->saleInvoiceDownpayment = $saleInvoiceDownpayment; }
+    
     public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
     public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }
 }

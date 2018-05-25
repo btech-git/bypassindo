@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Form\Transaction\PurchaseInvoiceHeaderWorkshopType;
-use AppBundle\Grid\Transaction\PurchaseInvoiceHeaderGridType;
+use AppBundle\Grid\Transaction\PurchaseInvoiceHeaderWorkshopGridType;
 
 /**
  * @Route("/transaction/purchase_invoice_header_workshop")
@@ -27,7 +27,7 @@ class PurchaseInvoiceHeaderWorkshopController extends Controller
         $repository = $em->getRepository(PurchaseInvoiceHeader::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(PurchaseInvoiceHeaderGridType::class, $repository, $request);
+        $grid->build(PurchaseInvoiceHeaderWorkshopGridType::class, $repository, $request);
 
         return $this->render('transaction/purchase_invoice_header_workshop/grid.html.twig', array(
             'grid' => $grid->createView(),

@@ -45,16 +45,13 @@ class PurchaseInvoiceHeaderWorkshopForm
             $purchaseWorkshopHeader = $receiveWorkshop->getDeliveryWorkshop()->getPurchaseWorkshopHeader();
             $purchaseInvoiceHeader->setSupplier($purchaseWorkshopHeader->getSupplier());
             $purchaseInvoiceHeader->setIsTax($purchaseWorkshopHeader->getIsTax());
-            $purchaseInvoiceDetailWorkshops = $purchaseInvoiceHeader->getPurchaseInvoiceDetailWorkshops();
-            $purchaseInvoiceDetailWorkshops->clear();
-            foreach ($purchaseWorkshopHeader->getPurchaseWorkshopDetails() as $purchaseWorkshopDetail) {
-                $purchaseInvoiceDetailWorkshop = new PurchaseInvoiceDetailWorkshop();
-                $purchaseInvoiceDetailWorkshop->setItemName($purchaseWorkshopDetail->getItemName());
-                $purchaseInvoiceDetailWorkshop->setQuantity($purchaseWorkshopDetail->getQuantity());
-                $purchaseInvoiceDetailWorkshop->setUnitPrice($purchaseWorkshopDetail->getUnitPrice());
-                $purchaseInvoiceDetailWorkshop->setTotal($purchaseWorkshopDetail->getTotal());
-                $purchaseInvoiceDetailWorkshop->setPurchaseInvoiceHeader($purchaseInvoiceHeader);
-                $purchaseInvoiceDetailWorkshops->add($purchaseInvoiceDetailWorkshop);
+            $purchaseWorkshopDetails = $purchaseWorkshopHeader->getPurchaseWorkshopDetails();
+            foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetailWorkshops() as $index => $purchaseInvoiceDetailWorkshop) {
+                if ($purchaseWorkshopDetails->containsKey($index)) {
+                    $purchaseWorkshopDetail = $purchaseWorkshopDetails->get($index);
+                    $purchaseInvoiceDetailWorkshop->setItemName($purchaseWorkshopDetail->getItemName());
+                    $purchaseInvoiceDetailWorkshop->setQuantity($purchaseWorkshopDetail->getQuantity());
+                }
             }
         }
         $purchaseInvoiceHeader->sync();

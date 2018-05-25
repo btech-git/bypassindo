@@ -16,7 +16,7 @@ use LibBundle\Grid\SearchOperator\EqualType;
 use LibBundle\Grid\SearchOperator\ContainType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 
-class PurchaseInvoiceHeaderGridType extends DataGridType
+class PurchaseInvoiceHeaderUnitGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
@@ -72,7 +72,10 @@ class PurchaseInvoiceHeaderGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
+        $expr = Criteria::expr();
         $criteria = Criteria::create();
+        
+        $criteria->andWhere($expr->eq('businessType', PurchaseInvoiceHeader::BUSINESS_TYPE_UNIT));
 
         $builder->processSearch(function($values, $operator, $field) use ($criteria) {
             $operator::search($criteria, $field, $values);

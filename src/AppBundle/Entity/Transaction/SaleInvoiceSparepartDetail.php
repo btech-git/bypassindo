@@ -6,16 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Common\CodeNumberEntity;
-use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Supplier;
 
 /**
- * @ORM\Table(name="transaction_purchase_invoice_sparepart_detail")
+ * @ORM\Table(name="transaction_sale_invoice_sparepart_detail")
  * @ORM\Entity
  */
-class PurchaseInvoiceSparepartDetail
+class SaleInvoiceSparepartDetail
 {
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -150,12 +146,12 @@ class PurchaseInvoiceSparepartDetail
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
-    private $purchaseAmount;
+    private $saleAmount;
     /**
-     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceSparepartHeader", inversedBy="purchaseInvoiceSparepartDetails")
+     * @ORM\ManyToOne(targetEntity="SaleInvoiceSparepartHeader", inversedBy="saleInvoiceSparepartDetails")
      * @Assert\NotNull()
      */
-    private $purchaseInvoiceSparepartHeader;
+    private $saleInvoiceSparepartHeader;
     
     public function __construct()
     {
@@ -238,10 +234,10 @@ class PurchaseInvoiceSparepartDetail
     public function getTotalAfterTax() { return $this->totalAfterTax; }
     public function setTotalAfterTax($totalAfterTax) { $this->totalAfterTax = $totalAfterTax; }
 
-    public function getPurchaseAmount() { return $this->purchaseAmount; }
-    public function setPurchaseAmount($purchaseAmount) { $this->purchaseAmount = $purchaseAmount; }
+    public function getSaleAmount() { return $this->saleAmount; }
+    public function setSaleAmount($saleAmount) { $this->saleAmount = $saleAmount; }
 
-    public function getPurchaseInvoiceSparepartHeader() { return $this->purchaseInvoiceSparepartHeader; }
-    public function setPurchaseInvoiceSparepartHeader(PurchaseInvoiceSparepartHeader $purchaseInvoiceSparepartHeader = null) { $this->purchaseInvoiceSparepartHeader = $purchaseInvoiceSparepartHeader; }
+    public function getSaleInvoiceSparepartHeader() { return $this->saleInvoiceSparepartHeader; }
+    public function setSaleInvoiceSparepartHeader(SaleInvoiceSparepartHeader $saleInvoiceSparepartHeader = null) { $this->saleInvoiceSparepartHeader = $saleInvoiceSparepartHeader; }
 }
 

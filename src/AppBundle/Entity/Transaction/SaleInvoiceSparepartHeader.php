@@ -6,16 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use AppBundle\Entity\Common\CodeNumberEntity;
-use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Supplier;
 
 /**
- * @ORM\Table(name="transaction_purchase_invoice_sparepart_header")
+ * @ORM\Table(name="transaction_sale_invoice_sparepart_header")
  * @ORM\Entity
  */
-class PurchaseInvoiceSparepartHeader
+class SaleInvoiceSparepartHeader
 {
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -195,7 +191,7 @@ class PurchaseInvoiceSparepartHeader
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
-    private $totalPurchaseAmount;
+    private $totalSaleAmount;
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
@@ -227,14 +223,14 @@ class PurchaseInvoiceSparepartHeader
      */
     private $serviceMileage;
     /**
-     * @ORM\OneToMany(targetEntity="PurchaseInvoiceSparepartDetail", mappedBy="purchaseInvoiceSparepartHeader")
+     * @ORM\OneToMany(targetEntity="SaleInvoiceSparepartDetail", mappedBy="saleInvoiceSparepartHeader")
      * @Assert\Valid() @Assert\Count(min=1)
      */
-    private $purchaseInvoiceSparepartDetails;
+    private $saleInvoiceSparepartDetails;
     
     public function __construct()
     {
-        $this->purchaseInvoiceSparepartDetails = new ArrayCollection();
+        $this->saleInvoiceSparepartDetails = new ArrayCollection();
     }
 
     public function getId() { return $this->id; }
@@ -341,8 +337,8 @@ class PurchaseInvoiceSparepartHeader
     public function getGrandTotalAfterTax() { return $this->grandTotalAfterTax; }
     public function setGrandTotalAfterTax($grandTotalAfterTax) { $this->grandTotalAfterTax = $grandTotalAfterTax; }
 
-    public function getTotalPurchaseAmount() { return $this->totalPurchaseAmount; }
-    public function setTotalPurchaseAmount($totalPurchaseAmount) { $this->totalPurchaseAmount = $totalPurchaseAmount; }
+    public function getTotalSaleAmount() { return $this->totalSaleAmount; }
+    public function setTotalSaleAmount($totalSaleAmount) { $this->totalSaleAmount = $totalSaleAmount; }
 
     public function getPaymentType() { return $this->paymentType; }
     public function setPaymentType($paymentType) { $this->paymentType = $paymentType; }
@@ -362,6 +358,6 @@ class PurchaseInvoiceSparepartHeader
     public function getServiceMileage() { return $this->serviceMileage; }
     public function setServiceMileage($serviceMileage) { $this->serviceMileage = $serviceMileage; }
 
-    public function getPurchaseInvoiceSparepartDetails() { return $this->purchaseInvoiceSparepartDetails; }
-    public function setPurchaseInvoiceSparepartDetails(Collection $purchaseInvoiceSparepartDetails) { $this->purchaseInvoiceSparepartDetails = $purchaseInvoiceSparepartDetails; }
+    public function getSaleInvoiceSparepartDetails() { return $this->saleInvoiceSparepartDetails; }
+    public function setSaleInvoiceSparepartDetails(Collection $saleInvoiceSparepartDetails) { $this->saleInvoiceSparepartDetails = $saleInvoiceSparepartDetails; }
 }

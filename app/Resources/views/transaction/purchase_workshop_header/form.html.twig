@@ -32,10 +32,6 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>PO Karoseri #</label>
-                    <div>{{ purchaseWorkshopHeader.codeNumber }}</div>
-                </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'} }) }}
                 <div class="form-group" id="supplier-info">

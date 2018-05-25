@@ -30,9 +30,21 @@ class PurchaseWorkshopHeaderForm
     
     public function finalize(PurchaseWorkshopHeader $purchaseWorkshopHeader, array $params = array())
     {
+        if (empty($purchaseWorkshopHeader->getId())) {
+            $transactionDate = $purchaseWorkshopHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastPurchaseWorkshopHeader = $this->purchaseWorkshopHeaderRepository->findRecentBy($year, $month);
+                $currentPurchaseWorkshopHeader = ($lastPurchaseWorkshopHeader === null) ? $purchaseWorkshopHeader : $lastPurchaseWorkshopHeader;
+                $purchaseWorkshopHeader->setCodeNumberToNext($currentPurchaseWorkshopHeader->getCodeNumber(), $year, $month);
+            }
+        }
+        
         foreach ($purchaseWorkshopHeader->getPurchaseWorkshopDetails() as $purchaseWorkshopDetail) {
             $purchaseWorkshopDetail->setPurchaseWorkshopHeader($purchaseWorkshopHeader);
         }
+        
         $this->sync($purchaseWorkshopHeader);
     }
     
@@ -49,6 +61,7 @@ class PurchaseWorkshopHeaderForm
         $purchaseWorkshopHeader->setTaxNominal($taxNominal);
         $grandTotal = $subTotal + $taxNominal;
         $purchaseWorkshopHeader->setGrandTotal($grandTotal);
+        $purchaseWorkshopHeader->setQuantityOrder($purchaseWorkshopHeader->getSaleOrder()->getQuantity());
     }
     
     public function save(PurchaseWorkshopHeader $purchaseWorkshopHeader)

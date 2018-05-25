@@ -12,15 +12,15 @@ use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\BetweenType;
-use AppBundle\Entity\Transaction\SaleInvoice;
+use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 
-class SaleInvoiceGridType extends DataGridType
+class PurchaseInvoiceDetailGeneralGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {        
         $builder->searchWidget()
-            ->addGroup('saleInvoice')
-                ->setEntityName(SaleInvoice::class)
+            ->addGroup('purchaseInvoiceHeader')
+                ->setEntityName(PurchaseInvoiceHeader::class)
                 ->addField('transactionDate')
                     ->addOperator(SearchBlankType::class)
                     ->addOperator(BetweenType::class)
@@ -31,7 +31,7 @@ class SaleInvoiceGridType extends DataGridType
         ;
 
         $builder->sortWidget()
-            ->addGroup('saleInvoice')
+            ->addGroup('purchaseInvoiceHeader')
                 ->addField('transactionDate')
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
@@ -57,28 +57,26 @@ class SaleInvoiceGridType extends DataGridType
             $operator::sort($criteria[$group], $field);
         });
 
-        $builder->processPage($repository->count($criteria['saleInvoice'], $associations), function($offset, $size) use ($criteria) {
-            $criteria['saleInvoice']->setMaxResults($size);
-            $criteria['saleInvoice']->setFirstResult($offset);
+        $builder->processPage($repository->count($criteria['purchaseInvoiceDetailGeneral'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['purchaseInvoiceDetailGeneral']->setMaxResults($size);
+            $criteria['purchaseInvoiceDetailGeneral']->setFirstResult($offset);
         });
         
-        $objects = $repository->match($criteria['saleInvoice'], $associations);
+        $objects = $repository->match($criteria['purchaseInvoiceDetailGeneral'], $associations);
 
         $builder->setData($objects);
     }
 
     private function getSpecifications(array $options)
     {
-        $names = array('saleInvoice', 'purchaseDeliveryOrder');
+        $names = array('purchaseInvoiceDetailGeneral', 'purchaseInvoiceHeader');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
         }
 
         $associations = array(
-            'receiveOrder' => array('criteria' => null, 'associations' => array(
-                'purchaseDeliveryOrder' => array('criteria' => null),
-            )),
+            'purchaseInvoiceHeader' => array('criteria' => $criteria['purchaseInvoiceHeader'], 'merge' => true),
         );
 
         return array($criteria, $associations);

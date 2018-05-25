@@ -7,10 +7,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Validator\Constraints\NotNull;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Transaction\ReceiveWorkshop;
+use AppBundle\Entity\Transaction\PurchaseInvoiceDetailWorkshop;
 
 class PurchaseInvoiceHeaderWorkshopType extends AbstractType
 {
@@ -22,6 +24,14 @@ class PurchaseInvoiceHeaderWorkshopType extends AbstractType
             ->add('taxInvoiceDate', 'date')
             ->add('taxInvoiceNumber')
             ->add('note')
+            ->add('purchaseInvoiceDetailWorkshops', CollectionType::class, array(
+                'entry_type' => PurchaseInvoiceDetailWorkshopType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'prototype_data' => new PurchaseInvoiceDetailWorkshop(),
+                'label' => false,
+            ))
         ;
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event) use ($options) {

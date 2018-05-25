@@ -9,7 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Form\Transaction\PurchaseInvoiceHeaderUnitType;
-use AppBundle\Grid\Transaction\PurchaseInvoiceHeaderGridType;
+use AppBundle\Grid\Transaction\PurchaseInvoiceHeaderUnitGridType;
 
 /**
  * @Route("/transaction/purchase_invoice_header_unit")
@@ -27,7 +27,7 @@ class PurchaseInvoiceHeaderUnitController extends Controller
         $repository = $em->getRepository(PurchaseInvoiceHeader::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(PurchaseInvoiceHeaderGridType::class, $repository, $request);
+        $grid->build(PurchaseInvoiceHeaderUnitGridType::class, $repository, $request);
 
         return $this->render('transaction/purchase_invoice_header_unit/grid.html.twig', array(
             'grid' => $grid->createView(),

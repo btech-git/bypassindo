@@ -4,7 +4,8 @@
 
 {% block stylesheets %}
     <style>
-        table thead tr th:nth-child(2), table tbody tr td:nth-child(2) { width: 50% }
+        table thead tr th:nth-child(2), table tbody tr td:nth-child(2) { width: 30% }
+        table thead tr th:nth-child(3), table tbody tr td:nth-child(3) { width: 30% }
     </style>
 {% endblock %}
 
@@ -16,14 +17,30 @@
             <thead>
                 <tr>
                     <th colspan="2" class="bg-info lead">
-                        <strong>Group</strong>
+                        <strong>Laporan</strong>
                     </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Entity</td>
-                    <td>{{ include('action.html.twig', {'url': path('report_entity_index'), 'label': 'Show', 'button': 'btn btn-info', 'icon': 'glyphicon glyphicon-info-sign'}) }}</td>
+                    <td>Pembelian Umum</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_purchase_invoice_detail_general_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Pembelian Karoseri</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_purchase_invoice_detail_workshop_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Pembelian Unit</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_purchase_invoice_detail_unit_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_detail_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>DP Penjualan</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_downpayment_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
             </tbody>
         </table>

@@ -1,9 +1,9 @@
 {% extends 'report/layout.html.twig' %}
 
-{% block title 'Report Sale Invoice' %}
+{% block title 'Report Sale Invoice Downpayment' %}
 
 {% block content %}
-    <div id="sale-invoice-grid" data-grid="{{ path('report_sale_invoice_grid') }}"></div>
+    <div id="sale-invoice-downpayment-grid" data-grid="{{ path('report_sale_invoice_downpayment_grid') }}"></div>
 {% endblock %}
 
 {% block stylesheets_include %}
@@ -15,24 +15,20 @@
     {{ parent() }}
     <style>
         table.report-data > thead > tr > th:nth-child(1),
-        table.report-data > tbody > tr > td:nth-child(1) { width: 10% }
+        table.report-data > tbody > tr > td:nth-child(1) { width: 15% }
         table.report-data > thead > tr > th:nth-child(2),
         table.report-data > tbody > tr > td:nth-child(2) { width: 10% }
         table.report-data > thead > tr > th:nth-child(3),
         table.report-data > tbody > tr > td:nth-child(3) { width: 10% }
         table.report-data > thead > tr > th:nth-child(4),
-        table.report-data > tbody > tr > td:nth-child(4) { width: 10% }
+        table.report-data > tbody > tr > td:nth-child(4) { width: 15% }
         table.report-data > thead > tr > th:nth-child(5),
-        table.report-data > tbody > tr > td:nth-child(5) { width: 10% }
+        table.report-data > tbody > tr > td:nth-child(5) { width: 15% }
         table.report-data > thead > tr > th:nth-child(6),
-        table.report-data > tbody > tr > td:nth-child(6) { width: 10% }
+        table.report-data > tbody > tr > td:nth-child(6) { width: 15% }
         table.report-data > thead > tr > th:nth-child(7),
         table.report-data > tbody > tr > td:nth-child(7) { width: 10% }
         table.report-data > thead > tr > th:nth-child(8),
         table.report-data > tbody > tr > td:nth-child(8) { width: 10% }
-        table.report-data > thead > tr > th:nth-child(9),
-        table.report-data > tbody > tr > td:nth-child(9) { width: 10% }
-        table.report-data > thead > tr > th:nth-child(10),
-        table.report-data > tbody > tr > td:nth-child(10) { width: 10% }
     </style>
 {% endblock %}

@@ -73,7 +73,7 @@ class SaleInvoiceHeader extends CodeNumberEntity
     private $salePaymentHeader;
     /**
      * @ORM\OneToMany(targetEntity="SaleInvoiceDetail", mappedBy="saleInvoiceHeader")
-     * @Assert\Valid() @Assert\Count(min=1)
+     * @Assert\Valid() @Assert\Count(min=1, max=3)
      */
     private $saleInvoiceDetails;
     

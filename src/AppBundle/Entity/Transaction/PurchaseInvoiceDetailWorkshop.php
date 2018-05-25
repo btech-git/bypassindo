@@ -76,6 +76,6 @@ class PurchaseInvoiceDetailWorkshop
 
     public function sync()
     {
-        $this->total = $this->quantity * $this->unitPrice - $this->discount;
+        $this->total = $this->quantity * $this->unitPrice;
     }
 }

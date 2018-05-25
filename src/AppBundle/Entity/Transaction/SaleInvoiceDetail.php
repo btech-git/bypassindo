@@ -80,13 +80,6 @@ class SaleInvoiceDetail
 
     public function sync()
     {
-        $receiveOrder = $this->getReceiveOrder();
-        $purchaseDeliveryOrder = $receiveOrder === null ? null : $receiveOrder->getPurchaseDeliveryOrder();
-        $saleOrder = $purchaseDeliveryOrder === null ? null : $purchaseDeliveryOrder->getSaleOrder();
-        $unitPrice = $saleOrder === null ? '0.00' : $saleOrder->getUnitPrice();
-        $this->unitPrice = $unitPrice;
-        $this->quantity = 1;
-        
         $this->total = $this->quantity * $this->unitPrice;
     }
 }

@@ -30,19 +30,32 @@ class SaleInvoiceHeaderForm
     
     public function finalize(SaleInvoiceHeader $saleInvoiceHeader, array $params = array())
     {
+        if (empty($saleInvoiceHeader->getId())) {
+            $transactionDate = $saleInvoiceHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastSaleInvoiceHeaderApplication = $this->saleInvoiceHeaderRepository->findRecentBy($year, $month);
+                $currentSaleInvoiceHeader = ($lastSaleInvoiceHeaderApplication === null) ? $saleInvoiceHeader : $lastSaleInvoiceHeaderApplication;
+                $saleInvoiceHeader->setCodeNumberToNext($currentSaleInvoiceHeader->getCodeNumber(), $year, $month);
+            }
+        }
+        
         foreach ($saleInvoiceHeader->getSaleInvoiceDetails() as $saleInvoiceDetail) {
             $saleInvoiceDetail->setSaleInvoiceHeader($saleInvoiceHeader);
         }
+        
         $this->sync($saleInvoiceHeader);
     }
     
     private function sync(SaleInvoiceHeader $saleInvoiceHeader)
     {
         foreach ($saleInvoiceHeader->getSaleInvoiceDetails() as $saleInvoiceDetail) {
-            $saleInvoiceDetail->setVehicleChassisNumber($saleInvoiceDetail->getReceiveOrder()->getPurchaseDeliveryOrder()->getVehicleChassisNumber());
-            $saleInvoiceDetail->setVehicleMachineNumber($saleInvoiceDetail->getReceiveOrder()->getPurchaseDeliveryOrder()->getVehicleMachineNumber());
-            $saleInvoiceDetail->setQuantity('1');
-            $saleInvoiceDetail->setUnitPrice($saleInvoiceDetail->getReceiveOrder()->getPurchaseDeliveryOrder()->getSaleOrder()->getTotal());
+            $purchaseDeliveryOrder = $saleInvoiceDetail->getReceiveOrder()->getPurchaseDeliveryOrder();
+            $saleInvoiceDetail->setVehicleChassisNumber($purchaseDeliveryOrder->getVehicleChassisNumber());
+            $saleInvoiceDetail->setVehicleMachineNumber($purchaseDeliveryOrder->getVehicleMachineNumber());
+            $saleInvoiceDetail->setQuantity(1);
+            $saleInvoiceDetail->setUnitPrice($purchaseDeliveryOrder->getSaleOrder()->getUnitPrice());
         }
         $saleInvoiceHeader->sync();
     }

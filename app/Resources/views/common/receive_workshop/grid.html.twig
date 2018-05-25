@@ -29,6 +29,10 @@
     </thead>
     <tbody>
         {% for receiveWorkshop in grid.data %}
+            {% set purchaseWorkshopDetailUnitPriceList = [] %}
+            {% for purchaseWorkshopDetail in receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.purchaseWorkshopDetails %}
+                {% set purchaseWorkshopDetailUnitPriceList = purchaseWorkshopDetailUnitPriceList|merge([purchaseWorkshopDetail.unitPrice]) %}
+            {% endfor %}
             <tr data-field-id="{{ receiveWorkshop.id }}"
                 data-field-code-number="{{ receiveWorkshop.codeNumber|default }}"
                 data-field-supplier-name="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.supplier.name|default }}"
@@ -42,7 +46,9 @@
                 data-field-sale-order-vehicle-color="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleColor|default }}"
                 data-field-vehicle-model-manufacture-code="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleModel.manufactureCode|default }}"
                 data-field-vehicle-chassis-number="{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}"
-                data-field-vehicle-machine-number="{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}">
+                data-field-vehicle-machine-number="{{ receiveWorkshop.deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}"
+                data-field-purchase-workshop-details-count="{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.purchaseWorkshopDetails.count|default }}"
+                data-field-purchase-workshop-detail-unit-price-list="{{ purchaseWorkshopDetailUnitPriceList|json_encode }}">
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|default ? receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ receiveWorkshop.deliveryWorkshop.purchaseWorkshopHeader.saleOrder.codeNumber|default }}</td>

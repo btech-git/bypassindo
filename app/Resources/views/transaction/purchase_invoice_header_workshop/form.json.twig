@@ -7,8 +7,6 @@
             "{{ index }}": {
                 "itemName": "{{ purchaseInvoiceDetailWorkshop.itemName|default }}",
                 "quantity": "{{ purchaseInvoiceDetailWorkshop.quantity|default }}",
-                "unitPrice": "{{ purchaseInvoiceDetailWorkshop.unitPrice|default|number_format(2) }}",
-                "discount": "{{ purchaseInvoiceDetailWorkshop.discount|default|number_format(2) }}",
                 "total": "{{ purchaseInvoiceDetailWorkshop.total|default|number_format(2) }}"
             }
             {%- if not loop.last -%},{%- endif -%}

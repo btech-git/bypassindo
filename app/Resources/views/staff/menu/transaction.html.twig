@@ -165,6 +165,15 @@
             <tbody>
                 {% if menu['sale_invoice'] %}
                     <tr>
+                        <td>Invoice DP Penjualan</td>
+                        <td>
+                            {% if is_granted('ROLE_SALE_INVOICE_NEW') %}
+                                {{ include('action.html.twig', {'url': path('transaction_sale_invoice_downpayment_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}
+                            {% endif %}
+                        </td>
+                        <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_downpayment_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                    </tr>
+                    <tr>
                         <td>Invoice Penjualan</td>
                         <td>
                             {% if is_granted('ROLE_SALE_INVOICE_NEW') %}
@@ -294,8 +303,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Invoice Pembelian Sparepart</td>
-                    <td>{{ include('action.html.twig', {'url': path('transaction_purchase_invoice_sparepart_header_import'), 'label': 'Import', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-import'}) }}</td>
+                    <td>Invoice Penjualan Sparepart</td>
+                    <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_sparepart_header_import'), 'label': 'Import', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-import'}) }}</td>
                     <td></td>
                 </tr>
             </tbody>

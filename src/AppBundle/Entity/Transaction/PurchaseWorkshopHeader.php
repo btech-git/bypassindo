@@ -32,12 +32,17 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $note;
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision=18, scale=2)
+     * @ORM\Column(type="smallint")
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $quantityOrder;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $subTotal;
     /**
-     * @ORM\Column(name="tax_nominal", type="decimal", precision=18, scale=2)
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $taxNominal;
@@ -47,7 +52,7 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $grandTotal;
     /**
-     * @ORM\Column(name="is_tax", type="boolean")
+     * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
     private $isTax;
@@ -99,6 +104,9 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
+
+    public function getQuantityOrder() { return $this->quantityOrder; }
+    public function setQuantityOrder($quantityOrder) { $this->quantityOrder = $quantityOrder; }
 
     public function getSubTotal() { return $this->subTotal; }
     public function setSubTotal($subTotal) { $this->subTotal = $subTotal; }
