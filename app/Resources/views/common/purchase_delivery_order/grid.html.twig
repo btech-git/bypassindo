@@ -5,24 +5,22 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
+            <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Tanggal DO</th>
             <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
             <th data-group="customer" data-field="name">Customer</th>
             <th data-group="purchaseDeliveryOrder" data-field="reference">DO #</th>
-            <th data-group="saleOrder" data-field="vehicleColor">Warna</th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
         </tr>
         <tr data-action="search">
-            <th data-group="purchaseDeliveryOrder" data-field="codeNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
+            <th data-group="saleOrder" data-field="vehicleColor"></th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate"></th>
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
             <th data-group="purchaseDeliveryOrder" data-field="reference"></th>
-            <th data-group="saleOrder" data-field="vehicleColor"></th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
         </tr>
     </thead>
     <tbody>
@@ -40,14 +38,13 @@
                 data-field-sale-order-quantity="{{ purchaseDeliveryOrder.saleOrder.quantity|default }}"
                 data-field-sale-order-unit-price="{{ purchaseDeliveryOrder.saleOrder.unitPrice|default }}"
                 data-field-vehicle-model-manufacture-code="{{ purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}">
-                <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.reference|default }}</td>
-                <td class="text-left">{{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
-                <td class="text-left">{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
-                <td class="text-left">{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
         {% else %}
             <tr>

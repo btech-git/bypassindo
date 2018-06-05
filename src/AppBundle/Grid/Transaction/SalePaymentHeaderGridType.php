@@ -13,7 +13,7 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
-use LibBundle\Grid\SearchOperator\ContainType;
+use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\SalePaymentHeader;
 
 class SalePaymentHeaderGridType extends DataGridType
@@ -42,9 +42,9 @@ class SalePaymentHeaderGridType extends DataGridType
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('amount')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('note')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

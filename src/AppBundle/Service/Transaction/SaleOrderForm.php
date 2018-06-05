@@ -16,14 +16,9 @@ class SaleOrderForm
     
     public function initialize(SaleOrder $saleOrder, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($saleOrder->getId())) {
-//            $lastSaleOrder = $this->saleOrderRepository->findRecentBy($year, $month);
-//            $currentSaleOrder = ($lastSaleOrder === null) ? $saleOrder : $lastSaleOrder;
-//            $saleOrder->setCodeNumberToNext($saleOrder->getCodeNumber(), $year, $month);
-            $saleOrder->setCodeNumberMonth($month);
-            $saleOrder->setCodeNumberYear($year);
             $saleOrder->setStaffFirst($staff);
             $saleOrder->setVehicleBrand('HINO');
         }
@@ -32,6 +27,16 @@ class SaleOrderForm
     
     public function finalize(SaleOrder $saleOrder, array $params = array())
     {
+        if (empty($saleOrder->getId())) {
+            $transactionDate = $saleOrder->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastSaleOrderApplication = $this->saleOrderRepository->findRecentBy($year, $month);
+                $currentSaleOrder = ($lastSaleOrderApplication === null) ? $saleOrder : $lastSaleOrderApplication;
+                $saleOrder->setCodeNumberToNext($currentSaleOrder->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($saleOrder);
     }
     

@@ -29,11 +29,7 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Invoice Pembelian #</label>
-                    <div>{{ purchaseInvoiceHeader.codeNumber }}</div>
-                </div>
-                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal Hutang'}) }}
                 {{ form_row(form.taxInvoiceNumber, {'label': 'Faktur Pajak Supplier'}) }}
                 {{ form_row(form.taxInvoiceDate, {'label': 'Tanggal Faktur Pajak'}) }}
                 {{ form_row(form.supplierInvoiceNumber, {'label': 'Supplier Invoice #'}) }}

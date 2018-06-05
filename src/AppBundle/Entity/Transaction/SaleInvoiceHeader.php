@@ -28,8 +28,18 @@ class SaleInvoiceHeader extends CodeNumberEntity
      */
     private $transactionDate;
     /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $createdDate;
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $dueDate;
+    /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank() @Assert\Length(min=16, max=16)
      */
     private $taxNumber;
     /**
@@ -92,6 +102,12 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
 
+    public function getCreatedDate() { return $this->createdDate; }
+    public function setCreatedDate($createdDate) { $this->createdDate = $createdDate; }
+
+    public function getDueDate() { return $this->dueDate; }
+    public function setDueDate($dueDate) { $this->dueDate = $dueDate; }
+
     public function getTaxNumber() { return $this->taxNumber; }
     public function setTaxNumber($taxNumber) { $this->taxNumber = $taxNumber; }
 
@@ -121,6 +137,15 @@ class SaleInvoiceHeader extends CodeNumberEntity
 
     public function getSaleInvoiceDetails() { return $this->saleInvoiceDetails; }
     public function setSaleInvoiceDetails(Collection $saleInvoiceDetails) { $this->saleInvoiceDetails = $saleInvoiceDetails; }
+
+    public function getFormattedTaxNumber()
+    {
+        $part1 = substr($this->taxNumber, 0, 3);
+        $part2 = substr($this->taxNumber, 3, 3);
+        $part3 = substr($this->taxNumber, 6, 2);
+        $part4 = substr($this->taxNumber, 8, 8);
+        return $part1 . '.' . $part2 . '-' . $part3 . '.' . $part4;
+    }
 
     public function sync()
     {

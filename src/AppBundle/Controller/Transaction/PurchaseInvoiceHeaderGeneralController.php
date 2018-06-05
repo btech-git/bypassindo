@@ -56,7 +56,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
         $purchaseInvoiceHeaderGeneralService = $this->get('app.transaction.purchase_invoice_header_general_form');
         $form = $this->createForm(PurchaseInvoiceHeaderGeneralType::class, $purchaseInvoiceHeader, array(
             'service' => $purchaseInvoiceHeaderGeneralService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
         $purchaseInvoiceHeaderGeneralService = $this->get('app.transaction.purchase_invoice_header_general_form');
         $form = $this->createForm(PurchaseInvoiceHeaderGeneralType::class, $purchaseInvoiceHeader, array(
             'service' => $purchaseInvoiceHeaderGeneralService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

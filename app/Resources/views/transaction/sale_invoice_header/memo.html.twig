@@ -20,8 +20,8 @@
                             <div class="cell value">{{ saleInvoiceHeader.codeNumber|default }}</div>
                         </div>
                         <div class="row">
-                            <div class="cell label">Tanggal</div>
-                            <div class="cell value">{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}</div>
+                            <div class="cell label">Tanggal Piutang</div>
+                            <div class="cell value">{{ saleInvoiceHeader.receivableDate|default ? saleInvoiceHeader.receivableDate|date('d M Y') }}</div>
                         </div>
                     </div>
                 </div>

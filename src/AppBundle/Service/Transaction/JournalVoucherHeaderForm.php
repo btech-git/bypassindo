@@ -21,19 +21,25 @@ class JournalVoucherHeaderForm
     
     public function initialize(JournalVoucherHeader $journalVoucherHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($journalVoucherHeader->getId())) {
-            $lastJournalVoucherHeader = $this->journalVoucherHeaderRepository->findRecentBy($year, $month);
-            $currentJournalVoucherHeader = ($lastJournalVoucherHeader === null) ? $journalVoucherHeader : $lastJournalVoucherHeader;
-            $journalVoucherHeader->setCodeNumberToNext($currentJournalVoucherHeader->getCodeNumber(), $year, $month);
-            
             $journalVoucherHeader->setStaff($staff);
         }
     }
     
     public function finalize(JournalVoucherHeader $journalVoucherHeader, array $params = array())
     {
+        if (empty($journalVoucherHeader->getId())) {
+            $transactionDate = $journalVoucherHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastJournalVoucherHeaderApplication = $this->journalVoucherHeaderRepository->findRecentBy($year, $month);
+                $currentJournalVoucherHeader = ($lastJournalVoucherHeaderApplication === null) ? $journalVoucherHeader : $lastJournalVoucherHeaderApplication;
+                $journalVoucherHeader->setCodeNumberToNext($currentJournalVoucherHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($journalVoucherHeader->getJournalVoucherDetails() as $journalVoucherDetail) {
             $journalVoucherDetail->setJournalVoucherHeader($journalVoucherHeader);
         }

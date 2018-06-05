@@ -42,11 +42,11 @@ class PurchaseDeliveryOrderGridType extends DataGridType
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('vehicleChassisNumber')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('vehicleMachineNumber')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('reference')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

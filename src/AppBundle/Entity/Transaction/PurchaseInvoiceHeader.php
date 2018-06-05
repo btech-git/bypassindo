@@ -6,7 +6,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\Supplier;
@@ -31,6 +30,16 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $transactionDate;
     /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $createdDate;
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $dueDate;
+    /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
@@ -42,7 +51,7 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     private $taxInvoiceDate;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
+     * @Assert\NotNull() @Assert\Length(min=16, max=16)
      */
     private $taxInvoiceNumber;
     /**
@@ -142,6 +151,12 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
 
+    public function getCreatedDate() { return $this->createdDate; }
+    public function setCreatedDate($createdDate) { $this->createdDate = $createdDate; }
+
+    public function getDueDate() { return $this->dueDate; }
+    public function setDueDate($dueDate) { $this->dueDate = $dueDate; }
+
     public function getSupplierInvoiceNumber() { return $this->supplierInvoiceNumber; }
     public function setSupplierInvoiceNumber($supplierInvoiceNumber) { $this->supplierInvoiceNumber = $supplierInvoiceNumber; }
 
@@ -201,6 +216,15 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
 
     public function getPurchaseInvoiceDetailGenerals() { return $this->purchaseInvoiceDetailGenerals; }
     public function setPurchaseInvoiceDetailGenerals(Collection $purchaseInvoiceDetailGenerals) { $this->purchaseInvoiceDetailGenerals = $purchaseInvoiceDetailGenerals; }
+
+    public function getFormattedTaxNumber()
+    {
+        $part1 = substr($this->taxInvoiceNumber, 0, 3);
+        $part2 = substr($this->taxInvoiceNumber, 3, 3);
+        $part3 = substr($this->taxInvoiceNumber, 6, 2);
+        $part4 = substr($this->taxInvoiceNumber, 8, 8);
+        return $part1 . '.' . $part2 . '-' . $part3 . '.' . $part4;
+    }
 
     public function sync()
     {

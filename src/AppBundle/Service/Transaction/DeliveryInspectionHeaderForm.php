@@ -16,13 +16,9 @@ class DeliveryInspectionHeaderForm
     
     public function initialize(DeliveryInspectionHeader $deliveryInspectionHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($deliveryInspectionHeader->getId())) {
-            $lastDeliveryInspectionHeader = $this->deliveryInspectionHeaderRepository->findRecentBy($year, $month);
-            $currentDeliveryInspectionHeader = ($lastDeliveryInspectionHeader === null) ? $deliveryInspectionHeader : $lastDeliveryInspectionHeader;
-            $deliveryInspectionHeader->setCodeNumberToNext($currentDeliveryInspectionHeader->getCodeNumber(), $year, $month);
-            
             $deliveryInspectionHeader->setStaffFirst($staff);
         }
         $deliveryInspectionHeader->setStaffLast($staff);
@@ -30,6 +26,16 @@ class DeliveryInspectionHeaderForm
     
     public function finalize(DeliveryInspectionHeader $deliveryInspectionHeader, array $params = array())
     {
+        if (empty($deliveryInspectionHeader->getId())) {
+            $transactionDate = $deliveryInspectionHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastDeliveryInspectionHeaderApplication = $this->deliveryInspectionHeaderRepository->findRecentBy($year, $month);
+                $currentDeliveryInspectionHeader = ($lastDeliveryInspectionHeaderApplication === null) ? $deliveryInspectionHeader : $lastDeliveryInspectionHeaderApplication;
+                $deliveryInspectionHeader->setCodeNumberToNext($currentDeliveryInspectionHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($deliveryInspectionHeader->getDeliveryInspectionDetails() as $deliveryInspectionDetails) {
             $deliveryInspectionDetails->setDeliveryInspectionHeader($deliveryInspectionHeader);
         }

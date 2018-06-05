@@ -56,7 +56,7 @@ class ReceiveWorkshopController extends Controller
         $receiveWorkshopService = $this->get('app.transaction.receive_workshop_form');
         $form = $this->createForm(ReceiveWorkshopType::class, $receiveWorkshop, array(
             'service' => $receiveWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class ReceiveWorkshopController extends Controller
         $receiveWorkshopService = $this->get('app.transaction.receive_workshop_form');
         $form = $this->createForm(ReceiveWorkshopType::class, $receiveWorkshop, array(
             'service' => $receiveWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

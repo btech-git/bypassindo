@@ -56,7 +56,7 @@ class DeliveryOrderController extends Controller
         $deliveryOrderService = $this->get('app.transaction.delivery_order_form');
         $form = $this->createForm(DeliveryOrderType::class, $deliveryOrder, array(
             'service' => $deliveryOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -110,7 +110,7 @@ class DeliveryOrderController extends Controller
         $deliveryOrderService = $this->get('app.transaction.delivery_order_form');
         $form = $this->createForm(DeliveryOrderType::class, $deliveryOrder, array(
             'service' => $deliveryOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

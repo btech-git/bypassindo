@@ -31,7 +31,7 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.transactionDate, {'label': 'Tanggal Piutang'}) }}
                 {{ form_row(form.taxNumber, {'label': 'Faktur Pajak #'}) }}
             </div>
             <div class="col-sm-6">
@@ -111,7 +111,7 @@
                     <h4 class="modal-title">Receive Order List</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid', {'form': form.vars.id}) }}"></div>
+                    <div id="receive-order-grid" data-grid="{{ path('common_receive_order_grid', {'form': form.vars.id, 'options': {'customer_id': saleInvoiceHeader.customer.id|default(0)} }) }}"></div>
                 </div>
             </div>
         </div>
@@ -137,6 +137,14 @@
             var table = $("#sale-invoice-detail-list");
             var tableBody = $("tbody", table);
             
+            $("#{{ form.customer.vars.id }}").on("change", function() {
+                tableBody.empty();
+                bind();
+                var url = "{{ path('common_receive_order_grid', {'form': form.vars.id, 'options': {'customer_id': '__customer_id'} })|raw }}";
+                url = url.replace("__customer_id", parseInt($(this).val()));
+                $("#receive-order-grid").load(url, {id: "receive-order-grid"});
+            });
+            
             tableBody.on("click", "button.remove", function() {
                 $(this).closest("tr").remove();
                 bind();
@@ -144,7 +152,7 @@
             
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");
-                $("#{{ form.customer.vars.id }}").val($(this).attr("data-field-id"));
+                $("#{{ form.customer.vars.id }}").val($(this).attr("data-field-id")).trigger("change");
                 $("[data-name=customer-name]", "#customer-info").text($(this).attr("data-field-name"));
                 $("[data-name=customer-contact-person]", "#customer-info").text($(this).attr("data-field-contact-person"));
                 $("[data-name=customer-office-address]", "#customer-info").text($(this).attr("data-field-office-address"));

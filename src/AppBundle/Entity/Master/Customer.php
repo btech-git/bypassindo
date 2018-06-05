@@ -20,6 +20,11 @@ class Customer
      */
     private $id;
     /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $prefix;
+    /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
      */
@@ -201,6 +206,9 @@ class Customer
     
     public function getId() { return $this->id; }
 
+    public function getPrefix() { return $this->prefix; }
+    public function setPrefix($prefix) { $this->prefix = $prefix; }
+    
     public function getName() { return $this->name; }
     public function setName($name) { $this->name = $name; }
     

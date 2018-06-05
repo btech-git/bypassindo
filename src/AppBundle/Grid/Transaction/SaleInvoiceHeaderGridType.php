@@ -44,11 +44,11 @@ class SaleInvoiceHeaderGridType extends DataGridType
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('amount')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('totalPayment')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('remaining')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

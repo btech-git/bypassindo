@@ -16,13 +16,9 @@ class DeliveryOrderForm
     
     public function initialize(DeliveryOrder $deliveryOrder, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($deliveryOrder->getId())) {
-            $lastDeliveryOrder = $this->deliveryOrderRepository->findRecentBy($year, $month);
-            $currentDeliveryOrder = ($lastDeliveryOrder === null) ? $deliveryOrder : $lastDeliveryOrder;
-            $deliveryOrder->setCodeNumberToNext($currentDeliveryOrder->getCodeNumber(), $year, $month);
-            
             $deliveryOrder->setStaffFirst($staff);
         }
         $deliveryOrder->setStaffLast($staff);
@@ -30,6 +26,16 @@ class DeliveryOrderForm
     
     public function finalize(DeliveryOrder $deliveryOrder, array $params = array())
     {
+        if (empty($deliveryOrder->getId())) {
+            $transactionDate = $deliveryOrder->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastDeliveryOrderApplication = $this->deliveryOrderRepository->findRecentBy($year, $month);
+                $currentDeliveryOrder = ($lastDeliveryOrderApplication === null) ? $deliveryOrder : $lastDeliveryOrderApplication;
+                $deliveryOrder->setCodeNumberToNext($currentDeliveryOrder->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($deliveryOrder);
     }
     

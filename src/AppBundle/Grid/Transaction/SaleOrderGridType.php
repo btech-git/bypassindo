@@ -43,13 +43,13 @@ class SaleOrderGridType extends DataGridType
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('vehicleColor')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('quantity')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('unitPrice')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('total')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

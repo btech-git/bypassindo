@@ -56,7 +56,7 @@ class SaleInvoiceHeaderController extends Controller
         $saleInvoiceHeaderService = $this->get('app.transaction.sale_invoice_header_form');
         $form = $this->createForm(SaleInvoiceHeaderType::class, $saleInvoiceHeader, array(
             'service' => $saleInvoiceHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class SaleInvoiceHeaderController extends Controller
         $saleInvoiceHeaderService = $this->get('app.transaction.sale_invoice_header_form');
         $form = $this->createForm(SaleInvoiceHeaderType::class, $saleInvoiceHeader, array(
             'service' => $saleInvoiceHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -121,14 +121,13 @@ class SaleInvoiceHeaderController extends Controller
      */
     public function deleteAction(Request $request, SaleInvoiceHeader $saleInvoiceHeader)
     {
+        $saleInvoiceHeaderService = $this->get('app.transaction.sale_invoice_header_form');
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $repository = $em->getRepository(SaleInvoiceHeader::class);
-                $repository->remove($saleInvoiceHeader);
+                $saleInvoiceHeaderService->delete($saleInvoiceHeader);
 
                 $this->addFlash('success', array('title' => 'Success!', 'message' => 'The record was deleted successfully.'));
             } else {
@@ -151,7 +150,7 @@ class SaleInvoiceHeaderController extends Controller
      */
     public function memoAction(SaleInvoiceHeader $saleInvoiceHeader)
     {
-        return $this->render('transaction/sale_invoice_header/memoPlain.html.twig', array(
+        return $this->render('transaction/sale_invoice_header/memo_plain.html.twig', array(
             'saleInvoiceHeader' => $saleInvoiceHeader,
         ));
     }

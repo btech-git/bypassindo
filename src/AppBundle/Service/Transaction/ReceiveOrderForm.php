@@ -16,13 +16,9 @@ class ReceiveOrderForm
     
     public function initialize(ReceiveOrder $receiveOrder, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($receiveOrder->getId())) {
-            $lastReceiveOrder = $this->receiveOrderRepository->findRecentBy($year, $month);
-            $currentReceiveOrder = ($lastReceiveOrder === null) ? $receiveOrder : $lastReceiveOrder;
-            $receiveOrder->setCodeNumberToNext($currentReceiveOrder->getCodeNumber(), $year, $month);
-            
             $receiveOrder->setStaffFirst($staff);
         }
         $receiveOrder->setStaffLast($staff);
@@ -30,6 +26,16 @@ class ReceiveOrderForm
     
     public function finalize(ReceiveOrder $receiveOrder, array $params = array())
     {
+        if (empty($receiveOrder->getId())) {
+            $transactionDate = $receiveOrder->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastReceiveOrderApplication = $this->receiveOrderRepository->findRecentBy($year, $month);
+                $currentReceiveOrder = ($lastReceiveOrderApplication === null) ? $receiveOrder : $lastReceiveOrderApplication;
+                $receiveOrder->setCodeNumberToNext($currentReceiveOrder->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($receiveOrder);
     }
     

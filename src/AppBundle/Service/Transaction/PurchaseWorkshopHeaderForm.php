@@ -16,13 +16,9 @@ class PurchaseWorkshopHeaderForm
     
     public function initialize(PurchaseWorkshopHeader $purchaseWorkshopHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($purchaseWorkshopHeader->getId())) {
-            $lastPurchaseWorkshopHeader = $this->purchaseWorkshopHeaderRepository->findRecentBy($year, $month);
-            $currentPurchaseWorkshopHeader = ($lastPurchaseWorkshopHeader === null) ? $purchaseWorkshopHeader : $lastPurchaseWorkshopHeader;
-            $purchaseWorkshopHeader->setCodeNumberToNext($currentPurchaseWorkshopHeader->getCodeNumber(), $year, $month);
-            
             $purchaseWorkshopHeader->setStaffFirst($staff);
         }
         $purchaseWorkshopHeader->setStaffLast($staff);
@@ -61,7 +57,10 @@ class PurchaseWorkshopHeaderForm
         $purchaseWorkshopHeader->setTaxNominal($taxNominal);
         $grandTotal = $subTotal + $taxNominal;
         $purchaseWorkshopHeader->setGrandTotal($grandTotal);
-        $purchaseWorkshopHeader->setQuantityOrder($purchaseWorkshopHeader->getSaleOrder()->getQuantity());
+        $saleOrder = $purchaseWorkshopHeader->getSaleOrder();
+        if ($saleOrder !== null) {
+            $purchaseWorkshopHeader->setQuantityOrder($saleOrder->getQuantity());
+        }
     }
     
     public function save(PurchaseWorkshopHeader $purchaseWorkshopHeader)

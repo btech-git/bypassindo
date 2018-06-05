@@ -21,19 +21,25 @@ class DepositHeaderForm
     
     public function initialize(DepositHeader $depositHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($depositHeader->getId())) {
-            $lastDepositHeader = $this->depositHeaderRepository->findRecentBy($year, $month);
-            $currentDepositHeader = ($lastDepositHeader === null) ? $depositHeader : $lastDepositHeader;
-            $depositHeader->setCodeNumberToNext($currentDepositHeader->getCodeNumber(), $year, $month);
-            
             $depositHeader->setStaff($staff);
         }
     }
     
     public function finalize(DepositHeader $depositHeader, array $params = array())
     {
+        if (empty($depositHeader->getId())) {
+            $transactionDate = $depositHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastDepositHeaderApplication = $this->depositHeaderRepository->findRecentBy($year, $month);
+                $currentDepositHeader = ($lastDepositHeaderApplication === null) ? $depositHeader : $lastDepositHeaderApplication;
+                $depositHeader->setCodeNumberToNext($currentDepositHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($depositHeader->getDepositDetails() as $depositDetail) {
             $depositDetail->setDepositHeader($depositHeader);
         }

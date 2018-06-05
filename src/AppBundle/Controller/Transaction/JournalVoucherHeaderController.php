@@ -56,7 +56,7 @@ class JournalVoucherHeaderController extends Controller
         $journalVoucherHeaderService = $this->get('app.transaction.journal_voucher_header_form');
         $form = $this->createForm(JournalVoucherHeaderType::class, $journalVoucherHeader, array(
             'service' => $journalVoucherHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class JournalVoucherHeaderController extends Controller
         $journalVoucherHeaderService = $this->get('app.transaction.journal_voucher_header_form');
         $form = $this->createForm(JournalVoucherHeaderType::class, $journalVoucherHeader, array(
             'service' => $journalVoucherHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

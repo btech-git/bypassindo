@@ -21,19 +21,25 @@ class ExpenseHeaderForm
     
     public function initialize(ExpenseHeader $expenseHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($expenseHeader->getId())) {
-            $lastExpenseHeader = $this->expenseHeaderRepository->findRecentBy($year, $month);
-            $currentExpenseHeader = ($lastExpenseHeader === null) ? $expenseHeader : $lastExpenseHeader;
-            $expenseHeader->setCodeNumberToNext($currentExpenseHeader->getCodeNumber(), $year, $month);
-            
             $expenseHeader->setStaff($staff);
         }
     }
     
     public function finalize(ExpenseHeader $expenseHeader, array $params = array())
     {
+        if (empty($expenseHeader->getId())) {
+            $transactionDate = $expenseHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastExpenseHeaderApplication = $this->expenseHeaderRepository->findRecentBy($year, $month);
+                $currentExpenseHeader = ($lastExpenseHeaderApplication === null) ? $expenseHeader : $lastExpenseHeaderApplication;
+                $expenseHeader->setCodeNumberToNext($currentExpenseHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($expenseHeader->getExpenseDetails() as $expenseDetail) {
             $expenseDetail->setExpenseHeader($expenseHeader);
         }

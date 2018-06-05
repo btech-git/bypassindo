@@ -13,6 +13,7 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('prefix')
             ->add('name')
             ->add('birthDate', BirthdayType::class)
             ->add('officeAddress')

@@ -56,7 +56,7 @@ class PurchaseWorkshopHeaderController extends Controller
         $purchaseWorkshopHeaderService = $this->get('app.transaction.purchase_workshop_header_form');
         $form = $this->createForm(PurchaseWorkshopHeaderType::class, $purchaseWorkshopHeader, array(
             'service' => $purchaseWorkshopHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class PurchaseWorkshopHeaderController extends Controller
         $purchaseWorkshopHeaderService = $this->get('app.transaction.purchase_workshop_header_form');
         $form = $this->createForm(PurchaseWorkshopHeaderType::class, $purchaseWorkshopHeader, array(
             'service' => $purchaseWorkshopHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

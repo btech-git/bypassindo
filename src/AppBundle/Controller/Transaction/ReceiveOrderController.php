@@ -56,7 +56,7 @@ class ReceiveOrderController extends Controller
         $receiveOrderService = $this->get('app.transaction.receive_order_form');
         $form = $this->createForm(ReceiveOrderType::class, $receiveOrder, array(
             'service' => $receiveOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class ReceiveOrderController extends Controller
         $receiveOrderService = $this->get('app.transaction.receive_order_form');
         $form = $this->createForm(ReceiveOrderType::class, $receiveOrder, array(
             'service' => $receiveOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

@@ -14,12 +14,12 @@
                 <td>{{ saleInvoiceHeader.codeNumber|default }}</td>
             </tr>
             <tr>
-                <th>Tanggal</th>
+                <th>Tanggal Piutang</th>
                 <td>{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('j F Y') }}</td>
             </tr>
             <tr>
                 <th>Faktur Pajak #</th>
-                <td>{{ saleInvoiceHeader.taxNumber|default }}</td>
+                <td>{{ saleInvoiceHeader.formattedTaxNumber|default }}</td>
             </tr>
             <tr>
                 <th>Customer</th>

@@ -51,6 +51,8 @@ class ReceiveOrderGridType extends DataGridType
                     ->addOperator(ContainNonEmptyType::class)
                 ->addField('vehicleMachineNumber')
                     ->addOperator(ContainNonEmptyType::class)
+                ->addField('reference')
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()
@@ -136,7 +138,11 @@ class ReceiveOrderGridType extends DataGridType
                     $associations['deliveryWorkshop']['merge'] = false;
                     $associations['purchaseDeliveryOrder']['associations']['saleOrder']['merge'] = true;
                     break;
-                case 'sale_invoice':
+                case 'sale_invoice_header':
+                    if (array_key_exists('customer_id', $options['options'])) {
+                        $criteria['customer']->andWhere($expr->eq('id', $options['options']['customer_id']));
+                    }
+                    $associations['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
                     $associations['saleInvoiceDetail']['merge'] = false;
                     break;
             }

@@ -56,7 +56,7 @@ class DepositHeaderController extends Controller
         $depositHeaderService = $this->get('app.transaction.deposit_header_form');
         $form = $this->createForm(DepositHeaderType::class, $depositHeader, array(
             'service' => $depositHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class DepositHeaderController extends Controller
         $depositHeaderService = $this->get('app.transaction.deposit_header_form');
         $form = $this->createForm(DepositHeaderType::class, $depositHeader, array(
             'service' => $depositHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

@@ -56,7 +56,7 @@ class DeliveryWorkshopController extends Controller
         $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
         $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop, array(
             'service' => $deliveryWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -94,7 +94,7 @@ class DeliveryWorkshopController extends Controller
         $deliveryWorkshopService = $this->get('app.transaction.delivery_workshop_form');
         $form = $this->createForm(DeliveryWorkshopType::class, $deliveryWorkshop, array(
             'service' => $deliveryWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

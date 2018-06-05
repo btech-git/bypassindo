@@ -56,19 +56,17 @@ class SaleInvoiceDownpaymentController extends Controller
         $saleInvoiceDownpaymentService = $this->get('app.transaction.sale_invoice_downpayment_form');
         $form = $this->createForm(SaleInvoiceDownpaymentType::class, $saleInvoiceDownpayment, array(
             'service' => $saleInvoiceDownpaymentService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository(SaleInvoiceDownpayment::class);
-            $repository->add($saleInvoiceDownpayment);
+        if ($_format === 'html' && $form->isSubmitted() && $form->isValid()) {
+            $saleInvoiceDownpaymentService->save($saleInvoiceDownpayment);
 
             return $this->redirectToRoute('transaction_sale_invoice_downpayment_show', array('id' => $saleInvoiceDownpayment->getId()));
         }
 
-        return $this->render('transaction/sale_invoice_downpayment/new.html.twig', array(
+        return $this->render('transaction/sale_invoice_downpayment/new.'.$_format.'.twig', array(
             'saleInvoiceDownpayment' => $saleInvoiceDownpayment,
             'form' => $form->createView(),
         ));
@@ -91,20 +89,22 @@ class SaleInvoiceDownpaymentController extends Controller
      * @Method({"GET", "POST"})
      * @Security("has_role('ROLE_TRANSACTION')")
      */
-    public function editAction(Request $request, SaleInvoiceDownpayment $saleInvoiceDownpayment)
+    public function editAction(Request $request, SaleInvoiceDownpayment $saleInvoiceDownpayment, $_format = 'html')
     {
-        $form = $this->createForm(SaleInvoiceDownpaymentType::class, $saleInvoiceDownpayment);
+        $saleInvoiceDownpaymentService = $this->get('app.transaction.sale_invoice_downpayment_form');
+        $form = $this->createForm(SaleInvoiceDownpaymentType::class, $saleInvoiceDownpayment, array(
+            'service' => $saleInvoiceDownpaymentService,
+            'init' => array('staff' => $this->getUser()),
+        ));
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository(SaleInvoiceDownpayment::class);
-            $repository->update($saleInvoiceDownpayment);
+        if ($_format === 'html' && $form->isSubmitted() && $form->isValid()) {
+            $saleInvoiceDownpaymentService->save($saleInvoiceDownpayment);
 
             return $this->redirectToRoute('transaction_sale_invoice_downpayment_show', array('id' => $saleInvoiceDownpayment->getId()));
         }
 
-        return $this->render('transaction/sale_invoice_downpayment/edit.html.twig', array(
+        return $this->render('transaction/sale_invoice_downpayment/edit.'.$_format.'.twig', array(
             'saleInvoiceDownpayment' => $saleInvoiceDownpayment,
             'form' => $form->createView(),
         ));
@@ -117,14 +117,13 @@ class SaleInvoiceDownpaymentController extends Controller
      */
     public function deleteAction(Request $request, SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
+        $saleInvoiceDownpaymentService = $this->get('app.transaction.sale_invoice_downpayment_form');
         $form = $this->createFormBuilder()->getForm();
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
             if ($form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $repository = $em->getRepository(SaleInvoiceDownpayment::class);
-                $repository->remove($saleInvoiceDownpayment);
+                $saleInvoiceDownpaymentService->delete($saleInvoiceDownpayment);
 
                 $this->addFlash('success', array('title' => 'Success!', 'message' => 'The record was deleted successfully.'));
             } else {
@@ -137,6 +136,18 @@ class SaleInvoiceDownpaymentController extends Controller
         return $this->render('transaction/sale_invoice_downpayment/delete.html.twig', array(
             'saleInvoiceDownpayment' => $saleInvoiceDownpayment,
             'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_sale_invoice_downpayment_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_TRANSACTION')")
+     */
+    public function memoAction(SaleInvoiceDownpayment $saleInvoiceDownpayment)
+    {
+        return $this->render('transaction/sale_invoice_downpayment/memo_plain.html.twig', array(
+            'saleInvoiceDownpayment' => $saleInvoiceDownpayment,
         ));
     }
 }

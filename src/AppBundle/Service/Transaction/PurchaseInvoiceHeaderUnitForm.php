@@ -16,13 +16,11 @@ class PurchaseInvoiceHeaderUnitForm
     
     public function initialize(PurchaseInvoiceHeader $purchaseInvoiceHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($date, $staff) = array($params['date'], $params['staff']);
         
         if (empty($purchaseInvoiceHeader->getId())) {
-            $lastPurchaseInvoiceHeader = $this->purchaseInvoiceHeaderRepository->findRecentBy($year, $month);
-            $currentPurchaseInvoiceHeader = ($lastPurchaseInvoiceHeader === null) ? $purchaseInvoiceHeader : $lastPurchaseInvoiceHeader;
-            $purchaseInvoiceHeader->setCodeNumberToNext($currentPurchaseInvoiceHeader->getCodeNumber(), $year, $month);
-            
+            $createdDate = date_create_from_format('Y-m-d', $date);
+            $purchaseInvoiceHeader->setCreatedDate($createdDate);
             $purchaseInvoiceHeader->setReceiveWorkshop(null);
             $purchaseInvoiceHeader->setBusinessType(PurchaseInvoiceHeader::BUSINESS_TYPE_UNIT);
             $purchaseInvoiceHeader->setStaffFirst($staff);
@@ -32,6 +30,16 @@ class PurchaseInvoiceHeaderUnitForm
     
     public function finalize(PurchaseInvoiceHeader $purchaseInvoiceHeader, array $params = array())
     {
+        if (empty($purchaseInvoiceHeader->getId())) {
+            $transactionDate = $purchaseInvoiceHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastPurchaseInvoiceHeaderApplication = $this->purchaseInvoiceHeaderRepository->findRecentBy($year, $month);
+                $currentPurchaseInvoiceHeader = ($lastPurchaseInvoiceHeaderApplication === null) ? $purchaseInvoiceHeader : $lastPurchaseInvoiceHeaderApplication;
+                $purchaseInvoiceHeader->setCodeNumberToNext($currentPurchaseInvoiceHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetailUnits() as $purchaseInvoiceDetailUnit) {
             $purchaseInvoiceDetailUnit->setPurchaseInvoiceHeader($purchaseInvoiceHeader);
         }

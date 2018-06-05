@@ -26,7 +26,10 @@ class ReceiveOrderController extends Controller
         if ($request->query->has('form')) {
             $options['form'] = $request->query->get('form');
         }
-        
+        if ($request->query->has('options')) {
+            $options['options'] = $request->query->get('options');
+        }
+//        dump($options);
         $em = $this->getDoctrine()->getManager();
         $repository = $em->getRepository(ReceiveOrder::class);
 

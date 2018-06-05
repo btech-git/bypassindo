@@ -16,13 +16,9 @@ class PurchaseDeliveryOrderForm
     
     public function initialize(PurchaseDeliveryOrder $purchaseDeliveryOrder, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($purchaseDeliveryOrder->getId())) {
-            $lastPurchaseDeliveryOrder = $this->purchaseDeliveryOrderRepository->findRecentBy($year, $month);
-            $currentPurchaseDeliveryOrder = ($lastPurchaseDeliveryOrder === null) ? $purchaseDeliveryOrder : $lastPurchaseDeliveryOrder;
-            $purchaseDeliveryOrder->setCodeNumberToNext($currentPurchaseDeliveryOrder->getCodeNumber(), $year, $month);
-            
             $purchaseDeliveryOrder->setStaffFirst($staff);
         }
         $purchaseDeliveryOrder->setStaffLast($staff);
@@ -30,6 +26,16 @@ class PurchaseDeliveryOrderForm
     
     public function finalize(PurchaseDeliveryOrder $purchaseDeliveryOrder, array $params = array())
     {
+        if (empty($purchaseDeliveryOrder->getId())) {
+            $transactionDate = $purchaseDeliveryOrder->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastPurchaseDeliveryOrderApplication = $this->purchaseDeliveryOrderRepository->findRecentBy($year, $month);
+                $currentPurchaseDeliveryOrder = ($lastPurchaseDeliveryOrderApplication === null) ? $purchaseDeliveryOrder : $lastPurchaseDeliveryOrderApplication;
+                $purchaseDeliveryOrder->setCodeNumberToNext($currentPurchaseDeliveryOrder->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($purchaseDeliveryOrder);
     }
     

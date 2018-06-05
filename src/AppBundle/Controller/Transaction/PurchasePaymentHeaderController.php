@@ -56,7 +56,7 @@ class PurchasePaymentHeaderController extends Controller
         $purchasePaymentHeaderService = $this->get('app.transaction.purchase_payment_header_form');
         $form = $this->createForm(PurchasePaymentHeaderType::class, $purchasePaymentHeader, array(
             'service' => $purchasePaymentHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class PurchasePaymentHeaderController extends Controller
         $purchasePaymentHeaderService = $this->get('app.transaction.purchase_payment_header_form');
         $form = $this->createForm(PurchasePaymentHeaderType::class, $purchasePaymentHeader, array(
             'service' => $purchasePaymentHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

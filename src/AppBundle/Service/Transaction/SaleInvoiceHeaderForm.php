@@ -16,13 +16,11 @@ class SaleInvoiceHeaderForm
     
     public function initialize(SaleInvoiceHeader $saleInvoiceHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($date, $staff) = array($params['date'], $params['staff']);
         
         if (empty($saleInvoiceHeader->getId())) {
-            $lastSaleInvoice = $this->saleInvoiceHeaderRepository->findRecentBy($year, $month);
-            $currentSaleInvoice = ($lastSaleInvoice === null) ? $saleInvoiceHeader : $lastSaleInvoice;
-            $saleInvoiceHeader->setCodeNumberToNext($currentSaleInvoice->getCodeNumber(), $year, $month);
-            
+            $createdDate = date_create_from_format('Y-m-d', $date);
+            $saleInvoiceHeader->setCreatedDate($createdDate);
             $saleInvoiceHeader->setStaffFirst($staff);
         }
         $saleInvoiceHeader->setStaffLast($staff);
@@ -40,16 +38,20 @@ class SaleInvoiceHeaderForm
                 $saleInvoiceHeader->setCodeNumberToNext($currentSaleInvoiceHeader->getCodeNumber(), $year, $month);
             }
         }
-        
         foreach ($saleInvoiceHeader->getSaleInvoiceDetails() as $saleInvoiceDetail) {
             $saleInvoiceDetail->setSaleInvoiceHeader($saleInvoiceHeader);
         }
-        
         $this->sync($saleInvoiceHeader);
     }
     
     private function sync(SaleInvoiceHeader $saleInvoiceHeader)
     {
+        $customer = $saleInvoiceHeader->getCustomer();
+        $transactionDate = $saleInvoiceHeader->getTransactionDate();
+        if ($transactionDate !== null && $customer !== null) {
+            $creditPaymentTerm = $customer->getCreditPaymentTerm();
+            $saleInvoiceHeader->setDueDate($transactionDate->add(date_interval_create_from_date_string("{$creditPaymentTerm} days")));
+        }
         foreach ($saleInvoiceHeader->getSaleInvoiceDetails() as $saleInvoiceDetail) {
             $purchaseDeliveryOrder = $saleInvoiceDetail->getReceiveOrder()->getPurchaseDeliveryOrder();
             $saleInvoiceDetail->setVehicleChassisNumber($purchaseDeliveryOrder->getVehicleChassisNumber());

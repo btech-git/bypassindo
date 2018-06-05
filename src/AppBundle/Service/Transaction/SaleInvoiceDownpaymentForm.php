@@ -16,13 +16,9 @@ class SaleInvoiceDownpaymentForm
     
     public function initialize(SaleInvoiceDownpayment $saleInvoiceDownpayment, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($saleInvoiceDownpayment->getId())) {
-            $lastSaleInvoice = $this->saleInvoiceDownpaymentRepository->findRecentBy($year, $month);
-            $currentSaleInvoice = ($lastSaleInvoice === null) ? $saleInvoiceDownpayment : $lastSaleInvoice;
-            $saleInvoiceDownpayment->setCodeNumberToNext($currentSaleInvoice->getCodeNumber(), $year, $month);
-            
             $saleInvoiceDownpayment->setStaffFirst($staff);
         }
         $saleInvoiceDownpayment->setStaffLast($staff);

@@ -46,9 +46,9 @@ class DeliveryWorkshopGridType extends DataGridType
             ->addGroup('purchaseDeliveryOrder')
                 ->setEntityName(PurchaseDeliveryOrder::class)
                 ->addField('vehicleChassisNumber')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('vehicleMachineNumber')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

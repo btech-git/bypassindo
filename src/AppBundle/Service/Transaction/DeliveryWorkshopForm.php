@@ -16,13 +16,9 @@ class DeliveryWorkshopForm
     
     public function initialize(DeliveryWorkshop $deliveryWorkshop, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($deliveryWorkshop->getId())) {
-            $lastDeliveryWorkshop = $this->deliveryWorkshopRepository->findRecentBy($year, $month);
-            $currentDeliveryWorkshop = ($lastDeliveryWorkshop === null) ? $deliveryWorkshop : $lastDeliveryWorkshop;
-            $deliveryWorkshop->setCodeNumberToNext($currentDeliveryWorkshop->getCodeNumber(), $year, $month);
-            
             $deliveryWorkshop->setStaffFirst($staff);
         }
         $deliveryWorkshop->setStaffLast($staff);
@@ -30,6 +26,16 @@ class DeliveryWorkshopForm
     
     public function finalize(DeliveryWorkshop $deliveryWorkshop, array $params = array())
     {
+        if (empty($deliveryWorkshop->getId())) {
+            $transactionDate = $deliveryWorkshop->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastDeliveryWorkshopApplication = $this->deliveryWorkshopRepository->findRecentBy($year, $month);
+                $currentDeliveryWorkshop = ($lastDeliveryWorkshopApplication === null) ? $deliveryWorkshop : $lastDeliveryWorkshopApplication;
+                $deliveryWorkshop->setCodeNumberToNext($currentDeliveryWorkshop->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($deliveryWorkshop);
     }
     

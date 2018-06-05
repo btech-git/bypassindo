@@ -5,24 +5,20 @@
 <table data-role="table" class="table table-bordered table-striped table-condensed table-hover">
     <thead>
         <tr data-action="sort" class="alert alert-info">
-            <th data-group="receiveOrder" data-field="codeNumber">Penerimaan #</th>
-            <th data-group="receiveOrder" data-field="transactionDate">Tanggal</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
+            <th data-group="vehicleModel" data-field="vosModel">Model</th>
             <th data-group="saleOrder" data-field="codeNumber">SPK #</th>
             <th data-group="customer" data-field="name">Customer </th>
             <th data-group="saleOrder" data-field="reference">DO #</th>
-            <th data-group="vehicleModel" data-field="vosModel">Model</th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
         </tr>
         <tr data-action="search">
-            <th data-group="receiveOrder" data-field="codeNumber"></th>
-            <th data-group="receiveOrder" data-field="transactionDate"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
+            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
+            <th></th>
             <th data-group="saleOrder" data-field="codeNumber"></th>
             <th data-group="customer" data-field="name"></th>
             <th data-group="purchaseDeliveryOrder" data-field="reference"></th>
-            <th></th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
-            <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
         </tr>
     </thead>
     <tbody>
@@ -41,14 +37,12 @@
                 data-field-sale-order-quantity="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.quantity|default|number_format(0) }}"
                 data-field-sale-order-unit-price="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.unitPrice|default|number_format(2) }}"
                 data-field-sale-order-total="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.total|default|number_format(2) }}">
-                <td class="text-left">{{ receiveOrder.codeNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.transactionDate|default ? receiveOrder.transactionDate|date('j M Y') }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.reference|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.saleOrder.VehicleModel.vosModelName|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
-                <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
             </tr>
         {% else %}
             <tr>

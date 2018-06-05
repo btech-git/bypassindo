@@ -58,7 +58,7 @@ class SaleOrderController extends Controller
         $saleOrderService = $this->get('app.transaction.sale_order_form');
         $form = $this->createForm(SaleOrderType::class, $saleOrder, array(
             'service' => $saleOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -100,7 +100,7 @@ class SaleOrderController extends Controller
         $saleOrderService = $this->get('app.transaction.sale_order_form');
         $form = $this->createForm(SaleOrderType::class, $saleOrder, array(
             'service' => $saleOrderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

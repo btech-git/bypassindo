@@ -16,13 +16,9 @@ class PurchasePaymentHeaderForm
     
     public function initialize(PurchasePaymentHeader $purchasePaymentHeader, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($purchasePaymentHeader->getId())) {
-            $lastPurchasePaymentHeader = $this->purchasePaymentHeaderRepository->findRecentBy($year, $month);
-            $currentPurchasePaymentHeader = ($lastPurchasePaymentHeader === null) ? $purchasePaymentHeader : $lastPurchasePaymentHeader;
-            $purchasePaymentHeader->setCodeNumberToNext($currentPurchasePaymentHeader->getCodeNumber(), $year, $month);
-            
             $purchasePaymentHeader->setStaffFirst($staff);
         }
         $purchasePaymentHeader->setStaffLast($staff);
@@ -30,6 +26,16 @@ class PurchasePaymentHeaderForm
     
     public function finalize(PurchasePaymentHeader $purchasePaymentHeader, array $params = array())
     {
+        if (empty($purchasePaymentHeader->getId())) {
+            $transactionDate = $purchasePaymentHeader->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastPurchasePaymentHeaderApplication = $this->purchasePaymentHeaderRepository->findRecentBy($year, $month);
+                $currentPurchasePaymentHeader = ($lastPurchasePaymentHeaderApplication === null) ? $purchasePaymentHeader : $lastPurchasePaymentHeaderApplication;
+                $purchasePaymentHeader->setCodeNumberToNext($currentPurchasePaymentHeader->getCodeNumber(), $year, $month);
+            }
+        }
         foreach ($purchasePaymentHeader->getPurchasePaymentDetails() as $purchasePaymentDetail) {
             $purchasePaymentDetail->setPurchasePaymentHeader($purchasePaymentHeader);
         }

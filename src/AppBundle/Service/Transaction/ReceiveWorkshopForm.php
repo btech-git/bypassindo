@@ -16,13 +16,9 @@ class ReceiveWorkshopForm
     
     public function initialize(ReceiveWorkshop $receiveWorkshop, array $params = array())
     {
-        list($month, $year, $staff) = array($params['month'], $params['year'], $params['staff']);
+        list($staff) = array($params['staff']);
         
         if (empty($receiveWorkshop->getId())) {
-            $lastReceiveWorkshop = $this->receiveWorkshopRepository->findRecentBy($year, $month);
-            $currentReceiveWorkshop = ($lastReceiveWorkshop === null) ? $receiveWorkshop : $lastReceiveWorkshop;
-            $receiveWorkshop->setCodeNumberToNext($currentReceiveWorkshop->getCodeNumber(), $year, $month);
-            
             $receiveWorkshop->setStaffFirst($staff);
         }
         $receiveWorkshop->setStaffLast($staff);
@@ -30,6 +26,16 @@ class ReceiveWorkshopForm
     
     public function finalize(ReceiveWorkshop $receiveWorkshop, array $params = array())
     {
+        if (empty($receiveWorkshop->getId())) {
+            $transactionDate = $receiveWorkshop->getTransactionDate();
+            if ($transactionDate !== null) {
+                $month = intval($transactionDate->format('m'));
+                $year = intval($transactionDate->format('y'));
+                $lastReceiveWorkshopApplication = $this->receiveWorkshopRepository->findRecentBy($year, $month);
+                $currentReceiveWorkshop = ($lastReceiveWorkshopApplication === null) ? $receiveWorkshop : $lastReceiveWorkshopApplication;
+                $receiveWorkshop->setCodeNumberToNext($currentReceiveWorkshop->getCodeNumber(), $year, $month);
+            }
+        }
         $this->sync($receiveWorkshop);
     }
     

@@ -11,10 +11,12 @@ use LibBundle\Grid\SortOperator\BlankType as SortBlankType;
 use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
+use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
 use LibBundle\Grid\SearchOperator\ContainType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
+use AppBundle\Entity\Master\Supplier;
 
 class PurchaseInvoiceHeaderWorkshopGridType extends DataGridType
 {
@@ -42,13 +44,17 @@ class PurchaseInvoiceHeaderWorkshopGridType extends DataGridType
                         ->getInput(1)
                             ->setAttributes(array('data-pick' => 'date'))
                 ->addField('supplierInvoiceNumber')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('grandTotal')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('totalPayment')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
                 ->addField('remaining')
-                    ->addOperator(EqualNonEmptyType::class)
+                    ->addOperator(ContainNonEmptyType::class)
+            ->addGroup('supplier')
+                ->setEntityName(Supplier::class)
+                ->addField('name')
+                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()

@@ -59,7 +59,7 @@ class DeliveryInspectionHeaderController extends Controller
         $deliveryInspectionHeaderService = $this->get('app.transaction.delivery_inspection_header_form');
         $form = $this->createForm(DeliveryInspectionHeaderType::class, $deliveryInspectionHeader, array(
             'service' => $deliveryInspectionHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
             'inspectionItemRepository' => $this->getDoctrine()->getManager()->getRepository(InspectionItem::class),
         ));
         $form->handleRequest($request);
@@ -116,7 +116,7 @@ class DeliveryInspectionHeaderController extends Controller
         $deliveryInspectionHeaderService = $this->get('app.transaction.delivery_inspection_header_form');
         $form = $this->createForm(DeliveryInspectionHeaderType::class, $deliveryInspectionHeader, array(
             'service' => $deliveryInspectionHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
             'inspectionItemRepository' => $this->getDoctrine()->getManager()->getRepository(InspectionItem::class),
         ));
         $form->handleRequest($request);

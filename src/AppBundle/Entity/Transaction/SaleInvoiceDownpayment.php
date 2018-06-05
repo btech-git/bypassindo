@@ -30,7 +30,7 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
     private $transactionDate;
     /**
      * @ORM\Column(type="string", length=20)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank() @Assert\Length(min=16, max=16)
      */
     private $taxNumber;
     /**
@@ -114,6 +114,15 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
 
     public function getAccount() { return $this->account; }
     public function setAccount(Account $account = null) { $this->account = $account; }
+
+    public function getFormattedTaxNumber()
+    {
+        $part1 = substr($this->taxNumber, 0, 3);
+        $part2 = substr($this->taxNumber, 3, 3);
+        $part3 = substr($this->taxNumber, 6, 2);
+        $part4 = substr($this->taxNumber, 8, 8);
+        return $part1 . '.' . $part2 . '-' . $part3 . '.' . $part4;
+    }
 
     public function sync()
     {

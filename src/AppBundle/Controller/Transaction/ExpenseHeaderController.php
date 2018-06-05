@@ -56,7 +56,7 @@ class ExpenseHeaderController extends Controller
         $expenseHeaderService = $this->get('app.transaction.expense_header_form');
         $form = $this->createForm(ExpenseHeaderType::class, $expenseHeader, array(
             'service' => $expenseHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class ExpenseHeaderController extends Controller
         $expenseHeaderService = $this->get('app.transaction.expense_header_form');
         $form = $this->createForm(ExpenseHeaderType::class, $expenseHeader, array(
             'service' => $expenseHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

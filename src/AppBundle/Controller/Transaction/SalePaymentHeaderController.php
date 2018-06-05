@@ -56,7 +56,7 @@ class SalePaymentHeaderController extends Controller
         $salePaymentHeaderService = $this->get('app.transaction.sale_payment_header_form');
         $form = $this->createForm(SalePaymentHeaderType::class, $salePaymentHeader, array(
             'service' => $salePaymentHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class SalePaymentHeaderController extends Controller
         $salePaymentHeaderService = $this->get('app.transaction.sale_payment_header_form');
         $form = $this->createForm(SalePaymentHeaderType::class, $salePaymentHeader, array(
             'service' => $salePaymentHeaderService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 

@@ -56,7 +56,7 @@ class PurchaseInvoiceHeaderWorkshopController extends Controller
         $purchaseInvoiceHeaderWorkshopService = $this->get('app.transaction.purchase_invoice_header_workshop_form');
         $form = $this->createForm(PurchaseInvoiceHeaderWorkshopType::class, $purchaseInvoiceHeader, array(
             'service' => $purchaseInvoiceHeaderWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
@@ -97,7 +97,7 @@ class PurchaseInvoiceHeaderWorkshopController extends Controller
         $purchaseInvoiceHeaderWorkshopService = $this->get('app.transaction.purchase_invoice_header_workshop_form');
         $form = $this->createForm(PurchaseInvoiceHeaderWorkshopType::class, $purchaseInvoiceHeader, array(
             'service' => $purchaseInvoiceHeaderWorkshopService,
-            'init' => array('year' => date('y'), 'month' => date('m'), 'staff' => $this->getUser()),
+            'init' => array('date' => date('Y-m-d'), 'staff' => $this->getUser()),
         ));
         $form->handleRequest($request);
 
