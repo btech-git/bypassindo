@@ -13,7 +13,7 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
-use LibBundle\Grid\SearchOperator\ContainType;
+use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 
 class PurchaseDeliveryOrderGridType extends DataGridType
