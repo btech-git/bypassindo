@@ -48,7 +48,7 @@ class PurchaseDeliveryOrderGridType extends DataGridType
                 ->addField('reference')
                     ->addOperator(ContainNonEmptyType::class)
             ->addGroup('vehicleModel')
-                ->addField('name')
+                ->addField('vosModelName')
                     ->addOperator(ContainNonEmptyType::class)
         ;
 
