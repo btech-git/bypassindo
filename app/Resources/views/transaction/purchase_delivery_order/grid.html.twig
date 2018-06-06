@@ -7,6 +7,7 @@
         <tr data-action="sort" class="alert alert-info">
             <th data-group="purchaseDeliveryOrder" data-field="codeNumber">DO #</th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate">Tanggal</th>
+            <th data-group="vehicleModel" data-field="name">Type</th>
             <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber">Rangka #</th>
             <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber">Mesin #</th>
             <th data-group="purchaseDeliveryOrder" data-field="reference">DO HMSI #</th>
@@ -15,6 +16,7 @@
         <tr data-action="search">
             <th data-group="purchaseDeliveryOrder" data-field="codeNumber"></th>
             <th data-group="purchaseDeliveryOrder" data-field="transactionDate"></th>
+            <th data-group="vehicleModel" data-field="name"></th>
             <th data-group="purchaseDeliveryOrder" data-field="vehicleChassisNumber"></th>
             <th data-group="purchaseDeliveryOrder" data-field="vehicleMachineNumber"></th>
             <th data-group="purchaseDeliveryOrder" data-field="reference"></th>
@@ -26,6 +28,7 @@
             <tr data-field-id="{{ purchaseDeliveryOrder.id }}">
                 <td class="text-left">{{ purchaseDeliveryOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.transactionDate|default ? purchaseDeliveryOrder.transactionDate|date('j M Y') }}</td>
+                <td class="text-left">{{ purchaseDeliveryOrder.vehicleModel.name|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                 <td class="text-left">{{ purchaseDeliveryOrder.reference|default }}</td>
@@ -43,7 +46,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="5" class="alert alert-warning">
+                <td colspan="6" class="alert alert-warning">
                     <strong>There are no items to display.</strong>
                 </td>
             </tr>
