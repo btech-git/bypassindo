@@ -119,6 +119,9 @@ class SaleOrderGridType extends DataGridType
                     $criteria['saleOrder']->andWhere($expr->eq('isWorkshopNeeded', true));
                     $associations['purchaseWorkshopHeader']['merge'] = false;
                     break;
+                case 'sale_invoice_downpayment':
+                    $associations['saleInvoiceDownpayment']['merge'] = false;
+                    break;
             }
         }
 
