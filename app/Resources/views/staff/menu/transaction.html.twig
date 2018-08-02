@@ -174,13 +174,22 @@
                         <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_downpayment_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                     </tr>
                     <tr>
-                        <td>Invoice Penjualan</td>
+                        <td>Invoice Penjualan Unit</td>
                         <td>
                             {% if is_granted('ROLE_SALE_INVOICE_NEW') %}
-                                {{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}
+                                {{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_unit_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}
                             {% endif %}
                         </td>
-                        <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                        <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_unit_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                    </tr>
+                    <tr>
+                        <td>Invoice Penjualan Umum</td>
+                        <td>
+                            {% if is_granted('ROLE_SALE_INVOICE_NEW') %}
+                                {{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_general_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}
+                            {% endif %}
+                        </td>
+                        <td>{{ include('action.html.twig', {'url': path('transaction_sale_invoice_header_general_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                     </tr>
                 {% endif %}
                 {% if menu['purchase_invoice_header_unit'] %}

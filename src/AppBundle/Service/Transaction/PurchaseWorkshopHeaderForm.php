@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
 use AppBundle\Repository\Transaction\PurchaseWorkshopHeaderRepository;
 
@@ -66,13 +67,17 @@ class PurchaseWorkshopHeaderForm
     public function save(PurchaseWorkshopHeader $purchaseWorkshopHeader)
     {
         if (empty($purchaseWorkshopHeader->getId())) {
-            $this->purchaseWorkshopHeaderRepository->add($purchaseWorkshopHeader, array(
-                'purchaseWorkshopDetails' => array('add' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseWorkshopHeader) {
+                $this->purchaseWorkshopHeaderRepository->add($purchaseWorkshopHeader, array(
+                    'purchaseWorkshopDetails' => array('add' => true),
+                ));
+            });
         } else {
-            $this->purchaseWorkshopHeaderRepository->update($purchaseWorkshopHeader, array(
-                'purchaseWorkshopDetails' => array('add' => true, 'remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseWorkshopHeader) {
+                $this->purchaseWorkshopHeaderRepository->update($purchaseWorkshopHeader, array(
+                    'purchaseWorkshopDetails' => array('add' => true, 'remove' => true),
+                ));
+            });
         }
     }
     
@@ -80,9 +85,11 @@ class PurchaseWorkshopHeaderForm
     {
         $this->beforeDelete($purchaseWorkshopHeader);
         if (!empty($purchaseWorkshopHeader->getId())) {
-            $this->purchaseWorkshopHeaderRepository->remove($purchaseWorkshopHeader, array(
-                'purchaseWorkshopDetails' => array('remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseWorkshopHeader) {
+                $this->purchaseWorkshopHeaderRepository->remove($purchaseWorkshopHeader, array(
+                    'purchaseWorkshopDetails' => array('remove' => true),
+                ));
+            });
         }
     }
     

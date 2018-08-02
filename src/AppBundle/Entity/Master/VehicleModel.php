@@ -3,9 +3,9 @@
 namespace AppBundle\Entity\Master;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -58,9 +58,29 @@ class VehicleModel
      * @Assert\NotNull()
      */
     private $vehicleModelType;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleDiscountApplication", mappedBy="vehicleModel")
+     */
+    private $saleDiscountApplications;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleInvoiceDetailUnit", mappedBy="vehicleModel")
+     */
+    private $saleInvoiceDetailUnits;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\PurchaseDeliveryOrder", mappedBy="vehicleModel")
+     */
+    private $purchaseDeliveryOrders;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleOrder", mappedBy="vehicleModel")
+     */
+    private $saleOrders;
     
     public function __construct()
     {
+        $this->saleDiscountApplications = new ArrayCollection();
+        $this->saleInvoiceDetailUnits = new ArrayCollection();
+        $this->purchaseDeliveryOrders = new ArrayCollection();
+        $this->saleOrders = new ArrayCollection();
     }
     
     public function __toString()
@@ -93,4 +113,16 @@ class VehicleModel
 
     public function getVehicleModelType() { return $this->vehicleModelType; }
     public function setVehicleModelType(VehicleModelType $vehicleModelType = null) { $this->vehicleModelType = $vehicleModelType; }
+    
+    public function getSaleDiscountApplications() { return $this->saleDiscountApplications; }
+    public function setSaleDiscountApplications(Collection $saleDiscountApplications) { $this->saleDiscountApplications = $saleDiscountApplications; }
+    
+    public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
+    public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
+    
+    public function getPurchaseDeliveryOrders() { return $this->purchaseDeliveryOrders; }
+    public function setPurchaseDeliveryOrders(Collection $purchaseDeliveryOrders) { $this->purchaseDeliveryOrders = $purchaseDeliveryOrders; }
+    
+    public function getSaleOrders() { return $this->saleOrders; }
+    public function setSaleOrders(Collection $saleOrders) { $this->saleOrders = $saleOrders; }
 }

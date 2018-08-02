@@ -3,6 +3,8 @@
 namespace AppBundle\Entity\Admin;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Common\User;
 
@@ -46,6 +48,15 @@ class Staff extends User
      * @Assert\NotNull()
      */
     private $note;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleInvoiceDetailUnit", mappedBy="staffSalesman")
+     */
+    private $saleInvoiceDetailUnits;
+    
+    public function __construct()
+    {
+        $this->saleInvoiceDetailUnits = new ArrayCollection();
+    }
     
     public function __toString()
     {
@@ -72,6 +83,9 @@ class Staff extends User
     
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
+    
+    public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
+    public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
     
     public function getRoles()
     {

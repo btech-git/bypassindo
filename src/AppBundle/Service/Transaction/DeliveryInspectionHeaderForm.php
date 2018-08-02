@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\DeliveryInspectionHeader;
 use AppBundle\Repository\Transaction\DeliveryInspectionHeaderRepository;
 
@@ -51,13 +52,17 @@ class DeliveryInspectionHeaderForm
     public function save(DeliveryInspectionHeader $deliveryInspectionHeader)
     {
         if (empty($deliveryInspectionHeader->getId())) {
-            $this->deliveryInspectionHeaderRepository->add($deliveryInspectionHeader, array(
-                'deliveryInspectionDetails' => array('add' => true),
-            ));
+            ObjectPersister::save(function() use ($deliveryInspectionHeader) {
+                $this->deliveryInspectionHeaderRepository->add($deliveryInspectionHeader, array(
+                    'deliveryInspectionDetails' => array('add' => true),
+                ));
+            });
         } else {
-            $this->deliveryInspectionHeaderRepository->update($deliveryInspectionHeader, array(
-                'deliveryInspectionDetails' => array('add' => true, 'remove' => true),
-            ));
+            ObjectPersister::save(function() use ($deliveryInspectionHeader) {
+                $this->deliveryInspectionHeaderRepository->update($deliveryInspectionHeader, array(
+                    'deliveryInspectionDetails' => array('add' => true, 'remove' => true),
+                ));
+            });
         }
     }
     
@@ -65,9 +70,11 @@ class DeliveryInspectionHeaderForm
     {
         $this->beforeDelete($deliveryInspectionHeader);
         if (!empty($deliveryInspectionHeader->getId())) {
-            $this->deliveryInspectionHeaderRepository->remove($deliveryInspectionHeader, array(
-                'deliveryInspectionDetails' => array('remove' => true),
-            ));
+            ObjectPersister::save(function() use ($deliveryInspectionHeader) {
+                $this->deliveryInspectionHeaderRepository->remove($deliveryInspectionHeader, array(
+                    'deliveryInspectionDetails' => array('remove' => true),
+                ));
+            });
         }
     }
     

@@ -62,7 +62,7 @@ class AccountGridType extends DataGridType
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        $criteria = Criteria::create();
+        list($criteria, $associations) = $this->getSpecifications($options);
 
         $builder->processSearch(function($values, $operator, $field) use ($criteria) {
             $operator::search($criteria, $field, $values);
@@ -72,13 +72,32 @@ class AccountGridType extends DataGridType
             $operator::sort($criteria, $field);
         });
 
-        $builder->processPage($repository->count($criteria), function($offset, $size) use ($criteria) {
-            $criteria->setMaxResults($size);
-            $criteria->setFirstResult($offset);
+        $builder->processPage($repository->count($criteria['account'], $associations), function($offset, $size) use ($criteria) {
+            $criteria['account']->setMaxResults($size);
+            $criteria['account']->setFirstResult($offset);
         });
         
-        $objects = $repository->match($criteria);
+        $objects = $repository->match($criteria['account'], $associations);
 
         $builder->setData($objects);
+    }
+    
+    private function getSpecifications(array $options)
+    {
+        $names = array('account');
+        $criteria = array();
+        foreach ($names as $name) {
+            $criteria[$name] = Criteria::create();
+        }
+
+        $associations = array();
+
+        if (array_key_exists('form', $options)) {
+            switch ($options['form']) {
+                
+            }
+        }
+
+        return array($criteria, $associations);
     }
 }

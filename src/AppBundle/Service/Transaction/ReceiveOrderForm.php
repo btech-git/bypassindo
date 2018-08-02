@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\ReceiveOrder;
 use AppBundle\Repository\Transaction\ReceiveOrderRepository;
 
@@ -46,9 +47,13 @@ class ReceiveOrderForm
     public function save(ReceiveOrder $receiveOrder)
     {
         if (empty($receiveOrder->getId())) {
-            $this->receiveOrderRepository->add($receiveOrder);
+            ObjectPersister::save(function() use ($receiveOrder) {
+                $this->receiveOrderRepository->add($receiveOrder);
+            });
         } else {
-            $this->receiveOrderRepository->update($receiveOrder);
+            ObjectPersister::save(function() use ($receiveOrder) {
+                $this->receiveOrderRepository->update($receiveOrder);
+            });
         }
     }
     
@@ -56,7 +61,9 @@ class ReceiveOrderForm
     {
         $this->beforeDelete($receiveOrder);
         if (!empty($receiveOrder->getId())) {
-            $this->receiveOrderRepository->remove($receiveOrder);
+            ObjectPersister::save(function() use ($receiveOrder) {
+                $this->receiveOrderRepository->remove($receiveOrder);
+            });
         }
     }
     

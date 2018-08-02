@@ -91,6 +91,12 @@ class SupplierGridType extends DataGridType
                 case 'purchase_invoice_header_workshop':
                     $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
                     break;
+                case 'purchase_workshop_header':
+                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    break;
+                case 'sale_discount_application':
+                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    break;
             }
         }
 

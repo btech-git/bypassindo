@@ -83,6 +83,24 @@ class VehicleModelGridType extends DataGridType
 
         $associations = array();
 
+        if (array_key_exists('form', $options)) {
+//            $expr = Criteria::expr();
+            switch ($options['form']) {
+//                case 'purchase_delivery_order':
+//                    $associations['purchaseDeliveryOrders']['merge'] = true;
+//                    break;
+//                case 'sale_discount_application':
+//                    $associations['saleDiscountApplications']['merge'] = true;
+//                    break;
+//                case 'sale_invoice_detail_unit':
+//                    $associations['saleInvoiceDetailUnits']['merge'] = true;
+//                    break;
+//                case 'sale_order':
+//                    $associations['saleOrders']['merge'] = true;
+//                    break;
+            }
+        }
+
         return array($criteria, $associations);
     }
 }

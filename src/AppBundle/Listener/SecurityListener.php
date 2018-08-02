@@ -17,6 +17,7 @@ class SecurityListener
     public function onSecurityInteractiveLogin(InteractiveLoginEvent $event)
     {
         $securityContext = $this->securityContext;
+        
         $transactionRowMenu = array(
             'sale_discount_application',
             'sale_order',
@@ -49,13 +50,14 @@ class SecurityListener
             return array_reduce(array_slice($transactionRowMenu, $value[0], $value[1]), function($carry, $item) { return $carry || $item; }, false);
         };
         $transactionTableMenu = array_map($callback, $transactionTableMenu);
-        $transactionHeaderMenu = array(
+        
+        $headerMenu = array(
             'master' => $securityContext->isGranted('ROLE_MASTER'),
             'report' => $securityContext->isGranted('ROLE_REPORT'),
             'staff' => $securityContext->isGranted('ROLE_ADMIN'),
             'transaction' => $transactionTableMenu['sale'] || $transactionTableMenu['purchase'] || $transactionTableMenu['service'] || $transactionTableMenu['finance'],
         );
-        $menu = array_merge($transactionRowMenu, $transactionTableMenu, $transactionHeaderMenu);
+        $menu = array_merge($transactionRowMenu, $transactionTableMenu, $headerMenu);
         
         $session = $event->getRequest()->getSession();
         $session->set('menu', $menu);

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Repository\Transaction\PurchaseDeliveryOrderRepository;
 
@@ -59,9 +60,13 @@ class PurchaseDeliveryOrderForm
     public function save(PurchaseDeliveryOrder $purchaseDeliveryOrder)
     {
         if (empty($purchaseDeliveryOrder->getId())) {
-            $this->purchaseDeliveryOrderRepository->add($purchaseDeliveryOrder);
+            ObjectPersister::save(function() use ($purchaseDeliveryOrder) {
+                $this->purchaseDeliveryOrderRepository->add($purchaseDeliveryOrder);
+            });
         } else {
-            $this->purchaseDeliveryOrderRepository->update($purchaseDeliveryOrder);
+            ObjectPersister::save(function() use ($purchaseDeliveryOrder) {
+                $this->purchaseDeliveryOrderRepository->update($purchaseDeliveryOrder);
+            });
         }
     }
     
@@ -69,7 +74,9 @@ class PurchaseDeliveryOrderForm
     {
         $this->beforeDelete($purchaseDeliveryOrder);
         if (!empty($purchaseDeliveryOrder->getId())) {
-            $this->purchaseDeliveryOrderRepository->remove($purchaseDeliveryOrder);
+            ObjectPersister::save(function() use ($purchaseDeliveryOrder) {
+                $this->purchaseDeliveryOrderRepository->remove($purchaseDeliveryOrder);
+            });
         }
     }
     

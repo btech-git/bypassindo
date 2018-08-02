@@ -3,11 +3,14 @@
 namespace AppBundle\Entity\Master;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="master_account") @ORM\Entity
+ * @ORM\Table(name="master_account")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Master\AccountRepository")
  * @UniqueEntity("name")
  */
 class Account
@@ -41,9 +44,14 @@ class Account
      * @Assert\NotNull()
      */
     private $accountCategory;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Report\JournalLedger", mappedBy="account")
+     */
+    private $journalLedgers;
     
     public function __construct()
     {
+        $this->journalLedgers = new ArrayCollection();
     }
     
     public function __toString()
@@ -67,4 +75,7 @@ class Account
 
     public function getAccountCategory() { return $this->accountCategory; }
     public function setAccountCategory(AccountCategory $accountCategory) { $this->accountCategory = $accountCategory; }
+    
+    public function getJournalLedgers() { return $this->journalLedgers; }
+    public function setJournalLedgers(Collection $journalLedgers) { $this->journalLedgers = $journalLedgers; }
 }

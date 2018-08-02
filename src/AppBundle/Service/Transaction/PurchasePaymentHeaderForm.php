@@ -2,16 +2,21 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchasePaymentHeader;
+use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class PurchasePaymentHeaderForm
 {
     private $purchasePaymentHeaderRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(PurchasePaymentHeaderRepository $purchasePaymentHeaderRepository)
+    public function __construct(PurchasePaymentHeaderRepository $purchasePaymentHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->purchasePaymentHeaderRepository = $purchasePaymentHeaderRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(PurchasePaymentHeader $purchasePaymentHeader, array $params = array())
@@ -28,12 +33,14 @@ class PurchasePaymentHeaderForm
     {
         if (empty($purchasePaymentHeader->getId())) {
             $transactionDate = $purchasePaymentHeader->getTransactionDate();
-            if ($transactionDate !== null) {
+            $purchasePaymentDetails = $purchasePaymentHeader->getPurchasePaymentDetails();
+            if ($transactionDate !== null && count($purchasePaymentDetails) > 0) {
+                $accountCode = $purchasePaymentDetails[0]->getAccount()->getCode();
                 $month = intval($transactionDate->format('m'));
                 $year = intval($transactionDate->format('y'));
-                $lastPurchasePaymentHeaderApplication = $this->purchasePaymentHeaderRepository->findRecentBy($year, $month);
+                $lastPurchasePaymentHeaderApplication = $this->purchasePaymentHeaderRepository->findRecentBy($year, $month, $accountCode);
                 $currentPurchasePaymentHeader = ($lastPurchasePaymentHeaderApplication === null) ? $purchasePaymentHeader : $lastPurchasePaymentHeaderApplication;
-                $purchasePaymentHeader->setCodeNumberToNext($currentPurchasePaymentHeader->getCodeNumber(), $year, $month);
+                $purchasePaymentHeader->setCodeNumberToNext($currentPurchasePaymentHeader->getCodeNumber(), $year, $month, $accountCode);
             }
         }
         foreach ($purchasePaymentHeader->getPurchasePaymentDetails() as $purchasePaymentDetail) {
@@ -49,18 +56,27 @@ class PurchasePaymentHeaderForm
             $totalAmount += $purchasePaymentDetail->getAmount();
         }
         $purchasePaymentHeader->setTotalAmount($totalAmount);
+        $purchaseInvoiceHeader = $purchasePaymentHeader->getPurchaseInvoiceHeader();
+        $purchaseInvoiceHeader->setTotalPayment($totalAmount);
+        $purchaseInvoiceHeader->setRemaining($purchaseInvoiceHeader->getGrandTotal() - $totalAmount);
     }
     
     public function save(PurchasePaymentHeader $purchasePaymentHeader)
     {
         if (empty($purchasePaymentHeader->getId())) {
-            $this->purchasePaymentHeaderRepository->add($purchasePaymentHeader, array(
-                'purchasePaymentDetails' => array('add' => true),
-            ));
+            ObjectPersister::save(function() use ($purchasePaymentHeader) {
+                $this->purchasePaymentHeaderRepository->add($purchasePaymentHeader, array(
+                    'purchasePaymentDetails' => array('add' => true),
+                ));
+                $this->markJournalLedgers($purchasePaymentHeader, true);
+            });
         } else {
-            $this->purchasePaymentHeaderRepository->update($purchasePaymentHeader, array(
-                'purchasePaymentDetails' => array('add' => true, 'remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchasePaymentHeader) {
+                $this->purchasePaymentHeaderRepository->update($purchasePaymentHeader, array(
+                    'purchasePaymentDetails' => array('add' => true, 'remove' => true),
+                ));
+                $this->markJournalLedgers($purchasePaymentHeader, true);
+            });
         }
     }
     
@@ -68,9 +84,12 @@ class PurchasePaymentHeaderForm
     {
         $this->beforeDelete($purchasePaymentHeader);
         if (!empty($purchasePaymentHeader->getId())) {
-            $this->purchasePaymentHeaderRepository->remove($purchasePaymentHeader, array(
-                'purchasePaymentDetails' => array('remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchasePaymentHeader) {
+                $this->purchasePaymentHeaderRepository->remove($purchasePaymentHeader, array(
+                    'purchasePaymentDetails' => array('remove' => true),
+                ));
+                $this->markJournalLedgers($purchasePaymentHeader, false);
+            });
         }
     }
     
@@ -78,5 +97,46 @@ class PurchasePaymentHeaderForm
     {
         $purchasePaymentHeader->getPurchasePaymentDetails()->clear();
         $this->sync($purchasePaymentHeader);
+    }
+    
+    private function markJournalLedgers(PurchasePaymentHeader $purchasePaymentHeader, $addForHeader)
+    {
+        $oldJournalLedgers = $this->journalLedgerRepository->findBy(array(
+            'transactionType' => JournalLedger::TRANSACTION_TYPE_PAYABLE_PAYMENT,
+            'codeNumberYear' => $purchasePaymentHeader->getCodeNumberYear(),
+            'codeNumberMonth' => $purchasePaymentHeader->getCodeNumberMonth(),
+            'codeNumberOrdinal' => $purchasePaymentHeader->getCodeNumberOrdinal(),
+        ));
+        $this->journalLedgerRepository->remove($oldJournalLedgers);
+        foreach ($purchasePaymentHeader->getPurchasePaymentDetails() as $purchasePaymentDetail) {
+            if ($purchasePaymentDetail->getAmount() > 0) {
+                $accountPayableUnit = $this->accountRepository->findPayableUnitRecord();
+            
+                $journalLedgerCredit = new JournalLedger();
+                $journalLedgerCredit->setCodeNumber($purchasePaymentHeader->getCodeNumber());
+                $journalLedgerCredit->setTransactionDate($purchasePaymentHeader->getTransactionDate());
+                $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE_PAYMENT);
+                $journalLedgerCredit->setTransactionSubject($purchasePaymentDetail->getMemo());
+                $journalLedgerCredit->setNote($purchasePaymentHeader->getNote());
+                $journalLedgerCredit->setDebit(0);
+                $journalLedgerCredit->setCredit($purchasePaymentDetail->getAmount());
+                $journalLedgerCredit->setAccount($purchasePaymentDetail->getAccount());
+                $journalLedgerCredit->setStaff($purchasePaymentHeader->getStaffFirst());
+                $this->journalLedgerRepository->add($journalLedgerCredit);
+            }
+        }
+        if ($addForHeader) {
+            $journalLedgerDebit = new JournalLedger();
+            $journalLedgerDebit->setCodeNumber($purchasePaymentHeader->getCodeNumber());
+            $journalLedgerDebit->setTransactionDate($purchasePaymentHeader->getTransactionDate());
+            $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE_PAYMENT);
+            $journalLedgerDebit->setTransactionSubject($purchasePaymentHeader->getPurchaseInvoiceHeader()->getSupplier());
+            $journalLedgerDebit->setNote($purchasePaymentHeader->getNote());
+            $journalLedgerDebit->setDebit($purchasePaymentHeader->getTotalAmount());
+            $journalLedgerDebit->setCredit(0);
+            $journalLedgerDebit->setAccount($accountPayableUnit);
+            $journalLedgerDebit->setStaff($purchasePaymentHeader->getStaffFirst());
+            $this->journalLedgerRepository->add($journalLedgerDebit);
+        }
     }
 }

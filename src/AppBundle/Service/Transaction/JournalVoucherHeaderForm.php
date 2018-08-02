@@ -6,17 +6,17 @@ use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\JournalVoucherHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\JournalVoucherHeaderRepository;
-//use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class JournalVoucherHeaderForm
 {
     private $journalVoucherHeaderRepository;
     private $journalLedgerRepository;
     
-    public function __construct(JournalVoucherHeaderRepository $journalVoucherHeaderRepository) //, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(JournalVoucherHeaderRepository $journalVoucherHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->journalVoucherHeaderRepository = $journalVoucherHeaderRepository;
-//        $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(JournalVoucherHeader $journalVoucherHeader, array $params = array())
@@ -52,14 +52,14 @@ class JournalVoucherHeaderForm
                 $this->journalVoucherHeaderRepository->add($journalVoucherHeader, array(
                     'journalVoucherDetails' => array('add' => true),
                 ));
-//                $this->markJournalLedgers($journalVoucherHeader);
+                $this->markJournalLedgers($journalVoucherHeader);
             });
         } else {
             ObjectPersister::save(function() use ($journalVoucherHeader) {
                 $this->journalVoucherHeaderRepository->update($journalVoucherHeader, array(
                     'journalVoucherDetails' => array('add' => true, 'remove' => true),
                 ));
-//                $this->markJournalLedgers($journalVoucherHeader);
+                $this->markJournalLedgers($journalVoucherHeader);
             });
         }
     }
@@ -72,7 +72,7 @@ class JournalVoucherHeaderForm
                 $this->journalVoucherHeaderRepository->remove($journalVoucherHeader, array(
                     'journalVoucherDetails' => array('remove' => true),
                 ));
-//                $this->markJournalLedgers($journalVoucherHeader);
+                $this->markJournalLedgers($journalVoucherHeader);
             });
         }
     }

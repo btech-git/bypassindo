@@ -142,4 +142,16 @@ class PurchaseInvoiceHeaderGeneralController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_purchase_invoice_header_general_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
+     */
+    public function memoAction(PurchaseInvoiceHeader $purchaseInvoiceHeader)
+    {
+        return $this->render('transaction/purchase_invoice_header_general/memo.html.twig', array(
+            'purchaseInvoiceHeader' => $purchaseInvoiceHeader,
+        ));
+    }
 }

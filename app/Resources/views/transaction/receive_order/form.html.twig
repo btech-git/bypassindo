@@ -9,10 +9,6 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Penerimaan #</label>
-                    <div>{{ receiveOrder.codeNumber }}</div>
-                </div>
                 {{ form_row(form.transactionDate, {'label' : 'Tanggal Terima' }) }}
                 {{ form_row(form.deliveryDate, {'label' : 'Tanggal SJ' }) }}
                 {{ form_row(form.serviceBookNumber, {'label' : 'Buku Service #' }) }}                

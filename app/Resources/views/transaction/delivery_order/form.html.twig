@@ -9,10 +9,6 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Surat Jalan #</label>
-                    <div>{{ deliveryOrder.codeNumber }}</div>
-                </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.isNetworkBook, {'label': 'Satu Buku Jaringan'}) }}
                 {{ form_row(form.isSpareTire, {'label': 'Satu Ban Serep'}) }}

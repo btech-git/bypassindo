@@ -2,17 +2,21 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
-use AppBundle\Entity\Transaction\PurchaseInvoiceDetailWorkshop;
+use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class PurchaseInvoiceHeaderWorkshopForm
 {
     private $purchaseInvoiceHeaderRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository)
+    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->purchaseInvoiceHeaderRepository = $purchaseInvoiceHeaderRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(PurchaseInvoiceHeader $purchaseInvoiceHeader, array $params = array())
@@ -22,6 +26,7 @@ class PurchaseInvoiceHeaderWorkshopForm
         if (empty($purchaseInvoiceHeader->getId())) {
             $createdDate = date_create_from_format('Y-m-d', $date);
             $purchaseInvoiceHeader->setCreatedDate($createdDate);
+            $purchaseInvoiceHeader->setDueDate($createdDate);
             $purchaseInvoiceHeader->setBusinessType(PurchaseInvoiceHeader::BUSINESS_TYPE_WORKSHOP);
             $purchaseInvoiceHeader->setStaffFirst($staff);
         }
@@ -68,13 +73,19 @@ class PurchaseInvoiceHeaderWorkshopForm
     public function save(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
         if (empty($purchaseInvoiceHeader->getId())) {
-            $this->purchaseInvoiceHeaderRepository->add($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetailWorkshops' => array('add' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->add($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetailWorkshops' => array('add' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, true);
+            });
         } else {
-            $this->purchaseInvoiceHeaderRepository->update($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetailWorkshops' => array('add' => true, 'remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->update($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetailWorkshops' => array('add' => true, 'remove' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, true);
+            });
         }
     }
     
@@ -82,9 +93,12 @@ class PurchaseInvoiceHeaderWorkshopForm
     {
         $this->beforeDelete($purchaseInvoiceHeader);
         if (!empty($purchaseInvoiceHeader->getId())) {
-            $this->purchaseInvoiceHeaderRepository->remove($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetailWorkshops' => array('remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->remove($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetailWorkshops' => array('remove' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, false);
+            });
         }
     }
     
@@ -92,5 +106,44 @@ class PurchaseInvoiceHeaderWorkshopForm
     {
         $purchaseInvoiceHeader->getPurchaseInvoiceDetailWorkshops()->clear();
         $this->sync($purchaseInvoiceHeader);
+    }
+    
+    private function markJournalLedgers(PurchaseInvoiceHeader $purchaseInvoiceHeader, $addForHeader)
+    {
+        $oldJournalLedgers = $this->journalLedgerRepository->findBy(array(
+            'transactionType' => JournalLedger::TRANSACTION_TYPE_PAYABLE,
+            'codeNumberYear' => $purchaseInvoiceHeader->getCodeNumberYear(),
+            'codeNumberMonth' => $purchaseInvoiceHeader->getCodeNumberMonth(),
+            'codeNumberOrdinal' => $purchaseInvoiceHeader->getCodeNumberOrdinal(),
+        ));
+        $this->journalLedgerRepository->remove($oldJournalLedgers);
+        if ($addForHeader && $purchaseInvoiceHeader->getGrandTotal() > 0) {
+            $accountInventorySparepart = $this->accountRepository->findInventorySparepartRecord();
+            $accountPayableOther = $this->accountRepository->findPayableOtherRecord();
+
+            $journalLedgerDebit = new JournalLedger();
+            $journalLedgerDebit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
+            $journalLedgerDebit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
+            $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerDebit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
+            $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
+            $journalLedgerDebit->setDebit($purchaseInvoiceHeader->getGrandTotal());
+            $journalLedgerDebit->setCredit(0);
+            $journalLedgerDebit->setAccount($accountInventorySparepart);
+            $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $this->journalLedgerRepository->add($journalLedgerDebit);
+
+            $journalLedgerCredit = new JournalLedger();
+            $journalLedgerCredit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
+            $journalLedgerCredit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
+            $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerCredit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
+            $journalLedgerCredit->setNote($purchaseInvoiceHeader->getNote());
+            $journalLedgerCredit->setDebit(0);
+            $journalLedgerCredit->setCredit($purchaseInvoiceHeader->getGrandTotal());
+            $journalLedgerCredit->setAccount($accountPayableOther);
+            $journalLedgerCredit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $this->journalLedgerRepository->add($journalLedgerCredit);
+        }
     }
 }

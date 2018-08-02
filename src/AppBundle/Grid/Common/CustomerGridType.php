@@ -81,6 +81,24 @@ class CustomerGridType extends DataGridType
 
         $associations = array();
 
+        if (array_key_exists('form', $options)) {
+//            $expr = Criteria::expr();
+            switch ($options['form']) {
+//                case 'sale_discount_application':
+//                    $associations['saleDiscountApplication']['merge'] = true;
+//                    break;
+//                case 'sale_order':
+//                    $associations['saleOrder']['merge'] = true;
+//                    break;
+                case 'sale_invoice_downpayment':
+                    $associations['saleInvoiceDownpayment']['merge'] = true;
+                    break;
+                case 'sale_invoice_header':
+                    $associations['saleInvoiceHeader']['merge'] = true;
+                    break;
+            }
+        }
+        
         return array($criteria, $associations);
     }
 }

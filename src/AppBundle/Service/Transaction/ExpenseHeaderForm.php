@@ -6,17 +6,17 @@ use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\ExpenseHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\ExpenseHeaderRepository;
-//use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class ExpenseHeaderForm
 {
     private $expenseHeaderRepository;
-//    private $journalLedgerRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(ExpenseHeaderRepository $expenseHeaderRepository)//, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(ExpenseHeaderRepository $expenseHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->expenseHeaderRepository = $expenseHeaderRepository;
-//        $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(ExpenseHeader $expenseHeader, array $params = array())
@@ -52,14 +52,14 @@ class ExpenseHeaderForm
                 $this->expenseHeaderRepository->add($expenseHeader, array(
                     'expenseDetails' => array('add' => true),
                 ));
-//                $this->markJournalLedgers($expenseHeader, true);
+                $this->markJournalLedgers($expenseHeader, true);
             });
         } else {
             ObjectPersister::save(function() use ($expenseHeader) {
                 $this->expenseHeaderRepository->update($expenseHeader, array(
                     'expenseDetails' => array('add' => true, 'remove' => true),
                 ));
-//                $this->markJournalLedgers($expenseHeader, true);
+                $this->markJournalLedgers($expenseHeader, true);
             });
         }
     }
@@ -94,31 +94,30 @@ class ExpenseHeaderForm
         $this->journalLedgerRepository->remove($oldJournalLedgers);
         foreach ($expenseHeader->getExpenseDetails() as $expenseDetail) {
             if ($expenseDetail->getAmount() > 0) {
-                $journalLedger = new JournalLedger();
-                $journalLedger->setCodeNumber($expenseHeader->getCodeNumber());
-                $journalLedger->setTransactionDate($expenseHeader->getTransactionDate());
-                $journalLedger->setTransactionType(JournalLedger::TRANSACTION_TYPE_EXPENSE);
-                $journalLedger->setTransactionSubject($expenseDetail->getMemo());
-                $journalLedger->setNote($expenseHeader->getNote());
-                $journalLedger->setDebit($expenseDetail->getAmount());
-                $journalLedger->setCredit(0);
-                $journalLedger->setAccount($expenseDetail->getAccount());
-                $journalLedger->setStaff($expenseHeader->getStaff());
-                $this->journalLedgerRepository->add($journalLedger);
+                $journalLedgerDebit = new JournalLedger();
+                $journalLedgerDebit->setCodeNumber($expenseHeader->getCodeNumber());
+                $journalLedgerDebit->setTransactionDate($expenseHeader->getTransactionDate());
+                $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_EXPENSE);
+                $journalLedgerDebit->setTransactionSubject($expenseDetail->getMemo());
+                $journalLedgerDebit->setNote($expenseHeader->getNote());
+                $journalLedgerDebit->setDebit($expenseDetail->getAmount());
+                $journalLedgerDebit->setCredit(0);
+                $journalLedgerDebit->setAccount($expenseDetail->getAccount());
+                $journalLedgerDebit->setStaff($expenseHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerDebit);
+                
+                $journalLedgerCredit = new JournalLedger();
+                $journalLedgerCredit->setCodeNumber($expenseHeader->getCodeNumber());
+                $journalLedgerCredit->setTransactionDate($expenseHeader->getTransactionDate());
+                $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_EXPENSE);
+                $journalLedgerCredit->setTransactionSubject($expenseDetail->getMemo());
+                $journalLedgerCredit->setNote($expenseHeader->getNote());
+                $journalLedgerCredit->setDebit(0);
+                $journalLedgerCredit->setCredit($expenseDetail->getAmount());
+                $journalLedgerCredit->setAccount($expenseHeader->getAccount());
+                $journalLedgerCredit->setStaff($expenseHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerCredit);
             }
-        }
-        if ($addForHeader) {
-            $journalLedger = new JournalLedger();
-            $journalLedger->setCodeNumber($expenseHeader->getCodeNumber());
-            $journalLedger->setTransactionDate($expenseHeader->getTransactionDate());
-            $journalLedger->setTransactionType(JournalLedger::TRANSACTION_TYPE_EXPENSE);
-            $journalLedger->setTransactionSubject('Expense');
-            $journalLedger->setNote($expenseHeader->getNote());
-            $journalLedger->setDebit(0);
-            $journalLedger->setCredit($expenseHeader->getTotalAmount());
-            $journalLedger->setAccount($expenseHeader->getAccount());
-            $journalLedger->setStaff($expenseHeader->getStaff());
-            $this->journalLedgerRepository->add($journalLedger);
         }
     }
 }

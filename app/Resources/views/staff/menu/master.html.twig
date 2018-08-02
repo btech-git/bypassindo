@@ -33,6 +33,11 @@
                     <td>{{ include('action.html.twig', {'url': path('master_supplier_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
                 <tr>
+                    <td>Chart of Accounts</td>
+                    <td>{{ include('action.html.twig', {'url': path('master_account_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+                    <td>{{ include('action.html.twig', {'url': path('master_account_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
                     <td>Finance Company</td>
                     <td>{{ include('action.html.twig', {'url': path('master_finance_company_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
                     <td>{{ include('action.html.twig', {'url': path('master_finance_company_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
@@ -41,6 +46,11 @@
                     <td>Model Kendaraan</td>
                     <td>{{ include('action.html.twig', {'url': path('master_vehicle_model_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
                     <td>{{ include('action.html.twig', {'url': path('master_vehicle_model_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Jenis Pembayaran</td>
+                    <td>{{ include('action.html.twig', {'url': path('master_payment_method_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
+                    <td>{{ include('action.html.twig', {'url': path('master_payment_method_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
             </tbody>
         </table>

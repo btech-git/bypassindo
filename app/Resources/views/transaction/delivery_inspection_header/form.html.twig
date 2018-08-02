@@ -9,10 +9,6 @@
         <div>{{ form_errors(form) }}</div>
         <div class="row">
             <div class="col-sm-6">
-                <div class="form-group">
-                    <label>Delivery Inspection #</label>
-                    <div>{{ deliveryInspectionHeader.codeNumber }}</div>
-                </div>
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
                 {{ form_row(form.isVehicleComplete, {'attr': {'data-choice-group': 'completion-part-type'} }) }}
                 {{ form_row(form.isBodyBuilderExecuted, {'attr': {'data-choice-group': 'completion-part-type'} }) }}

@@ -62,7 +62,7 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      */
     private $isStock;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel", inversedBy="purchaseDeliveryOrders")
      * @Assert\NotNull()
      */
     private $vehicleModel;

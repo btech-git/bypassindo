@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\DeliveryOrder;
 use AppBundle\Repository\Transaction\DeliveryOrderRepository;
 
@@ -46,9 +47,13 @@ class DeliveryOrderForm
     public function save(DeliveryOrder $deliveryOrder)
     {
         if (empty($deliveryOrder->getId())) {
-            $this->deliveryOrderRepository->add($deliveryOrder);
+            ObjectPersister::save(function() use ($deliveryOrder) {
+                $this->deliveryOrderRepository->add($deliveryOrder);
+            });
         } else {
-            $this->deliveryOrderRepository->update($deliveryOrder);
+            ObjectPersister::save(function() use ($deliveryOrder) {
+                $this->deliveryOrderRepository->update($deliveryOrder);
+            });
         }
     }
     
@@ -56,7 +61,9 @@ class DeliveryOrderForm
     {
         $this->beforeDelete($deliveryOrder);
         if (!empty($deliveryOrder->getId())) {
-            $this->deliveryOrderRepository->remove($deliveryOrder);
+            ObjectPersister::save(function() use ($deliveryOrder) {
+                $this->deliveryOrderRepository->remove($deliveryOrder);
+            });
         }
     }
     

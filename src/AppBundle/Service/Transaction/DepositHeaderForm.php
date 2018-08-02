@@ -6,17 +6,17 @@ use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\DepositHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\DepositHeaderRepository;
-//use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class DepositHeaderForm
 {
     private $depositHeaderRepository;
-//    private $journalLedgerRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(DepositHeaderRepository $depositHeaderRepository)
+    public function __construct(DepositHeaderRepository $depositHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->depositHeaderRepository = $depositHeaderRepository;
-//        $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(DepositHeader $depositHeader, array $params = array())
@@ -52,14 +52,14 @@ class DepositHeaderForm
                 $this->depositHeaderRepository->add($depositHeader, array(
                     'depositDetails' => array('add' => true),
                 ));
-//                $this->markJournalLedgers($depositHeader, true);
+                $this->markJournalLedgers($depositHeader, true);
             });
         } else {
             ObjectPersister::save(function() use ($depositHeader) {
                 $this->depositHeaderRepository->update($depositHeader, array(
                     'depositDetails' => array('add' => true, 'remove' => true),
                 ));
-//                $this->markJournalLedgers($depositHeader, true);
+                $this->markJournalLedgers($depositHeader, true);
             });
         }
     }
@@ -72,7 +72,7 @@ class DepositHeaderForm
                 $this->depositHeaderRepository->remove($depositHeader, array(
                     'depositDetails' => array('remove' => true),
                 ));
-//                $this->markJournalLedgers($depositHeader, false);
+                $this->markJournalLedgers($depositHeader, false);
             });
         }
     }
@@ -94,31 +94,30 @@ class DepositHeaderForm
         $this->journalLedgerRepository->remove($oldJournalLedgers);
         foreach ($depositHeader->getDepositDetails() as $depositDetail) {
             if ($depositDetail->getAmount() > 0) {
-                $journalLedger = new JournalLedger();
-                $journalLedger->setCodeNumber($depositHeader->getCodeNumber());
-                $journalLedger->setTransactionDate($depositHeader->getTransactionDate());
-                $journalLedger->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
-                $journalLedger->setTransactionSubject($depositDetail->getMemo());
-                $journalLedger->setNote($depositHeader->getNote());
-                $journalLedger->setDebit(0);
-                $journalLedger->setCredit($depositDetail->getAmount());
-                $journalLedger->setAccount($depositDetail->getAccount());
-                $journalLedger->setStaff($depositHeader->getStaff());
-                $this->journalLedgerRepository->add($journalLedger);
+                $journalLedgerCredit = new JournalLedger();
+                $journalLedgerCredit->setCodeNumber($depositHeader->getCodeNumber());
+                $journalLedgerCredit->setTransactionDate($depositHeader->getTransactionDate());
+                $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerCredit->setTransactionSubject($depositDetail->getMemo());
+                $journalLedgerCredit->setNote($depositHeader->getNote());
+                $journalLedgerCredit->setDebit(0.00);
+                $journalLedgerCredit->setCredit($depositDetail->getAmount());
+                $journalLedgerCredit->setAccount($depositDetail->getAccount());
+                $journalLedgerCredit->setStaff($depositHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerCredit);
+                
+                $journalLedgerDebit = new JournalLedger();
+                $journalLedgerDebit->setCodeNumber($depositHeader->getCodeNumber());
+                $journalLedgerDebit->setTransactionDate($depositHeader->getTransactionDate());
+                $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerDebit->setTransactionSubject($depositDetail->getMemo());
+                $journalLedgerDebit->setNote($depositHeader->getNote());
+                $journalLedgerDebit->setDebit($depositDetail->getAmount());
+                $journalLedgerDebit->setCredit(0.00);
+                $journalLedgerDebit->setAccount($depositHeader->getAccount());
+                $journalLedgerDebit->setStaff($depositHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerDebit);
             }
-        }
-        if ($addForHeader) {
-            $journalLedger = new JournalLedger();
-            $journalLedger->setCodeNumber($depositHeader->getCodeNumber());
-            $journalLedger->setTransactionDate($depositHeader->getTransactionDate());
-            $journalLedger->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
-            $journalLedger->setTransactionSubject('Deposit');
-            $journalLedger->setNote($depositHeader->getNote());
-            $journalLedger->setDebit($depositHeader->getTotalAmount());
-            $journalLedger->setCredit(0);
-            $journalLedger->setAccount($depositHeader->getAccount());
-            $journalLedger->setStaff($depositHeader->getStaff());
-            $this->journalLedgerRepository->add($journalLedger);
         }
     }
 }

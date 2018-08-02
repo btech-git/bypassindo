@@ -9,7 +9,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Customer;
 
 /**
  * @ORM\Table(name="transaction_receive_order")
@@ -65,9 +64,9 @@ class ReceiveOrder extends CodeNumberEntity
      */
     private $deliveryInspectionHeader;
     /**
-     * @ORM\OneToOne(targetEntity="SaleInvoiceDetail", mappedBy="receiveOrder")
+     * @ORM\OneToOne(targetEntity="SaleInvoiceDetailUnit", mappedBy="receiveOrder")
      */
-    private $saleInvoiceDetail;
+    private $saleInvoiceDetailUnit;
     
     public function __construct()
     {
@@ -108,6 +107,6 @@ class ReceiveOrder extends CodeNumberEntity
     public function getDeliveryInspectionHeader() { return $this->deliveryInspectionHeader; }
     public function setDeliveryInspectionHeader(DeliveryInspectionHeader $deliveryInspectionHeader = null) { $this->deliveryInspectionHeader = $deliveryInspectionHeader; }
 
-    public function getSaleInvoiceDetail() { return $this->saleInvoiceDetail; }
-    public function setSaleInvoiceDetail(SaleInvoiceDetail $saleInvoiceDetail = null) { $this->saleInvoiceDetail = $saleInvoiceDetail; }
+    public function getSaleInvoiceDetailUnit() { return $this->saleInvoiceDetailUnit; }
+    public function setSaleInvoiceDetailUnit(SaleInvoiceDetailUnit $saleInvoiceDetailUnit = null) { $this->saleInvoiceDetailUnit = $saleInvoiceDetailUnit; }
 }

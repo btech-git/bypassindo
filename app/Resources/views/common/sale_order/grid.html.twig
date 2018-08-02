@@ -36,7 +36,7 @@
                 data-field-quantity="{{ saleOrder.quantity|default }}"
                 data-field-vehicle-model-manufacture-code="{{ saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ saleOrder.codeNumber|default }}</td>
-                <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('Y-m-d') }}</td>
+                <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleOrder.customer.name|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleBrand|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleSerialNumber|default }}</td>

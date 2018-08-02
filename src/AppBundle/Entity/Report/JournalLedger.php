@@ -17,6 +17,11 @@ class JournalLedger extends CodeNumberEntity
     const TRANSACTION_TYPE_DEPOSIT = 'deposit';
     const TRANSACTION_TYPE_EXPENSE = 'expense';
     const TRANSACTION_TYPE_VOUCHER = 'voucher';
+    const TRANSACTION_TYPE_SALE_DOWNPAYMENT = 'downpayment';
+    const TRANSACTION_TYPE_RECEIVABLE = 'piutang';
+    const TRANSACTION_TYPE_PAYABLE = 'hutang';
+    const TRANSACTION_TYPE_RECEIVABLE_PAYMENT = 'pelunasan piutang';
+    const TRANSACTION_TYPE_PAYABLE_PAYMENT = 'pembayaran hutang';
     
     /**
      * @ORM\Column(name="id", type="integer") @ORM\Id @ORM\GeneratedValue
@@ -53,7 +58,7 @@ class JournalLedger extends CodeNumberEntity
      */
     private $credit;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Account")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Account", inversedBy="journalLedgers")
      * @Assert\NotNull()
      */
     private $account;

@@ -138,12 +138,12 @@ class ReceiveOrderGridType extends DataGridType
                     $associations['deliveryWorkshop']['merge'] = false;
                     $associations['purchaseDeliveryOrder']['associations']['saleOrder']['merge'] = true;
                     break;
-                case 'sale_invoice_header':
+                case 'sale_invoice_header_unit':
                     if (array_key_exists('customer_id', $options['options'])) {
                         $criteria['customer']->andWhere($expr->eq('id', $options['options']['customer_id']));
                     }
                     $associations['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
-                    $associations['saleInvoiceDetail']['merge'] = false;
+                    $associations['saleInvoiceDetailUnit']['merge'] = false;
                     break;
             }
         }

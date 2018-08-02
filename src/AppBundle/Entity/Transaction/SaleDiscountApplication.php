@@ -232,8 +232,7 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $financeCompany;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
-     * @Assert\NotNull()
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel", inversedBy="saleDiscountApplications")
      */
     private $vehicleModel;
     /**

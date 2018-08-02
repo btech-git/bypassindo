@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\SaleDiscountApplication;
 use AppBundle\Repository\Transaction\SaleDiscountApplicationRepository;
 
@@ -59,9 +60,13 @@ class SaleDiscountApplicationForm
     public function save(SaleDiscountApplication $saleDiscountApplication)
     {
         if (empty($saleDiscountApplication->getId())) {
-            $this->saleDiscountApplicationRepository->add($saleDiscountApplication);
+            ObjectPersister::save(function() use ($saleDiscountApplication) {
+                $this->saleDiscountApplicationRepository->add($saleDiscountApplication);
+            });
         } else {
-            $this->saleDiscountApplicationRepository->update($saleDiscountApplication);
+            ObjectPersister::save(function() use ($saleDiscountApplication) {
+                $this->saleDiscountApplicationRepository->update($saleDiscountApplication);
+            });
         }
     }
     
@@ -69,7 +74,9 @@ class SaleDiscountApplicationForm
     {
         $this->beforeDelete($saleDiscountApplication);
         if (!empty($saleDiscountApplication->getId())) {
-            $this->saleDiscountApplicationRepository->remove($saleDiscountApplication);
+            ObjectPersister::save(function() use ($saleDiscountApplication) {
+                $this->saleDiscountApplicationRepository->remove($saleDiscountApplication);
+            });
         }
     }
     

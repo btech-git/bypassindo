@@ -2,16 +2,21 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\SaleInvoiceDownpayment;
+use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\SaleInvoiceDownpaymentRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class SaleInvoiceDownpaymentForm
 {
     private $saleInvoiceDownpaymentRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(SaleInvoiceDownpaymentRepository $saleInvoiceDownpaymentRepository)
+    public function __construct(SaleInvoiceDownpaymentRepository $saleInvoiceDownpaymentRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->saleInvoiceDownpaymentRepository = $saleInvoiceDownpaymentRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(SaleInvoiceDownpayment $saleInvoiceDownpayment, array $params = array())
@@ -53,9 +58,15 @@ class SaleInvoiceDownpaymentForm
     public function save(SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
         if (empty($saleInvoiceDownpayment->getId())) {
-            $this->saleInvoiceDownpaymentRepository->add($saleInvoiceDownpayment);
+            ObjectPersister::save(function() use ($saleInvoiceDownpayment) {
+                $this->saleInvoiceDownpaymentRepository->add($saleInvoiceDownpayment);
+                $this->markJournalLedgers($saleInvoiceDownpayment, true);
+            });
         } else {
-            $this->saleInvoiceDownpaymentRepository->update($saleInvoiceDownpayment);
+            ObjectPersister::save(function() use ($saleInvoiceDownpayment) {
+                $this->saleInvoiceDownpaymentRepository->update($saleInvoiceDownpayment);
+                $this->markJournalLedgers($saleInvoiceDownpayment, true);
+            });
         }
     }
     
@@ -63,12 +74,54 @@ class SaleInvoiceDownpaymentForm
     {
         $this->beforeDelete($saleInvoiceDownpayment);
         if (!empty($saleInvoiceDownpayment->getId())) {
-            $this->saleInvoiceDownpaymentRepository->remove($saleInvoiceDownpayment);
+            ObjectPersister::save(function() use ($saleInvoiceDownpayment) {
+                $this->saleInvoiceDownpaymentRepository->remove($saleInvoiceDownpayment);
+                $this->markJournalLedgers($saleInvoiceDownpayment, false);
+            });
         }
     }
     
     protected function beforeDelete(SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
         $this->sync($saleInvoiceDownpayment);
+    }
+    
+    private function markJournalLedgers(SaleInvoiceDownpayment $saleInvoiceDownpayment, $addForHeader)
+    {
+        $oldJournalLedgers = $this->journalLedgerRepository->findBy(array(
+            'transactionType' => JournalLedger::TRANSACTION_TYPE_SALE_DOWNPAYMENT,
+            'codeNumberYear' => $saleInvoiceDownpayment->getCodeNumberYear(),
+            'codeNumberMonth' => $saleInvoiceDownpayment->getCodeNumberMonth(),
+            'codeNumberOrdinal' => $saleInvoiceDownpayment->getCodeNumberOrdinal(),
+        ));
+        $this->journalLedgerRepository->remove($oldJournalLedgers);
+        
+        if ($addForHeader && $saleInvoiceDownpayment->getAmount() > 0) {
+            $accountSaleUnit = $this->accountRepository->findSaleUnitRecord();
+            
+            $journalLedgerDebit = new JournalLedger();
+            $journalLedgerDebit->setCodeNumber($saleInvoiceDownpayment->getCodeNumber());
+            $journalLedgerDebit->setTransactionDate($saleInvoiceDownpayment->getTransactionDate());
+            $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_SALE_DOWNPAYMENT);
+            $journalLedgerDebit->setTransactionSubject($saleInvoiceDownpayment->getCustomer());
+            $journalLedgerDebit->setNote($saleInvoiceDownpayment->getNote());
+            $journalLedgerDebit->setDebit($saleInvoiceDownpayment->getAmount());
+            $journalLedgerDebit->setCredit(0.00);
+            $journalLedgerDebit->setAccount($saleInvoiceDownpayment->getAccount());
+            $journalLedgerDebit->setStaff($saleInvoiceDownpayment->getStaffFirst());
+            $this->journalLedgerRepository->add($journalLedgerDebit);
+
+            $journalLedgerCredit = new JournalLedger();
+            $journalLedgerCredit->setCodeNumber($saleInvoiceDownpayment->getCodeNumber());
+            $journalLedgerCredit->setTransactionDate($saleInvoiceDownpayment->getTransactionDate());
+            $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_SALE_DOWNPAYMENT);
+            $journalLedgerCredit->setTransactionSubject($saleInvoiceDownpayment->getCustomer());
+            $journalLedgerCredit->setNote($saleInvoiceDownpayment->getNote());
+            $journalLedgerCredit->setDebit(0.00);
+            $journalLedgerCredit->setCredit($saleInvoiceDownpayment->getAmount());
+            $journalLedgerCredit->setAccount($accountSaleUnit);
+            $journalLedgerCredit->setStaff($saleInvoiceDownpayment->getStaffFirst());
+            $this->journalLedgerRepository->add($journalLedgerCredit);
+        }
     }
 }

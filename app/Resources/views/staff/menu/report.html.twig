@@ -35,12 +35,32 @@
                     <td>{{ include('action.html.twig', {'url': path('report_purchase_invoice_detail_unit_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
                 <tr>
-                    <td>Penjualan</td>
-                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_detail_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                    <td>Pembelian Unit per Model</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_vehicle_model_purchase_invoice_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan Umum</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_detail_general_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan Unit</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_detail_unit_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan Unit per Model</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_vehicle_model_sale_invoice_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan Unit per Salesman</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_salesman_sale_invoice_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
                 <tr>
                     <td>DP Penjualan</td>
                     <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_downpayment_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Buku Besar</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_account_journal_ledger_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
             </tbody>
         </table>

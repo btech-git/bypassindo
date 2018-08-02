@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\DeliveryWorkshop;
 use AppBundle\Repository\Transaction\DeliveryWorkshopRepository;
 
@@ -46,9 +47,13 @@ class DeliveryWorkshopForm
     public function save(DeliveryWorkshop $deliveryWorkshop)
     {
         if (empty($deliveryWorkshop->getId())) {
-            $this->deliveryWorkshopRepository->add($deliveryWorkshop);
+            ObjectPersister::save(function() use ($deliveryWorkshop) {
+                $this->deliveryWorkshopRepository->add($deliveryWorkshop);
+            });
         } else {
-            $this->deliveryWorkshopRepository->update($deliveryWorkshop);
+            ObjectPersister::save(function() use ($deliveryWorkshop) {
+                $this->deliveryWorkshopRepository->update($deliveryWorkshop);
+            });
         }
     }
     
@@ -56,7 +61,9 @@ class DeliveryWorkshopForm
     {
         $this->beforeDelete($deliveryWorkshop);
         if (!empty($deliveryWorkshop->getId())) {
-            $this->deliveryWorkshopRepository->remove($deliveryWorkshop);
+            ObjectPersister::save(function() use ($deliveryWorkshop) {
+                $this->deliveryWorkshopRepository->remove($deliveryWorkshop);
+            });
         }
     }
     

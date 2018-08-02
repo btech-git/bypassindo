@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\SaleOrder;
 use AppBundle\Repository\Transaction\SaleOrderRepository;
 
@@ -61,9 +62,13 @@ class SaleOrderForm
     public function save(SaleOrder $saleOrder)
     {
         if (empty($saleOrder->getId())) {
-            $this->saleOrderRepository->add($saleOrder);
+            ObjectPersister::save(function() use ($saleOrder) {
+                $this->saleOrderRepository->add($saleOrder);
+            });
         } else {
-            $this->saleOrderRepository->update($saleOrder);
+            ObjectPersister::save(function() use ($saleOrder) {
+                $this->saleOrderRepository->update($saleOrder);
+            });
         }
     }
     
@@ -71,7 +76,9 @@ class SaleOrderForm
     {
         $this->beforeDelete($saleOrder);
         if (!empty($saleOrder->getId())) {
-            $this->saleOrderRepository->remove($saleOrder);
+            ObjectPersister::save(function() use ($saleOrder) {
+                $this->saleOrderRepository->remove($saleOrder);
+            });
         }
     }
     

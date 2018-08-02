@@ -179,7 +179,7 @@ class SaleOrder extends CodeNumberEntity
      */
     private $customer;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel", inversedBy="saleOrders")
      * @Assert\NotNull()
      */
     private $vehicleModel;

@@ -18,6 +18,9 @@ use AppBundle\Entity\Master\Customer;
  */
 class SaleInvoiceHeader extends CodeNumberEntity
 {
+    const BUSINESS_TYPE_UNIT = 'unit';
+    const BUSINESS_TYPE_GENERAL = 'umum';
+    
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
      */
@@ -42,6 +45,11 @@ class SaleInvoiceHeader extends CodeNumberEntity
      * @Assert\NotBlank() @Assert\Length(min=16, max=16)
      */
     private $taxNumber;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $businessType;
     /**
      * @ORM\Column(type="text")
      * @Assert\NotNull()
@@ -82,14 +90,18 @@ class SaleInvoiceHeader extends CodeNumberEntity
      */
     private $salePaymentHeader;
     /**
-     * @ORM\OneToMany(targetEntity="SaleInvoiceDetail", mappedBy="saleInvoiceHeader")
-     * @Assert\Valid() @Assert\Count(min=1, max=3)
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDetailUnit", mappedBy="saleInvoiceHeader")
      */
-    private $saleInvoiceDetails;
+    private $saleInvoiceDetailUnits;
+    /**
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDetailGeneral", mappedBy="saleInvoiceHeader")
+     */
+    private $saleInvoiceDetailGenerals;
     
     public function __construct()
     {
-        $this->saleInvoiceDetails = new ArrayCollection();        
+        $this->saleInvoiceDetailUnits = new ArrayCollection();
+        $this->saleInvoiceDetailGenerals = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -110,6 +122,9 @@ class SaleInvoiceHeader extends CodeNumberEntity
 
     public function getTaxNumber() { return $this->taxNumber; }
     public function setTaxNumber($taxNumber) { $this->taxNumber = $taxNumber; }
+
+    public function getBusinessType() { return $this->businessType; }
+    public function setBusinessType($businessType) { $this->businessType = $businessType; }
 
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
@@ -135,8 +150,11 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getSalePaymentHeader() { return $this->salePaymentHeader; }
     public function setSalePaymentHeader(SalePaymentHeader $salePaymentHeader = null) { $this->salePaymentHeader = $salePaymentHeader; }
 
-    public function getSaleInvoiceDetails() { return $this->saleInvoiceDetails; }
-    public function setSaleInvoiceDetails(Collection $saleInvoiceDetails) { $this->saleInvoiceDetails = $saleInvoiceDetails; }
+    public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
+    public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
+
+    public function getSaleInvoiceDetailGenerals() { return $this->saleInvoiceDetailGenerals; }
+    public function setSaleInvoiceDetailGenerals(Collection $saleInvoiceDetailGenerals) { $this->saleInvoiceDetailGenerals = $saleInvoiceDetailGenerals; }
 
     public function getFormattedTaxNumber()
     {
@@ -150,9 +168,13 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function sync()
     {
         $grandTotal = 0.00;
-        foreach ($this->saleInvoiceDetails as $saleInvoiceDetail) {
-            $saleInvoiceDetail->sync();
-            $grandTotal += $saleInvoiceDetail->getTotal();
+        foreach ($this->saleInvoiceDetailUnits as $saleInvoiceDetailUnit) {
+            $saleInvoiceDetailUnit->sync();
+            $grandTotal += $saleInvoiceDetailUnit->getTotal();
+        }
+        foreach ($this->saleInvoiceDetailGenerals as $saleInvoiceDetailGeneral) {
+            $saleInvoiceDetailGeneral->sync();
+            $grandTotal += $saleInvoiceDetailGeneral->getTotal();
         }
         $this->grandTotal = $grandTotal;
         

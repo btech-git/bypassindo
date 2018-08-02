@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\ReceiveWorkshop;
 use AppBundle\Repository\Transaction\ReceiveWorkshopRepository;
 
@@ -46,9 +47,13 @@ class ReceiveWorkshopForm
     public function save(ReceiveWorkshop $receiveWorkshop)
     {
         if (empty($receiveWorkshop->getId())) {
-            $this->receiveWorkshopRepository->add($receiveWorkshop);
+            ObjectPersister::save(function() use ($receiveWorkshop) {
+                $this->receiveWorkshopRepository->add($receiveWorkshop);
+            });
         } else {
-            $this->receiveWorkshopRepository->update($receiveWorkshop);
+            ObjectPersister::save(function() use ($receiveWorkshop) {
+                $this->receiveWorkshopRepository->update($receiveWorkshop);
+            });
         }
     }
     
@@ -56,7 +61,9 @@ class ReceiveWorkshopForm
     {
         $this->beforeDelete($receiveWorkshop);
         if (!empty($receiveWorkshop->getId())) {
-            $this->receiveWorkshopRepository->remove($receiveWorkshop);
+            ObjectPersister::save(function() use ($receiveWorkshop) {
+                $this->receiveWorkshopRepository->remove($receiveWorkshop);
+            });
         }
     }
     

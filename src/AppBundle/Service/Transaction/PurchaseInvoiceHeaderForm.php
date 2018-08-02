@@ -2,16 +2,21 @@
 
 namespace AppBundle\Service\Transaction;
 
+use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
+use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository;
+use AppBundle\Repository\Report\JournalLedgerRepository;
 
 class PurchaseInvoiceHeaderForm
 {
     private $purchaseInvoiceHeaderRepository;
+    private $journalLedgerRepository;
     
-    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository)
+    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
     {
         $this->purchaseInvoiceHeaderRepository = $purchaseInvoiceHeaderRepository;
+        $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
     public function initialize(PurchaseInvoiceHeader $purchaseInvoiceHeader, array $params = array())
@@ -79,13 +84,19 @@ class PurchaseInvoiceHeaderForm
     public function save(PurchaseInvoiceHeader $purchaseInvoiceHeader)
     {
         if (empty($purchaseInvoiceHeader->getId())) {
-            $this->purchaseInvoiceHeaderRepository->add($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetails' => array('add' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->add($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetails' => array('add' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, true);
+            });
         } else {
-            $this->purchaseInvoiceHeaderRepository->update($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetails' => array('add' => true, 'remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->update($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetails' => array('add' => true, 'remove' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, true);
+            });
         }
     }
     
@@ -93,9 +104,12 @@ class PurchaseInvoiceHeaderForm
     {
         $this->beforeDelete($purchaseInvoiceHeader);
         if (!empty($purchaseInvoiceHeader->getId())) {
-            $this->purchaseInvoiceHeaderRepository->remove($purchaseInvoiceHeader, array(
-                'purchaseInvoiceDetails' => array('remove' => true),
-            ));
+            ObjectPersister::save(function() use ($purchaseInvoiceHeader) {
+                $this->purchaseInvoiceHeaderRepository->remove($purchaseInvoiceHeader, array(
+                    'purchaseInvoiceDetails' => array('remove' => true),
+                ));
+                $this->markJournalLedgers($purchaseInvoiceHeader, true);
+            });
         }
     }
     
@@ -103,5 +117,43 @@ class PurchaseInvoiceHeaderForm
     {
         $purchaseInvoiceHeader->getPurchaseInvoiceDetails()->clear();
         $this->sync($purchaseInvoiceHeader);
+    }
+    
+    private function markJournalLedgers(DepositHeader $depositHeader, $addForHeader)
+    {
+        $oldJournalLedgers = $this->journalLedgerRepository->findBy(array(
+            'transactionType' => JournalLedger::TRANSACTION_TYPE_DEPOSIT,
+            'codeNumberYear' => $depositHeader->getCodeNumberYear(),
+            'codeNumberMonth' => $depositHeader->getCodeNumberMonth(),
+            'codeNumberOrdinal' => $depositHeader->getCodeNumberOrdinal(),
+        ));
+        $this->journalLedgerRepository->remove($oldJournalLedgers);
+        foreach ($depositHeader->getDepositDetails() as $depositDetail) {
+            if ($depositDetail->getAmount() > 0) {
+                $journalLedgerCredit = new JournalLedger();
+                $journalLedgerCredit->setCodeNumber($depositHeader->getCodeNumber());
+                $journalLedgerCredit->setTransactionDate($depositHeader->getTransactionDate());
+                $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerCredit->setTransactionSubject($depositDetail->getMemo());
+                $journalLedgerCredit->setNote($depositHeader->getNote());
+                $journalLedgerCredit->setDebit(0);
+                $journalLedgerCredit->setCredit($depositDetail->getAmount());
+                $journalLedgerCredit->setAccount($depositDetail->getAccount());
+                $journalLedgerCredit->setStaff($depositHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerCredit);
+                
+                $journalLedgerDebit = new JournalLedger();
+                $journalLedgerDebit->setCodeNumber($depositHeader->getCodeNumber());
+                $journalLedgerDebit->setTransactionDate($depositHeader->getTransactionDate());
+                $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerDebit->setTransactionSubject($depositDetail->getMemo());
+                $journalLedgerDebit->setNote($depositHeader->getNote());
+                $journalLedgerDebit->setDebit($depositDetail->getAmount());
+                $journalLedgerDebit->setCredit(0);
+                $journalLedgerDebit->setAccount($depositHeader->getAccount());
+                $journalLedgerDebit->setStaff($depositHeader->getStaff());
+                $this->journalLedgerRepository->add($journalLedgerDebit);
+            }
+        }
     }
 }
