@@ -111,7 +111,7 @@ services:
 
     app.transaction.sale_invoice_downpayment_form:
         class: AppBundle\Service\Transaction\SaleInvoiceDownpaymentForm
-        arguments: ["@app.transaction.sale_invoice_downpayment_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.sale_invoice_downpayment_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.sale_invoice_header_repository:
         class: AppBundle\Repository\Transaction\SaleInvoiceHeaderRepository
@@ -121,11 +121,11 @@ services:
 
     app.transaction.sale_invoice_header_unit_form:
         class: AppBundle\Service\Transaction\SaleInvoiceHeaderUnitForm
-        arguments: ["@app.transaction.sale_invoice_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.sale_invoice_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.sale_invoice_header_general_form:
         class: AppBundle\Service\Transaction\SaleInvoiceHeaderGeneralForm
-        arguments: ["@app.transaction.sale_invoice_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.sale_invoice_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.sale_payment_header_repository:
         class: AppBundle\Repository\Transaction\SalePaymentHeaderRepository
@@ -149,15 +149,15 @@ services:
 
     app.transaction.purchase_invoice_header_unit_form:
         class: AppBundle\Service\Transaction\PurchaseInvoiceHeaderUnitForm
-        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.purchase_invoice_header_workshop_form:
         class: AppBundle\Service\Transaction\PurchaseInvoiceHeaderWorkshopForm
-        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.purchase_invoice_header_general_form:
         class: AppBundle\Service\Transaction\PurchaseInvoiceHeaderGeneralForm
-        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.purchase_invoice_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.purchase_payment_header_repository:
         class: AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository
@@ -167,7 +167,7 @@ services:
 
     app.transaction.purchase_payment_header_form:
         class: AppBundle\Service\Transaction\PurchasePaymentHeaderForm
-        arguments: ["@app.transaction.purchase_payment_header_repository", "@app.report.journal_ledger_repository"]
+        arguments: ["@app.transaction.purchase_payment_header_repository", "@app.report.journal_ledger_repository", "@app.master.account_repository"]
 
     app.transaction.purchase_delivery_order_repository:
         class: AppBundle\Repository\Transaction\PurchaseDeliveryOrderRepository

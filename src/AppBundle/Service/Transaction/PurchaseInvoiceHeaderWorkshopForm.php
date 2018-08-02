@@ -7,16 +7,19 @@ use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\PurchaseInvoiceHeaderRepository;
 use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Master\AccountRepository;
 
 class PurchaseInvoiceHeaderWorkshopForm
 {
     private $purchaseInvoiceHeaderRepository;
     private $journalLedgerRepository;
+    private $accountRepository;
     
-    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(PurchaseInvoiceHeaderRepository $purchaseInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository, AccountRepository $accountRepository)
     {
         $this->purchaseInvoiceHeaderRepository = $purchaseInvoiceHeaderRepository;
         $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->accountRepository = $accountRepository;
     }
     
     public function initialize(PurchaseInvoiceHeader $purchaseInvoiceHeader, array $params = array())

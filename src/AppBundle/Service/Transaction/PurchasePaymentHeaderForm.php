@@ -7,16 +7,19 @@ use AppBundle\Entity\Transaction\PurchasePaymentHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository;
 use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Master\AccountRepository;
 
 class PurchasePaymentHeaderForm
 {
     private $purchasePaymentHeaderRepository;
     private $journalLedgerRepository;
+    private $accountRepository;
     
-    public function __construct(PurchasePaymentHeaderRepository $purchasePaymentHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(PurchasePaymentHeaderRepository $purchasePaymentHeaderRepository, JournalLedgerRepository $journalLedgerRepository, AccountRepository $accountRepository)
     {
         $this->purchasePaymentHeaderRepository = $purchasePaymentHeaderRepository;
         $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->accountRepository = $accountRepository;
     }
     
     public function initialize(PurchasePaymentHeader $purchasePaymentHeader, array $params = array())

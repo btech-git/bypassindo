@@ -7,16 +7,19 @@ use AppBundle\Entity\Transaction\SaleInvoiceHeader;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\SaleInvoiceHeaderRepository;
 use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Master\AccountRepository;
 
 class SaleInvoiceHeaderUnitForm
 {
     private $saleInvoiceHeaderRepository;
     private $journalLedgerRepository;
+    private $accountRepository;
     
-    public function __construct(SaleInvoiceHeaderRepository $saleInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(SaleInvoiceHeaderRepository $saleInvoiceHeaderRepository, JournalLedgerRepository $journalLedgerRepository, AccountRepository $accountRepository)
     {
         $this->saleInvoiceHeaderRepository = $saleInvoiceHeaderRepository;
         $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->accountRepository = $accountRepository;
     }
     
     public function initialize(SaleInvoiceHeader $saleInvoiceHeader, array $params = array())

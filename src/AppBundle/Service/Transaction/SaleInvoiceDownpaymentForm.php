@@ -7,16 +7,19 @@ use AppBundle\Entity\Transaction\SaleInvoiceDownpayment;
 use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Repository\Transaction\SaleInvoiceDownpaymentRepository;
 use AppBundle\Repository\Report\JournalLedgerRepository;
+use AppBundle\Repository\Master\AccountRepository;
 
 class SaleInvoiceDownpaymentForm
 {
     private $saleInvoiceDownpaymentRepository;
     private $journalLedgerRepository;
+    private $accountRepository;
     
-    public function __construct(SaleInvoiceDownpaymentRepository $saleInvoiceDownpaymentRepository, JournalLedgerRepository $journalLedgerRepository)
+    public function __construct(SaleInvoiceDownpaymentRepository $saleInvoiceDownpaymentRepository, JournalLedgerRepository $journalLedgerRepository, AccountRepository $accountRepository)
     {
         $this->saleInvoiceDownpaymentRepository = $saleInvoiceDownpaymentRepository;
         $this->journalLedgerRepository = $journalLedgerRepository;
+        $this->accountRepository = $accountRepository;
     }
     
     public function initialize(SaleInvoiceDownpayment $saleInvoiceDownpayment, array $params = array())
