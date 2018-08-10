@@ -13,6 +13,7 @@ use AppBundle\Entity\Admin\Staff;
 /**
  * @ORM\Table(name="transaction_purchase_payment_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository")
+ * @Assert\Expression("(this.getTotalAmount() <= this.getPurchaseInvoiceHeader().getRemaining())", message = "Total payment must be less or equal to remaining")
  */
 class PurchasePaymentHeader extends CodeNumberAccountEntity
 {

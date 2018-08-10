@@ -8,7 +8,6 @@ use AppBundle\Entity\Master\Account;
 
 /**
  * @ORM\Table(name="transaction_journal_voucher_detail") @ORM\Entity
- * @Assert\Expression("(this.getDebit() == 0 and this.getCredit() > 0) or (this.getDebit() > 0 and this.getCredit() == 0)")
  */
 class JournalVoucherDetail
 {
@@ -19,6 +18,7 @@ class JournalVoucherDetail
     /**
      * @ORM\Column(name="debit", type="decimal", precision=18, scale=2)
      * @Assert\NotNull()
+     * @Assert\Expression("(this.getDebit() == 0 and this.getCredit() > 0) or (this.getDebit() > 0 and this.getCredit() == 0)", message = "Either Debit or Credit must be 0")
      */
     private $debit;
     /**
