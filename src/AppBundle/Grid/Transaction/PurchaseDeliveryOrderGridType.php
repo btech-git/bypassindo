@@ -47,9 +47,9 @@ class PurchaseDeliveryOrderGridType extends DataGridType
                     ->addOperator(ContainNonEmptyType::class)
                 ->addField('reference')
                     ->addOperator(ContainNonEmptyType::class)
-            ->addGroup('vehicleModel')
-                ->addField('vosModelName')
-                    ->addOperator(ContainNonEmptyType::class)
+//            ->addGroup('vehicleModel')
+//                ->addField('vosModelName')
+//                    ->addOperator(ContainNonEmptyType::class)
         ;
 
         $builder->sortWidget()
