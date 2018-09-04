@@ -54,6 +54,13 @@ class SaleInvoiceDownpaymentForm
         if ($saleOrder !== null) {
             $saleInvoiceDownpayment->setCustomer($saleOrder->getCustomer());
         }
+        $oldSaleInvoiceDownpayments = $saleOrder->getSaleInvoiceDownpayments();
+        $saleInvoiceDownpayments = $oldSaleInvoiceDownpayments->getValues();
+        $totalAmount = 0.00;
+        foreach ($saleInvoiceDownpayments as $saleInvoiceDownpayment) {
+            $totalAmount += $oldSaleInvoiceDownpayment->getAmount();
+        }
+        $saleOrder->setDownpaymentRemaining($saleOrder->getDownPayment() - $totalAmount);
         
         $saleInvoiceDownpayment->sync();
     }

@@ -46,6 +46,10 @@
                         <label>Manufacture Code:</label>
                         <span data-name="vehicle-model-manufacture-code">{{ saleInvoiceDownpayment.saleOrder.vehicleModel.manufactureCode|default }}</span>
                     </div>
+                    <div>
+                        <label>Jumlah Downpayment:</label>
+                        <span data-name="sale-order-downpayment">{{ saleInvoiceDownpayment.saleOrder.downPayment|default }}</span>
+                    </div>
                 </div>
                 {{ form_row(form.account, {'label': 'Pelunasan ke Akun'}) }}
             </div>
@@ -86,6 +90,7 @@
                 $("[data-name=sale-order-vehicle-serial-number]", "#sale-order-info").text($(this).attr("data-field-vehicle-serial-number"));
                 $("[data-name=sale-order-vehicle-color]", "#sale-order-info").text($(this).attr("data-field-vehicle-color"));
                 $("[data-name=vehicle-model-manufacture-code]", "#sale-order-info").text($(this).attr("data-field-vehicle-model-manufacture-code"));
+                $("[data-name=sale-order-downpayment]", "#sale-order-info").text($(this).attr("data-field-downpayment"));
             });
         });
     </script>

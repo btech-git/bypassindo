@@ -34,6 +34,7 @@
                 data-field-vehicle-serial-number="{{ saleOrder.vehicleSerialNumber|default }}"
                 data-field-vehicle-color="{{ saleOrder.vehicleColor|default }}"
                 data-field-quantity="{{ saleOrder.quantity|default }}"
+                data-field-downpayment="{{ saleOrder.downpayment|default }}"
                 data-field-vehicle-model-manufacture-code="{{ saleOrder.vehicleModel.manufactureCode|default }}">
                 <td class="text-left">{{ saleOrder.codeNumber|default }}</td>
                 <td class="text-left">{{ saleOrder.transactionDate|default ? saleOrder.transactionDate|date('j M Y') }}</td>

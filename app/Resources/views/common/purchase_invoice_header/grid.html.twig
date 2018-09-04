@@ -29,11 +29,11 @@
         {% for purchaseInvoiceHeader in grid.data %}
             <tr data-field-id="{{ purchaseInvoiceHeader.id }}"
                 data-field-code-number="{{ purchaseInvoiceHeader.codeNumber|default }}"
-                data-field-transaction-date="{{ purchaseInvoiceHeader.transactionDate|default|date('j M Y') }}"
+                data-field-transaction-date="{{ purchaseInvoiceHeader.transactionDate|default }}"
                 data-field-supplier-name="{{ purchaseInvoiceHeader.supplier.name|default }}"
                 data-field-supplier-invoice-number="{{ purchaseInvoiceHeader.supplierInvoiceNumber|default }}"
                 data-field-business-type="{{ purchaseInvoiceHeader.businessType|default }}"
-                data-field-grand-total="{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}"
+                data-field-grand-total="{{ purchaseInvoiceHeader.grandTotal|default }}"
                 data-field-total-payment="{{ purchaseInvoiceHeader.totalPayment|default }}"
                 data-field-remaining="{{ purchaseInvoiceHeader.remaining|default }}">
                 <td class="text-left">{{ purchaseInvoiceHeader.codeNumber|default }}</td>

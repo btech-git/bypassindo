@@ -114,6 +114,10 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $purchaseDeliveryOrder;
     /**
+     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceDownpayment", inversedBy="purchaseInvoiceHeaders")
+     */
+    private $purchaseInvoiceDownpayment;
+    /**
      * @ORM\OneToOne(targetEntity="ReceiveWorkshop", inversedBy="purchaseInvoiceHeader")
      */
     private $receiveWorkshop;
@@ -201,6 +205,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
 
     public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
     public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
+
+    public function getPurchaseInvoiceDownpayment() { return $this->purchaseInvoiceDownpayment; }
+    public function setPurchaseInvoiceDownpayment(PurchaseInvoiceDownpayment $purchaseInvoiceDownpayment = null) { $this->purchaseInvoiceDownpayment = $purchaseInvoiceDownpayment; }
 
     public function getReceiveWorkshop() { return $this->receiveWorkshop; }
     public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }

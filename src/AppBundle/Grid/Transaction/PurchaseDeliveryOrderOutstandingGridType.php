@@ -23,7 +23,7 @@ class PurchaseDeliveryOrderOutstandingGridType extends DataGridType
         $pageSize = 10;
         $pageOffset = 0;
         
-        $builder->processPage($repository->countOutstandings(), function($offset, $size) use ($pageSize, $pageOffset) {
+        $builder->processPage($repository->countOutstandings(), function($offset, $size) use (&$pageSize, &$pageOffset) {
             $pageSize = $size;
             $pageOffset = $offset;
         });

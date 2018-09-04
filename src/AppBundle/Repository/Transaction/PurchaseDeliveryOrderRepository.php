@@ -19,7 +19,7 @@ class PurchaseDeliveryOrderRepository extends EntityRepository
 
     public function findOutstandingsBy($size, $offset)
     {
-        $query = $this->_em->createQuery('SELECT t FROM AppBundle\Entity\Transaction\PurchaseDeliveryOrder t WHERE DATE_DIFF(CURRENT_DATE(), t.transactionDate) >= 6 AND t.id IN (SELECT IDENTITY(r.purchaseDeliveryOrder) FROM AppBundle\Entity\Transaction\ReceiveOrder r)');
+        $query = $this->_em->createQuery('SELECT t FROM AppBundle\Entity\Transaction\PurchaseDeliveryOrder t WHERE DATE_DIFF(CURRENT_DATE(), t.transactionDate) >= 6 AND t.id NOT IN (SELECT IDENTITY(r.purchaseDeliveryOrder) FROM AppBundle\Entity\Transaction\ReceiveOrder r)');
         $query->setMaxResults($size);
         $query->setFirstResult($offset);
         $purchaseDeliveryOrders = $query->getResult();
@@ -29,7 +29,7 @@ class PurchaseDeliveryOrderRepository extends EntityRepository
 
     public function countOutstandings()
     {
-        $query = $this->_em->createQuery('SELECT COUNT(t) FROM AppBundle\Entity\Transaction\PurchaseDeliveryOrder t WHERE DATE_DIFF(CURRENT_DATE(), t.transactionDate) >= 6 AND t.id IN (SELECT IDENTITY(r.purchaseDeliveryOrder) FROM AppBundle\Entity\Transaction\ReceiveOrder r)');
+        $query = $this->_em->createQuery('SELECT COUNT(t) FROM AppBundle\Entity\Transaction\PurchaseDeliveryOrder t WHERE DATE_DIFF(CURRENT_DATE(), t.transactionDate) >= 6 AND t.id NOT IN (SELECT IDENTITY(r.purchaseDeliveryOrder) FROM AppBundle\Entity\Transaction\ReceiveOrder r)');
         $count = $query->getSingleScalarResult();
         
         return $count;

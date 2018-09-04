@@ -94,7 +94,7 @@ class PurchaseWorkshopHeaderGridType extends DataGridType
 
     private function getSpecifications(array $options)
     {
-        $names = array('purchaseWorkshopHeader');
+        $names = array('purchaseWorkshopHeader', 'supplier');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();

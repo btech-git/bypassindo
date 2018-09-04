@@ -7,16 +7,16 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
-use AppBundle\Entity\Master\Customer;
+use AppBundle\Entity\Master\Supplier;
 use AppBundle\Entity\Master\PaymentMethod;
 use AppBundle\Entity\Master\Account;
 
 /**
- * @ORM\Table(name="transaction_sale_invoice_downpayment")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleInvoiceDownpaymentRepository")
+ * @ORM\Table(name="transaction_purchase_invoice_downpayment")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\PurchaseInvoiceDownpaymentRepository")
  * @UniqueEntity({"taxNumber"})
  */
-class SaleInvoiceDownpayment extends CodeNumberEntity
+class PurchaseInvoiceDownpayment extends CodeNumberEntity
 {
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -53,15 +53,10 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
      */
     private $staffLast;
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Customer")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
      * @Assert\NotNull()
      */
-    private $customer;
-    /**
-     * @ORM\ManyToOne(targetEntity="SaleOrder", inversedBy="saleInvoiceDownpayments")
-     * @Assert\NotNull()
-     */
-    private $saleOrder;
+    private $supplier;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Account")
      * @Assert\NotNull()
@@ -72,14 +67,19 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $paymentMethod;
+    /**
+     * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="purchaseInvoiceDownpayment")
+     */
+    private $purchaseInvoiceHeaders;
     
     public function __construct()
     {
+        $this->purchaseInvoiceHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
     {
-        return 'SDP';
+        return 'PDP';
     }
     
     public function getId() { return $this->id; }
@@ -102,17 +102,17 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getCustomer() { return $this->customer; }
-    public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
-
-    public function getSaleOrder() { return $this->saleOrder; }
-    public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
+    public function getSupplier() { return $this->supplier; }
+    public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
 
     public function getPaymentMethod() { return $this->paymentMethod; }
     public function setPaymentMethod(PaymentMethod $paymentMethod = null) { $this->paymentMethod = $paymentMethod; }
 
     public function getAccount() { return $this->account; }
     public function setAccount(Account $account = null) { $this->account = $account; }
+
+    public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
+    public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
 
     public function getFormattedTaxNumber()
     {

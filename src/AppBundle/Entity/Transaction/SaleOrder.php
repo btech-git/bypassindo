@@ -141,6 +141,11 @@ class SaleOrder extends CodeNumberEntity
      */
     private $downPayment;
     /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $downPaymentRemaining;
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotNull()
      */
@@ -188,9 +193,9 @@ class SaleOrder extends CodeNumberEntity
      */
     private $purchaseDeliveryOrders;
     /**
-     * @ORM\OneToOne(targetEntity="SaleInvoiceDownpayment", mappedBy="saleOrder")
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDownpayment", mappedBy="saleOrder")
      */
-    private $saleInvoiceDownpayment;
+    private $saleInvoiceDownpayments;
     /**
      * @ORM\OneToOne(targetEntity="PurchaseWorkshopHeader", mappedBy="saleOrder")
      */
@@ -199,6 +204,7 @@ class SaleOrder extends CodeNumberEntity
     public function __construct()
     {
         $this->purchaseDeliveryOrders = new ArrayCollection();
+        $this->saleInvoiceDownpayments = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -277,6 +283,9 @@ class SaleOrder extends CodeNumberEntity
     public function getDownPayment() { return $this->downPayment; }
     public function setDownPayment($downPayment) { $this->downPayment = $downPayment; }
 
+    public function getDownPaymentRemaining() { return $this->downPaymentRemaining; }
+    public function setDownPaymentRemaining($downPaymentRemaining) { $this->downPaymentRemaining = $downPaymentRemaining; }
+
     public function getDeliveryAddress() { return $this->deliveryAddress; }
     public function setDeliveryAddress($deliveryAddress) { $this->deliveryAddress = $deliveryAddress; }
 
@@ -307,8 +316,8 @@ class SaleOrder extends CodeNumberEntity
     public function getPurchaseDeliveryOrders() { return $this->purchaseDeliveryOrders; }
     public function setPurchaseDeliveryOrders(Collection $purchaseDeliveryOrders) { $this->purchaseDeliveryOrders = $purchaseDeliveryOrders; }
 
-    public function getSaleInvoiceDownpayment() { return $this->saleInvoiceDownpayment; }
-    public function setSaleInvoiceDownpayment(SaleInvoiceDownpayment $saleInvoiceDownpayment = null) { $this->saleInvoiceDownpayment = $saleInvoiceDownpayment; }
+    public function getSaleInvoiceDownpayments() { return $this->saleInvoiceDownpayments; }
+    public function setSaleInvoiceDownpayments(Collection $saleInvoiceDownpayments) { $this->saleInvoiceDownpayments = $saleInvoiceDownpayments; }
     
     public function getPurchaseWorkshopHeader() { return $this->purchaseWorkshopHeader; }
     public function setPurchaseWorkshopHeader(PurchaseWorkshopHeader $purchaseWorkshopHeader = null) { $this->purchaseWorkshopHeader = $purchaseWorkshopHeader; }

@@ -164,7 +164,7 @@
                 var name = "{{ form.saleInvoiceDetailUnits.vars.prototype.vars.name }}";
                 var rows = tableBody.children("tr");
                 var index = Math.max({{ saleInvoiceDetailUnitsCount }}, (rows.length > 0) ? parseInt(rows.last().attr("data-index")) + 1 : 0);
-                if (rows.length < 3) {
+                if (rows.length < 10) {
                     tableBody.appendByPrototype(tableBody.attr("data-prototype"), name, index, function(prototype) {
                         var receiveOrderPrototype = prototype.find("#{{ form.saleInvoiceDetailUnits.vars.prototype.receiveOrder.vars.id }}");
                         receiveOrderPrototype.val(context.attr("data-field-id"));
@@ -173,7 +173,7 @@
                         var vehicleMachineNumberPrototype = prototype.find("[data-name=vehicle-machine-number-" + name + "]");
                         vehicleMachineNumberPrototype.text(context.attr("data-field-vehicle-machine-number"));
                         var unitPricePrototype = prototype.find("[data-name=unit-price-" + name + "]");
-                        unitPricePrototype.text(context.attr("data-field-sale-order-unit-price"));
+                        unitPricePrototype.text($.numberFormat(context.attr("data-field-sale-order-unit-price"), 2));
                     });
                     bind();
                 }

@@ -66,7 +66,6 @@
                     <th class="center">Model</th>
                     <th class="center">Rangka #</th>
                     <th class="center">Mesin #</th>
-                    <th class="center">Quantity</th>
                 </tr>
             </thead>
             <tbody>
@@ -76,7 +75,6 @@
                     <td class="center">{{ deliveryWorkshop.purchaseWorkshopHeader.saleOrder.vehicleModel.vosModelName|default }}</td>
                     <td class="left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                     <td class="left">{{ deliveryWorkshop.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
-                    <td class="center">{{ deliveryWorkshop.purchaseWorkshopHeader.saleOrder.quantity|default|number_format(0) }}</td>
                 </tr>
             </tbody>
             <tfoot></tfoot>
