@@ -3,9 +3,9 @@
 namespace AppBundle\Entity\Transaction;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
@@ -59,7 +59,17 @@ class SaleInvoiceHeader extends CodeNumberEntity
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
-    private $grandTotal;
+    private $grandTotalBeforeDownpayment;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $grandTotalAfterDownpayment;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $totalDownpayment;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -94,13 +104,18 @@ class SaleInvoiceHeader extends CodeNumberEntity
      */
     private $saleInvoiceDetailUnits;
     /**
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDetailUnitDownpayment", mappedBy="saleInvoiceHeader")
+     */
+    private $saleInvoiceDetailUnitDownpayments;
+    /**
      * @ORM\OneToMany(targetEntity="SaleInvoiceDetailGeneral", mappedBy="saleInvoiceHeader")
      */
     private $saleInvoiceDetailGenerals;
     
     public function __construct()
     {
-        $this->saleInvoiceDetailUnits = new ArrayCollection();
+        $this->saleInvoiceDetailUnits = new ArrayCollection();        
+        $this->saleInvoiceDetailUnitDownpayments = new ArrayCollection();
         $this->saleInvoiceDetailGenerals = new ArrayCollection();
     }
     
@@ -129,8 +144,14 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
 
-    public function getGrandTotal() { return $this->grandTotal; }
-    public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
+    public function getGrandTotalBeforeDownpayment() { return $this->grandTotalBeforeDownpayment; }
+    public function setGrandTotalBeforeDownpayment($grandTotalBeforeDownpayment) { $this->grandTotalBeforeDownpayment = $grandTotalBeforeDownpayment; }
+
+    public function getGrandTotalAfterDownpayment() { return $this->grandTotalAfterDownpayment; }
+    public function setGrandTotalAfterDownpayment($grandTotalAfterDownpayment) { $this->grandTotalAfterDownpayment = $grandTotalAfterDownpayment; }
+
+    public function getTotalDownpayment() { return $this->totalDownpayment; }
+    public function setTotalDownpayment($totalDownpayment) { $this->totalDownpayment = $totalDownpayment; }
 
     public function getTotalPayment() { return $this->totalPayment; }
     public function setTotalPayment($totalPayment) { $this->totalPayment = $totalPayment; }
@@ -153,6 +174,9 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
     public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
 
+    public function getSaleInvoiceDetailUnitDownpayments() { return $this->saleInvoiceDetailUnitDownpayments; }
+    public function setSaleInvoiceDetailUnitDownpayments(Collection $saleInvoiceDetailUnitDownpayments) { $this->saleInvoiceDetailUnitDownpayments = $saleInvoiceDetailUnitDownpayments; }
+
     public function getSaleInvoiceDetailGenerals() { return $this->saleInvoiceDetailGenerals; }
     public function setSaleInvoiceDetailGenerals(Collection $saleInvoiceDetailGenerals) { $this->saleInvoiceDetailGenerals = $saleInvoiceDetailGenerals; }
 
@@ -167,16 +191,22 @@ class SaleInvoiceHeader extends CodeNumberEntity
 
     public function sync()
     {
-        $grandTotal = 0.00;
+        $grandTotalBeforeDownpayment = 0.00;
         foreach ($this->saleInvoiceDetailUnits as $saleInvoiceDetailUnit) {
             $saleInvoiceDetailUnit->sync();
-            $grandTotal += $saleInvoiceDetailUnit->getTotal();
+            $grandTotalBeforeDownpayment += $saleInvoiceDetailUnit->getTotal();
         }
         foreach ($this->saleInvoiceDetailGenerals as $saleInvoiceDetailGeneral) {
             $saleInvoiceDetailGeneral->sync();
-            $grandTotal += $saleInvoiceDetailGeneral->getTotal();
+            $grandTotalBeforeDownpayment += $saleInvoiceDetailGeneral->getTotal();
         }
-        $this->grandTotal = $grandTotal;
+        $this->grandTotalBeforeDownpayment = $grandTotalBeforeDownpayment;
+        $totalDownpayment = 0.00;
+        foreach ($this->saleInvoiceDetailUnitDownpayments as $saleInvoiceDetailUnitDownpayment) {
+            $totalDownpayment += $saleInvoiceDetailUnitDownpayment->getAmount();
+        }
+        $this->totalDownpayment = $totalDownpayment;
+        $this->grandTotalAfterDownpayment = $this->grandTotalBeforeDownpayment - $this->totalDownpayment;
         
         $totalPayment = '0.00';
         if ($this->salePaymentHeader !== null) {
@@ -184,6 +214,6 @@ class SaleInvoiceHeader extends CodeNumberEntity
         }
         $this->totalPayment = $totalPayment;
         
-        $this->remaining = $this->grandTotal - $this->totalPayment;
+        $this->remaining = $this->grandTotalAfterDownpayment - $this->totalPayment;
     }
 }

@@ -50,6 +50,9 @@ class SaleInvoiceHeaderUnitForm
         foreach ($saleInvoiceHeader->getSaleInvoiceDetailUnits() as $saleInvoiceDetailUnit) {
             $saleInvoiceDetailUnit->setSaleInvoiceHeader($saleInvoiceHeader);
         }
+        foreach ($saleInvoiceHeader->getSaleInvoiceDetailUnitDownpayments() as $saleInvoiceDetailUnitDownpayment) {
+            $saleInvoiceDetailUnitDownpayment->setSaleInvoiceHeader($saleInvoiceHeader);
+        }
         $this->sync($saleInvoiceHeader);
     }
     
@@ -70,6 +73,9 @@ class SaleInvoiceHeaderUnitForm
             $saleInvoiceDetailUnit->setUnitPrice($purchaseDeliveryOrder->getSaleOrder()->getUnitPrice());
             $saleInvoiceDetailUnit->setStaffSalesman($purchaseDeliveryOrder->getSaleOrder()->getStaffFirst());
         }
+        foreach ($saleInvoiceHeader->getSaleInvoiceDetailUnitDownpayments() as $saleInvoiceDetailUnitDownpayment) {
+            $saleInvoiceDetailUnitDownpayment->setAmount($saleInvoiceDetailUnitDownpayment->getSaleInvoiceDownpayment()->getAmount());
+        }
         $saleInvoiceHeader->sync();
     }
     
@@ -79,6 +85,7 @@ class SaleInvoiceHeaderUnitForm
             ObjectPersister::save(function() use ($saleInvoiceHeader) {
                 $this->saleInvoiceHeaderRepository->add($saleInvoiceHeader, array(
                     'saleInvoiceDetailUnits' => array('add' => true),
+                    'saleInvoiceDetailUnitDownpayments' => array('add' => true),
                 ));
                 $this->markJournalLedgers($saleInvoiceHeader, true);
             });
@@ -86,6 +93,7 @@ class SaleInvoiceHeaderUnitForm
             ObjectPersister::save(function() use ($saleInvoiceHeader) {
                 $this->saleInvoiceHeaderRepository->update($saleInvoiceHeader, array(
                     'saleInvoiceDetailUnits' => array('add' => true, 'remove' => true),
+                    'saleInvoiceDetailUnitDownpayments' => array('add' => true, 'remove' => true),
                 ));
                 $this->markJournalLedgers($saleInvoiceHeader, true);
             });
@@ -99,6 +107,7 @@ class SaleInvoiceHeaderUnitForm
             ObjectPersister::save(function() use ($saleInvoiceHeader) {
                 $this->saleInvoiceHeaderRepository->remove($saleInvoiceHeader, array(
                     'saleInvoiceDetailUnits' => array('remove' => true),
+                    'saleInvoiceDetailUnitDownpayments' => array('remove' => true),
                 ));
                 $this->markJournalLedgers($saleInvoiceHeader, false);
             });
@@ -108,6 +117,7 @@ class SaleInvoiceHeaderUnitForm
     protected function beforeDelete(SaleInvoiceHeader $saleInvoiceHeader)
     {
         $saleInvoiceHeader->getSaleInvoiceDetailUnits()->clear();
+        $saleInvoiceHeader->getSaleInvoiceDetailUnitDownpayments()->clear();
         $this->sync($saleInvoiceHeader);
     }
     
@@ -120,7 +130,7 @@ class SaleInvoiceHeaderUnitForm
             'codeNumberOrdinal' => $saleInvoiceHeader->getCodeNumberOrdinal(),
         ));
         $this->journalLedgerRepository->remove($oldJournalLedgers);
-        if ($addForHeader && $saleInvoiceHeader->getGrandTotal() > 0) {
+        if ($addForHeader && $saleInvoiceHeader->getGrandTotalAfterDownpayment() > 0) {
             $accountReceivable = $this->accountRepository->findReceivableRecord();
             $accountSaleUnit = $this->accountRepository->findSaleUnitRecord();
             
@@ -130,7 +140,7 @@ class SaleInvoiceHeaderUnitForm
             $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_RECEIVABLE);
             $journalLedgerDebit->setTransactionSubject($saleInvoiceHeader->getCustomer());
             $journalLedgerDebit->setNote($saleInvoiceHeader->getNote());
-            $journalLedgerDebit->setDebit($saleInvoiceHeader->getGrandTotal());
+            $journalLedgerDebit->setDebit($saleInvoiceHeader->getGrandTotalAfterDownpayment());
             $journalLedgerDebit->setCredit(0);
             $journalLedgerDebit->setAccount($accountReceivable);
             $journalLedgerDebit->setStaff($saleInvoiceHeader->getStaffFirst());
@@ -143,7 +153,7 @@ class SaleInvoiceHeaderUnitForm
             $journalLedgerCredit->setTransactionSubject($saleInvoiceHeader->getCustomer());
             $journalLedgerCredit->setNote($saleInvoiceHeader->getNote());
             $journalLedgerCredit->setDebit(0);
-            $journalLedgerCredit->setCredit($saleInvoiceHeader->getGrandTotal());
+            $journalLedgerCredit->setCredit($saleInvoiceHeader->getGrandTotalAfterDownpayment());
             $journalLedgerCredit->setAccount($accountSaleUnit);
             $journalLedgerCredit->setStaff($saleInvoiceHeader->getStaffFirst());
             $this->journalLedgerRepository->add($journalLedgerCredit);

@@ -27,7 +27,7 @@
         {% for saleInvoiceHeader in grid.data %}
             <tr data-field-id="{{ saleInvoiceHeader.id }}"
                 data-field-code-number="{{ saleInvoiceHeader.codeNumber|default }}"
-                data-field-transaction-date="{{ saleInvoiceHeader.transactionDate|default }}"
+                data-field-transaction-date="{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('Y-m-d') }}"
                 data-field-tax-number="{{ saleInvoiceHeader.taxNumber|default }}"
                 data-field-customer-name="{{ saleInvoiceHeader.customer.name|default }}"
                 data-field-grand-total="{{ saleInvoiceHeader.grandTotal|default }}"

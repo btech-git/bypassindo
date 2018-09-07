@@ -13,6 +13,7 @@ use Symfony\Component\Validator\Constraints\Count;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\SaleInvoiceHeader;
 use AppBundle\Entity\Transaction\SaleInvoiceDetailUnit;
+use AppBundle\Entity\Transaction\SaleInvoiceDetailUnitDownpayment;
 use AppBundle\Entity\Master\Customer;
 
 class SaleInvoiceHeaderUnitType extends AbstractType
@@ -33,8 +34,16 @@ class SaleInvoiceHeaderUnitType extends AbstractType
                 'label' => false,
                 'constraints' => array(
                     new Valid(),
-                    new Count(array('min' => 1)),
+                    new Count(array('min' => 1, 'max' => 10)),
                 ),
+            ))
+            ->add('saleInvoiceDetailUnitDownpayments', CollectionType::class, array(
+                'entry_type' => SaleInvoiceDetailUnitDownpaymentType::class,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'prototype_data' => new SaleInvoiceDetailUnitDownpayment(),
+                'label' => false,
             ))
         ;
         $builder

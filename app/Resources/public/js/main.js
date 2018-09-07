@@ -13,6 +13,49 @@ jQuery(function($) {
         return parts.join(decimal);
     };
     
+    jQuery.datetimeFormat = function(datetime, format) {
+        format = typeof format === "undefined" ? "YYYY-MM-DD hh:mm:ss" : format;
+        var dateObj = new Date(datetime);
+        var date = dateObj.getDate();
+        var month = dateObj.getMonth();
+        var year = dateObj.getFullYear();
+        var hour = dateObj.getHours();
+        var minute = dateObj.getMinutes();
+        var second = dateObj.getSeconds();
+        var pad = function(string) {
+            return ("00" + string).slice(-2);
+        };
+        var str = format;
+        if (str.indexOf("Y") !== -1) {
+            str = str.replace("YYYY", year);
+            str = str.replace("YY", (year + "").substr(-2, 2));
+        }
+        if (str.indexOf("D") !== -1) {
+            str = str.replace("DD", pad(date));
+            str = str.replace("D", date);
+        }
+        if (str.indexOf("h") !== -1) {
+            str = str.replace("hh", pad(hour));
+            str = str.replace("h", hour);
+        }
+        if (str.indexOf("m") !== -1) {
+            str = str.replace("mm", pad(minute));
+            str = str.replace("m", minute);
+        }
+        if (str.indexOf("s") !== -1) {
+            str = str.replace("ss", pad(second));
+            str = str.replace("s", second);
+        }
+        if (str.indexOf("M") !== -1) {
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            str = str.replace("MMMM", monthNames[month]);
+            str = str.replace("MMM", monthNames[month].substr(0, 3));
+            str = str.replace("MM", pad(month + 1));
+            str = str.replace("M", month + 1);
+        }
+        return str;
+    }
+    
     jQuery.redirect = function(url, data, method, target) {
         data = typeof data === "undefined" ? {} : data;
         method = typeof method === "undefined" ? "" : method;
@@ -86,6 +129,10 @@ jQuery(function($) {
                     var decimal = el.attr("data-option-decimal-point");
                     var separator = el.attr("data-option-thousand-separator");
                     value = $.numberFormat(el.val(), precision, decimal, separator);
+                    break;
+                case "datetime":
+                    var format = el.attr("data-option-format");
+                    value = $.datetimeFormat(el.val(), format);
                     break;
                 default:
                     value = "";

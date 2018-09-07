@@ -2,6 +2,7 @@
 
 namespace AppBundle\Service\Transaction;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\SaleInvoiceDownpayment;
 use AppBundle\Entity\Report\JournalLedger;
@@ -45,20 +46,25 @@ class SaleInvoiceDownpaymentForm
             }
         }
         
-        $this->sync($saleInvoiceDownpayment);
+        $this->sync($saleInvoiceDownpayment, false);
     }
     
-    private function sync(SaleInvoiceDownpayment $saleInvoiceDownpayment)
+    private function sync(SaleInvoiceDownpayment $saleInvoiceDownpayment, $mergeForDelete)
     {
         $saleOrder = $saleInvoiceDownpayment->getSaleOrder();
         if ($saleOrder !== null) {
             $saleInvoiceDownpayment->setCustomer($saleOrder->getCustomer());
         }
         $oldSaleInvoiceDownpayments = $saleOrder->getSaleInvoiceDownpayments();
-        $saleInvoiceDownpayments = $oldSaleInvoiceDownpayments->getValues();
+        $saleInvoiceDownpaymentList = new ArrayCollection($oldSaleInvoiceDownpayments->getValues());
+        if ($mergeForDelete) {
+            $saleInvoiceDownpaymentList->removeElement($saleInvoiceDownpayment);
+        } else if (empty($saleInvoiceDownpayment->getId())) {
+            $saleInvoiceDownpaymentList->add($saleInvoiceDownpayment);
+        }
         $totalAmount = 0.00;
-        foreach ($saleInvoiceDownpayments as $saleInvoiceDownpayment) {
-            $totalAmount += $oldSaleInvoiceDownpayment->getAmount();
+        foreach ($saleInvoiceDownpaymentList as $saleInvoiceDownpaymentItem) {
+            $totalAmount += $saleInvoiceDownpaymentItem->getAmount();
         }
         $saleOrder->setDownpaymentRemaining($saleOrder->getDownPayment() - $totalAmount);
         
@@ -93,7 +99,7 @@ class SaleInvoiceDownpaymentForm
     
     protected function beforeDelete(SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
-        $this->sync($saleInvoiceDownpayment);
+        $this->sync($saleInvoiceDownpayment, true);
     }
     
     private function markJournalLedgers(SaleInvoiceDownpayment $saleInvoiceDownpayment, $addForHeader)

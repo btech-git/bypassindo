@@ -70,6 +70,7 @@ class SaleInvoiceHeaderUnitController extends Controller
             'saleInvoiceHeader' => $saleInvoiceHeader,
             'form' => $form->createView(),
             'saleInvoiceDetailUnitsCount' => 0,
+            'saleInvoiceDetailUnitDownpaymentsCount' => 0,
         ));
     }
 
@@ -93,6 +94,7 @@ class SaleInvoiceHeaderUnitController extends Controller
     public function editAction(Request $request, SaleInvoiceHeader $saleInvoiceHeader, $_format = 'html')
     {
         $saleInvoiceDetailUnitsCount = $saleInvoiceHeader->getSaleInvoiceDetailUnits()->count();
+        $saleInvoiceDetailUnitDownpaymentsCount = $saleInvoiceHeader->getSaleInvoiceDetailUnitDownpayments()->count();
 
         $saleInvoiceHeaderUnitService = $this->get('app.transaction.sale_invoice_header_unit_form');
         $form = $this->createForm(SaleInvoiceHeaderUnitType::class, $saleInvoiceHeader, array(
@@ -111,6 +113,7 @@ class SaleInvoiceHeaderUnitController extends Controller
             'saleInvoiceHeader' => $saleInvoiceHeader,
             'form' => $form->createView(),
             'saleInvoiceDetailUnitsCount' => $saleInvoiceDetailUnitsCount,
+            'saleInvoiceDetailUnitDownpaymentsCount' => $saleInvoiceDetailUnitDownpaymentsCount,
         ));
     }
 

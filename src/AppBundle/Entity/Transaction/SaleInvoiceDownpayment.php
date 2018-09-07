@@ -3,6 +3,8 @@
 namespace AppBundle\Entity\Transaction;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
@@ -72,9 +74,14 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $paymentMethod;
+    /**
+     * @ORM\OneToMany(targetEntity="SaleInvoiceDetailUnitDownpayment", mappedBy="saleInvoiceDownpayment")
+     */
+    private $saleInvoiceDetailUnitDownpayments;
     
     public function __construct()
-    {
+    {        
+        $this->saleInvoiceDetailUnitDownpayments = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -113,6 +120,9 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
 
     public function getAccount() { return $this->account; }
     public function setAccount(Account $account = null) { $this->account = $account; }
+
+    public function getSaleInvoiceDetailUnitDownpayments() { return $this->saleInvoiceDetailUnitDownpayments; }
+    public function setSaleInvoiceDetailUnitDownpayments(Collection $saleInvoiceDetailUnitDownpayments) { $this->saleInvoiceDetailUnitDownpayments = $saleInvoiceDetailUnitDownpayments; }
 
     public function getFormattedTaxNumber()
     {

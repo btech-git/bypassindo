@@ -176,7 +176,7 @@
                 $("#{{ form.saleInvoiceHeader.vars.id }}").val($(this).attr("data-field-id"));
                 $("[data-name=code-number]", "#sale-invoice-header-info").text($(this).attr("data-field-code-number"));
                 $("[data-name=customer-name]", "#sale-invoice-header-info").text($(this).attr("data-field-customer-name"));
-                $("[data-name=transaction-date]", "#sale-invoice-header-info").text($(this).attr("data-field-transaction-date"));
+                $("[data-name=transaction-date]", "#sale-invoice-header-info").text($.datetimeFormat($(this).attr("data-field-transaction-date"), 'D MMM YYYY'));
                 $("[data-name=tax-number]", "#sale-invoice-header-info").text($(this).attr("data-field-tax-number"));
                 $("[data-name=grand-total]", "#sale-invoice-header-info").text($(this).attr("data-field-grand-total"));
                 $("[data-name=total-payment]", "#sale-invoice-header-info").text($(this).attr("data-field-total-payment"));
