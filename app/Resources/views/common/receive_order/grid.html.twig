@@ -36,6 +36,7 @@
                 data-field-vehicle-model-manufacture-code="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleModel.manufactureCode|default }}"
                 data-field-sale-order-quantity="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.quantity|default }}"
                 data-field-sale-order-unit-price="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.unitPrice|default }}"
+                data-field-sale-order-payment-type="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.financeCompany.name|default }}"
                 data-field-sale-order-total="{{ receiveOrder.purchaseDeliveryOrder.saleOrder.total|default }}">
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                 <td class="text-left">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>

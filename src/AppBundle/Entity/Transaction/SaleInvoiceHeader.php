@@ -14,7 +14,6 @@ use AppBundle\Entity\Master\Customer;
 /**
  * @ORM\Table(name="transaction_sale_invoice_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SaleInvoiceHeaderRepository")
- * @UniqueEntity({"taxNumber"})
  */
 class SaleInvoiceHeader extends CodeNumberEntity
 {

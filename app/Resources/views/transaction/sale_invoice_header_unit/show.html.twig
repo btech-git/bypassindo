@@ -51,6 +51,7 @@
             <tr class="bg-info">
                 <th>Rangka #</th>
                 <th>Mesin #</th>
+                <th>Jenis Pembayaran</th>
                 <th>Quantity</th>
                 <th>Price</th>
                 <th>Total</th>
@@ -61,6 +62,7 @@
                 <tr>
                     <td class="text-left">{{ saleInvoiceDetailUnit.vehicleChassisNumber|default }}</td>
                     <td class="text-left">{{ saleInvoiceDetailUnit.vehicleMachineNumber|default }}</td>
+                    <td class="text-left">{{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.saleOrder.financeCompany.name|default }}</td>
                     <td class="text-center">{{ saleInvoiceDetailUnit.quantity|default|number_format(0) }}</td>
                     <td class="text-right">{{ saleInvoiceDetailUnit.unitPrice|default|number_format(2) }}</td>
                     <td class="text-right">{{ saleInvoiceDetailUnit.total|default|number_format(2) }}</td>
@@ -69,8 +71,8 @@
         </tbody>
         <tfoot>
             <tr>
-                <td class="text-right" colspan="4">Grand Total</td>
-                <td class="text-right">{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                <td class="text-right" colspan="5">Grand Total</td>
+                <td class="text-right">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</td>
             </tr>
         </tfoot>
     </table>

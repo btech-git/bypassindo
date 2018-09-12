@@ -121,7 +121,7 @@ class PurchaseInvoiceHeaderWorkshopForm
         ));
         $this->journalLedgerRepository->remove($oldJournalLedgers);
         if ($addForHeader && $purchaseInvoiceHeader->getGrandTotal() > 0) {
-            $accountInventorySparepart = $this->accountRepository->findInventorySparepartRecord();
+            $accountInventoryWorkshop = $this->accountRepository->findInventoryWorkshopRecord();
             $accountPayableOther = $this->accountRepository->findPayableOtherRecord();
 
             $journalLedgerDebit = new JournalLedger();
@@ -132,7 +132,7 @@ class PurchaseInvoiceHeaderWorkshopForm
             $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
             $journalLedgerDebit->setDebit($purchaseInvoiceHeader->getGrandTotal());
             $journalLedgerDebit->setCredit(0);
-            $journalLedgerDebit->setAccount($accountInventorySparepart);
+            $journalLedgerDebit->setAccount($accountInventoryWorkshop);
             $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
             $this->journalLedgerRepository->add($journalLedgerDebit);
 

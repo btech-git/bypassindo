@@ -114,6 +114,7 @@ class SaleInvoiceDownpaymentForm
         
         if ($addForHeader && $saleInvoiceDownpayment->getAmount() > 0) {
             $accountSaleUnit = $this->accountRepository->findSaleUnitRecord();
+            $accountReceivable = $this->accountRepository->findReceivableRecord();
             
             $journalLedgerDebit = new JournalLedger();
             $journalLedgerDebit->setCodeNumber($saleInvoiceDownpayment->getCodeNumber());
@@ -123,7 +124,7 @@ class SaleInvoiceDownpaymentForm
             $journalLedgerDebit->setNote($saleInvoiceDownpayment->getNote());
             $journalLedgerDebit->setDebit($saleInvoiceDownpayment->getAmount());
             $journalLedgerDebit->setCredit(0.00);
-            $journalLedgerDebit->setAccount($saleInvoiceDownpayment->getAccount());
+            $journalLedgerDebit->setAccount($accountReceivable);
             $journalLedgerDebit->setStaff($saleInvoiceDownpayment->getStaffFirst());
             $this->journalLedgerRepository->add($journalLedgerDebit);
 

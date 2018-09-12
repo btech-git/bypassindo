@@ -34,6 +34,8 @@
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.account) }}
+                {{ form_row(form.objectiveReason, {'label': 'Pengeluaran Untuk'}) }}
+                {{ form_row(form.chequeNumber, {'label': 'No Cek/BG'}) }}
                 {{ form_row(form.note) }}
             </div>
         </div>

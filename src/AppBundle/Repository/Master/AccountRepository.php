@@ -6,24 +6,24 @@ use LibBundle\Doctrine\EntityRepository;
 
 class AccountRepository extends EntityRepository
 {
-    public function findInventorySparepartRecord()
+    public function findReceivableRecord()
+    {
+        return $this->find(7);
+    }
+    
+    public function findInventoryUnitRecord()
+    {
+        return $this->find(10);
+    }
+    
+    public function findInventoryWorkshopRecord()
     {
         return $this->find(11);
     }
     
-    public function findPayableSparepartRecord()
+    public function findInventorySparepartRecord()
     {
-        return $this->find(29);
-    }
-    
-    public function findSaleUnitRecord()
-    {
-        return $this->find(50);
-    }
-    
-    public function findReceivableRecord()
-    {
-        return $this->find(7);
+        return $this->find(12);
     }
     
     public function findPayableUnitRecord()
@@ -36,8 +36,14 @@ class AccountRepository extends EntityRepository
         return $this->find(28);
     }
     
-    public function findInventoryUnitRecord()
+    public function findPayableSparepartRecord()
     {
-        return $this->find(10);
+        return $this->find(29);
     }
+    
+    public function findSaleUnitRecord()
+    {
+        return $this->find(50);
+    }
+    
 }

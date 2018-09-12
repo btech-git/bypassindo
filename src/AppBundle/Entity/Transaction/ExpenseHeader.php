@@ -26,6 +26,16 @@ class ExpenseHeader extends CodeNumberEntity
      */
     private $transactionDate;
     /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank()
+     */
+    private $objectiveReason;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
+     */
+    private $chequeNumber;
+    /**
      * @ORM\Column(name="note", type="text")
      * @Assert\NotNull()
      */
@@ -61,7 +71,13 @@ class ExpenseHeader extends CodeNumberEntity
     
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate(\DateTime $transactionDate = null) { $this->transactionDate = $transactionDate; }
-    
+
+    public function getObjectiveReason() { return $this->objectiveReason; }
+    public function setObjectiveReason($objectiveReason) { $this->objectiveReason = $objectiveReason; }
+
+    public function getChequeNumber() { return $this->chequeNumber; }
+    public function setChequeNumber($chequeNumber) { $this->chequeNumber = $chequeNumber; }
+
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
     

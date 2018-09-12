@@ -21,6 +21,8 @@ class ExpenseHeaderType extends AbstractType
     {
         $builder
             ->add('transactionDate', DateType::class)
+            ->add('objectiveReason')
+            ->add('chequeNumber')
             ->add('note')
             ->add('account', EntityType::class, array(
                 'class' => Account::class,

@@ -15,7 +15,7 @@
         </div>
         <div>
             <div class="rows-1 top-info content-left">
-                aaaaaaaaaaaaaaa
+                {{ expenseHeader.objectiveReason|default }}
             </div>
             <div class="rows-1 top-info content-right">
                 {{ expenseHeader.totalAmount|default|number_format(2) }}
@@ -29,7 +29,7 @@
                 {{ expenseHeader.account.name|default }}
             </div>
             <div class="rows-1 bottom-info content-middle">
-                dgds
+                {{ expenseHeader.chequeNumber|default }}
             </div>
             <div class="rows-1 bottom-info content-right">
                 {{ expenseHeader.totalAmount|default|number_format(2) }}

@@ -22,6 +22,14 @@
                 <td>{{ expenseHeader.account.name|default }}</td>
             </tr>
             <tr>
+                <th>Pengeluaran untuk</th>
+                <td>{{ expenseHeader.objectiveReason|default }}</td>
+            </tr>
+            <tr>
+                <th>No. Cek/BG</th>
+                <td>{{ expenseHeader.chequeNumber|default }}</td>
+            </tr>
+            <tr>
                 <th>Note</th>
                 <td>{{ expenseHeader.note|default }}</td>
             </tr>
