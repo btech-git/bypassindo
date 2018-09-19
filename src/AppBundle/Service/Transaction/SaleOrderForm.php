@@ -53,6 +53,7 @@ class SaleOrderForm
         }
         $purchaseDeliveryOrdersCount = $saleOrder->getPurchaseDeliveryOrders()->count();
         $saleOrder->setRemaining($saleOrder->getQuantity() - $purchaseDeliveryOrdersCount);
+        $saleOrder->setDownpaymentRemaining('0.00');
         $purchaseWorkshopHeader = $saleOrder->getPurchaseWorkshopHeader();
         if ($purchaseWorkshopHeader !== null) {
             $purchaseWorkshopHeader->setQuantityOrder($saleOrder->getQuantity());

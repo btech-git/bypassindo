@@ -91,9 +91,9 @@ class ReceiveOrderGridType extends DataGridType
             if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleChassisNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
                 $associations['purchaseDeliveryOrder']['merge'] = true;
             }
-            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleMachineNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
-                $associations['purchaseDeliveryOrder']['merge'] = true;
-            }
+//            if ($group === 'purchaseDeliveryOrder' && $field === 'vehicleMachineNumber' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+//                $associations['purchaseDeliveryOrder']['merge'] = true;
+//            }
             $operator::search($criteria[$group], $field, $values);
         });
 

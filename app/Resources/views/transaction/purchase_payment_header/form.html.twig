@@ -183,9 +183,9 @@
                 $("[data-name=transaction-date]", "#purchase-invoice-header-info").text($(this).attr("data-field-transaction-date"));
                 $("[data-name=supplier-invoice-number]", "#purchase-invoice-header-info").text($(this).attr("data-field-supplier-invoice-number"));
                 $("[data-name=business-type]", "#purchase-invoice-header-info").text($(this).attr("data-field-business-type"));
-                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($(this).attr("data-field-grand-total"));
-                $("[data-name=total-payment]", "#purchase-invoice-header-info").text($(this).attr("data-field-total-payment"));
-                $("[data-name=remaining]", "#purchase-invoice-header-info").text($(this).attr("data-field-remaining"));
+                $("[data-name=grand-total]", "#purchase-invoice-header-info").text($.numberFormat((this).attr("data-field-grand-total"), 2));
+                $("[data-name=total-payment]", "#purchase-invoice-header-info").text($.numberFormat((this).attr("data-field-total-payment"), 2));
+                $("[data-name=remaining]", "#purchase-invoice-header-info").text($.numberFormat((this).attr("data-field-remaining"), 2));
             });
             
             $("#account-grid").on("click", "table[data-role=table] tbody tr", function() {

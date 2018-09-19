@@ -48,7 +48,7 @@
                     </div>
                     <div>
                         <label>Jumlah Downpayment:</label>
-                        <span data-name="sale-order-downpayment">{{ saleInvoiceDownpayment.saleOrder.downPayment|default }}</span>
+                        <span data-name="sale-order-downpayment">{{ saleInvoiceDownpayment.saleOrder.downPayment|default|number_format(2) }}</span>
                     </div>
                 </div>
                 {{ form_row(form.account, {'label': 'Pelunasan ke Akun'}) }}

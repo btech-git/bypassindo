@@ -30,14 +30,14 @@
                 data-field-transaction-date="{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('Y-m-d') }}"
                 data-field-tax-number="{{ saleInvoiceHeader.taxNumber|default }}"
                 data-field-customer-name="{{ saleInvoiceHeader.customer.name|default }}"
-                data-field-grand-total="{{ saleInvoiceHeader.grandTotal|default }}"
-                data-field-total-payment="{{ saleInvoiceHeader.totalPayment|default }}"
-                data-field-remaining="{{ saleInvoiceHeader.remaining|default }}">
+                data-field-grand-total="{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}"
+                data-field-total-payment="{{ saleInvoiceHeader.totalPayment|default|number_format(2) }}"
+                data-field-remaining="{{ saleInvoiceHeader.remaining|default|number_format(2) }}">
                 <td class="text-left">{{ saleInvoiceHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleInvoiceHeader.customer.name|default }}</td>
                 <td class="text-left">{{ saleInvoiceHeader.taxNumber|default }}</td>
-                <td class="text-right">{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</td>
                 <td class="text-right">{{ saleInvoiceHeader.totalPayment|default|number_format(2) }}</td>
                 <td class="text-right">{{ saleInvoiceHeader.remaining|default|number_format(2) }}</td>
             </tr>

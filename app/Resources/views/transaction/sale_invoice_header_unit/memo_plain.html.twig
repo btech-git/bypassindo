@@ -17,7 +17,7 @@
             {{ saleInvoiceHeader.customer.name|default }}
         </div>
         <div class="rows-1 nominal">
-            {{ saleInvoiceHeader.grandTotal|default|number_format(0, '.', '')|say|capitalize }} rupiah.
+            {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0, '.', '')|say|capitalize }} rupiah.
         </div>
         <div class="rows-empty middle">
             &nbsp;
