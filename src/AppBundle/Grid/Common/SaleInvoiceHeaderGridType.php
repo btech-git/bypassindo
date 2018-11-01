@@ -77,7 +77,7 @@ class SaleInvoiceHeaderGridType extends DataGridType
 
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
             if ($group === 'customer' && $field === 'name' && $operator === ContainNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
-                $associations['receiveOrder']['associations']['purchaseDeliveryOrder']['associations']['saleOrder']['associations']['customer']['merge'] = true;
+                $associations['customer']['merge'] = true;
             }
             $operator::search($criteria[$group], $field, $values);
         });
