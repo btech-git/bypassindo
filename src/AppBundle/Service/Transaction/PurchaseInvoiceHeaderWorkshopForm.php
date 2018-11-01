@@ -66,7 +66,7 @@ class PurchaseInvoiceHeaderWorkshopForm
                 if ($purchaseWorkshopDetails->containsKey($index)) {
                     $purchaseWorkshopDetail = $purchaseWorkshopDetails->get($index);
                     $purchaseInvoiceDetailWorkshop->setItemName($purchaseWorkshopDetail->getItemName());
-                    $purchaseInvoiceDetailWorkshop->setQuantity($purchaseWorkshopDetail->getQuantity());
+                    $purchaseInvoiceDetailWorkshop->setQuantity(1);
                 }
             }
         }

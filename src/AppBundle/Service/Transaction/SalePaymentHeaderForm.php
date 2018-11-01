@@ -60,8 +60,9 @@ class SalePaymentHeaderForm
         }
         $salePaymentHeader->setTotalAmount($totalAmount);
         $saleInvoiceHeader = $salePaymentHeader->getSaleInvoiceHeader();
-        $saleInvoiceHeader->setTotalPayment($totalAmount);
-        $saleInvoiceHeader->setRemaining($saleInvoiceHeader->getGrandTotalAfterDownpayment() - $totalAmount);
+        $totalPayment = $saleInvoiceHeader->getTotalPayment() + $totalAmount;
+        $saleInvoiceHeader->setTotalPayment($totalPayment);
+        $saleInvoiceHeader->setRemaining($saleInvoiceHeader->getGrandTotalAfterDownpayment() - $totalPayment);
     }
     
     public function save(SalePaymentHeader $salePaymentHeader)

@@ -13,7 +13,6 @@ use LibBundle\Grid\SortOperator\DescendingType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use AppBundle\Entity\Transaction\SaleInvoiceHeader;
-use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Entity\Master\Customer;
 
 class SaleInvoiceHeaderGridType extends DataGridType
@@ -110,9 +109,10 @@ class SaleInvoiceHeaderGridType extends DataGridType
         );
 
         if (array_key_exists('form', $options)) {
+            $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'sale_payment_header':
-                    $associations['salePaymentHeader']['merge'] = false;
+                    $criteria['saleInvoiceHeader']->andWhere($expr->gt('remaining', 0));
                     break;
             }
         }

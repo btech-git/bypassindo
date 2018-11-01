@@ -83,19 +83,19 @@ class SupplierGridType extends DataGridType
             $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'purchase_invoice_header_general':
-                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_GENERAL));
+                    $criteria['supplier']->andWhere($expr->eq('businessType', Supplier::BUSINESS_TYPE_GENERAL));
                     break;
                 case 'purchase_invoice_header_unit':
-                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_UNIT));
+                    $criteria['supplier']->andWhere($expr->eq('businessType', Supplier::BUSINESS_TYPE_UNIT));
                     break;
                 case 'purchase_invoice_header_workshop':
-                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    $criteria['supplier']->andWhere($expr->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
                     break;
                 case 'purchase_workshop_header':
-                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    $criteria['supplier']->andWhere($expr->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
                     break;
                 case 'sale_discount_application':
-                    $criteria['supplier']->andWhere($expr()->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
+                    $criteria['supplier']->andWhere($expr->eq('businessType', Supplier::BUSINESS_TYPE_WORKSHOP));
                     break;
             }
         }

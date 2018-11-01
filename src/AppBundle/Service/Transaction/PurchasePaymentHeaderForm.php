@@ -60,8 +60,9 @@ class PurchasePaymentHeaderForm
         }
         $purchasePaymentHeader->setTotalAmount($totalAmount);
         $purchaseInvoiceHeader = $purchasePaymentHeader->getPurchaseInvoiceHeader();
-        $purchaseInvoiceHeader->setTotalPayment($totalAmount);
-        $purchaseInvoiceHeader->setRemaining($purchaseInvoiceHeader->getGrandTotal() - $totalAmount);
+        $totalPayment = $purchaseInvoiceHeader->getTotalPayment() + $totalAmount;
+        $purchaseInvoiceHeader->setTotalPayment($totalPayment);
+        $purchaseInvoiceHeader->setRemaining($purchaseInvoiceHeader->getGrandTotal() - $totalPayment);
     }
     
     public function save(PurchasePaymentHeader $purchasePaymentHeader)

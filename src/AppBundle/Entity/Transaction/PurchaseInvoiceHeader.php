@@ -122,9 +122,9 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $receiveWorkshop;
     /**
-     * @ORM\OneToOne(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
+     * @ORM\OneToMany(targetEntity="PurchasePaymentHeader", mappedBy="purchaseInvoiceHeader")
      */
-    private $purchasePaymentHeader;
+    private $purchasePaymentHeaders;
     /**
      * @ORM\OneToMany(targetEntity="PurchaseInvoiceDetailUnit", mappedBy="purchaseInvoiceHeader")
      */
@@ -143,6 +143,7 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         $this->purchaseInvoiceDetailUnits = new ArrayCollection();
         $this->purchaseInvoiceDetailWorkshops = new ArrayCollection();
         $this->purchaseInvoiceDetailGenerals = new ArrayCollection();
+        $this->purchasePaymentHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -212,8 +213,8 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getReceiveWorkshop() { return $this->receiveWorkshop; }
     public function setReceiveWorkshop(ReceiveWorkshop $receiveWorkshop = null) { $this->receiveWorkshop = $receiveWorkshop; }
 
-    public function getPurchasePaymentHeader() { return $this->purchasePaymentHeader; }
-    public function setPurchasePaymentHeader(PurchasePaymentHeader $purchasePaymentHeader = null) { $this->purchasePaymentHeader = $purchasePaymentHeader; }
+    public function getPurchasePaymentHeaders() { return $this->purchasePaymentHeaders; }
+    public function setPurchasePaymentHeaders(Collection $purchasePaymentHeaders) { $this->purchasePaymentHeaders = $purchasePaymentHeaders; }
 
     public function getPurchaseInvoiceDetailUnits() { return $this->purchaseInvoiceDetailUnits; }
     public function setPurchaseInvoiceDetailUnits(Collection $purchaseInvoiceDetailUnits) { $this->purchaseInvoiceDetailUnits = $purchaseInvoiceDetailUnits; }
@@ -255,9 +256,11 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         $this->grandTotal = $grandTotal;
         
         $totalPayment = '0.00';
-        if ($this->purchasePaymentHeader !== null) {
-            $this->purchasePaymentHeader->sync();
-            $totalPayment = $this->purchasePaymentHeader->getTotalAmount();
+        if ($this->purchasePaymentHeaders !== null) {
+            foreach ($this->purchasePaymentHeaders as $purchasePaymentHeader) {
+                $purchasePaymentHeader->sync();
+                $totalPayment = $purchasePaymentHeader->getTotalAmount();
+            }
         }
         $this->totalPayment = $totalPayment;
         

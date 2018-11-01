@@ -37,6 +37,7 @@
         <div class="row">
             <div class="col-sm-6">
                 {{ form_row(form.transactionDate, {'label': 'Tanggal Piutang'}) }}
+                {{ form_row(form.taxDate, {'label': 'Tanggal F. Pajak'}) }}
                 {{ form_row(form.taxNumber, {'label': 'Faktur Pajak #'}) }}
             </div>
             <div class="col-sm-6">
@@ -87,7 +88,7 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="4">Grand Total</td>
-                    <td class="text-right"><span data-name="grand-total">{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="grand-total">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>

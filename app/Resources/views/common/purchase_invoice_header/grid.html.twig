@@ -29,7 +29,7 @@
         {% for purchaseInvoiceHeader in grid.data %}
             <tr data-field-id="{{ purchaseInvoiceHeader.id }}"
                 data-field-code-number="{{ purchaseInvoiceHeader.codeNumber|default }}"
-                data-field-transaction-date="{{ purchaseInvoiceHeader.transactionDate|default }}"
+                data-field-transaction-date="{{ purchaseInvoiceHeader.transactionDate|default ? purchaseInvoiceHeader.transactionDate|date('Y-m-d') }}"
                 data-field-supplier-name="{{ purchaseInvoiceHeader.supplier.name|default }}"
                 data-field-supplier-invoice-number="{{ purchaseInvoiceHeader.supplierInvoiceNumber|default }}"
                 data-field-business-type="{{ purchaseInvoiceHeader.businessType|default }}"

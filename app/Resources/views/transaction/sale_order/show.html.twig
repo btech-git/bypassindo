@@ -22,6 +22,14 @@
                 <td>{{ saleOrder.quotationNumber|default }}</td>
             </tr>
             <tr>
+                <th>Customer</th>
+                <td>{{ saleOrder.customer.name|default }}</td>
+            </tr>
+            <tr>
+                <th>Contact Person</th>
+                <td>{{ saleOrder.customer.contactPerson|default }}</td>
+            </tr>
+            <tr>
                 <th>Tanggal PO</th>
                 <td>{{ saleOrder.purchaseOrderDate|default ? saleOrder.purchaseOrderDate|date('j F Y') }}</td>
             </tr>

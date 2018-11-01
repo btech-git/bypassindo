@@ -22,6 +22,7 @@ class SaleInvoiceHeaderUnitType extends AbstractType
     {
         $builder
             ->add('transactionDate', 'date')
+            ->add('taxDate', 'date')
             ->add('taxNumber')
             ->add('note')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))

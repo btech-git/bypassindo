@@ -111,9 +111,10 @@ class PurchaseInvoiceHeaderGridType extends DataGridType
         );
 
         if (array_key_exists('form', $options)) {
+            $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'purchase_payment_header':
-                    $associations['purchasePaymentHeader']['merge'] = false;
+                    $criteria['purchaseInvoiceHeader']->andWhere($expr->gt('remaining', 0));
                     break;
             }
         }

@@ -111,7 +111,7 @@ class SaleInvoiceHeaderGeneralForm
             'codeNumberOrdinal' => $saleInvoiceHeader->getCodeNumberOrdinal(),
         ));
         $this->journalLedgerRepository->remove($oldJournalLedgers);
-        if ($addForHeader && $saleInvoiceHeader->getGrandTotal() > 0) {
+        if ($addForHeader && $saleInvoiceHeader->getGrandTotalBeforeDownpayment() > 0) {
             $accountReceivable = $this->accountRepository->findReceivableRecord();
             $accountSaleUnit = $this->accountRepository->findSaleUnitRecord();
             
@@ -121,7 +121,7 @@ class SaleInvoiceHeaderGeneralForm
             $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_RECEIVABLE);
             $journalLedgerDebit->setTransactionSubject($saleInvoiceHeader->getCustomer());
             $journalLedgerDebit->setNote($saleInvoiceHeader->getNote());
-            $journalLedgerDebit->setDebit($saleInvoiceHeader->getGrandTotal());
+            $journalLedgerDebit->setDebit($saleInvoiceHeader->getGrandTotalBeforeDownpayment());
             $journalLedgerDebit->setCredit(0);
             $journalLedgerDebit->setAccount($accountReceivable);
             $journalLedgerDebit->setStaff($saleInvoiceHeader->getStaffFirst());
@@ -134,7 +134,7 @@ class SaleInvoiceHeaderGeneralForm
             $journalLedgerCredit->setTransactionSubject($saleInvoiceHeader->getCustomer());
             $journalLedgerCredit->setNote($saleInvoiceHeader->getNote());
             $journalLedgerCredit->setDebit(0);
-            $journalLedgerCredit->setCredit($saleInvoiceHeader->getGrandTotal());
+            $journalLedgerCredit->setCredit($saleInvoiceHeader->getGrandTotalBeforeDownpayment());
             $journalLedgerCredit->setAccount($accountSaleUnit);
             $journalLedgerCredit->setStaff($saleInvoiceHeader->getStaffFirst());
             $this->journalLedgerRepository->add($journalLedgerCredit);

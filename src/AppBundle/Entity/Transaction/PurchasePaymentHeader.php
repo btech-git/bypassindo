@@ -13,7 +13,7 @@ use AppBundle\Entity\Admin\Staff;
 /**
  * @ORM\Table(name="transaction_purchase_payment_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\PurchasePaymentHeaderRepository")
- * @Assert\Expression("(this.getTotalAmount() <= this.getPurchaseInvoiceHeader().getRemaining())", message = "Total payment must be less or equal to remaining")
+ * @Assert\Expression("(this.getPurchaseInvoiceHeader().getRemaining() >= 0)", message = "Remaining must be greater or equal to 0")
  */
 class PurchasePaymentHeader extends CodeNumberAccountEntity
 {
@@ -47,7 +47,7 @@ class PurchasePaymentHeader extends CodeNumberAccountEntity
      */
     private $staffLast;
     /**
-     * @ORM\OneToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchasePaymentHeader")
+     * @ORM\ManyToOne(targetEntity="PurchaseInvoiceHeader", inversedBy="purchasePaymentHeaders")
      * @Assert\NotNull()
      */
     private $purchaseInvoiceHeader;

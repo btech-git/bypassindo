@@ -37,9 +37,9 @@
                 <td class="text-left">{{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleInvoiceHeader.customer.name|default }}</td>
                 <td class="text-left">{{ saleInvoiceHeader.taxNumber|default }}</td>
-                <td class="text-right">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</td>
-                <td class="text-right">{{ saleInvoiceHeader.totalPayment|default|number_format(2) }}</td>
-                <td class="text-right">{{ saleInvoiceHeader.remaining|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default }}</td>
+                <td class="text-right">{{ saleInvoiceHeader.totalPayment|default }}</td>
+                <td class="text-right">{{ saleInvoiceHeader.remaining|default }}</td>
             </tr>
         {% else %}
             <tr>

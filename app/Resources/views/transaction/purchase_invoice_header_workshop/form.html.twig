@@ -11,15 +11,11 @@
         <td class="text-left">
             <span data-name="item-name-{{ object.vars.name }}">{{ object.vars.value.itemName|default }}</span>
         </td>
-        <td class="text-center">
-            <span data-name="quantity-{{ object.vars.name }}">{{ object.vars.value.quantity|default }}</span>
-        </td>
         <td class="text-right">
             {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-group-name': 'unit-price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
         <td class="text-right">
-            <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
+            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
         </td>
     </tr>
 {% endmacro %}
@@ -79,9 +75,8 @@
             <thead>
                 <tr class="bg-info">
                     <th>Nama Barang</th>
-                    <th style="width: 10%">Quantity</th>
                     <th style="width: 15%">Price</th>
-                    <th style="width: 15%">Total</th>
+                    <th style="width: 15%"></th>
                 </tr>
             </thead>
             <tbody data-prototype="{{ self.details_row(form.purchaseInvoiceDetailWorkshops.vars.prototype)|e }}">
@@ -91,15 +86,15 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td class="text-right" colspan="3">Sub Total</td>
+                    <td class="text-right" colspan="2">Sub Total</td>
                     <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="3">PPn</td>
+                    <td class="text-right" colspan="2">PPn</td>
                     <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="3">Grand Total</td>
+                    <td class="text-right" colspan="2">Grand Total</td>
                     <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
                 </tr>
             </tfoot>

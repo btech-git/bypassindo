@@ -1,7 +1,7 @@
 {
     "subTotal": "{{ saleInvoiceHeader.subTotal|default|number_format(2) }}",
     "taxNominal": "{{ saleInvoiceHeader.taxNominal|default|number_format(2) }}",
-    "grandTotal": "{{ saleInvoiceHeader.grandTotal|default|number_format(2) }}",
+    "grandTotal": "{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}",
     "saleInvoiceDetailGenerals": {
         {%- for index, saleInvoiceDetailGeneral in saleInvoiceHeader.saleInvoiceDetailGenerals -%}
             "{{ index }}": {

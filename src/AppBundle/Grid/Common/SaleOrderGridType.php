@@ -120,7 +120,7 @@ class SaleOrderGridType extends DataGridType
                     $associations['purchaseWorkshopHeader']['merge'] = false;
                     break;
                 case 'sale_invoice_downpayment':
-//                    $associations['saleInvoiceDownpayments']['merge'] = false;
+                    $associations['saleInvoiceDownpayments']['merge'] = false;
                     break;
             }
         }

@@ -40,6 +40,11 @@ class SaleInvoiceHeader extends CodeNumberEntity
      */
     private $dueDate;
     /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $taxDate;
+    /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotBlank() @Assert\Length(min=16, max=16)
      */
@@ -95,9 +100,9 @@ class SaleInvoiceHeader extends CodeNumberEntity
      */
     private $customer;
     /**
-     * @ORM\OneToOne(targetEntity="SalePaymentHeader", mappedBy="saleInvoiceHeader")
+     * @ORM\OneToMany(targetEntity="SalePaymentHeader", mappedBy="saleInvoiceHeader")
      */
-    private $salePaymentHeader;
+    private $salePaymentHeaders;
     /**
      * @ORM\OneToMany(targetEntity="SaleInvoiceDetailUnit", mappedBy="saleInvoiceHeader")
      */
@@ -116,6 +121,7 @@ class SaleInvoiceHeader extends CodeNumberEntity
         $this->saleInvoiceDetailUnits = new ArrayCollection();        
         $this->saleInvoiceDetailUnitDownpayments = new ArrayCollection();
         $this->saleInvoiceDetailGenerals = new ArrayCollection();
+        $this->salePaymentHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -133,6 +139,9 @@ class SaleInvoiceHeader extends CodeNumberEntity
 
     public function getDueDate() { return $this->dueDate; }
     public function setDueDate($dueDate) { $this->dueDate = $dueDate; }
+
+    public function getTaxDate() { return $this->taxDate; }
+    public function setTaxDate($taxDate) { $this->taxDate = $taxDate; }
 
     public function getTaxNumber() { return $this->taxNumber; }
     public function setTaxNumber($taxNumber) { $this->taxNumber = $taxNumber; }
@@ -167,8 +176,8 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getCustomer() { return $this->customer; }
     public function setCustomer(Customer $customer = null) { $this->customer = $customer; }
 
-    public function getSalePaymentHeader() { return $this->salePaymentHeader; }
-    public function setSalePaymentHeader(SalePaymentHeader $salePaymentHeader = null) { $this->salePaymentHeader = $salePaymentHeader; }
+    public function getSalePaymentHeaders() { return $this->salePaymentHeaders; }
+    public function setSalePaymentHeaders(Collection $salePaymentHeaders) { $this->salePaymentHeaders = $salePaymentHeaders; }
 
     public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
     public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
@@ -208,8 +217,11 @@ class SaleInvoiceHeader extends CodeNumberEntity
         $this->grandTotalAfterDownpayment = $this->grandTotalBeforeDownpayment - $this->totalDownpayment;
         
         $totalPayment = '0.00';
-        if ($this->salePaymentHeader !== null) {
-            $totalPayment = $this->salePaymentHeader->getTotalAmount();
+        if ($this->salePaymentHeaders !== null) {
+            foreach ($this->salePaymentHeaders as $salePaymentHeader) {
+                $salePaymentHeader->sync();
+                $totalPayment = $salePaymentHeader->getTotalAmount();
+            }
         }
         $this->totalPayment = $totalPayment;
         
