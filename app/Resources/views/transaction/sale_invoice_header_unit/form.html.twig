@@ -38,7 +38,7 @@
             <span data-name="code-number-{{ object.vars.name }}">{{ object.vars.value.saleInvoiceDownpayment.codeNumber|default }}</span>
         </td>
         <td class="text-right">
-            <span data-name="sale-order-code-number-{{ object.vars.name }}">{{ object.vars.value.saleInvoiceDownpayment.saleOrder.codeNumber|default|number_format(2) }}</span>
+            <span data-name="transaction-date-{{ object.vars.name }}">{{ object.vars.value.saleInvoiceDownpayment.transactionDate|default ? object.vars.value.saleInvoiceDownpayment.transactionDate|date('j M Y') }}</span>
         </td>
         <td class="text-right">
             <span data-name="amount-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(2) }}</span>
@@ -111,7 +111,7 @@
                 <tr class="bg-info">
                     <th class="hide"></th>
                     <th>Downpayment #</th>
-                    <th>SPK #</th>
+                    <th>Tanggal</th>
                     <th>Amount</th>
                     <th style="width: 0"></th>
                 </tr>
@@ -226,6 +226,11 @@
                 bind();
             });
             
+            downpaymentTableBody.on("click", "button.remove", function() {
+                $(this).closest("tr").remove();
+                bind();
+            });
+            
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#customer-dialog").modal("hide");
                 $("#{{ form.customer.vars.id }}").val($(this).attr("data-field-id")).trigger("change");
@@ -268,8 +273,8 @@
                     saleInvoiceDownpaymentPrototype.val(context.attr("data-field-id"));
                     var codeNumberPrototype = prototype.find("[data-name=code-number-" + name + "]");
                     codeNumberPrototype.text(context.attr("data-field-code-number"));
-                    var saleOrderCodeNumberPrototype = prototype.find("[data-name=sale-order-code-number-" + name + "]");
-                    saleOrderCodeNumberPrototype.text(context.attr("data-field-sale-order-code-number"));
+                    var transactionDatePrototype = prototype.find("[data-name=transaction-date-" + name + "]");
+                    transactionDatePrototype.text(context.attr("data-field-transaction-date"));
                     var amountPrototype = prototype.find("[data-name=amount-" + name + "]");
                     amountPrototype.text($.numberFormat(context.attr("data-field-amount"), 2));
                 });

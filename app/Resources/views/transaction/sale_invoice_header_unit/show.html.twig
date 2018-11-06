@@ -40,9 +40,7 @@
                 <th>Rangka #</th>
                 <th>Mesin #</th>
                 <th>Jenis Pembayaran</th>
-                <th>Quantity</th>
                 <th>Price</th>
-                <th>Total</th>
             </tr>
         </thead>
         <tbody>
@@ -51,23 +49,49 @@
                     <td class="text-left">{{ saleInvoiceDetailUnit.vehicleChassisNumber|default }}</td>
                     <td class="text-left">{{ saleInvoiceDetailUnit.vehicleMachineNumber|default }}</td>
                     <td class="text-left">{{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.saleOrder.financeCompany.name|default }}</td>
-                    <td class="text-center">{{ saleInvoiceDetailUnit.quantity|default|number_format(0) }}</td>
                     <td class="text-right">{{ saleInvoiceDetailUnit.unitPrice|default|number_format(2) }}</td>
-                    <td class="text-right">{{ saleInvoiceDetailUnit.total|default|number_format(2) }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot></tfoot>
+    </table>
+  
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr class="bg-info">
+                <th>Downpayment #</th>
+                <th>Tanggal</th>
+                <th>Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for saleInvoiceDetailUnitDownpayment in saleInvoiceHeader.saleInvoiceDetailUnitDownpayments %}
+                <tr>
+                    <td class="text-left">{{ saleInvoiceDetailUnitDownpayment.saleInvoiceDownpayment.codeNumber|default }}</td>
+                    <td class="text-left">{{ saleInvoiceDetailUnitDownpayment.saleInvoiceDownpayment.transactionDate|default ? saleInvoiceDetailUnitDownpayment.saleInvoiceDownpayment.transactionDate|date('j M Y') }}</td>
+                    <td class="text-right">{{ saleInvoiceDetailUnitDownpayment.amount|default|number_format(2) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
-                <td class="text-right" colspan="5">Grand Total</td>
+                <td class="text-right" colspan="2">Sub Total</td>
+                <td class="text-right">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="2">Total DP</td>
+                <td class="text-right">{{ saleInvoiceHeader.totalDownpayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="2">Grand Total</td>
                 <td class="text-right">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</td>
             </tr>
             <tr>
-                <td class="text-right" colspan="5">Total Payment</td>
+                <td class="text-right" colspan="2">Total Payment</td>
                 <td class="text-right">{{ saleInvoiceHeader.totalPayment|default|number_format(2) }}</td>
             </tr>
             <tr>
-                <td class="text-right" colspan="5">Remaining</td>
+                <td class="text-right" colspan="2">Remaining</td>
                 <td class="text-right">{{ saleInvoiceHeader.remaining|default|number_format(2) }}</td>
             </tr>
         </tfoot>

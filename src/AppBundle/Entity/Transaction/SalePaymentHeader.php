@@ -13,7 +13,7 @@ use AppBundle\Entity\Admin\Staff;
 /**
  * @ORM\Table(name="transaction_sale_payment_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SalePaymentHeaderRepository")
- * @Assert\Expression("(this.getSaleInvoiceHeader().getRemaining() >= 0)", message = "Remaining must be greater or equal to 0")
+ * @Assert\Expression("(this.getSaleInvoiceDownpayment() == null or this.getSaleInvoiceHeader() == null) and ((this.getSaleInvoiceDownpayment() != null and this.getSaleInvoiceDownpayment().getRemaining() >= 0) or (this.getSaleInvoiceHeader() != null and this.getSaleInvoiceHeader().getRemaining() >= 0))", message = "Remaining must be greater or equal to 0")
  */
 class SalePaymentHeader extends CodeNumberAccountEntity
 {
@@ -48,9 +48,12 @@ class SalePaymentHeader extends CodeNumberAccountEntity
     private $staffLast;
     /**
      * @ORM\ManyToOne(targetEntity="SaleInvoiceHeader", inversedBy="salePaymentHeaders")
-     * @Assert\NotNull()
      */
     private $saleInvoiceHeader;
+    /**
+     * @ORM\ManyToOne(targetEntity="SaleInvoiceDownpayment", inversedBy="salePaymentHeaders")
+     */
+    private $saleInvoiceDownpayment;
     /**
      * @ORM\OneToMany(targetEntity="SalePaymentDetail", mappedBy="salePaymentHeader")
      * @Assert\Valid() @Assert\Count(min=1)
@@ -86,6 +89,9 @@ class SalePaymentHeader extends CodeNumberAccountEntity
 
     public function getSaleInvoiceHeader() { return $this->saleInvoiceHeader; }
     public function setSaleInvoiceHeader(SaleInvoiceHeader $saleInvoiceHeader = null) { $this->saleInvoiceHeader = $saleInvoiceHeader; }
+
+    public function getSaleInvoiceDownpayment() { return $this->saleInvoiceDownpayment; }
+    public function setSaleInvoiceDownpayment(SaleInvoiceDownpayment $saleInvoiceDownpayment = null) { $this->saleInvoiceDownpayment = $saleInvoiceDownpayment; }
 
     public function getSalePaymentDetails() { return $this->salePaymentDetails; }
     public function setSalePaymentDetails(Collection $salePaymentDetails) { $this->salePaymentDetails = $salePaymentDetails; }

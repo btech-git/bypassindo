@@ -120,6 +120,7 @@ class SaleOrderGridType extends DataGridType
                     $associations['purchaseWorkshopHeader']['merge'] = false;
                     break;
                 case 'sale_invoice_downpayment':
+                    $criteria['saleOrder']->andWhere($expr->gt('downPayment', 0));
                     $associations['saleInvoiceDownpayments']['merge'] = false;
                     break;
             }

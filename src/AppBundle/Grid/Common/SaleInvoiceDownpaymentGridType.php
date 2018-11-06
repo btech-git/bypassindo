@@ -118,6 +118,9 @@ class SaleInvoiceDownpaymentGridType extends DataGridType
                     $associations['customer']['merge'] = true;
                     $associations['saleInvoiceDetailUnitDownpayments']['merge'] = false;
                     break;
+                case 'sale_payment_header':
+                    $criteria['saleInvoiceDownpayment']->andWhere($expr->gt('remaining', 0));
+                    break;
             }
         }
 

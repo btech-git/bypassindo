@@ -45,6 +45,16 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
      */
     private $amount;
     /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $totalPayment;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $remaining;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
      */
@@ -65,6 +75,10 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
      */
     private $saleOrder;
     /**
+     * @ORM\OneToMany(targetEntity="SalePaymentHeader", mappedBy="saleInvoiceDownpayment")
+     */
+    private $salePaymentHeaders;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Account")
      * @Assert\NotNull()
      */
@@ -82,6 +96,7 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
     public function __construct()
     {        
         $this->saleInvoiceDetailUnitDownpayments = new ArrayCollection();
+        $this->salePaymentHeaders = new ArrayCollection();
     }
     
     public function getCodeNumberConstant()
@@ -103,6 +118,12 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
     public function getAmount() { return $this->amount; }
     public function setAmount($amount) { $this->amount = $amount; }
 
+    public function getTotalPayment() { return $this->totalPayment; }
+    public function setTotalPayment($totalPayment) { $this->totalPayment = $totalPayment; }
+
+    public function getRemaining() { return $this->remaining; }
+    public function setRemaining($remaining) { $this->remaining = $remaining; }
+
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
 
@@ -114,6 +135,9 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
 
     public function getSaleOrder() { return $this->saleOrder; }
     public function setSaleOrder(SaleOrder $saleOrder = null) { $this->saleOrder = $saleOrder; }
+
+    public function getSalePaymentHeaders() { return $this->salePaymentHeaders; }
+    public function setSalePaymentHeaders(Collection $salePaymentHeaders) { $this->salePaymentHeaders = $salePaymentHeaders; }
 
     public function getPaymentMethod() { return $this->paymentMethod; }
     public function setPaymentMethod(PaymentMethod $paymentMethod = null) { $this->paymentMethod = $paymentMethod; }
@@ -135,6 +159,16 @@ class SaleInvoiceDownpayment extends CodeNumberEntity
 
     public function sync()
     {
+        $totalPayment = '0.00';
+        if ($this->salePaymentHeaders !== null) {
+            foreach ($this->salePaymentHeaders as $salePaymentHeader) {
+                $salePaymentHeader->sync();
+                $totalPayment = $salePaymentHeader->getTotalAmount();
+            }
+        }
+        $this->totalPayment = $totalPayment;
+        
+        $this->remaining = $this->amount - $this->totalPayment;
         
     }
 }

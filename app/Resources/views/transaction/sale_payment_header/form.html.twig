@@ -41,8 +41,40 @@
         <div class="row">
             <div class="col-sm-6">
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.saleInvoiceDownpayment, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-invoice-downpayment-dialog'} }) }}
+                <div class="form-group" id="sale-invoice-downpayment-info">
+                    <div>
+                        <label>Invoice DP #:</label>
+                        <span data-name="code-number">{{ salePaymentHeader.saleInvoiceDownpayment.codeNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Tanggal:</label>
+                        <span data-name="transaction-date">{{ salePaymentHeader.saleInvoiceDownpayment.transactionDate|default|date('j M Y') }}</span>
+                    </div>
+                    <div>
+                        <label>Customer:</label>
+                        <span data-name="customer-name">{{ salePaymentHeader.saleInvoiceDownpayment.customer.name|default }}</span>
+                    </div>
+                    <div>
+                        <label>Faktur Pajak #:</label>
+                        <span data-name="tax-number">{{ salePaymentHeader.saleInvoiceDownpayment.taxNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Grand Total:</label>
+                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceDownpayment.amount|default|number_format(2) }}</span>
+                    </div>
+                    <div>
+                        <label>Total Payment:</label>
+                        <span data-name="total-payment">{{ salePaymentHeader.saleInvoiceDownpayment.totalPayment|default|number_format(2) }}</span>
+                    </div>
+                    <div>
+                        <label>Sisa:</label>
+                        <span data-name="remaining">{{ salePaymentHeader.saleInvoiceDownpayment.remaining|default|number_format(2) }}</span>
+                    </div>
+                </div>
             </div>
             <div class="col-sm-6">
+                {{ form_row(form.isInvoiceUnit, {'label': 'Pilih Invoice'}) }}
                 {{ form_row(form.saleInvoiceHeader, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#sale-invoice-header-dialog'} }) }}
                 <div class="form-group" id="sale-invoice-header-info">
                     <div>
@@ -63,7 +95,7 @@
                     </div>
                     <div>
                         <label>Grand Total:</label>
-                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceHeader.grandTotal|default|number_format(2) }}</span>
+                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</span>
                     </div>
                     <div>
                         <label>Total Payment:</label>
@@ -128,6 +160,19 @@
                 </div>
             </div>
         </div>
+        <div id="sale-invoice-downpayment-dialog" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg" style="width: 90%">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Sales Invoice DownpaymentList</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="sale-invoice-downpayment-grid" data-grid="{{ path('common_sale_invoice_downpayment_grid', {'form': form.vars.id}) }}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     {{ form_end(form) }}
     <div id="account-dialog" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg" style="width: 90%">
@@ -171,6 +216,37 @@
                 bind();
             });
             
+            function setSaleInvoiceDownpaymentVisibility(sel, start) {
+                if (!start) {
+                    $("#{{ form.saleInvoiceDownpayment.vars.id }}").val("");
+                }
+                $("#{{ form.saleInvoiceDownpayment.vars.id }}").parent().hide();
+                $("#sale-invoice-downpayment-info").hide();
+                if (sel.val() === "0") {
+                    $("#{{ form.saleInvoiceDownpayment.vars.id }}").parent().show();
+                    $("#sale-invoice-downpayment-info").show();
+                }
+            }
+            function setSaleInvoiceHeaderVisibility(sel, start) {
+                if (!start) {
+                    $("#{{ form.saleInvoiceHeader.vars.id }}").val("");
+                    $("[data-name=code-number]", "#sale-invoice-header-info").text("");
+                }
+                $("#{{ form.saleInvoiceHeader.vars.id }}").parent().hide();
+                $("#sale-invoice-header-info").hide();
+                if (sel.val() === "1") {
+                    $("#{{ form.saleInvoiceHeader.vars.id }}").parent().show();
+                    $("#sale-invoice-header-info").show();                    
+                }
+            }
+            
+            setSaleInvoiceDownpaymentVisibility($(":checked", "#{{ form.isInvoiceUnit.vars.id }}"), true);
+            setSaleInvoiceHeaderVisibility($(":checked", "#{{ form.isInvoiceUnit.vars.id }}"), true);
+            $("#{{ form.isInvoiceUnit.vars.id }}").on("change", function() {
+                setSaleInvoiceDownpaymentVisibility($(":checked", this), false);
+                setSaleInvoiceHeaderVisibility($(":checked", this), false);
+            });
+            
             $("#sale-invoice-header-grid").on("click", "table[data-role=table] tbody tr", function() {
                 $("#sale-invoice-header-dialog").modal("hide");
                 $("#{{ form.saleInvoiceHeader.vars.id }}").val($(this).attr("data-field-id"));
@@ -181,6 +257,18 @@
                 $("[data-name=grand-total]", "#sale-invoice-header-info").text($.numberFormat($(this).attr("data-field-grand-total"), 2));
                 $("[data-name=total-payment]", "#sale-invoice-header-info").text($.numberFormat($(this).attr("data-field-total-payment"), 2));
                 $("[data-name=remaining]", "#sale-invoice-header-info").text($.numberFormat($(this).attr("data-field-remaining"), 2));
+            });
+            
+            $("#sale-invoice-downpayment-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#sale-invoice-downpayment-dialog").modal("hide");
+                $("#{{ form.saleInvoiceDownpayment.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#sale-invoice-downpayment-info").text($(this).attr("data-field-code-number"));
+                $("[data-name=customer-name]", "#sale-invoice-downpayment-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=transaction-date]", "#sale-invoice-downpayment-info").text($.datetimeFormat($(this).attr("data-field-transaction-date"), 'D MMM YYYY'));
+                $("[data-name=tax-number]", "#sale-invoice-downpayment-info").text($(this).attr("data-field-tax-number"));
+                $("[data-name=grand-total]", "#sale-invoice-downpayment-info").text($.numberFormat($(this).attr("data-field-amount"), 2));
+                $("[data-name=total-payment]", "#sale-invoice-downpayment-info").text($.numberFormat($(this).attr("data-field-total-payment"), 2));
+                $("[data-name=remaining]", "#sale-invoice-downpayment-info").text($.numberFormat($(this).attr("data-field-remaining"), 2));
             });
             
             $("#account-grid").on("click", "table[data-role=table] tbody tr", function() {

@@ -59,10 +59,20 @@ class SalePaymentHeaderForm
             $totalAmount += $salePaymentDetail->getAmount();
         }
         $salePaymentHeader->setTotalAmount($totalAmount);
+        
         $saleInvoiceHeader = $salePaymentHeader->getSaleInvoiceHeader();
-        $totalPayment = $saleInvoiceHeader->getTotalPayment() + $totalAmount;
-        $saleInvoiceHeader->setTotalPayment($totalPayment);
-        $saleInvoiceHeader->setRemaining($saleInvoiceHeader->getGrandTotalAfterDownpayment() - $totalPayment);
+        if ($saleInvoiceHeader !== null) {
+            $totalPayment = $saleInvoiceHeader->getTotalPayment() + $totalAmount;
+            $saleInvoiceHeader->setTotalPayment($totalPayment);
+            $saleInvoiceHeader->setRemaining($saleInvoiceHeader->getGrandTotalAfterDownpayment() - $totalPayment);
+        }
+        
+        $saleInvoiceDownpayment = $salePaymentHeader->getSaleInvoiceDownpayment();
+        if ($saleInvoiceDownpayment !== null) {
+            $totalPayment = $saleInvoiceDownpayment->getTotalPayment() + $totalAmount;
+            $saleInvoiceDownpayment->setTotalPayment($totalPayment);
+            $saleInvoiceDownpayment->setRemaining($saleInvoiceDownpayment->getAmount() - $totalPayment);
+        }
     }
     
     public function save(SalePaymentHeader $salePaymentHeader)
