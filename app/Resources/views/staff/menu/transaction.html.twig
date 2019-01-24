@@ -24,7 +24,7 @@
             <tbody>
                 {% if menu['sale_discount_application'] %}
                     <tr>
-                        <td>Pengajuan Diskon Penjualan</td>
+                        <td>Proposal Penjualan Unit</td>
                         <td>
                             {% if is_granted('ROLE_SALE_DISCOUNT_APPLICATION_NEW') %}
                                 {{ include('action.html.twig', {'url': path('transaction_sale_discount_application_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}

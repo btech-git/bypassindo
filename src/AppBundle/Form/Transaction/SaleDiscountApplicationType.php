@@ -22,34 +22,49 @@ class SaleDiscountApplicationType extends AbstractType
     {
         $builder
             ->add('transactionDate', 'date')
-            ->add('dealStatus', ChoiceType::class, array(
+            ->add('transactionStatus', ChoiceType::class, array(
                 'expanded' => true,
-                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'DEAL_STATUS'),
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'TRANSACTION_STATUS'),
                 'choices_as_values' => true,
             ))
-            ->add('dealDate', 'date')
-            ->add('isHinoCustomer')
-            ->add('isMitsubishiCustomer')
-            ->add('isNissanCustomer')
-            ->add('isIsuzuCustomer')
-            ->add('isBenzCustomer')
-            ->add('otherBrandCustomer')
+            ->add('ownershipStatus', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'OWNERSHIP_STATUS'),
+                'choices_as_values' => true,
+            ))
+            ->add('ownershipCategory', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'OWNERSHIP_CATEGORY'),
+                'choices_as_values' => true,
+            ))
+            ->add('workshopReference', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'WORKSHOP_REFERENCE'),
+                'choices_as_values' => true,
+            ))
             ->add('requestQuantity')
-            ->add('requestUsageType')
-            ->add('competitorBrand')
-            ->add('competitorType')
-            ->add('competitorDealer')
             ->add('paymentMethodType', ChoiceType::class, array(
                 'expanded' => true,
                 'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'PAYMENT_METHOD'),
                 'choices_as_values' => true,
             ))
             ->add('financeCompany')
-            ->add('customerPrice')
-            ->add('salesmanPrice')
-            ->add('competitorPrice')
-            ->add('offTheRoadPrice')
-            ->add('registrationPrice')
+            ->add('bookingFee')
+            ->add('downpayment1')
+            ->add('downpayment2')
+            ->add('totalPayment')
+            ->add('leasingPrice')
+            ->add('leasingPriceDifference')
+            ->add('leasingOverPaid')
+            ->add('leasingOverPaidNett')
+            ->add('leasingTaxAmount')
+            ->add('leasingStatus', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'LEASING_STATUS'),
+                'choices_as_values' => true,
+            ))
+            ->add('deliveryType')
+            ->add('bookingFee')
             ->add('otherPricingName1')
             ->add('otherPricingName2')
             ->add('otherPricingName3')
@@ -61,6 +76,27 @@ class SaleDiscountApplicationType extends AbstractType
             ->add('otherPricingAmount4')
             ->add('otherPricingAmount5')
             ->add('mediatorPrice')
+            ->add('assemblyYear')
+            ->add('vehicleColor')
+            ->add('orderArea')
+            ->add('workshopType')
+            ->add('workshopReference')
+            ->add('workshopPrice')
+            ->add('workshopProfit')
+            ->add('isWorkshopSplitPurchase')
+            ->add('isCashBeforeDelivery')
+            ->add('isPaymentTerm')
+            ->add('termOfPayment')
+            ->add('leasingReference', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(SaleDiscountApplication::class, 'LEASING_REFERENCE'),
+                'choices_as_values' => true,
+            ))
+            ->add('unitPrice')
+            ->add('mediatorName')
+            ->add('mediatorRanking')
+            ->add('mediatorPhone')
+            ->add('mediatorTaxSelection')
             ->add('note')
             ->add('customer', EntityTextType::class, array('class' => Customer::class))
             ->add('vehicleModel', EntityTextType::class, array('class' => VehicleModel::class))

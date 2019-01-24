@@ -20,18 +20,22 @@ use AppBundle\Entity\Master\Supplier;
  */
 class SaleDiscountApplication extends CodeNumberEntity
 {
-    const DEAL_STATUS_TOUCH = 'touch';
-    const DEAL_STATUS_NEGOTIATION = 'negotiation';
-    const DEAL_STATUS_HOT = 'hot';
-    const DEAL_STATUS_CONTRACT = 'contract';
-    const CUSTOMER_STATUS_TYPE_HINO = 'hino';
-    const CUSTOMER_STATUS_TYPE_MITSUBISHI = 'mitsubishi';
-    const CUSTOMER_STATUS_TYPE_NISSAN = 'u d. trucks';
-    const CUSTOMER_STATUS_TYPE_ISUZU = 'isuzu';
-    const CUSTOMER_STATUS_TYPE_BENZ = 'benz';
-    const CUSTOMER_STATUS_TYPE_OTHER = 'other';
     const PAYMENT_METHOD_CASH = 'cash';
-    const PAYMENT_METHOD_FINANCE_COMPANY = 'finance company';
+    const PAYMENT_METHOD_FINANCE_COMPANY = 'leasing';
+    const TRANSACTION_STATUS_NEW = 'new';
+    const TRANSACTION_STATUS_REPEAT = 'repeat';
+    const LEASING_STATUS_MATCHED = 'ya';
+    const LEASING_STATUS_UNMATCHED = 'tidak';
+    const OWNERSHIP_STATUS_OFFTHEROAD = 'Off TR';
+    const OWNERSHIP_STATUS_ONTHEROAD = 'On TR';
+    const OWNERSHIP_CATEGORY_BLACK = 'Hitam';
+    const OWNERSHIP_CATEGORY_YELLOW = 'Kuning';
+    const WORKSHOP_REFERENCE_PARTNER = 'Rekanan';
+    const WORKSHOP_REFERENCE_SALESMAN = 'Salesman';
+    const WORKSHOP_REFERENCE_CUSTOMER = 'Customer';
+    const LEASING_REFERENCE_PARTNER = 'Rekanan';
+    const LEASING_REFERENCE_OTHER = 'Referensi';
+    const LEASING_REFERENCE_CUSTOMER = 'Customer';
     
     /**
      * @ORM\Column(type="integer") @ORM\Id @ORM\GeneratedValue
@@ -46,42 +50,62 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $dealStatus;
+    private $assemblyYear;
     /**
-     * @ORM\Column(type="date")
-     * @Assert\NotNull() @Assert\Date()
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
      */
-    private $dealDate;
+    private $vehicleColor;
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotNull()
+     */
+    private $orderArea;
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotNull()
+     */
+    private $workshopType;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $workshopReference;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $workshopPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $workshopProfit;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
-    private $isHinoCustomer;
+    private $isWorkshopSplitPurchase;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $isMitsubishiCustomer;
+    private $deliveryType;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $isNissanCustomer;
+    private $ownershipStatus;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $isIsuzuCustomer;
+    private $ownershipCategory;
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $isBenzCustomer;
-    /**
-     * @ORM\Column(type="string", length=60)
-     * @Assert\NotNull()
-     */
-    private $otherBrandCustomer;
+    private $transactionStatus;
     /**
      * @ORM\Column(type="smallint")
      * @Assert\NotNull() @Assert\GreaterThan(0)
@@ -91,37 +115,36 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
      */
-    private $requestUsageType;
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
-     */
-    private $competitorBrand;
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
-     */
-    private $competitorType;
-    /**
-     * @ORM\Column(type="string", length=60)
-     * @Assert\NotNull()
-     */
-    private $competitorDealer;
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Assert\NotNull()
-     */
     private $paymentMethodType;
     /**
-     * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThan(0)
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
      */
-    private $customerPrice;
+    private $isCashBeforeDelivery;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isPaymentTerm;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $termOfPayment;
+    /**
+     * @ORM\Column(type="string", length=20, nullable=true)
+     */
+    private $leasingReference;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
-    private $salesmanPrice;
+    private $unitPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $totalPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -131,12 +154,52 @@ class SaleDiscountApplication extends CodeNumberEntity
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
-    private $competitorPrice;
+    private $bookingFee;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThan(0)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
-    private $offTheRoadPrice;
+    private $downpayment1;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $downpayment2;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $totalPayment;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $leasingPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $leasingPriceDifference;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $leasingOverPaid;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $leasingOverPaidNett;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $leasingTaxAmount;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $leasingStatus;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -144,7 +207,7 @@ class SaleDiscountApplication extends CodeNumberEntity
     private $registrationPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThan(0)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $subTotalPrice;
     /**
@@ -203,6 +266,26 @@ class SaleDiscountApplication extends CodeNumberEntity
      */
     private $grandTotalPrice;
     /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $mediatorName;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $mediatorRanking;
+    /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $mediatorPhone;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $mediatorTaxSelection;
+    /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
@@ -254,62 +337,98 @@ class SaleDiscountApplication extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
 
-    public function getDealStatus() { return $this->dealStatus; }
-    public function setDealStatus($dealStatus) { $this->dealStatus = $dealStatus; }
+    public function getAssemblyYear() { return $this->assemblyYear; }
+    public function setAssemblyYear($assemblyYear) { $this->assemblyYear = $assemblyYear; }
 
-    public function getDealDate() { return $this->dealDate; }
-    public function setDealDate($dealDate) { $this->dealDate = $dealDate; }
+    public function getVehicleColor() { return $this->vehicleColor; }
+    public function setVehicleColor($vehicleColor) { $this->vehicleColor = $vehicleColor; }
 
-    public function getIsHinoCustomer() { return $this->isHinoCustomer; }
-    public function setIsHinoCustomer($isHinoCustomer) { $this->isHinoCustomer = $isHinoCustomer; }
+    public function getOrderArea() { return $this->orderArea; }
+    public function setOrderArea($orderArea) { $this->orderArea = $orderArea; }
 
-    public function getIsMitsubishiCustomer() { return $this->isMitsubishiCustomer; }
-    public function setIsMitsubishiCustomer($isMitsubishiCustomer) { $this->isMitsubishiCustomer = $isMitsubishiCustomer; }
+    public function getWorkshopType() { return $this->workshopType; }
+    public function setWorkshopType($workshopType) { $this->workshopType = $workshopType; }
 
-    public function getIsNissanCustomer() { return $this->isNissanCustomer; }
-    public function setIsNissanCustomer($isNissanCustomer) { $this->isNissanCustomer = $isNissanCustomer; }
+    public function getWorkshopReference() { return $this->workshopReference; }
+    public function setWorkshopReference($workshopReference) { $this->workshopReference = $workshopReference; }
 
-    public function getIsIsuzuCustomer() { return $this->isIsuzuCustomer; }
-    public function setIsIsuzuCustomer($isIsuzuCustomer) { $this->isIsuzuCustomer = $isIsuzuCustomer; }
+    public function getWorkshopPrice() { return $this->workshopPrice; }
+    public function setWorkshopPrice($workshopPrice) { $this->workshopPrice = $workshopPrice; }
 
-    public function getIsBenzCustomer() { return $this->isBenzCustomer; }
-    public function setIsBenzCustomer($isBenzCustomer) { $this->isBenzCustomer = $isBenzCustomer; }
+    public function getWorkshopProfit() { return $this->workshopProfit; }
+    public function setWorkshopProfit($workshopProfit) { $this->workshopProfit = $workshopProfit; }
 
-    public function getOtherBrandCustomer() { return $this->otherBrandCustomer; }
-    public function setOtherBrandCustomer($otherBrandCustomer) { $this->otherBrandCustomer = $otherBrandCustomer; }
+    public function getIsWorkshopSplitPurchase() { return $this->isWorkshopSplitPurchase; }
+    public function setIsWorkshopSplitPurchase($isWorkshopSplitPurchase) { $this->isWorkshopSplitPurchase = $isWorkshopSplitPurchase; }
+
+    public function getDeliveryType() { return $this->deliveryType; }
+    public function setDeliveryType($deliveryType) { $this->deliveryType = $deliveryType; }
+
+    public function getOwnershipStatus() { return $this->ownershipStatus; }
+    public function setOwnershipStatus($ownershipStatus) { $this->ownershipStatus = $ownershipStatus; }
+
+    public function getOwnershipCategory() { return $this->ownershipCategory; }
+    public function setOwnershipCategory($ownershipCategory) { $this->ownershipCategory = $ownershipCategory; }
+
+    public function getTransactionStatus() { return $this->transactionStatus; }
+    public function setTransactionStatus($transactionStatus) { $this->transactionStatus = $transactionStatus; }
 
     public function getRequestQuantity() { return $this->requestQuantity; }
     public function setRequestQuantity($requestQuantity) { $this->requestQuantity = $requestQuantity; }
 
-    public function getRequestUsageType() { return $this->requestUsageType; }
-    public function setRequestUsageType($requestUsageType) { $this->requestUsageType = $requestUsageType; }
-
-    public function getCompetitorBrand() { return $this->competitorBrand; }
-    public function setCompetitorBrand($competitorBrand) { $this->competitorBrand = $competitorBrand; }
-
-    public function getCompetitorType() { return $this->competitorType; }
-    public function setCompetitorType($competitorType) { $this->competitorType = $competitorType; }
-
-    public function getCompetitorDealer() { return $this->competitorDealer; }
-    public function setCompetitorDealer($competitorDealer) { $this->competitorDealer = $competitorDealer; }
-
     public function getPaymentMethodType() { return $this->paymentMethodType; }
     public function setPaymentMethodType($paymentMethodType) { $this->paymentMethodType = $paymentMethodType; }
 
-    public function getCustomerPrice() { return $this->customerPrice; }
-    public function setCustomerPrice($customerPrice) { $this->customerPrice = $customerPrice; }
+    public function getIsCashBeforeDelivery() { return $this->isCashBeforeDelivery; }
+    public function setIsCashBeforeDelivery($isCashBeforeDelivery) { $this->isCashBeforeDelivery = $isCashBeforeDelivery; }
 
-    public function getSalesmanPrice() { return $this->salesmanPrice; }
-    public function setSalesmanPrice($salesmanPrice) { $this->salesmanPrice = $salesmanPrice; }
+    public function getIsPaymentTerm() { return $this->isPaymentTerm; }
+    public function setIsPaymentTerm($isPaymentTerm) { $this->isPaymentTerm = $isPaymentTerm; }
+
+    public function getTermOfPayment() { return $this->termOfPayment; }
+    public function setTermOfPayment($termOfPayment) { $this->termOfPayment = $termOfPayment; }
+
+    public function getLeasingReference() { return $this->leasingReference; }
+    public function setLeasingReference($leasingReference) { $this->leasingReference = $leasingReference; }
+
+    public function getUnitPrice() { return $this->unitPrice; }
+    public function setUnitPrice($unitPrice) { $this->unitPrice = $unitPrice; }
+
+    public function getTotalPrice() { return $this->totalPrice; }
+    public function setTotalPrice($totalPrice) { $this->totalPrice = $totalPrice; }
 
     public function getApprovedPrice() { return $this->approvedPrice; }
     public function setApprovedPrice($approvedPrice) { $this->approvedPrice = $approvedPrice; }
+    
+    public function getBookingFee() { return $this->bookingFee; }
+    public function setBookingFee($bookingFee) { $this->bookingFee = $bookingFee; }
 
-    public function getCompetitorPrice() { return $this->competitorPrice; }
-    public function setCompetitorPrice($competitorPrice) { $this->competitorPrice = $competitorPrice; }
+    public function getDownpayment1() { return $this->downpayment1; }
+    public function setDownpayment1($downpayment1) { $this->downpayment1 = $downpayment1; }
 
-    public function getOffTheRoadPrice() { return $this->offTheRoadPrice; }
-    public function setOffTheRoadPrice($offTheRoadPrice) { $this->offTheRoadPrice = $offTheRoadPrice; }
+    public function getDownpayment2() { return $this->downpayment2; }
+    public function setDownpayment2($downpayment2) { $this->downpayment2 = $downpayment2; }
+
+    public function getTotalPayment() { return $this->totalPayment; }
+    public function setTotalPayment($totalPayment) { $this->totalPayment = $totalPayment; }
+
+    public function getLeasingPrice() { return $this->leasingPrice; }
+    public function setLeasingPrice($leasingPrice) { $this->leasingPrice = $leasingPrice; }
+
+    public function getLeasingPriceDifference() { return $this->leasingPriceDifference; }
+    public function setLeasingPriceDifference($leasingPriceDifference) { $this->leasingPriceDifference = $leasingPriceDifference; }
+
+    public function getLeasingOverPaid() { return $this->leasingOverPaid; }
+    public function setLeasingOverPaid($leasingOverPaid) { $this->leasingOverPaid = $leasingOverPaid; }
+
+    public function getLeasingOverPaidNett() { return $this->leasingOverPaidNett; }
+    public function setLeasingOverPaidNett($leasingOverPaidNett) { $this->leasingOverPaidNett = $leasingOverPaidNett; }
+
+    public function getLeasingTaxAmount() { return $this->leasingTaxAmount; }
+    public function setLeasingTaxAmount($leasingTaxAmount) { $this->leasingTaxAmount = $leasingTaxAmount; }
+
+    public function getLeasingStatus() { return $this->leasingStatus; }
+    public function setLeasingStatus($leasingStatus) { $this->leasingStatus = $leasingStatus; }
 
     public function getRegistrationPrice() { return $this->registrationPrice; }
     public function setRegistrationPrice($registrationPrice) { $this->registrationPrice = $registrationPrice; }
@@ -349,6 +468,18 @@ class SaleDiscountApplication extends CodeNumberEntity
 
     public function getGrandTotalPrice() { return $this->grandTotalPrice; }
     public function setGrandTotalPrice($grandTotalPrice) { $this->grandTotalPrice = $grandTotalPrice; }
+
+    public function getMediatorName() { return $this->mediatorName; }
+    public function setMediatorName($mediatorName) { $this->mediatorName = $mediatorName; }
+
+    public function getMediatorRanking() { return $this->mediatorRanking; }
+    public function setMediatorRanking($mediatorRanking) { $this->mediatorRanking = $mediatorRanking; }
+
+    public function getMediatorPhone() { return $this->mediatorPhone; }
+    public function setMediatorPhone($mediatorPhone) { $this->mediatorPhone = $mediatorPhone; }
+
+    public function getMediatorTaxSelection() { return $this->mediatorTaxSelection; }
+    public function setMediatorTaxSelection($mediatorTaxSelection) { $this->mediatorTaxSelection = $mediatorTaxSelection; }
 
     public function getMediatorPrice() { return $this->mediatorPrice; }
     public function setMediatorPrice($mediatorPrice) { $this->mediatorPrice = $mediatorPrice; }

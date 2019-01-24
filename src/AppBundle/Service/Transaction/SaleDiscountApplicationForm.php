@@ -43,10 +43,12 @@ class SaleDiscountApplicationForm
     
     private function sync(SaleDiscountApplication $saleDiscountApplication)
     {
-        $subTotal = $saleDiscountApplication->getOffTheRoadPrice() + $saleDiscountApplication->getRegistrationPrice();
-        $grandTotal = $subTotal + $saleDiscountApplication->getOtherPricingAmount1() + $saleDiscountApplication->getOtherPricingAmount2() + $saleDiscountApplication->getOtherPricingAmount3() + $saleDiscountApplication->getOtherPricingAmount4() + $saleDiscountApplication->getOtherPricingAmount5();
-        $saleDiscountApplication->setSubTotalPrice($subTotal);
+        $grandTotal = $saleDiscountApplication->getOtherPricingAmount1() + $saleDiscountApplication->getOtherPricingAmount2() + $saleDiscountApplication->getOtherPricingAmount3() + $saleDiscountApplication->getOtherPricingAmount4() + $saleDiscountApplication->getOtherPricingAmount5();
+        $totalPrice = $saleDiscountApplication->getUnitPrice() * $saleDiscountApplication->getRequestQuantity();
+        $saleDiscountApplication->setTotalPrice($totalPrice);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
+        $saleDiscountApplication->setSubTotalPrice(0);
+        $saleDiscountApplication->setRegistrationPrice(0);
 //        $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
 //        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_TYPE_OTHER) {
 //            $saleDiscountApplication->setCustomerStatusName($customerStatusType);
