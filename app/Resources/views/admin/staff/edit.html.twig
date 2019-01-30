@@ -8,3 +8,7 @@
         <div>{{ staff.username }}</div>
     </div>
 {% endblock %}
+
+{% block content_is_active %}
+    {{ form_row(form.isActive) }}
+{% endblock %}

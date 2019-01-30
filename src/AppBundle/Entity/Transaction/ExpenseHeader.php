@@ -16,6 +16,9 @@ use AppBundle\Entity\Admin\Staff;
  */
 class ExpenseHeader extends CodeNumberEntity
 {
+    const TRANSACTION_TYPE_UNIT = 'unit';
+    const TRANSACTION_TYPE_GENERAL = 'umum';
+    
     /**
      * @ORM\Column(name="id", type="integer") @ORM\Id @ORM\GeneratedValue
      */
@@ -25,6 +28,11 @@ class ExpenseHeader extends CodeNumberEntity
      * @Assert\NotNull() @Assert\Date()
      */
     private $transactionDate;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $transactionType;
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\NotBlank()
@@ -45,6 +53,10 @@ class ExpenseHeader extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $account;
+    /**
+     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="expenseHeaders")
+     */
+    private $purchaseDeliveryOrder;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
@@ -72,6 +84,9 @@ class ExpenseHeader extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate(\DateTime $transactionDate = null) { $this->transactionDate = $transactionDate; }
 
+    public function getTransactionType() { return $this->transactionType; }
+    public function setTransactionType($transactionType) { $this->transactionType = $transactionType; }
+
     public function getObjectiveReason() { return $this->objectiveReason; }
     public function setObjectiveReason($objectiveReason) { $this->objectiveReason = $objectiveReason; }
 
@@ -89,6 +104,9 @@ class ExpenseHeader extends CodeNumberEntity
     
     public function getStaffApproval() { return $this->staffApproval; }
     public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
+    
+    public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
+    public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
     
     public function getExpenseDetails() { return $this->expenseDetails; }
     public function setExpenseDetails(Collection $expenseDetails) { $this->expenseDetails = $expenseDetails; }

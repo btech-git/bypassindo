@@ -98,12 +98,14 @@ class JournalVoucherHeaderForm
                 $journalLedger->setCodeNumber($journalVoucherHeader->getCodeNumber());
                 $journalLedger->setTransactionDate($journalVoucherHeader->getTransactionDate());
                 $journalLedger->setTransactionType(JournalLedger::TRANSACTION_TYPE_VOUCHER);
+                $journalLedger->setTransactionCategory($journalVoucherHeader->getTransactionType());
                 $journalLedger->setTransactionSubject($journalVoucherDetail->getMemo());
                 $journalLedger->setNote($journalVoucherHeader->getNote());
                 $journalLedger->setDebit($journalVoucherDetail->getDebit());
                 $journalLedger->setCredit($journalVoucherDetail->getCredit());
                 $journalLedger->setAccount($journalVoucherDetail->getAccount());
                 $journalLedger->setStaff($journalVoucherHeader->getStaff());
+                $journalLedger->setPurchaseDeliveryOrder($journalVoucherHeader->getPurchaseDeliveryOrder());
                 $this->journalLedgerRepository->add($journalLedger);
             }
         }

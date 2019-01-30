@@ -4,16 +4,20 @@ namespace AppBundle\Form\Transaction;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use LibBundle\Doctrine\EntityRepository;
+use LibBundle\Util\ConstantValueList;
+use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Master\Account;
 use AppBundle\Entity\Transaction\ExpenseDetail;
 use AppBundle\Entity\Transaction\ExpenseHeader;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 
 class ExpenseHeaderType extends AbstractType
 {
@@ -24,6 +28,11 @@ class ExpenseHeaderType extends AbstractType
             ->add('objectiveReason')
             ->add('chequeNumber')
             ->add('note')
+            ->add('transactionType', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(ExpenseHeader::class, 'TRANSACTION_TYPE'),
+                'choices_as_values' => true,
+            ))
             ->add('account', EntityType::class, array(
                 'class' => Account::class,
                 'query_builder' => function (EntityRepository $er) {
@@ -31,6 +40,7 @@ class ExpenseHeaderType extends AbstractType
                     return $qb->where($qb->expr()->in('IDENTITY(u.accountCategory)', array(10)));
                 },
             ))
+            ->add('purchaseDeliveryOrder', EntityTextType::class, array('class' => PurchaseDeliveryOrder::class))
             ->add('expenseDetails', CollectionType::class, array(
                 'entry_type' => ExpenseDetailType::class,
                 'allow_add' => true,

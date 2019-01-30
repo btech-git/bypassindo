@@ -31,9 +31,25 @@
         <div class="row">
             <div class="col-sm-6">
                 {{ form_row(form.transactionDate, {'label': 'Tanggal'}) }}
+                {{ form_row(form.transactionType, {'label': 'Jenis Transaksi'}) }}
+                {{ form_row(form.account) }}
             </div>
             <div class="col-sm-6">
-                {{ form_row(form.account) }}
+                {{ form_row(form.purchaseDeliveryOrder, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#purchase-delivery-order-dialog'}, 'label' : 'Data Kendaraan' }) }}
+                <div class="form-group" id="purchase-delivery-order-info">
+                    <div>
+                        <label>Rangka #:</label>
+                        <span data-name="vehicle-chassis-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Mesin #:</label>
+                        <span data-name="vehicle-machine-number">{{ receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</span>
+                    </div>
+                    <div>
+                        <label>Deskripsi:</label>
+                        <span data-name="vehicle-description">{{ receiveOrder.purchaseDeliveryOrder.vehicleDescription|default }}</span>
+                    </div>
+                </div>
                 {{ form_row(form.note) }}
             </div>
         </div>
@@ -87,6 +103,20 @@
             </div>
         </div>
     </div>
+                
+    <div id="purchase-delivery-order-dialog" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg" style="width: 90%">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Vehicle List</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="purchase-delivery-order-grid" data-grid="{{ path('common_purchase_delivery_order_grid', {'form': form.vars.id}) }}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
@@ -132,6 +162,20 @@
                     var accountNamePrototype = prototype.find("[data-name=account-name-" + name + "]");
                     accountNamePrototype.text(context.attr("data-field-account-name"));
                 });
+            });
+            
+            $("#purchase-delivery-order-grid").on("click", "table[data-role=table] tbody tr", function() {
+                $("#purchase-delivery-order-dialog").modal("hide");
+                $("#{{ form.purchaseDeliveryOrder.vars.id }}").val($(this).attr("data-field-id"));
+                $("[data-name=code-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-code-number"));
+                $("[data-name=sale-order-code-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-code-number"));
+                $("[data-name=customer-name]", "#purchase-delivery-order-info").text($(this).attr("data-field-customer-name"));
+                $("[data-name=sale-order-vehicle-brand]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-brand"));
+                $("[data-name=sale-order-vehicle-color]", "#purchase-delivery-order-info").text($(this).attr("data-field-sale-order-vehicle-color"));
+                $("[data-name=vehicle-production-year]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-production-year"));
+                $("[data-name=vehicle-chassis-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-chassis-number"));
+                $("[data-name=vehicle-machine-number]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-machine-number"));
+                $("[data-name=vehicle-description]", "#purchase-delivery-order-info").text($(this).attr("data-field-vehicle-description"));
             });
         });
     </script>

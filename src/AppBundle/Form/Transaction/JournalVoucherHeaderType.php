@@ -4,13 +4,17 @@ namespace AppBundle\Form\Transaction;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use LibBundle\Util\ConstantValueList;
+use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\JournalVoucherDetail;
 use AppBundle\Entity\Transaction\JournalVoucherHeader;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 
 class JournalVoucherHeaderType extends AbstractType
 {
@@ -19,6 +23,12 @@ class JournalVoucherHeaderType extends AbstractType
         $builder
             ->add('transactionDate', DateType::class)
             ->add('note')
+            ->add('transactionType', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(JournalVoucherHeader::class, 'TRANSACTION_TYPE'),
+                'choices_as_values' => true,
+            ))
+            ->add('purchaseDeliveryOrder', EntityTextType::class, array('class' => PurchaseDeliveryOrder::class))
             ->add('journalVoucherDetails', CollectionType::class, array(
                 'entry_type' => JournalVoucherDetailType::class,
                 'allow_add' => true,

@@ -112,33 +112,39 @@ class PurchaseInvoiceHeaderUnitForm
             'codeNumberOrdinal' => $purchaseInvoiceHeader->getCodeNumberOrdinal(),
         ));
         $this->journalLedgerRepository->remove($oldJournalLedgers);
-        if ($addForHeader && $purchaseInvoiceHeader->getGrandTotal() > 0) {
-            $accountInventoryUnit = $this->accountRepository->findInventoryUnitRecord();
-            $accountPayableUnit = $this->accountRepository->findPayableUnitRecord();
-            
-            $journalLedgerDebit = new JournalLedger();
-            $journalLedgerDebit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
-            $journalLedgerDebit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
-            $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
-            $journalLedgerDebit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
-            $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
-            $journalLedgerDebit->setDebit($purchaseInvoiceHeader->getGrandTotal());
-            $journalLedgerDebit->setCredit(0);
-            $journalLedgerDebit->setAccount($accountInventoryUnit);
-            $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
-            $this->journalLedgerRepository->add($journalLedgerDebit);
+        foreach ($purchaseInvoiceHeader->getPurchaseInvoiceDetailUnits() as $purchaseInvoiceDetail) {
+            if ($addForHeader && $purchaseInvoiceHeader->getGrandTotal() > 0) {
+                $accountInventoryUnit = $this->accountRepository->findInventoryUnitRecord();
+                $accountPayableUnit = $this->accountRepository->findPayableUnitRecord();
 
-            $journalLedgerCredit = new JournalLedger();
-            $journalLedgerCredit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
-            $journalLedgerCredit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
-            $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
-            $journalLedgerCredit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
-            $journalLedgerCredit->setNote($purchaseInvoiceHeader->getNote());
-            $journalLedgerCredit->setDebit(0);
-            $journalLedgerCredit->setCredit($purchaseInvoiceHeader->getGrandTotal());
-            $journalLedgerCredit->setAccount($accountPayableUnit);
-            $journalLedgerCredit->setStaff($purchaseInvoiceHeader->getStaffFirst());
-            $this->journalLedgerRepository->add($journalLedgerCredit);
+                $journalLedgerDebit = new JournalLedger();
+                $journalLedgerDebit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
+                $journalLedgerDebit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
+                $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+                $journalLedgerDebit->setTransactionCategory($purchaseInvoiceHeader::BUSINESS_TYPE_UNIT);
+                $journalLedgerDebit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
+                $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
+                $journalLedgerDebit->setDebit($purchaseInvoiceDetail->getTotal());
+                $journalLedgerDebit->setCredit(0);
+                $journalLedgerDebit->setAccount($accountInventoryUnit);
+                $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+                $journalLedgerDebit->setPurchaseDeliveryOrder($purchaseInvoiceDetail->getPurchaseDeliveryOrder());
+                $this->journalLedgerRepository->add($journalLedgerDebit);
+
+                $journalLedgerCredit = new JournalLedger();
+                $journalLedgerCredit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
+                $journalLedgerCredit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
+                $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+                $journalLedgerCredit->setTransactionCategory($purchaseInvoiceHeader::BUSINESS_TYPE_UNIT);
+                $journalLedgerCredit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
+                $journalLedgerCredit->setNote($purchaseInvoiceHeader->getNote());
+                $journalLedgerCredit->setDebit(0);
+                $journalLedgerCredit->setCredit($purchaseInvoiceDetail->getTotal());
+                $journalLedgerCredit->setAccount($accountPayableUnit);
+                $journalLedgerCredit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+                $journalLedgerCredit->setPurchaseDeliveryOrder($purchaseInvoiceDetail->getPurchaseDeliveryOrder());
+                $this->journalLedgerRepository->add($journalLedgerCredit);
+            }
         }
     }
 }

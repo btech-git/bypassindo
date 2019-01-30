@@ -92,10 +92,30 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      * @ORM\OneToMany(targetEntity="PurchaseInvoiceHeader", mappedBy="purchaseDeliveryOrder")
      */
     private $purchaseInvoiceHeaders;
+    /**
+     * @ORM\OneToMany(targetEntity="DepositHeader", mappedBy="purchaseDeliveryOrder")
+     */
+    private $depositHeaders;
+    /**
+     * @ORM\OneToMany(targetEntity="ExpenseHeader", mappedBy="purchaseDeliveryOrder")
+     */
+    private $expenseHeaders;
+    /**
+     * @ORM\OneToMany(targetEntity="JournalVoucherHeader", mappedBy="purchaseDeliveryOrder")
+     */
+    private $journalVoucherHeaders;
+    /**
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\Report\JournalLedger", mappedBy="purchaseDeliveryOrder")
+     */
+    private $journalLedgers;
     
     public function __construct()
     {
-        $this->purchaseInvoiceHeaders = new ArrayCollection();        
+        $this->purchaseInvoiceHeaders = new ArrayCollection();  
+        $this->depositHeaders = new ArrayCollection();      
+        $this->expenseHeaders = new ArrayCollection();  
+        $this->journalVoucherHeaders = new ArrayCollection();  
+        $this->journalLedgers = new ArrayCollection();   
     }
     
     public function getCodeNumberConstant()
@@ -149,6 +169,18 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     
     public function getPurchaseInvoiceHeaders() { return $this->purchaseInvoiceHeaders; }
     public function setPurchaseInvoiceHeaders(Collection $purchaseInvoiceHeaders) { $this->purchaseInvoiceHeaders = $purchaseInvoiceHeaders; }
+
+    public function getDepositHeaders() { return $this->depositHeaders; }
+    public function setDepositHeaders(Collection $depositHeaders) { $this->depositHeaders = $depositHeaders; }
+
+    public function getExpenseHeaders() { return $this->expenseHeaders; }
+    public function setExpenseHeaders(Collection $expenseHeaders) { $this->expenseHeaders = $expenseHeaders; }
+
+    public function getJournalVoucherHeaders() { return $this->journalVoucherHeaders; }
+    public function setJournalVoucherHeaders(Collection $journalVoucherHeaders) { $this->journalVoucherHeaders = $journalVoucherHeaders; }
+
+    public function getJournalLedgers() { return $this->journalLedgers; }
+    public function setJournalLedgers(Collection $journalLedgers) { $this->journalLedgers = $journalLedgers; }
 
     public function sync()
     {

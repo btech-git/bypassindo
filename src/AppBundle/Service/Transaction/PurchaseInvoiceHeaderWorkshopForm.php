@@ -128,24 +128,28 @@ class PurchaseInvoiceHeaderWorkshopForm
             $journalLedgerDebit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
             $journalLedgerDebit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
             $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerDebit->setTransactionCategory($purchaseInvoiceHeader::BUSINESS_TYPE_UNIT);
             $journalLedgerDebit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
             $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
             $journalLedgerDebit->setDebit($purchaseInvoiceHeader->getGrandTotal());
             $journalLedgerDebit->setCredit(0);
             $journalLedgerDebit->setAccount($accountInventoryWorkshop);
             $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $journalLedgerDebit->setPurchaseDeliveryOrder($purchaseInvoiceHeader->getPurchaseDeliveryOrder());
             $this->journalLedgerRepository->add($journalLedgerDebit);
 
             $journalLedgerCredit = new JournalLedger();
             $journalLedgerCredit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
             $journalLedgerCredit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
             $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerCredit->setTransactionCategory($purchaseInvoiceHeader::BUSINESS_TYPE_UNIT);
             $journalLedgerCredit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
             $journalLedgerCredit->setNote($purchaseInvoiceHeader->getNote());
             $journalLedgerCredit->setDebit(0);
             $journalLedgerCredit->setCredit($purchaseInvoiceHeader->getGrandTotal());
             $journalLedgerCredit->setAccount($accountPayableOther);
             $journalLedgerCredit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $journalLedgerCredit->setPurchaseDeliveryOrder($purchaseInvoiceHeader->getPurchaseDeliveryOrder());
             $this->journalLedgerRepository->add($journalLedgerCredit);
         }
     }

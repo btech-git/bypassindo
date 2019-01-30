@@ -120,12 +120,14 @@ class PurchasePaymentHeaderForm
                 $journalLedgerCredit->setCodeNumber($purchasePaymentHeader->getCodeNumber());
                 $journalLedgerCredit->setTransactionDate($purchasePaymentHeader->getTransactionDate());
                 $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE_PAYMENT);
+                $journalLedgerCredit->setTransactionCategory($purchasePaymentHeader->getPurchaseInvoiceHeader()->getBusinessType());
                 $journalLedgerCredit->setTransactionSubject($purchasePaymentDetail->getMemo());
                 $journalLedgerCredit->setNote($purchasePaymentHeader->getNote());
                 $journalLedgerCredit->setDebit(0);
                 $journalLedgerCredit->setCredit($purchasePaymentDetail->getAmount());
                 $journalLedgerCredit->setAccount($purchasePaymentDetail->getAccount());
                 $journalLedgerCredit->setStaff($purchasePaymentHeader->getStaffFirst());
+                $journalLedgerCredit->setPurchaseDeliveryOrder($purchasePaymentHeader->getPurchaseInvoiceHeader()->getPurchaseDeliveryOrder());
                 $this->journalLedgerRepository->add($journalLedgerCredit);
             }
         }
@@ -134,12 +136,14 @@ class PurchasePaymentHeaderForm
             $journalLedgerDebit->setCodeNumber($purchasePaymentHeader->getCodeNumber());
             $journalLedgerDebit->setTransactionDate($purchasePaymentHeader->getTransactionDate());
             $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE_PAYMENT);
+            $journalLedgerDebit->setTransactionCategory($purchasePaymentHeader->getPurchaseInvoiceHeader()->getBusinessType());
             $journalLedgerDebit->setTransactionSubject($purchasePaymentHeader->getPurchaseInvoiceHeader()->getSupplier());
             $journalLedgerDebit->setNote($purchasePaymentHeader->getNote());
             $journalLedgerDebit->setDebit($purchasePaymentHeader->getTotalAmount());
             $journalLedgerDebit->setCredit(0);
             $journalLedgerDebit->setAccount($accountPayableUnit);
             $journalLedgerDebit->setStaff($purchasePaymentHeader->getStaffFirst());
+            $journalLedgerDebit->setPurchaseDeliveryOrder($purchasePaymentHeader->getPurchaseInvoiceHeader()->getPurchaseDeliveryOrder());
             $this->journalLedgerRepository->add($journalLedgerDebit);
         }
     }

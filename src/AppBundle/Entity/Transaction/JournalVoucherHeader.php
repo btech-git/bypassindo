@@ -15,6 +15,9 @@ use AppBundle\Entity\Admin\Staff;
  */
 class JournalVoucherHeader extends CodeNumberEntity
 {
+    const TRANSACTION_TYPE_UNIT = 'unit';
+    const TRANSACTION_TYPE_GENERAL = 'umum';
+    
     /**
      * @ORM\Column(name="id", type="integer") @ORM\Id @ORM\GeneratedValue
      */
@@ -24,6 +27,11 @@ class JournalVoucherHeader extends CodeNumberEntity
      * @Assert\NotNull() @Assert\Date()
      */
     private $transactionDate;
+    /**
+     * @ORM\Column(type="string", length=20)
+     * @Assert\NotNull()
+     */
+    private $transactionType;
     /**
      * @ORM\Column(name="note", type="text")
      * @Assert\NotNull()
@@ -38,6 +46,10 @@ class JournalVoucherHeader extends CodeNumberEntity
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      */
     private $staffApproval;
+    /**
+     * @ORM\ManyToOne(targetEntity="PurchaseDeliveryOrder", inversedBy="journalVoucherHeaders")
+     */
+    private $purchaseDeliveryOrder;
     /**
      * @ORM\OneToMany(targetEntity="JournalVoucherDetail", mappedBy="journalVoucherHeader")
      * @Assert\Valid() @Assert\Count(min=1)
@@ -56,6 +68,9 @@ class JournalVoucherHeader extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate(\DateTime $transactionDate = null) { $this->transactionDate = $transactionDate; }
     
+    public function getTransactionType() { return $this->transactionType; }
+    public function setTransactionType($transactionType) { $this->transactionType = $transactionType; }
+
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
     
@@ -64,6 +79,9 @@ class JournalVoucherHeader extends CodeNumberEntity
     
     public function getStaffApproval() { return $this->staffApproval; }
     public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
+    
+    public function getPurchaseDeliveryOrder() { return $this->purchaseDeliveryOrder; }
+    public function setPurchaseDeliveryOrder(PurchaseDeliveryOrder $purchaseDeliveryOrder = null) { $this->purchaseDeliveryOrder = $purchaseDeliveryOrder; }
     
     public function getJournalVoucherDetails() { return $this->journalVoucherDetails; }
     public function setJournalVoucherDetails(Collection $journalVoucherDetails) { $this->journalVoucherDetails = $journalVoucherDetails; }

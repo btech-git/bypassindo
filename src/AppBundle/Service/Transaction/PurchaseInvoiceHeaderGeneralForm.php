@@ -115,24 +115,28 @@ class PurchaseInvoiceHeaderGeneralForm
             $journalLedgerDebit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
             $journalLedgerDebit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
             $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerDebit->setTransactionCategory(PurchaseInvoiceHeader::BUSINESS_TYPE_GENERAL);
             $journalLedgerDebit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
             $journalLedgerDebit->setNote($purchaseInvoiceHeader->getNote());
             $journalLedgerDebit->setDebit($purchaseInvoiceHeader->getGrandTotal());
             $journalLedgerDebit->setCredit(0);
             $journalLedgerDebit->setAccount($accountInventorySparepart);
             $journalLedgerDebit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $journalLedgerDebit->setPurchaseDeliveryOrder(null);
             $this->journalLedgerRepository->add($journalLedgerDebit);
 
             $journalLedgerCredit = new JournalLedger();
             $journalLedgerCredit->setCodeNumber($purchaseInvoiceHeader->getCodeNumber());
             $journalLedgerCredit->setTransactionDate($purchaseInvoiceHeader->getTransactionDate());
             $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_PAYABLE);
+            $journalLedgerCredit->setTransactionCategory(PurchaseInvoiceHeader::BUSINESS_TYPE_GENERAL);
             $journalLedgerCredit->setTransactionSubject($purchaseInvoiceHeader->getSupplier());
             $journalLedgerCredit->setNote($purchaseInvoiceHeader->getNote());
             $journalLedgerCredit->setDebit(0);
             $journalLedgerCredit->setCredit($purchaseInvoiceHeader->getGrandTotal());
             $journalLedgerCredit->setAccount($accountPayableSparepart);
             $journalLedgerCredit->setStaff($purchaseInvoiceHeader->getStaffFirst());
+            $journalLedgerCredit->setPurchaseDeliveryOrder(null);
             $this->journalLedgerRepository->add($journalLedgerCredit);
         }
     }

@@ -17,3 +17,7 @@ input[type=checkbox], input[type=radio] {
 .font-italic {
     font-style: italic !important;
 }
+
+ul.nav > li a:hover, ul.nav > li a:focus {
+    background-color: #ADD8E6;
+}

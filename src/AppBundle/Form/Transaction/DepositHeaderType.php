@@ -4,16 +4,20 @@ namespace AppBundle\Form\Transaction;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use LibBundle\Doctrine\EntityRepository;
+use LibBundle\Util\ConstantValueList;
+use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Master\Account;
 use AppBundle\Entity\Transaction\DepositDetail;
 use AppBundle\Entity\Transaction\DepositHeader;
+use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 
 class DepositHeaderType extends AbstractType
 {
@@ -22,6 +26,11 @@ class DepositHeaderType extends AbstractType
         $builder
             ->add('transactionDate', DateType::class)
             ->add('note')
+            ->add('transactionType', ChoiceType::class, array(
+                'expanded' => true,
+                'choices' => ConstantValueList::get(DepositHeader::class, 'TRANSACTION_TYPE'),
+                'choices_as_values' => true,
+            ))
             ->add('account', EntityType::class, array(
                 'class' => Account::class,
                 'query_builder' => function (EntityRepository $er) {
@@ -29,6 +38,7 @@ class DepositHeaderType extends AbstractType
                     return $qb->where($qb->expr()->in('IDENTITY(u.accountCategory)', array(10)));
                 },
             ))
+            ->add('purchaseDeliveryOrder', EntityTextType::class, array('class' => PurchaseDeliveryOrder::class))
             ->add('depositDetails', CollectionType::class, array(
                 'entry_type' => DepositDetailType::class,
                 'allow_add' => true,

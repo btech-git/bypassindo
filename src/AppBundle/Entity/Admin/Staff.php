@@ -6,10 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\User;
 
 /**
  * @ORM\Entity
+ * @UniqueEntity("email")
  */
 class Staff extends User
 {
@@ -30,7 +32,7 @@ class Staff extends User
     private $joinDate;
     /**
      * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\NotNull() @Assert\Email()
+     * @Assert\NotBlank() @Assert\Email()
      */
     private $email;
     /**
@@ -48,6 +50,11 @@ class Staff extends User
      * @Assert\NotNull()
      */
     private $note;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isActive = true;
     /**
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\Transaction\SaleInvoiceDetailUnit", mappedBy="staffSalesman")
      */
@@ -84,6 +91,9 @@ class Staff extends User
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
     
+    public function getIsActive() { return $this->isActive; }
+    public function setIsActive($isActive) { $this->isActive = $isActive; }
+
     public function getSaleInvoiceDetailUnits() { return $this->saleInvoiceDetailUnits; }
     public function setSaleInvoiceDetailUnits(Collection $saleInvoiceDetailUnits) { $this->saleInvoiceDetailUnits = $saleInvoiceDetailUnits; }
     

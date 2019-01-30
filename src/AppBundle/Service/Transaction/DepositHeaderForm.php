@@ -98,24 +98,28 @@ class DepositHeaderForm
                 $journalLedgerCredit->setCodeNumber($depositHeader->getCodeNumber());
                 $journalLedgerCredit->setTransactionDate($depositHeader->getTransactionDate());
                 $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerCredit->setTransactionCategory($depositHeader->getTransactionType());
                 $journalLedgerCredit->setTransactionSubject($depositDetail->getMemo());
                 $journalLedgerCredit->setNote($depositHeader->getNote());
                 $journalLedgerCredit->setDebit(0.00);
                 $journalLedgerCredit->setCredit($depositDetail->getAmount());
                 $journalLedgerCredit->setAccount($depositDetail->getAccount());
                 $journalLedgerCredit->setStaff($depositHeader->getStaff());
+                $journalLedgerCredit->setPurchaseDeliveryOrder($depositHeader->getPurchaseDeliveryOrder());
                 $this->journalLedgerRepository->add($journalLedgerCredit);
                 
                 $journalLedgerDebit = new JournalLedger();
                 $journalLedgerDebit->setCodeNumber($depositHeader->getCodeNumber());
                 $journalLedgerDebit->setTransactionDate($depositHeader->getTransactionDate());
                 $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_DEPOSIT);
+                $journalLedgerDebit->setTransactionCategory($depositHeader->getTransactionType());
                 $journalLedgerDebit->setTransactionSubject($depositDetail->getMemo());
                 $journalLedgerDebit->setNote($depositHeader->getNote());
                 $journalLedgerDebit->setDebit($depositDetail->getAmount());
                 $journalLedgerDebit->setCredit(0.00);
                 $journalLedgerDebit->setAccount($depositHeader->getAccount());
                 $journalLedgerDebit->setStaff($depositHeader->getStaff());
+                $journalLedgerDebit->setPurchaseDeliveryOrder($depositHeader->getPurchaseDeliveryOrder());
                 $this->journalLedgerRepository->add($journalLedgerDebit);
             }
         }

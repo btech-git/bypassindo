@@ -16,7 +16,7 @@ use AppBundle\Entity\Master\Supplier;
  */
 class PurchaseInvoiceHeader extends CodeNumberEntity
 {
-    const BUSINESS_TYPE_UNIT = 'hino motor';
+    const BUSINESS_TYPE_UNIT = 'unit';
     const BUSINESS_TYPE_WORKSHOP = 'karoseri';
     const BUSINESS_TYPE_GENERAL = 'umum';
     

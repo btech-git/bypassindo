@@ -53,6 +53,8 @@ class StaffType extends AbstractType
                         'first_options'  => array('label' => 'New Password'),
                         'second_options' => array('label' => 'Confirm Password'),
                     ));
+                } else {
+                    $form->add('isActive');
                 }
             })
             ->addEventListener(FormEvents::SUBMIT, function(FormEvent $event) use ($options) {
