@@ -11,6 +11,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * @ORM\Table(name="master_account_category") @ORM\Entity
  * @UniqueEntity("name")
+ * @UniqueEntity("code")
  */
 class AccountCategory
 {

@@ -44,6 +44,14 @@ class PurchaseDeliveryOrderForm
     {
         $purchaseDeliveryOrder->sync();
         
+//        $supplier = $purchaseDeliveryOrder->getSupplier();
+        $purchaseDeliveryOrder->setSupplier($purchaseDeliveryOrder->getSupplier('1'));
+        $transactionDate = $purchaseDeliveryOrder->getTransactionDate();
+        if ($transactionDate !== null) {
+//            $creditPaymentTerm = $supplier->getCreditPaymentTerm();
+            $purchaseDeliveryOrder->setDueDate($transactionDate->add(date_interval_create_from_date_string("60 days")));
+        }
+        
         $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
         if ($saleOrder !== null) {
             $purchaseDeliveryOrder->setVehicleModel($saleOrder->getVehicleModel());

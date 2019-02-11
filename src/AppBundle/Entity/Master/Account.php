@@ -12,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="master_account")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Master\AccountRepository")
  * @UniqueEntity("name")
+ * @UniqueEntity("code")
  */
 class Account
 {

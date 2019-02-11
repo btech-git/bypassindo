@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Table(name="master_employee") @ORM\Entity
+ * @UniqueEntity("name")
  */
 class Employee
 {

@@ -122,20 +122,22 @@ class SalePaymentHeaderForm
             'codeNumberOrdinal' => $salePaymentHeader->getCodeNumberOrdinal(),
         ));
         $this->journalLedgerRepository->remove($oldJournalLedgers);
+        
+        $saleInvoice = $salePaymentHeader->getSaleInvoiceHeader();
         foreach ($salePaymentHeader->getSalePaymentDetails() as $salePaymentDetail) {
             if ($salePaymentDetail->getAmount() > 0) {
                 $journalLedgerDebit = new JournalLedger();
                 $journalLedgerDebit->setCodeNumber($salePaymentHeader->getCodeNumber());
                 $journalLedgerDebit->setTransactionDate($salePaymentHeader->getTransactionDate());
                 $journalLedgerDebit->setTransactionType(JournalLedger::TRANSACTION_TYPE_RECEIVABLE_PAYMENT);
-                $journalLedgerDebit->setTransactionCategory($salePaymentHeader->getSaleInvoiceHeader()->getBusinessType());
+                $journalLedgerDebit->setTransactionCategory(empty($saleInvoice) ? 'unit' : $saleInvoice->getBusinessType());
                 $journalLedgerDebit->setTransactionSubject($salePaymentDetail->getMemo());
                 $journalLedgerDebit->setNote($salePaymentHeader->getNote());
                 $journalLedgerDebit->setDebit($salePaymentDetail->getAmount());
                 $journalLedgerDebit->setCredit(0);
                 $journalLedgerDebit->setAccount($salePaymentDetail->getAccount());
                 $journalLedgerDebit->setStaff($salePaymentHeader->getStaffFirst());
-                $journalLedgerDebit->setPurchaseDeliveryOrder('null');
+                $journalLedgerDebit->setPurchaseDeliveryOrder(null);
                 $this->journalLedgerRepository->add($journalLedgerDebit);
             }
         }
@@ -146,14 +148,14 @@ class SalePaymentHeaderForm
             $journalLedgerCredit->setCodeNumber($salePaymentHeader->getCodeNumber());
             $journalLedgerCredit->setTransactionDate($salePaymentHeader->getTransactionDate());
             $journalLedgerCredit->setTransactionType(JournalLedger::TRANSACTION_TYPE_RECEIVABLE_PAYMENT);
-            $journalLedgerCredit->setTransactionCategory($salePaymentHeader->getSaleInvoiceHeader()->getBusinessType());
-            $journalLedgerCredit->setTransactionSubject($salePaymentHeader->getSaleInvoiceHeader()->getCustomer());
+            $journalLedgerCredit->setTransactionCategory(empty($saleInvoice) ? 'unit' : $saleInvoice->getBusinessType());
+            $journalLedgerCredit->setTransactionSubject(empty($saleInvoice) ? $salePaymentHeader->getSaleInvoiceDownpayment()->getCustomer() : $saleInvoice->getCustomer());
             $journalLedgerCredit->setNote($salePaymentHeader->getNote());
             $journalLedgerCredit->setDebit(0);
             $journalLedgerCredit->setCredit($salePaymentHeader->getTotalAmount());
             $journalLedgerCredit->setAccount($accountReceivable);
             $journalLedgerCredit->setStaff($salePaymentHeader->getStaffFirst());
-            $journalLedgerCredit->setPurchaseDeliveryOrder('null');
+            $journalLedgerCredit->setPurchaseDeliveryOrder(null);
             $this->journalLedgerRepository->add($journalLedgerCredit);
         }
     }

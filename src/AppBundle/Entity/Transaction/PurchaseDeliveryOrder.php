@@ -10,6 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use AppBundle\Entity\Common\CodeNumberEntity;
 use AppBundle\Entity\Admin\Staff;
 use AppBundle\Entity\Master\VehicleModel;
+use AppBundle\Entity\Master\Supplier;
 
 /**
  * @ORM\Table(name="transaction_purchase_delivery_order")
@@ -26,6 +27,11 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      * @Assert\NotNull() @Assert\Date()
      */
     private $transactionDate;
+    /**
+     * @ORM\Column(type="date")
+     * @Assert\NotNull() @Assert\Date()
+     */
+    private $dueDate;
     /**
      * @ORM\Column(type="string", length=20)
      * @Assert\NotNull()
@@ -61,6 +67,10 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $isStock;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
+     */
+    private $supplier;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\VehicleModel", inversedBy="purchaseDeliveryOrders")
      * @Assert\NotNull()
@@ -128,6 +138,9 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     public function getTransactionDate() { return $this->transactionDate; }
     public function setTransactionDate($transactionDate) { $this->transactionDate = $transactionDate; }
 
+    public function getDueDate() { return $this->dueDate; }
+    public function setDueDate($dueDate) { $this->dueDate = $dueDate; }
+
     public function getReference() { return $this->reference; }
     public function setReference($reference) { $this->reference = $reference; }
 
@@ -151,6 +164,9 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
 
     public function getVehicleModel() { return $this->vehicleModel; }
     public function setVehicleModel(VehicleModel $vehicleModel = null) { $this->vehicleModel = $vehicleModel; }
+
+    public function getSupplier() { return $this->supplier; }
+    public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }
 
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }

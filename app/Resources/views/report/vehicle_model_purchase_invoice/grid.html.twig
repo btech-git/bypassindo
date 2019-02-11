@@ -2,15 +2,15 @@
 
 <div class="hidden-print">
     {{ grid_top(grid) }}
-    <div class="text-center">
+    {#<div class="text-center">
         <button type="button" class="btn btn-info btn-sm" id="export">Export</button>
-    </div>
+    </div>#}
     <hr />
 </div>
 
 <div class="report">
     <div class="report-header">
-        <div class="report-title">PT. Bypassindo Jayaindah</div>
+        <div class="report-title">PT. Bypassindo Jaya Indah</div>
         <div class="report-title">Laporan Pembelian Per Model</div>
         <div>
             {% set startDate = grid.searchVals['purchaseInvoiceHeaders']['transactionDate'][1]|default %}
@@ -56,13 +56,13 @@
                                 {% for purchaseDeliveryOrder in vehicleModel.purchaseDeliveryOrders %}
                                     <tr>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.codeNumber|default }}</td>
-                                        <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.transactionDate|default ? purchaseInvoiceDetailUnit.purchaseInvoiceHeader.transactionDate|date('j F Y') }}</td>
+                                        <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.transactionDate|default ? purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.transactionDate|date('j F Y') }}</td>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.supplier.name|default }}</td>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.vehicleChassisNumber|default }}</td>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.vehicleMachineNumber|default }}</td>
                                         <td class="text-right">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.total|default|number_format(2) }}</td>
                                     </tr>
-                                    {% set totalSum = totalSum + purchaseInvoiceDetailUnit.total %}
+                                    {% set totalSum = totalSum + purchaseDeliveryOrder.purchaseInvoiceDetailUnit.total %}
                                 {% endfor %}
                             </tbody>
                             <tfoot class="border-top-solid-normal">
@@ -83,7 +83,7 @@
     <br />
     {{ grid_bottom(grid) }}
 </div>
-
+{#
 <script>
     jQuery(function($) {
         $("#export").click(function() {
@@ -92,4 +92,4 @@
             $.redirect(url, data);
         });
     });
-</script>
+</script>#}
