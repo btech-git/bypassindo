@@ -29,7 +29,7 @@ class PurchaseDeliveryOrder extends CodeNumberEntity
     private $transactionDate;
     /**
      * @ORM\Column(type="date")
-     * @Assert\NotNull() @Assert\Date()
+     * @Assert\Date()
      */
     private $dueDate;
     /**
