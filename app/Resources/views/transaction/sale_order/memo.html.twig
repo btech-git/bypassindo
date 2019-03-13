@@ -80,7 +80,7 @@
                         </div>
                         <div class="row">
                             <div class="cell label">Off The Road?</div>
-                            <div class="cell value">{{ saleOrder.isOffTheRoad|default ? saleOrder.transactionDate|date('d M Y') }}</div>
+                            <div class="cell value">{{ saleOrder.isOffTheRoad|default ? "Yes" : "No" }}</div>
                         </div>
                         <div class="row">
                             <div class="cell label">Merk</div>
