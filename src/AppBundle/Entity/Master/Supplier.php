@@ -9,7 +9,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * @ORM\Table(name="master_supplier") @ORM\Entity
+ * @ORM\Table(name="master_supplier")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\Master\SupplierRepository")
  * @UniqueEntity("taxNumber")
  * @Assert\Expression("(this.getIsPersonal() and !this.getIsCompany()) or (!this.getIsPersonal() and this.getIsCompany())")
  */
