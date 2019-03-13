@@ -19,6 +19,12 @@ services:
         arguments:
             - AppBundle\Entity\Master\Account
 
+    app.master.supplier_repository:
+        class: AppBundle\Repository\Master\SupplierRepository
+        factory: ["@doctrine.orm.entity_manager", getRepository]
+        arguments:
+            - AppBundle\Entity\Master\Supplier
+
     app.transaction.sale_discount_application_repository:
         class: AppBundle\Repository\Transaction\SaleDiscountApplicationRepository
         factory: ["@doctrine.orm.entity_manager", getRepository]
@@ -177,7 +183,7 @@ services:
 
     app.transaction.purchase_delivery_order_form:
         class: AppBundle\Service\Transaction\PurchaseDeliveryOrderForm
-        arguments: ["@app.transaction.purchase_delivery_order_repository"]
+        arguments: ["@app.transaction.purchase_delivery_order_repository", "@app.master.supplier_repository"]
 
     app.transaction.sale_invoice_sparepart_header_repository:
         class: LibBundle\Doctrine\EntityRepository
@@ -188,12 +194,6 @@ services:
     app.transaction.sale_invoice_sparepart_header_sheet:
         class: AppBundle\Service\Transaction\SaleInvoiceSparepartHeaderSheet
         arguments: ["@validator",  "@lib.excel.object_parser", "@app.transaction.sale_invoice_sparepart_header_repository"]
-
-    app.report.journal_ledger_repository:
-        class: AppBundle\Repository\Report\JournalLedgerRepository
-        factory: ["@doctrine.orm.entity_manager", getRepository]
-        arguments:
-            - AppBundle\Entity\Report\JournalLedger
 
     app.transaction.deposit_header_repository:
         class: AppBundle\Repository\Transaction\DepositHeaderRepository
