@@ -251,8 +251,8 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         }
         $this->subTotal = $subTotal;
         $taxNominal = $this->getIsTax() ? $subTotal * 0.1 : 0;
-        $this->taxNominal = $taxNominal;
-        $grandTotal = $subTotal + $taxNominal;
+        $this->taxNominal = round($taxNominal);
+        $grandTotal = $subTotal + round($taxNominal);
         $this->grandTotal = $grandTotal;
         
         $totalPayment = '0.00';
