@@ -5,14 +5,17 @@ namespace AppBundle\Service\Transaction;
 use LibBundle\Doctrine\ObjectPersister;
 use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Repository\Transaction\PurchaseDeliveryOrderRepository;
+use AppBundle\Repository\Master\SupplierRepository;
 
 class PurchaseDeliveryOrderForm
 {
     private $purchaseDeliveryOrderRepository;
+    private $supplierRepository;
     
-    public function __construct(PurchaseDeliveryOrderRepository $purchaseDeliveryOrderRepository)
+    public function __construct(PurchaseDeliveryOrderRepository $purchaseDeliveryOrderRepository, SupplierRepository $supplierRepository)
     {
         $this->purchaseDeliveryOrderRepository = $purchaseDeliveryOrderRepository;
+        $this->supplierRepository = $supplierRepository;
     }
     
     public function initialize(PurchaseDeliveryOrder $purchaseDeliveryOrder, array $params = array())
@@ -21,6 +24,7 @@ class PurchaseDeliveryOrderForm
         
         if (empty($purchaseDeliveryOrder->getId())) {
             $purchaseDeliveryOrder->setStaffFirst($staff);
+            $purchaseDeliveryOrder->setSupplier($this->supplierRepository->findMainUnitRecord());
         }
         $purchaseDeliveryOrder->setStaffLast($staff);
     }
@@ -44,12 +48,12 @@ class PurchaseDeliveryOrderForm
     {
         $purchaseDeliveryOrder->sync();
         
-//        $supplier = $purchaseDeliveryOrder->getSupplier();
-        $purchaseDeliveryOrder->setSupplier($purchaseDeliveryOrder->getSupplier('1'));
         $transactionDate = $purchaseDeliveryOrder->getTransactionDate();
         if ($transactionDate !== null) {
-//            $creditPaymentTerm = $supplier->getCreditPaymentTerm();
-            $purchaseDeliveryOrder->setDueDate($transactionDate->add(date_interval_create_from_date_string("60 days")));
+            $date = clone $transactionDate;
+            $supplier = $purchaseDeliveryOrder->getSupplier();
+            $creditPaymentTerm = $supplier->getCreditPaymentTerm();
+            $purchaseDeliveryOrder->setDueDate($date->add(date_interval_create_from_date_string("{$creditPaymentTerm} days")));
         }
         
         $saleOrder = $purchaseDeliveryOrder->getSaleOrder();
