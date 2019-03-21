@@ -65,20 +65,30 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
      */
     private $note;
     /**
-     * @ORM\Column(name="sub_total", type="decimal", precision=18, scale=2)
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $subTotal;
     /**
-     * @ORM\Column(name="tax_nominal", type="decimal", precision=18, scale=2)
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $taxNominal;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $taxNominalReplacement;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $grandTotal;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $grandTotalReplacement;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
@@ -183,8 +193,14 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
     public function getTaxNominal() { return $this->taxNominal; }
     public function setTaxNominal($taxNominal) { $this->taxNominal = $taxNominal; }
     
+    public function getTaxNominalReplacement() { return $this->taxNominalReplacement; }
+    public function setTaxNominalReplacement($taxNominalReplacement) { $this->taxNominalReplacement = $taxNominalReplacement; }
+    
     public function getGrandTotal() { return $this->grandTotal; }
     public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
+
+    public function getGrandTotalReplacement() { return $this->grandTotalReplacement; }
+    public function setGrandTotalReplacement($grandTotalReplacement) { $this->grandTotalReplacement = $grandTotalReplacement; }
 
     public function getTotalPayment() { return $this->totalPayment; }
     public function setTotalPayment($totalPayment) { $this->totalPayment = $totalPayment; }
@@ -254,6 +270,8 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         $this->taxNominal = round($taxNominal);
         $grandTotal = $subTotal + round($taxNominal);
         $this->grandTotal = $grandTotal;
+        $grandTotalReplacement = $subTotal + round($this->taxNominalReplacement);
+        $this->grandTotalReplacement = $grandTotalReplacement;
         
         $totalPayment = '0.00';
         if ($this->purchasePaymentHeaders !== null) {
