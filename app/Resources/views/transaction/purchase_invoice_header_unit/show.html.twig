@@ -39,7 +39,7 @@
             </tr>
             <tr>
                 <th>Grand Total</th>
-                <td>{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                <td>{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
             </tr>
             <tr>
                 <th>Total Payment</th>
@@ -84,11 +84,11 @@
             </tr>
             <tr>
                 <td class="text-right" colspan="5">PPn</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.taxNominalReplacement|default|number_format(2) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="5">Grand Total</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
             </tr>
         </tfoot>
     </table>

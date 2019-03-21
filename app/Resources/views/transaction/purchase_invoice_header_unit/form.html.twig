@@ -100,7 +100,11 @@
                         <span style="display: inline-block">PPn 10%</span>
                         <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
                     </td>
-                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td class="text-right">
+                        {{ form_row(form.taxNominal, {'label': false}) }}
+                        {{ form_row(form.taxNominalReplacement, {'label': false, 'attr': {'data-name': 'tax-nominal-replacement', 'data-bind-target': '[data-name=tax-nominal-replacement-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        <span data-name="tax-nominal-replacement-text">{{ form.vars.value.taxNominalReplacement|default|number_format(2) }}</span>
+                    </td>
                     <td></td>
                 </tr>
                 <tr>
@@ -147,7 +151,7 @@
     {{ parent() }}
     <script>
         jQuery(function($) {
-            function bind() {
+            function bind(updateTextNominal) {
                 $.ajax({
                     method: "POST",
                     url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
@@ -155,11 +159,15 @@
                     dataType: "JSON",
                     success: function(data) {
                         $.each(data.purchaseInvoiceDetailUnits, function(index, purchaseInvoiceDetailUnit) {
-                            $("[data-name=total-" + index + "]", "#purchase-invoice-detail-unit-list").text(purchaseInvoiceDetailUnit.total);
+                            $("[data-name=total-" + index + "]", "#purchase-invoice-detail-unit-list").text($.numberFormat(purchaseInvoiceDetailUnit.total, 2));
                         });
-                        $("[data-name=sub-total]", "#purchase-invoice-detail-unit-list").text(data.subTotal);
-                        $("[data-name=tax-nominal]", "#purchase-invoice-detail-unit-list").text(data.taxNominal);
-                        $("[data-name=grand-total]", "#purchase-invoice-detail-unit-list").text(data.grandTotal);
+                        $("[data-name=sub-total]", "#purchase-invoice-detail-unit-list").text($.numberFormat(data.subTotal, 2));
+                        $("#{{ form.taxNominal.vars.id }}", "#purchase-invoice-detail-unit-list").val(data.taxNominal);
+                        if (updateTextNominal) {
+                            $("[data-name=tax-nominal-replacement]", "#purchase-invoice-detail-unit-list").val(data.taxNominal);
+                            $("[data-name=tax-nominal-replacement-text]", "#purchase-invoice-detail-unit-list").text($.numberFormat(data.taxNominal, 2));
+                        }
+                        $("[data-name=grand-total]", "#purchase-invoice-detail-unit-list").text($.numberFormat(data.grandTotal, 2));
                     }
                 });
             }
@@ -169,20 +177,23 @@
             var tableFoot = $("tfoot", table);
             
             tableBody.on("change", "[data-name=quantity]", function() {
-                bind();
+                bind(true);
             });
             tableBody.on("change", "[data-name=price]", function() {
-                bind();
+                bind(true);
             });
             tableBody.on("change", "[data-name=discount]", function() {
-                bind();
+                bind(true);
             });
             tableFoot.on("change", "[data-name=is-tax]", function() {
-                bind();
+                bind(true);
+            });
+            tableFoot.on("change", "[data-name=tax-nominal-replacement]", function() {
+                bind(false);
             });
             tableBody.on("click", ".remove-purchase-invoice-detail-unit-prototype", function() {
                 $(this).closest("tr").remove();
-                bind();
+                bind(true);
             });
             
             $("#supplier-grid").on("click", "table[data-role=table] tbody tr", function() {
@@ -212,7 +223,7 @@
                     //var unitPriceTextPrototype = prototype.find("[data-name=unit-price-text-" + name + "]");
                     //unitPriceTextPrototype.text($.numberFormat(context.attr("data-field-sale-order-unit-price"), 2));
                 });
-                bind();
+                bind(true);
             });
         });
     </script>
