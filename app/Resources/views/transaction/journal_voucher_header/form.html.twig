@@ -138,8 +138,8 @@
                     success: function(data) {
                         var infoTable = $("#detail-list");
                         var infoTableFoot = $("tfoot", infoTable);
-                        $("[data-name=total-debit]", infoTableFoot).text(data.totalDebit);
-                        $("[data-name=total-credit]", infoTableFoot).text(data.totalCredit);
+                        $("[data-name=total-debit]", infoTableFoot).text($.numberFormat(data.totalDebit, 2));
+                        $("[data-name=total-credit]", infoTableFoot).text($.numberFormat(data.totalCredit, 2));
                     }
                 });
             }

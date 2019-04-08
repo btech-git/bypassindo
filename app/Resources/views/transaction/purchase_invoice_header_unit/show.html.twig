@@ -37,18 +37,6 @@
                 <th>Note</th>
                 <td>{{ purchaseInvoiceHeader.note|default }}</td>
             </tr>
-            <tr>
-                <th>Grand Total</th>
-                <td>{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
-            </tr>
-            <tr>
-                <th>Total Payment</th>
-                <td>{{ purchaseInvoiceHeader.totalPayment|default|number_format(2) }}</td>
-            </tr>
-            <tr>
-                <th>Remaining</th>
-                <td>{{ purchaseInvoiceHeader.remaining|default|number_format(2) }}</td>
-            </tr>
         </tbody>
     </table>
           
@@ -89,6 +77,14 @@
             <tr>
                 <td class="text-right" colspan="5">Grand Total</td>
                 <td class="text-right">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="3">Total Payment</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.totalPayment|default|number_format(2) }}</td>
+            </tr>
+            <tr>
+                <td class="text-right" colspan="3">Remaining</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.remaining|default|number_format(2) }}</td>
             </tr>
         </tfoot>
     </table>

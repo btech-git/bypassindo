@@ -325,8 +325,8 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $("[data-name=sub-total-price]", "#pricing-list").text(data.subTotalPrice);
-                        $("[data-name=grand-total-price]", "#pricing-list").text(data.grandTotalPrice);
+                        $("[data-name=sub-total-price]", "#pricing-list").text($.numberFormat(data.subTotalPrice, 2));
+                        $("[data-name=grand-total-price]", "#pricing-list").text($.numberFormat(data.grandTotalPrice, 2));
                     }
                 });
             }

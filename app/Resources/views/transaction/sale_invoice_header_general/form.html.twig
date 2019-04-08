@@ -138,11 +138,11 @@
                     dataType: "JSON",
                     success: function(data) {
                         $.each(data.saleInvoiceDetailGenerals, function(index, saleInvoiceDetailGeneral) {
-                            $("[data-name=total-" + index + "]", "#sale-invoice-detail-general-list").text(saleInvoiceDetailGeneral.total);
+                            $("[data-name=total-" + index + "]", "#sale-invoice-detail-general-list").text($.numberFormat(saleInvoiceDetailGeneral.total, 2));
                         });
-                        $("[data-name=sub-total]", "#sale-invoice-detail-general-list").text(data.subTotal);
-                        $("[data-name=tax-nominal]", "#sale-invoice-detail-general-list").text(data.taxNominal);
-                        $("[data-name=grand-total]", "#sale-invoice-detail-general-list").text(data.grandTotal);
+                        $("[data-name=sub-total]", "#sale-invoice-detail-general-list").text($.numberFormat(data.subTotal, 2));
+                        $("[data-name=tax-nominal]", "#sale-invoice-detail-general-list").text($.numberFormat(data.taxNominal, 2));
+                        $("[data-name=grand-total]", "#sale-invoice-detail-general-list").text($.numberFormat(data.grandTotal, 2));
                     }
                 });
             }

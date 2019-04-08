@@ -1,4 +1,4 @@
 {
-    "totalDebit": "{{ journalVoucherHeader.totalDebit|default|number_format(2) }}",
-    "totalCredit": "{{ journalVoucherHeader.totalCredit|default|number_format(2) }}"
+    "totalDebit": {{ journalVoucherHeader.totalDebit|default|json_encode|raw }},
+    "totalCredit": {{ journalVoucherHeader.totalCredit|default|json_encode|raw }}
 }

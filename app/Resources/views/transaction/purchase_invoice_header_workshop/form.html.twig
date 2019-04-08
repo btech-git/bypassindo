@@ -12,7 +12,7 @@
             <span data-name="item-name-{{ object.vars.name }}">{{ object.vars.value.itemName|default }}</span>
         </td>
         <td class="text-right">
-            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-group-name': 'unit-price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+            {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'unit-price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
         </td>
         <td class="text-right">
             <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
@@ -90,12 +90,19 @@
                     <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
                 </tr>
                 <tr>
-                    <td class="text-right" colspan="2">PPn</td>
-                    <td class="text-right"><span data-name="tax-nominal">{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}</span></td>
+                    <td class="text-right" colspan="2">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right">
+                        {{ form_row(form.taxNominal, {'label': false}) }}
+                        {{ form_row(form.taxNominalReplacement, {'label': false, 'attr': {'data-name': 'tax-nominal-replacement', 'data-bind-target': '[data-name=tax-nominal-replacement-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        <span data-name="tax-nominal-replacement-text">{{ form.vars.value.taxNominalReplacement|default|number_format(2) }}</span>
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-right" colspan="2">Grand Total</td>
-                    <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                    <td class="text-right" data-name="grand-total">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -122,7 +129,7 @@
     {{ parent() }}
     <script>
         jQuery(function($) {
-            function bind() {
+            function bind(updateTextNominal) {
                 $.ajax({
                     method: "POST",
                     url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
@@ -134,21 +141,32 @@
                         var tableFoot = $("tfoot", table);
                         $.each(data.purchaseInvoiceDetailWorkshops, function(index, purchaseInvoiceDetailWorkshop) {
                             $("[data-name=item-name-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.itemName);
-                            $("[data-name=quantity-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.quantity);
-                            $("[data-name=total-" + index + "]", tableBody).text(purchaseInvoiceDetailWorkshop.total);
+                            $("[data-name=quantity-" + index + "]", tableBody).text($.numberFormat(purchaseInvoiceDetailWorkshop.quantity, 2));
+                            $("[data-name=total-" + index + "]", tableBody).text($.numberFormat(purchaseInvoiceDetailWorkshop.total, 2));
                         });
-                        $("[data-name=sub-total]", tableFoot).text(data.subTotal);
-                        $("[data-name=tax-nominal]", tableFoot).text(data.taxNominal);
-                        $("[data-name=grand-total]", tableFoot).text(data.grandTotal);
+                        $("[data-name=sub-total]", tableFoot).text($.numberFormat(data.subTotal, 2));
+                        $("#{{ form.taxNominal.vars.id }}", "#purchase-invoice-detail-workshop-info-list").val(data.taxNominal);
+                        if (updateTextNominal) {
+                            $("[data-name=tax-nominal-replacement]", "#purchase-invoice-detail-workshop-info-list").val(data.taxNominal);
+                            $("[data-name=tax-nominal-replacement-text]", "#purchase-invoice-detail-workshop-info-list").text($.numberFormat(data.taxNominal, 2));
+                        }
+                        $("[data-name=grand-total]", tableFoot).text($.numberFormat(data.grandTotal, 2));
                     }
                 });
             }
             
             var table = $("#purchase-invoice-detail-workshop-info-list");
             var tableBody = $("tbody", table);
+            var tableFoot = $("tfoot", table);
             
-            tableBody.on("change", "[data-group-name=unit-price]", function() {
-                bind();
+            tableBody.on("change", "[data-name=unit-price]", function() {
+                bind(true);
+            });
+            tableFoot.on("change", "[data-name=is-tax]", function() {
+                bind(true);
+            });
+            tableFoot.on("change", "[data-name=tax-nominal-replacement]", function() {
+                bind(false);
             });
             
             $("#receive-workshop-grid").on("click", "table[data-role=table] tbody tr", function() {
@@ -175,7 +193,7 @@
                         unitPriceTextPrototype.text($.numberFormat(purchaseWorkshopDetailUnitPriceList[i], 2));
                     });
                 }
-                bind();
+                bind(true);
             });
         });
     </script>

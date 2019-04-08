@@ -1,13 +1,13 @@
 {
-    "subTotal": "{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}",
-    "taxNominal": "{{ purchaseInvoiceHeader.taxNominal|default|number_format(2) }}",
-    "grandTotal": "{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}",
+    "subTotal": {{ purchaseInvoiceHeader.subTotal|default|json_encode|raw }},
+    "taxNominal": {{ purchaseInvoiceHeader.taxNominal|default|json_encode|raw }},
+    "grandTotal": {{ purchaseInvoiceHeader.grandTotal|default|json_encode|raw }},
     "purchaseInvoiceDetailWorkshops": {
         {%- for index, purchaseInvoiceDetailWorkshop in purchaseInvoiceHeader.purchaseInvoiceDetailWorkshops -%}
             "{{ index }}": {
-                "itemName": "{{ purchaseInvoiceDetailWorkshop.itemName|default }}",
-                "quantity": "{{ purchaseInvoiceDetailWorkshop.quantity|default }}",
-                "total": "{{ purchaseInvoiceDetailWorkshop.total|default|number_format(2) }}"
+                "itemName": {{ purchaseInvoiceDetailWorkshop.itemName|default|json_encode|raw }},
+                "quantity": {{ purchaseInvoiceDetailWorkshop.quantity|default|json_encode|raw }},
+                "total": {{ purchaseInvoiceDetailWorkshop.total|default|json_encode|raw }}
             }
             {%- if not loop.last -%},{%- endif -%}
         {%- endfor -%}

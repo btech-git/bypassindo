@@ -1,15 +1,15 @@
 {
-    "subTotal": "{{ saleInvoiceHeader.subTotal|default|number_format(2) }}",
-    "taxNominal": "{{ saleInvoiceHeader.taxNominal|default|number_format(2) }}",
-    "grandTotal": "{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}",
+    "subTotal": {{ saleInvoiceHeader.subTotal|default|json_encode|raw }},
+    "taxNominal": {{ saleInvoiceHeader.taxNominal|default|json_encode|raw }},
+    "grandTotal": {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|json_encode|raw }},
     "saleInvoiceDetailGenerals": {
         {%- for index, saleInvoiceDetailGeneral in saleInvoiceHeader.saleInvoiceDetailGenerals -%}
             "{{ index }}": {
-                "itemName": "{{ saleInvoiceDetailGeneral.itemName|default }}",
-                "quantity": "{{ saleInvoiceDetailGeneral.quantity|default }}",
-                "unitPrice": "{{ saleInvoiceDetailGeneral.unitPrice|default|number_format(2) }}",
-                "discount": "{{ saleInvoiceDetailGeneral.discount|default|number_format(2) }}",
-                "total": "{{ saleInvoiceDetailGeneral.total|default|number_format(2) }}"
+                "itemName": {{ saleInvoiceDetailGeneral.itemName|default|json_encode|raw }},
+                "quantity": {{ saleInvoiceDetailGeneral.quantity|default|json_encode|raw }},
+                "unitPrice": {{ saleInvoiceDetailGeneral.unitPrice|default|json_encode|raw }},
+                "discount": {{ saleInvoiceDetailGeneral.discount|default|json_encode|raw }},
+                "total": {{ saleInvoiceDetailGeneral.total|default|json_encode|raw }}
             }
             {%- if not loop.last -%},{%- endif -%}
         {%- endfor -%}

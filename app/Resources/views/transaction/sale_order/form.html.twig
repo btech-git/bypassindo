@@ -146,7 +146,7 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $("#total").text(data.total);
+                        $("#total").text($.numberFormat(data.total, 2));
                     }
                 });
             }

@@ -1,5 +1,5 @@
 {
-    "grandTotalBeforeDownpayment": "{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}",
-    "totalDownpayment": "{{ saleInvoiceHeader.totalDownpayment|default|number_format(2) }}",
-    "grandTotalAfterDownpayment": "{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}"
+    "grandTotalBeforeDownpayment": {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|json_encode|raw }},
+    "totalDownpayment": {{ saleInvoiceHeader.totalDownpayment|default|json_encode|raw }},
+    "grandTotalAfterDownpayment": {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|json_encode|raw }}
 }

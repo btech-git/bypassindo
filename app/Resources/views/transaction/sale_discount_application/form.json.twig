@@ -1,4 +1,4 @@
 {
-    "subTotalPrice": "{{ saleDiscountApplication.subTotalPrice|default|number_format(2) }}",
-    "grandTotalPrice": "{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}"
+    "subTotalPrice": {{ saleDiscountApplication.subTotalPrice|default|json_encode|raw }},
+    "grandTotalPrice": {{ saleDiscountApplication.grandTotalPrice|default|json_encode|raw }}
 }

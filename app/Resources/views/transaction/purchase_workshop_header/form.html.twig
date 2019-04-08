@@ -171,11 +171,11 @@
                     dataType: "JSON",
                     success: function(data) {
                         $.each(data.purchaseWorkshopDetails, function(index, purchaseWorkshopDetail) {
-                            $("[data-name=total-" + index + "]", "#purchase-workshop-detail-list").text(purchaseWorkshopDetail.total);
+                            $("[data-name=total-" + index + "]", "#purchase-workshop-detail-list").text($.numberFormat(purchaseWorkshopDetail.total, 2));
                         });
-                        $("[data-name=sub-total]", "#purchase-workshop-detail-list").text(data.subTotal);
-                        $("[data-name=tax-nominal]", "#purchase-workshop-detail-list").text(data.taxNominal);
-                        $("[data-name=grand-total]", "#purchase-workshop-detail-list").text(data.grandTotal);
+                        $("[data-name=sub-total]", "#purchase-workshop-detail-list").text($.numberFormat(data.subTotal, 2));
+                        $("[data-name=tax-nominal]", "#purchase-workshop-detail-list").text($.numberFormat(data.taxNominal, 2));
+                        $("[data-name=grand-total]", "#purchase-workshop-detail-list").text($.numberFormat(data.grandTotal, 2));
                     }
                 });
             }

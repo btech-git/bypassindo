@@ -197,9 +197,9 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $("[data-name=grand-total-before-downpayment]", downpaymentTableFooter).text(data.grandTotalBeforeDownpayment);
-                        $("[data-name=total-downpayment]", downpaymentTableFooter).text(data.totalDownpayment);
-                        $("[data-name=grand-total-after-downpayment]", downpaymentTableFooter).text(data.grandTotalAfterDownpayment);
+                        $("[data-name=grand-total-before-downpayment]", downpaymentTableFooter).text($.numberFormat(data.grandTotalBeforeDownpayment, 2));
+                        $("[data-name=total-downpayment]", downpaymentTableFooter).text($.numberFormat(data.totalDownpayment, 2));
+                        $("[data-name=grand-total-after-downpayment]", downpaymentTableFooter).text($.numberFormat(data.grandTotalAfterDownpayment, 2));
                     }
                 });
             }

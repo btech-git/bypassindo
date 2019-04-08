@@ -200,7 +200,7 @@
                     data: $("form").serialize(),
                     dataType: "JSON",
                     success: function(data) {
-                        $("[data-name=total-amount]", "#sale-payment-detail-list").text(data.totalAmount);
+                        $("[data-name=total-amount]", "#sale-payment-detail-list").text($.numberFormat(data.totalAmount, 2));
                     }
                 });
             }

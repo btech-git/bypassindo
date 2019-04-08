@@ -135,7 +135,7 @@
                     success: function(data) {
                         var infoTable = $("#detail-list");
                         var infoTableFoot = $("tfoot", infoTable);
-                        $("[data-name=total-amount]", infoTableFoot).text(data.totalAmount);
+                        $("[data-name=total-amount]", infoTableFoot).text($.numberFormat(data.totalAmount, 2));
                     }
                 });
             }
