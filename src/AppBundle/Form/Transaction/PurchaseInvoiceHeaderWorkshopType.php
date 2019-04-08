@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\NotNull;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseInvoiceHeader;
@@ -23,7 +24,10 @@ class PurchaseInvoiceHeaderWorkshopType extends AbstractType
             ->add('supplierInvoiceNumber')
             ->add('taxInvoiceDate', 'date')
             ->add('taxInvoiceNumber')
+            ->add('taxNominal', HiddenType::class)
+            ->add('taxNominalReplacement')
             ->add('note')
+            ->add('isTax')
             ->add('purchaseInvoiceDetailWorkshops', CollectionType::class, array(
                 'entry_type' => PurchaseInvoiceDetailWorkshopType::class,
                 'allow_add' => true,

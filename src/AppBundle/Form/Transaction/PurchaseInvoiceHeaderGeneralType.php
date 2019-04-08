@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\Valid;
 use Symfony\Component\Validator\Constraints\Count;
 use LibBundle\Form\Type\EntityTextType;
@@ -25,6 +26,8 @@ class PurchaseInvoiceHeaderGeneralType extends AbstractType
             ->add('supplierInvoiceNumber')
             ->add('taxInvoiceDate', 'date')
             ->add('taxInvoiceNumber')
+            ->add('taxNominal', HiddenType::class)
+            ->add('taxNominalReplacement')
             ->add('note')
             ->add('isTax')
             ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
