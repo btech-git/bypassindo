@@ -282,6 +282,6 @@ class PurchaseInvoiceHeader extends CodeNumberEntity
         }
         $this->totalPayment = $totalPayment;
         
-        $this->remaining = $this->grandTotal - $this->totalPayment;
+        $this->remaining = $this->grandTotalReplacement - $this->totalPayment;
     }
 }
