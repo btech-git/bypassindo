@@ -12,7 +12,7 @@
 {% block content %}
     {% set menu = app.session.get('menu') %}
     
-    {% if menu['master'] %}
+    {% if is_granted('ROLE_HUMAN_RESOURCE') %}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>

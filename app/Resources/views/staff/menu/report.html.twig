@@ -12,7 +12,7 @@
 {% block content %}
     {% set menu = app.session.get('menu') %}
     
-    {% if menu['report'] %}
+    {% if is_granted(['ROLE_ACCOUNTING_HEAD', 'ROLE_OPERATIONAL_HEAD', 'ROLE_SALES_MANAGER']) %}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -53,6 +53,10 @@
                 <tr>
                     <td>Penjualan Unit per Salesman</td>
                     <td>{{ include('action.html.twig', {'url': path('report_salesman_sale_invoice_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Penjualan Sparepart</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_sale_invoice_sparepart_detail_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
                 <tr>
                     <td>DP Penjualan</td>
