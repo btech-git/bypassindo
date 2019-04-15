@@ -24,10 +24,10 @@
                 <td class="text-right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
                 <td class="text-right">{{ saleOrder.total|default|number_format(2) }}</td>
                 <td class="text-left">
-                    <a class="btn btn-success" href="{{ path('transaction_sale_order_approval') }}">
+                    <a class="btn btn-success" href="{{ path('transaction_sale_order_approve', {'id': saleOrder.id}) }}">
                         <span class="glyphicon glyphicon-check"></span>
                     </a>
-                    <a class="btn btn-danger" href="{{ path('transaction_sale_order_approval') }}">
+                    <a class="btn btn-danger" href="{{ path('transaction_sale_order_reject', {'id': saleOrder.id}) }}">
                         <span class="glyphicon glyphicon-remove"></span>
                     </a>
                     <a class="btn btn-info" href="{{ path('transaction_sale_order_show', {'id': saleOrder.id}) }}">
