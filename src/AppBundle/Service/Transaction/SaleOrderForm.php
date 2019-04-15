@@ -22,6 +22,7 @@ class SaleOrderForm
         if (empty($saleOrder->getId())) {
             $saleOrder->setStaffFirst($staff);
             $saleOrder->setVehicleBrand('HINO');
+            $saleOrder->setRoleApproval('');
         }
         $saleOrder->setStaffLast($staff);
     }
@@ -86,5 +87,65 @@ class SaleOrderForm
     protected function beforeDelete(SaleOrder $saleOrder)
     {
         $this->sync($saleOrder);
+    }
+    
+    public function approve(SaleOrder $saleOrder, $staff)
+    {
+        $roles = $staff->getRoles();
+        $role = $roles[2];
+        switch ($role) {
+            case 'ROLE_DIRECTOR':
+                $roleApproval = 'ROLE_BRANCH_MANAGER';
+                $total = 1000000000;
+                break;
+            case 'ROLE_BRANCH_MANAGER':
+                $roleApproval = 'ROLE_SALES_MANAGER';
+                $total = 500000000;
+                break;
+            case 'ROLE_SALES_MANAGER':
+                $roleApproval = '';
+                $total = 0;
+                break;
+            default:
+                $roleApproval = null;
+                $total = null;
+        }
+        
+        $saleOrderTotal = $saleOrder->getTotal();
+        if (!$saleOrder->getIsRejected() && !$saleOrder->getIsApproved() && $saleOrder->getRoleApproval() === $roleApproval && $saleOrderTotal > $total) {
+            $saleOrder->setRoleApproval($role);
+            
+            if ($role === 'ROLE_SALES_MANAGER') {
+                $saleOrder->setStaffApprovalHead($staff);
+            } else if ($role === 'ROLE_BRANCH_MANAGER') {
+                $saleOrder->setStaffApprovalManager($staff);
+            } else if ($role === 'ROLE_DIRECTOR') {
+                $saleOrder->setStaffApprovalDirector($staff);
+            }
+            
+            $isApprovedHead = ($role === 'ROLE_SALES_MANAGER' && $saleOrderTotal > 0 && $saleOrderTotal <= 500000000);
+            $isApprovedManager = ($role === 'ROLE_BRANCH_MANAGER' && $saleOrderTotal > 500000000 && $saleOrderTotal <= 1000000000);
+            $isApprovedDirector = ($role === 'ROLE_DIRECTOR' && $saleOrderTotal > 1000000000);
+            if ($isApprovedHead || $isApprovedManager || $isApprovedDirector) {
+                $saleOrder->setIsApproved(true);
+            }
+            
+            ObjectPersister::save(function() use ($saleOrder) {
+                $this->saleOrderRepository->update($saleOrder);
+            });
+        }
+    }
+    
+    public function reject(SaleOrder $saleOrder, $staff)
+    {
+        if (!$saleOrder->getIsRejected() && !$saleOrder->getIsApproved()) {
+            $saleOrder->setStaffReject($staff);
+            
+            $saleOrder->setIsRejected(true);
+            
+            ObjectPersister::save(function() use ($saleOrder) {
+                $this->saleOrderRepository->update($saleOrder);
+            });
+        }
     }
 }

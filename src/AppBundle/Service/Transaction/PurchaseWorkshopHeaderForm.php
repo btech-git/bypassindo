@@ -21,6 +21,7 @@ class PurchaseWorkshopHeaderForm
         
         if (empty($purchaseWorkshopHeader->getId())) {
             $purchaseWorkshopHeader->setStaffFirst($staff);
+            $purchaseWorkshopHeader->setApproveOrRejectStatus('');
         }
         $purchaseWorkshopHeader->setStaffLast($staff);
     }
@@ -97,5 +98,29 @@ class PurchaseWorkshopHeaderForm
     {
         $purchaseWorkshopHeader->getPurchaseWorkshopDetails()->clear();
         $this->sync($purchaseWorkshopHeader);
+    }
+    
+    public function approve(PurchaseWorkshopHeader $purchaseWorkshopHeader, $staff)
+    {
+        if ($purchaseWorkshopHeader->getApproveOrRejectStatus() === '') {
+            $purchaseWorkshopHeader->setApproveOrRejectStatus('A');
+            $purchaseWorkshopHeader->setStaffApproveOrReject($staff);
+            
+            ObjectPersister::save(function() use ($purchaseWorkshopHeader) {
+                $this->purchaseWorkshopHeaderRepository->update($purchaseWorkshopHeader);
+            });
+        }
+    }
+    
+    public function reject(PurchaseWorkshopHeader $purchaseWorkshopHeader, $staff)
+    {
+        if ($purchaseWorkshopHeader->getApproveOrRejectStatus() === '') {
+            $purchaseWorkshopHeader->setApproveOrRejectStatus('R');
+            $purchaseWorkshopHeader->setStaffApproveOrReject($staff);
+            
+            ObjectPersister::save(function() use ($purchaseWorkshopHeader) {
+                $this->purchaseWorkshopHeaderRepository->update($purchaseWorkshopHeader);
+            });
+        }
     }
 }
