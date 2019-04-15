@@ -113,6 +113,7 @@ class PurchaseWorkshopHeaderGridType extends DataGridType
             switch ($options['form']) {
                 case 'delivery_workshop':
 //                    $associations['deliveryWorkshops']['merge'] = false;
+                    $criteria['purchaseWorkshopHeader']->andWhere($expr->eq('approveOrRejectStatus', 'A'));
                     $criteria['purchaseWorkshopHeader']->andWhere($expr->gt('quantityOrder - SIZE(deliveryWorkshops)', 0));
                     break;
             }

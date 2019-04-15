@@ -112,14 +112,17 @@ class SaleOrderGridType extends DataGridType
             $expr = Criteria::expr();
             switch ($options['form']) {
                 case 'purchase_delivery_order':
+                    $criteria['saleOrder']->andWhere($expr->eq('isApproved', true));
                     $criteria['saleOrder']->andWhere($expr->eq('isStock', false));
                     $criteria['saleOrder']->andWhere($expr->gt('remaining', 0));
                     break;
                 case 'purchase_workshop_header':
+                    $criteria['saleOrder']->andWhere($expr->eq('isApproved', true));
                     $criteria['saleOrder']->andWhere($expr->eq('isWorkshopNeeded', true));
                     $associations['purchaseWorkshopHeader']['merge'] = false;
                     break;
                 case 'sale_invoice_downpayment':
+                    $criteria['saleOrder']->andWhere($expr->eq('isApproved', true));
                     $criteria['saleOrder']->andWhere($expr->gt('downPayment', 0));
                     $associations['saleInvoiceDownpayments']['merge'] = false;
                     break;
