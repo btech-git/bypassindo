@@ -60,14 +60,14 @@ class SaleOrderApprovalGridType extends DataGridType
                     $total = 500000000;
                     break;
                 case 'ROLE_SALES_MANAGER':
-                    $roleApproval = 'ROLE_SALES_STAFF';
+                    $roleApproval = '';
                     $total = 0;
                     break;
                 default:
                     $roleApproval = null;
                     $total = null;
             }
-            $expression = $expr->andX($expr->eq('roleApproval', $roleApproval), $expr->gt('total', $total));
+            $expression = $expr->andX($expr->eq('isApproved', false), $expr->eq('isRejected', false), $expr->eq('roleApproval', $roleApproval), $expr->gt('total', $total));
             $criteria['saleOrder']->andWhere($expression);
         }
 
