@@ -12,7 +12,7 @@
 {% block content %}
     {% set menu = app.session.get('menu') %}
     
-    {% if is_granted('ROLE_SALES_STAFF') %}
+    {# {% if is_granted('ROLE_SALES_STAFF') %} #}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -30,12 +30,22 @@
                 <tr>
                     <td>Surat Pemesanan Kendaraan (SPK)</td>
                     <td>{{ include('action.html.twig', {'url': path('transaction_sale_order_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
-                    <td>{{ include('action.html.twig', {'url': path('transaction_sale_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                    <td>
+                        {{ include('action.html.twig', {'url': path('transaction_sale_order_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}
+                        {% if is_granted('ROLE_SALES_MANAGER') %}
+                            {{ include('action.html.twig', {'url': path('transaction_sale_order_approval'), 'label': 'Approval', 'button': 'btn btn-default', 'icon': 'glyphicon glyphicon-list'}) }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>PO Karoseri</td>
                     <td>{{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_new'), 'label': 'Add', 'button': 'btn btn-success', 'icon': 'glyphicon glyphicon-plus'}) }}</td>
-                    <td>{{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                    <td>
+                        {{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_index'), 'label': 'Manage', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}
+                        {% if is_granted('ROLE_ACCOUNTING_HEAD') %}
+                            {{ include('action.html.twig', {'url': path('transaction_purchase_workshop_header_approval'), 'label': 'Approval', 'button': 'btn btn-default', 'icon': 'glyphicon glyphicon-list'}) }}
+                        {% endif %}
+                    </td>
                 </tr>
                 <tr>
                     <td>Pengiriman Karoseri</td>
@@ -54,9 +64,9 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}
              
-    {% if is_granted('ROLE_FINANCE_STAFF') %}
+    {% if is_granted('ROLE_FINANCE_STAFF') %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -78,9 +88,9 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}
            
-    {% if is_granted('ROLE_INVENTORY_STAFF') %}
+    {% if is_granted('ROLE_INVENTORY_STAFF') %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -97,9 +107,9 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}
             
-    {% if is_granted(['ROLE_FINANCE_STAFF', 'ROLE_CASHIER_STAFF', 'ROLE_PURCHASE_STAFF']) %}
+    {% if is_granted(['ROLE_FINANCE_STAFF', 'ROLE_CASHIER_STAFF', 'ROLE_PURCHASE_STAFF']) %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -145,9 +155,9 @@
                 {% endif %}
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}
     
-    {% if is_granted('ROLE_ACCOUNTING_STAFF') %}
+    {% if is_granted('ROLE_ACCOUNTING_STAFF') %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -184,9 +194,9 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}
     
-    {% if is_granted('ROLE_SALES_STAFF') %}
+    {% if is_granted('ROLE_SALES_STAFF') %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -203,5 +213,5 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}#}
 {% endblock %}

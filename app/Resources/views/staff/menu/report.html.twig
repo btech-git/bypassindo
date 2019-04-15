@@ -12,7 +12,7 @@
 {% block content %}
     {% set menu = app.session.get('menu') %}
     
-    {% if is_granted(['ROLE_ACCOUNTING_HEAD', 'ROLE_OPERATIONAL_HEAD', 'ROLE_SALES_MANAGER']) %}
+    {#{% if is_granted(['ROLE_ACCOUNTING_HEAD', 'ROLE_OPERATIONAL_HEAD', 'ROLE_SALES_MANAGER']) %}#}
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
@@ -68,5 +68,5 @@
                 </tr>
             </tbody>
         </table>
-    {% endif %}
+    {#{% endif %}#}
 {% endblock %}
