@@ -11,20 +11,20 @@
                 </a>
                 <ul class="dropdown-menu">
                     <li><a href="#">Dashboard</a></li>
-                    {% if is_granted('ROLE_HUMAN_RESOURCE') %}
+                    {# {% if is_granted('ROLE_HUMAN_RESOURCE') %} #}
                         <li class="divider"></li>
                         <li><a href="{{ path('admin_staff_index') }}">Staff</a></li>
                         <li class="divider"></li>
                         <li><a href="{{ path('staff_menu_master') }}">Master</a></li>
-                    {% endif %}
-                    {% if is_granted(['ROLE_SALES_STAFF', 'ROLE_CASHIER_STAFF', 'ROLE_INVENTORY_STAFF', 'ROLE_FINANCE_STAFF', 'ROLE_ACCOUNTING_STAFF', 'ROLE_PURCHASE_STAFF']) %}
+                    {# {% endif %}
+                    {% if is_granted(['ROLE_SALES_STAFF', 'ROLE_CASHIER_STAFF', 'ROLE_INVENTORY_STAFF', 'ROLE_FINANCE_STAFF', 'ROLE_ACCOUNTING_STAFF', 'ROLE_PURCHASE_STAFF']) %} #}
                         <li class="divider"></li>
                         <li><a href="{{ path('staff_menu_transaction') }}">Transaction</a></li>
-                    {% endif %}
-                    {% if is_granted(['ROLE_ACCOUNTING_HEAD', 'ROLE_OPERATIONAL_HEAD', 'ROLE_SALES_MANAGER']) %}
+                    {# {% endif %}
+                    {% if is_granted(['ROLE_ACCOUNTING_HEAD', 'ROLE_OPERATIONAL_HEAD', 'ROLE_SALES_MANAGER']) %} #}
                         <li class="divider"></li>
                         <li><a href="{{ path('staff_menu_report') }}">Report</a></li>
-                    {% endif %}
+                    {# {% endif %} #}
                 </ul>
             </li>
         </ul>
