@@ -57,6 +57,11 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      */
     private $isTax;
     /**
+     * @ORM\Column(type="string", length=1)
+     * @Assert\NotNull()
+     */
+    private $approveOrRejectStatus;
+    /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
      */
@@ -66,6 +71,11 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
      * @Assert\NotNull()
      */
     private $staffLast;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     * @Assert\NotNull()
+     */
+    private $staffApproveOrReject;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\Supplier")
      * @Assert\NotNull()
@@ -120,11 +130,17 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     public function getIsTax() { return $this->isTax; }
     public function setIsTax($isTax) { $this->isTax = $isTax; }
     
+    public function getApproveOrRejectStatus() { return $this->approveOrRejectStatus; }
+    public function setApproveOrRejectStatus($approveOrRejectStatus) { $this->approveOrRejectStatus = $approveOrRejectStatus; }
+    
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
 
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
+
+    public function getStaffApproveOrReject() { return $this->staffApproveOrReject; }
+    public function setStaffApproveOrReject(Staff $staffApproveOrReject = null) { $this->staffApproveOrReject = $staffApproveOrReject; }
 
     public function getSupplier() { return $this->supplier; }
     public function setSupplier(Supplier $supplier = null) { $this->supplier = $supplier; }

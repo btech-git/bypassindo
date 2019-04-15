@@ -156,10 +156,25 @@ class SaleOrder extends CodeNumberEntity
      */
     private $note;
     /**
+     * @ORM\Column(type="string", length=60)
+     * @Assert\NotNull()
+     */
+    private $roleApproval;
+    /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
     private $isStock = false;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isApproved = false;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isRejected = false;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
@@ -173,7 +188,19 @@ class SaleOrder extends CodeNumberEntity
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      */
-    private $staffApproval;
+    private $staffApprovalHead;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     */
+    private $staffApprovalManager;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     */
+    private $staffApprovalDirector;
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
+     */
+    private $staffReject;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Master\FinanceCompany")
      */
@@ -292,8 +319,17 @@ class SaleOrder extends CodeNumberEntity
     public function getNote() { return $this->note; }
     public function setNote($note) { $this->note = $note; }
 
+    public function getRoleApproval() { return $this->roleApproval; }
+    public function setRoleApproval($roleApproval) { $this->roleApproval = $roleApproval; }
+
     public function getIsStock() { return $this->isStock; }
     public function setIsStock($isStock) { $this->isStock = $isStock; }
+
+    public function getIsApproved() { return $this->isApproved; }
+    public function setIsApproved($isApproved) { $this->isApproved = $isApproved; }
+
+    public function getIsRejected() { return $this->isRejected; }
+    public function setIsRejected($isRejected) { $this->isRejected = $isRejected; }
 
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
@@ -301,8 +337,17 @@ class SaleOrder extends CodeNumberEntity
     public function getStaffLast() { return $this->staffLast; }
     public function setStaffLast(Staff $staffLast = null) { $this->staffLast = $staffLast; }
 
-    public function getStaffApproval() { return $this->staffApproval; }
-    public function setStaffApproval(Staff $staffApproval = null) { $this->staffApproval = $staffApproval; }
+    public function getStaffApprovalHead() { return $this->staffApprovalHead; }
+    public function setStaffApprovalHead(Staff $staffApprovalHead = null) { $this->staffApprovalHead = $staffApprovalHead; }
+
+    public function getStaffApprovalManager() { return $this->staffApprovalManager; }
+    public function setStaffApprovalManager(Staff $staffApprovalManager = null) { $this->staffApprovalManager = $staffApprovalManager; }
+
+    public function getStaffApprovalDirector() { return $this->staffApprovalDirector; }
+    public function setStaffApprovalDirector(Staff $staffApprovalDirector = null) { $this->staffApprovalDirector = $staffApprovalDirector; }
+
+    public function getStaffReject() { return $this->staffReject; }
+    public function setStaffReject(Staff $staffReject = null) { $this->staffReject = $staffReject; }
 
     public function getFinanceCompany() { return $this->financeCompany; }
     public function setFinanceCompany(FinanceCompany $financeCompany = null) { $this->financeCompany = $financeCompany; }
