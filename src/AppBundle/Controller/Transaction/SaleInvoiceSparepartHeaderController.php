@@ -45,7 +45,7 @@ class SaleInvoiceSparepartHeaderController extends Controller
                     $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to import the records.'));
                 }
 
-                return $this->redirectToRoute('transaction_sale_invoice_sparepart_header_import8');
+                return $this->redirectToRoute('transaction_sale_invoice_sparepart_header_import');
             }
         }
 
