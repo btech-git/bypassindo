@@ -19,7 +19,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/grid", name="master_vehicle_model_type_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/", name="master_vehicle_model_type_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/new", name="master_vehicle_model_type_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/{id}", name="master_vehicle_model_type_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(VehicleModelType $vehicleModelType)
     {
@@ -84,7 +84,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/{id}/edit", name="master_vehicle_model_type_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, VehicleModelType $vehicleModelType)
     {
@@ -108,7 +108,7 @@ class VehicleModelTypeController extends Controller
     /**
      * @Route("/{id}/delete", name="master_vehicle_model_type_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, VehicleModelType $vehicleModelType)
     {

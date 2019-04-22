@@ -19,7 +19,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_invoice_downpayment_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/", name="transaction_sale_invoice_downpayment_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_invoice_downpayment_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_invoice_downpayment_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function showAction(SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
@@ -87,7 +87,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/{id}/edit", name="transaction_sale_invoice_downpayment_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function editAction(Request $request, SaleInvoiceDownpayment $saleInvoiceDownpayment, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_invoice_downpayment_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function deleteAction(Request $request, SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {
@@ -142,7 +142,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_sale_invoice_downpayment_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function memoAction(SaleInvoiceDownpayment $saleInvoiceDownpayment)
     {

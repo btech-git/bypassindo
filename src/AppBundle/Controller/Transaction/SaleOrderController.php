@@ -12,6 +12,7 @@ use AppBundle\Entity\Transaction\PurchaseDeliveryOrder;
 use AppBundle\Form\Transaction\SaleOrderType;
 use AppBundle\Form\Transaction\SaleOrderStockHeaderType;
 use AppBundle\Grid\Transaction\SaleOrderGridType;
+use AppBundle\Grid\Transaction\SaleOrderApprovalGridType;
 
 /**
  * @Route("/transaction/sale_order")
@@ -21,7 +22,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_order_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -39,7 +40,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/", name="transaction_sale_order_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function indexAction()
     {
@@ -49,7 +50,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_order_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_ORDER_NEW')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -77,7 +78,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_order_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function showAction(SaleOrder $saleOrder)
     {
@@ -93,7 +94,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_sale_order_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_ORDER_EDIT')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function editAction(Request $request, SaleOrder $saleOrder, $_format = 'html')
     {
@@ -119,7 +120,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_order_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_ORDER_DELETE')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function deleteAction(Request $request, SaleOrder $saleOrder)
     {
@@ -148,7 +149,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_sale_order_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT') or has_role('ROLE_SALE_ORDER_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function memoAction(SaleOrder $saleOrder)
     {
@@ -160,7 +161,7 @@ class SaleOrderController extends Controller
     /**
      * @Route("/{id}/stock_referring", name="transaction_sale_order_stock_referring", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_ORDER_NEW') or has_role('ROLE_SALE_ORDER_EDIT')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function stockReferringAction(Request $request, SaleOrder $saleOrder)
     {
@@ -182,6 +183,94 @@ class SaleOrderController extends Controller
         }
 
         return $this->render('transaction/sale_order/stock_referring.html.twig', array(
+            'saleOrder' => $saleOrder,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * @Route("/grid_approval", name="transaction_sale_order_grid_approval", condition="request.isXmlHttpRequest()")
+     * @Method("POST")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
+     */
+    public function gridApprovalAction(Request $request)
+    {
+        $options = array();
+        $options['user'] = $this->getUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(SaleOrder::class);
+
+        $grid = $this->get('lib.grid.datagrid');
+        $grid->build(SaleOrderApprovalGridType::class, $repository, $request, $options);
+
+        return $this->render('transaction/sale_order/grid_approval.html.twig', array(
+            'grid' => $grid->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/approval", name="transaction_sale_order_approval")
+     * @Method("GET")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
+     */
+    public function approvalAction()
+    {
+        return $this->render('transaction/sale_order/approval.html.twig');
+    }
+    /**
+     * @Route("/{id}/approve", name="transaction_sale_order_approve", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_SALES_MANAGER')")
+     */
+    public function approveAction(Request $request, SaleOrder $saleOrder)
+    {
+        $saleOrderService = $this->get('app.transaction.sale_order_form');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $saleOrderService->approve($saleOrder, $this->getUser());
+
+                $this->addFlash('success', array('title' => 'Success!', 'message' => 'Transaction was successfully approved.'));
+            } else {
+                $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to approve the transaction.'));
+            }
+
+            return $this->redirectToRoute('transaction_sale_order_approval');
+        }
+        
+        return $this->render('transaction/sale_order/approve.html.twig', array(
+            'saleOrder' => $saleOrder,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * @Route("/{id}/reject", name="transaction_sale_order_reject", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_SALES_MANAGER')")
+     */
+    public function rejectAction(Request $request, SaleOrder $saleOrder)
+    {
+        $saleOrderService = $this->get('app.transaction.sale_order_form');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $saleOrderService->reject($saleOrder, $this->getUser());
+
+                $this->addFlash('success', array('title' => 'Success!', 'message' => 'Transaction was successfully rejected.'));
+            } else {
+                $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to reject the transaction.'));
+            }
+
+            return $this->redirectToRoute('transaction_sale_order_approval');
+        }
+        
+        return $this->render('transaction/sale_order/reject.html.twig', array(
             'saleOrder' => $saleOrder,
             'form' => $form->createView(),
         ));

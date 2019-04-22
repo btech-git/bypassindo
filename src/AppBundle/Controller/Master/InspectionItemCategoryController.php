@@ -19,7 +19,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/grid", name="master_inspection_item_category_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/", name="master_inspection_item_category_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/new", name="master_inspection_item_category_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/{id}", name="master_inspection_item_category_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(InspectionItemCategory $inspectionItemCategory)
     {
@@ -84,7 +84,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/{id}/edit", name="master_inspection_item_category_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, InspectionItemCategory $inspectionItemCategory)
     {
@@ -108,7 +108,7 @@ class InspectionItemCategoryController extends Controller
     /**
      * @Route("/{id}/delete", name="master_inspection_item_category_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, InspectionItemCategory $inspectionItemCategory)
     {

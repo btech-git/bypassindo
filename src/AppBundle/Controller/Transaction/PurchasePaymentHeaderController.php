@@ -19,7 +19,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/grid", name="transaction_purchase_payment_header_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_NEW') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/", name="transaction_purchase_payment_header_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_NEW') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_purchase_payment_header_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_NEW')")
+     * @Security("has_role('ROLE_FINANCE_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -76,7 +76,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/{id}", name="transaction_purchase_payment_header_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_NEW') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF')")
      */
     public function showAction(PurchasePaymentHeader $purchasePaymentHeader)
     {
@@ -88,7 +88,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_purchase_payment_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function editAction(Request $request, PurchasePaymentHeader $purchasePaymentHeader, $_format = 'html')
     {
@@ -117,7 +117,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_purchase_payment_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function deleteAction(Request $request, PurchasePaymentHeader $purchasePaymentHeader)
     {
@@ -146,7 +146,7 @@ class PurchasePaymentHeaderController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_purchase_payment_header_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_HEADER_PAYMENT_NEW') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_EDIT') or has_role('ROLE_PURCHASE_PAYMENT_HEADER_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF')")
      */
     public function memoAction(PurchasePaymentHeader $purchasePaymentHeader)
     {

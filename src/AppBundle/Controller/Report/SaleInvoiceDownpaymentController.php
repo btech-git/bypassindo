@@ -18,7 +18,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/grid", name="report_sale_invoice_downpayment_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_REPORT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD') or has_role('ROLE_OPERATIONAL_HEAD') or has_role('ROLE_SALES_MANAGER')")
      */
     public function gridAction(Request $request)
     {
@@ -36,7 +36,7 @@ class SaleInvoiceDownpaymentController extends Controller
     /**
      * @Route("/", name="report_sale_invoice_downpayment_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_REPORT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD') or has_role('ROLE_OPERATIONAL_HEAD') or has_role('ROLE_SALES_MANAGER')")
      */
     public function indexAction()
     {

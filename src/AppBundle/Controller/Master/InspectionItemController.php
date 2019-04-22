@@ -19,7 +19,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/grid", name="master_inspection_item_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/", name="master_inspection_item_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/new", name="master_inspection_item_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/{id}", name="master_inspection_item_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(InspectionItem $inspectionItem)
     {
@@ -84,7 +84,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/{id}/edit", name="master_inspection_item_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, InspectionItem $inspectionItem)
     {
@@ -108,7 +108,7 @@ class InspectionItemController extends Controller
     /**
      * @Route("/{id}/delete", name="master_inspection_item_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, InspectionItem $inspectionItem)
     {

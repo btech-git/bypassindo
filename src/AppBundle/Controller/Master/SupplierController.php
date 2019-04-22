@@ -19,7 +19,7 @@ class SupplierController extends Controller
     /**
      * @Route("/grid", name="master_supplier_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SupplierController extends Controller
     /**
      * @Route("/", name="master_supplier_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SupplierController extends Controller
     /**
      * @Route("/new", name="master_supplier_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class SupplierController extends Controller
     /**
      * @Route("/{id}", name="master_supplier_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(Supplier $supplier)
     {
@@ -84,7 +84,7 @@ class SupplierController extends Controller
     /**
      * @Route("/{id}/edit", name="master_supplier_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, Supplier $supplier)
     {
@@ -108,7 +108,7 @@ class SupplierController extends Controller
     /**
      * @Route("/{id}/delete", name="master_supplier_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, Supplier $supplier)
     {

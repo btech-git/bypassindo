@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
 use AppBundle\Form\Transaction\PurchaseWorkshopHeaderType;
 use AppBundle\Grid\Transaction\PurchaseWorkshopHeaderGridType;
+use AppBundle\Grid\Transaction\PurchaseWorkshopHeaderApprovalGridType;
 
 /**
  * @Route("/transaction/purchase_workshop_header")
@@ -19,7 +20,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/grid", name="transaction_purchase_workshop_header_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_NEW') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_EDIT') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_DELETE')")
+     * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +38,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/", name="transaction_purchase_workshop_header_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_NEW') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_EDIT') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_DELETE')")
+     * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +48,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_purchase_workshop_header_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_NEW')")
+     * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -76,7 +77,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/{id}", name="transaction_purchase_workshop_header_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_NEW') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_EDIT') or has_role('ROLE_PURCHASE_WORKSHOP_HEADER_DELETE')")
+     * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
      */
     public function showAction(PurchaseWorkshopHeader $purchaseWorkshopHeader)
     {
@@ -88,7 +89,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_purchase_workshop_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_EDIT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
      */
     public function editAction(Request $request, PurchaseWorkshopHeader $purchaseWorkshopHeader, $_format = 'html')
     {
@@ -117,7 +118,7 @@ class PurchaseWorkshopHeaderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_purchase_workshop_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_WORKSHOP_HEADER_DELETE')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
      */
     public function deleteAction(Request $request, PurchaseWorkshopHeader $purchaseWorkshopHeader)
     {
@@ -138,6 +139,92 @@ class PurchaseWorkshopHeaderController extends Controller
         }
 
         return $this->render('transaction/purchase_workshop_header/delete.html.twig', array(
+            'purchaseWorkshopHeader' => $purchaseWorkshopHeader,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * @Route("/grid_approval", name="transaction_purchase_workshop_header_grid_approval", condition="request.isXmlHttpRequest()")
+     * @Method("POST")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
+     */
+    public function gridApprovalAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository(PurchaseWorkshopHeader::class);
+
+        $grid = $this->get('lib.grid.datagrid');
+        $grid->build(PurchaseWorkshopHeaderApprovalGridType::class, $repository, $request);
+
+        return $this->render('transaction/purchase_workshop_header/grid_approval.html.twig', array(
+            'grid' => $grid->createView(),
+        ));
+    }
+
+    /**
+     * @Route("/approval", name="transaction_purchase_workshop_header_approval")
+     * @Method("GET")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
+     */
+    public function approvalAction()
+    {
+        return $this->render('transaction/purchase_workshop_header/approval.html.twig');
+    }
+    
+    /**
+     * @Route("/{id}/approve", name="transaction_purchase_workshop_header_approve", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
+     */
+    public function approveAction(Request $request, PurchaseWorkshopHeader $purchaseWorkshopHeader)
+    {
+        $purchaseWorkshopHeaderService = $this->get('app.transaction.purchase_workshop_header_form');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $purchaseWorkshopHeaderService->approve($purchaseWorkshopHeader, $this->getUser());
+
+                $this->addFlash('success', array('title' => 'Success!', 'message' => 'Transaction was successfully approved.'));
+            } else {
+                $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to approve the transaction.'));
+            }
+
+            return $this->redirectToRoute('transaction_purchase_workshop_header_approval');
+        }
+        
+        return $this->render('transaction/purchase_workshop_header/approve.html.twig', array(
+            'purchaseWorkshopHeader' => $purchaseWorkshopHeader,
+            'form' => $form->createView(),
+        ));
+    }
+    
+    /**
+     * @Route("/{id}/reject", name="transaction_purchase_workshop_header_reject", requirements={"id": "\d+"})
+     * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD')")
+     */
+    public function rejectAction(Request $request, PurchaseWorkshopHeader $purchaseWorkshopHeader)
+    {
+        $purchaseWorkshopHeaderService = $this->get('app.transaction.purchase_workshop_header_form');
+        $form = $this->createFormBuilder()->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $purchaseWorkshopHeaderService->reject($purchaseWorkshopHeader, $this->getUser());
+
+                $this->addFlash('success', array('title' => 'Success!', 'message' => 'Transaction was successfully rejected.'));
+            } else {
+                $this->addFlash('danger', array('title' => 'Error!', 'message' => 'Failed to reject the transaction.'));
+            }
+
+            return $this->redirectToRoute('transaction_purchase_workshop_header_approval');
+        }
+        
+        return $this->render('transaction/purchase_workshop_header/reject.html.twig', array(
             'purchaseWorkshopHeader' => $purchaseWorkshopHeader,
             'form' => $form->createView(),
         ));

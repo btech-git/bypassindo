@@ -19,7 +19,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/grid", name="master_vehicle_model_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/", name="master_vehicle_model_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/new", name="master_vehicle_model_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/{id}", name="master_vehicle_model_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(VehicleModel $vehicleModel)
     {
@@ -84,7 +84,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/{id}/edit", name="master_vehicle_model_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, VehicleModel $vehicleModel)
     {
@@ -108,7 +108,7 @@ class VehicleModelController extends Controller
     /**
      * @Route("/{id}/delete", name="master_vehicle_model_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, VehicleModel $vehicleModel)
     {

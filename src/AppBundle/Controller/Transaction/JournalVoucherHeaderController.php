@@ -19,7 +19,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/grid", name="transaction_journal_voucher_header_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_CASHIER_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/", name="transaction_journal_voucher_header_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_CASHIER_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_journal_voucher_header_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_CASHIER_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -76,7 +76,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/{id}", name="transaction_journal_voucher_header_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_CASHIER_STAFF')")
      */
     public function showAction(JournalVoucherHeader $journalVoucherHeader)
     {
@@ -88,7 +88,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_journal_voucher_header_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function editAction(Request $request, JournalVoucherHeader $journalVoucherHeader, $_format = 'html')
     {
@@ -117,7 +117,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_journal_voucher_header_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function deleteAction(Request $request, JournalVoucherHeader $journalVoucherHeader)
     {
@@ -146,7 +146,7 @@ class JournalVoucherHeaderController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_journal_voucher_header_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_TRANSACTION')")
+     * @Security("has_role('ROLE_CASHIER_STAFF')")
      */
     public function memoAction(JournalVoucherHeader $journalVoucherHeader)
     {

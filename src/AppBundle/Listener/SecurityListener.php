@@ -52,7 +52,7 @@ class SecurityListener
         $transactionTableMenu = array_map($callback, $transactionTableMenu);
         
         $headerMenu = array(
-            'master' => $securityContext->isGranted('ROLE_MASTER'),
+            'master' => $securityContext->isGranted('ROLE_HUMAN_RESOURCE'),
             'report' => $securityContext->isGranted('ROLE_REPORT'),
             'staff' => $securityContext->isGranted('ROLE_ADMIN'),
             'transaction' => $transactionTableMenu['sale'] || $transactionTableMenu['purchase'] || $transactionTableMenu['service'] || $transactionTableMenu['finance'],

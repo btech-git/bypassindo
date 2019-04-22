@@ -19,7 +19,7 @@ class AccountJournalLedgerController extends Controller
     /**
      * @Route("/grid", name="report_account_journal_ledger_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_REPORT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD') or has_role('ROLE_OPERATIONAL_HEAD') or has_role('ROLE_SALES_MANAGER')")
      */
     public function gridAction(Request $request)
     {
@@ -42,7 +42,7 @@ class AccountJournalLedgerController extends Controller
     /**
      * @Route("/", name="report_account_journal_ledger_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_REPORT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD') or has_role('ROLE_OPERATIONAL_HEAD') or has_role('ROLE_SALES_MANAGER')")
      */
     public function indexAction()
     {
@@ -52,7 +52,7 @@ class AccountJournalLedgerController extends Controller
     /**
      * @Route("/export", name="report_account_journal_ledger_export")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_REPORT')")
+     * @Security("has_role('ROLE_ACCOUNTING_HEAD') or has_role('ROLE_OPERATIONAL_HEAD') or has_role('ROLE_SALES_MANAGER')")
      */
     public function exportAction(Request $request)
     {

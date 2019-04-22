@@ -19,7 +19,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_discount_application_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/", name="transaction_sale_discount_application_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_discount_application_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_discount_application_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function showAction(SaleDiscountApplication $saleDiscountApplication)
     {
@@ -87,7 +87,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_sale_discount_application_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function editAction(Request $request, SaleDiscountApplication $saleDiscountApplication, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_discount_application_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function deleteAction(Request $request, SaleDiscountApplication $saleDiscountApplication)
     {
@@ -142,7 +142,7 @@ class SaleDiscountApplicationController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_sale_discount_application_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_DISCOUNT_APPLICATION_NEW') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_EDIT') or has_role('ROLE_SALE_DISCOUNT_APPLICATION_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function memoAction(SaleDiscountApplication $saleDiscountApplication)
     {

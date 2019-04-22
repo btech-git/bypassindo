@@ -20,7 +20,7 @@ class StaffController extends Controller
     /**
      * @Route("/grid", name="admin_staff_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -38,7 +38,7 @@ class StaffController extends Controller
     /**
      * @Route("/", name="admin_staff_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -48,7 +48,7 @@ class StaffController extends Controller
     /**
      * @Route("/new", name="admin_staff_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -76,7 +76,7 @@ class StaffController extends Controller
     /**
      * @Route("/{id}", name="admin_staff_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(Staff $staff)
     {
@@ -88,7 +88,7 @@ class StaffController extends Controller
     /**
      * @Route("/{id}/edit", name="admin_staff_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, Staff $staff)
     {
@@ -115,7 +115,7 @@ class StaffController extends Controller
     /**
      * @Route("/{id}/delete", name="admin_staff_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_ADMIN')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, Staff $staff)
     {

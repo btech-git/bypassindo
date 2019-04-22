@@ -46,7 +46,7 @@ class SaleOrderForm
     {
         $total = $saleOrder->getQuantity() * $saleOrder->getUnitPrice();
         $saleOrder->setTotal($total);
-        $saleOrder->setStaffApproval(null);
+        $saleOrder->setStaffApprovalHead(null);
         if ($saleOrder->getIsCash() && !$saleOrder->getIsLeasing()) {
             $saleOrder->setFinanceCompany(null);
             $saleOrder->setLeasingTerm('');

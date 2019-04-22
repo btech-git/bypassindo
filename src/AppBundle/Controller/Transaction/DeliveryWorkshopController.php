@@ -19,7 +19,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/grid", name="transaction_delivery_workshop_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW') or has_role('ROLE_DELIVERY_WORKSHOP_EDIT') or has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/", name="transaction_delivery_workshop_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW') or has_role('ROLE_DELIVERY_WORKSHOP_EDIT') or has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_delivery_workshop_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -75,7 +75,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/{id}", name="transaction_delivery_workshop_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW') or has_role('ROLE_DELIVERY_WORKSHOP_EDIT') or has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function showAction(DeliveryWorkshop $deliveryWorkshop)
     {
@@ -87,7 +87,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_delivery_workshop_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_EDIT')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function editAction(Request $request, DeliveryWorkshop $deliveryWorkshop, $_format = 'html')
     {
@@ -113,7 +113,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_delivery_workshop_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     * @Security("has_role('ROLE_SALES_MANAGER')")
      */
     public function deleteAction(Request $request, DeliveryWorkshop $deliveryWorkshop)
     {
@@ -142,7 +142,7 @@ class DeliveryWorkshopController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_delivery_workshop_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_DELIVERY_WORKSHOP_NEW') or has_role('ROLE_DELIVERY_WORKSHOP_EDIT') or has_role('ROLE_DELIVERY_WORKSHOP_DELETE')")
+     * @Security("has_role('ROLE_SALES_STAFF')")
      */
     public function memoAction(DeliveryWorkshop $deliveryWorkshop)
     {

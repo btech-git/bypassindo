@@ -19,7 +19,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/grid", name="master_payment_method_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/", name="master_payment_method_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/new", name="master_payment_method_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function newAction(Request $request)
     {
@@ -72,7 +72,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/{id}", name="master_payment_method_show", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function showAction(PaymentMethod $paymentMethod)
     {
@@ -84,7 +84,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/{id}/edit", name="master_payment_method_edit", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function editAction(Request $request, PaymentMethod $paymentMethod)
     {
@@ -108,7 +108,7 @@ class PaymentMethodController extends Controller
     /**
      * @Route("/{id}/delete", name="master_payment_method_delete", requirements={"id": "\d+"})
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_MASTER')")
+     * @Security("has_role('ROLE_HUMAN_RESOURCE')")
      */
     public function deleteAction(Request $request, PaymentMethod $paymentMethod)
     {

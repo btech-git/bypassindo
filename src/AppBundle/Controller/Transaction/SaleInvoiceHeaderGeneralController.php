@@ -19,7 +19,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/grid", name="transaction_sale_invoice_header_general_grid", condition="request.isXmlHttpRequest()")
      * @Method("POST")
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function gridAction(Request $request)
     {
@@ -37,7 +37,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/", name="transaction_sale_invoice_header_general_index")
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function indexAction()
     {
@@ -47,7 +47,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/new.{_format}", name="transaction_sale_invoice_header_general_new")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function newAction(Request $request, $_format = 'html')
     {
@@ -76,7 +76,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}", name="transaction_sale_invoice_header_general_show")
      * @Method("GET")
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_NEW') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT') or has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function showAction(SaleInvoiceHeader $saleInvoiceHeader)
     {
@@ -88,7 +88,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}/edit.{_format}", name="transaction_sale_invoice_header_general_edit")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_EDIT')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function editAction(Request $request, SaleInvoiceHeader $saleInvoiceHeader, $_format = 'html')
     {
@@ -117,7 +117,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}/delete", name="transaction_sale_invoice_header_general_delete")
      * @Method({"GET", "POST"})
-     * @Security("has_role('ROLE_PURCHASE_INVOICE_HEADER_GENERAL_DELETE')")
+     * @Security("has_role('ROLE_OPERATIONAL_HEAD')")
      */
     public function deleteAction(Request $request, SaleInvoiceHeader $saleInvoiceHeader)
     {
@@ -146,7 +146,7 @@ class SaleInvoiceHeaderGeneralController extends Controller
     /**
      * @Route("/{id}/memo", name="transaction_sale_invoice_header_general_memo", requirements={"id": "\d+"})
      * @Method("GET")
-     * @Security("has_role('ROLE_SALE_INVOICE_NEW') or has_role('ROLE_SALE_INVOICE_EDIT') or has_role('ROLE_SALE_INVOICE_DELETE')")
+     * @Security("has_role('ROLE_FINANCE_STAFF') or has_role('ROLE_CASHIER_STAFF')")
      */
     public function memoAction(SaleInvoiceHeader $saleInvoiceHeader)
     {

@@ -7,11 +7,11 @@ services:
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]
-    app.security_listener:
-        class: AppBundle\Listener\SecurityListener
-        arguments: ["@security.context"]
-        tags:
-            - { name: kernel.event_listener, event: security.interactive_login }
+#    app.security_listener:
+#        class: AppBundle\Listener\SecurityListener
+#        arguments: ["@security.context"]
+#        tags:
+#            - { name: kernel.event_listener, event: security.interactive_login }
 
     app.master.account_repository:
         class: AppBundle\Repository\Master\AccountRepository
