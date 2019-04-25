@@ -73,7 +73,6 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     private $staffLast;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
-     * @Assert\NotNull()
      */
     private $staffApproveOrReject;
     /**
