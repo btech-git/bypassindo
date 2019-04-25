@@ -59,6 +59,8 @@ class PurchaseWorkshopHeaderForm
         $purchaseWorkshopHeader->setTaxNominal($taxNominal);
         $grandTotal = $subTotal + $taxNominal;
         $purchaseWorkshopHeader->setGrandTotal($grandTotal);
+        $grandTotalReplacement = $subTotal + round($purchaseWorkshopHeader->getTaxNominalReplacement());
+        $purchaseWorkshopHeader->setGrandTotalReplacement($grandTotalReplacement);
         $saleOrder = $purchaseWorkshopHeader->getSaleOrder();
         if ($saleOrder !== null) {
             $purchaseWorkshopHeader->setQuantityOrder($saleOrder->getQuantity());

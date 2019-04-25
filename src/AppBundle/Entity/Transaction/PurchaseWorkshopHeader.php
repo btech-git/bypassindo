@@ -48,9 +48,19 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     private $taxNominal;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $taxNominalReplacement;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $grandTotal;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $grandTotalReplacement;
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
@@ -123,8 +133,14 @@ class PurchaseWorkshopHeader extends CodeNumberEntity
     public function getTaxNominal() { return $this->taxNominal; }
     public function setTaxNominal($taxNominal) { $this->taxNominal = $taxNominal; }
     
+    public function getTaxNominalReplacement() { return $this->taxNominalReplacement; }
+    public function setTaxNominalReplacement($taxNominalReplacement) { $this->taxNominalReplacement = $taxNominalReplacement; }
+    
     public function getGrandTotal() { return $this->grandTotal; }
     public function setGrandTotal($grandTotal) { $this->grandTotal = $grandTotal; }
+
+    public function getGrandTotalReplacement() { return $this->grandTotalReplacement; }
+    public function setGrandTotalReplacement($grandTotalReplacement) { $this->grandTotalReplacement = $grandTotalReplacement; }
 
     public function getIsTax() { return $this->isTax; }
     public function setIsTax($isTax) { $this->isTax = $isTax; }

@@ -88,11 +88,11 @@
             </tr>
             <tr>
                 <td class="text-right" colspan="3">PPn 10%</td>
-                <td class="text-right">{{ purchaseWorkshopHeader.taxNominal|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseWorkshopHeader.taxNominalReplacement|default|number_format(2) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="3">Grand Total</td>
-                <td class="text-right">{{ purchaseWorkshopHeader.grandTotal|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseWorkshopHeader.grandTotalReplacement|default|number_format(2) }}</td>
             </tr>
         </tfoot>
     </table>

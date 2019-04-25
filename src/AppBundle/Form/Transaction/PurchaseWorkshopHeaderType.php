@@ -8,6 +8,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use LibBundle\Form\Type\EntityTextType;
 use AppBundle\Entity\Transaction\PurchaseWorkshopHeader;
 use AppBundle\Entity\Transaction\PurchaseWorkshopDetail;
@@ -22,6 +23,8 @@ class PurchaseWorkshopHeaderType extends AbstractType
             ->add('transactionDate', 'date')
             ->add('note')
             ->add('isTax')
+            ->add('taxNominal', HiddenType::class)
+            ->add('taxNominalReplacement')
             ->add('supplier', EntityTextType::class, array('class' => Supplier::class))
             ->add('saleOrder', EntityTextType::class, array('class' => SaleOrder::class))
             ->add('purchaseWorkshopDetails', CollectionType::class, array(
