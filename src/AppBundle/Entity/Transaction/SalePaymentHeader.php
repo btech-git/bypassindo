@@ -13,7 +13,6 @@ use AppBundle\Entity\Admin\Staff;
 /**
  * @ORM\Table(name="transaction_sale_payment_header")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\Transaction\SalePaymentHeaderRepository")
- * @Assert\Expression("(this.getSaleInvoiceDownpayment() == null or this.getSaleInvoiceHeader() == null) and ((this.getSaleInvoiceDownpayment() != null and this.getSaleInvoiceDownpayment().getRemaining() >= 0) or (this.getSaleInvoiceHeader() != null and this.getSaleInvoiceHeader().getRemaining() >= 0))", message = "Remaining must be greater or equal to 0")
  */
 class SalePaymentHeader extends CodeNumberAccountEntity
 {

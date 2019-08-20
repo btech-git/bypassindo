@@ -71,9 +71,9 @@
                                 <td>Harga Chassis (Off)</td>
                                 <td colspan="2">TIPE: {{ saleDiscountApplication.vehicleModel.vosModelName|default }}</td>
                                 <td>{{ saleDiscountApplication.requestQuantity|default }}</td>
-                                <td>{{ saleDiscountApplication.unitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.unitPrice|default|number_format(2) }}</td>
                                 <td></td>
-                                <td></td>
+                                <td style="text-align: right">{{ saleDiscountApplication.totalPrice|default|number_format(2) }}</td>
                             </tr>
                             <tr>
                                 <td>BBN: {{ saleDiscountApplication.ownershipStatus|default }}</td>
@@ -87,16 +87,16 @@
                             <tr>
                                 <td colspan="3">Bentuk Karoseri: {{ saleDiscountApplication.workshopType|default }}</td>
                                 <td>Ref: {{ saleDiscountApplication.workshopReference|default }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherUnitPrice|default|number_format(2) }}</td>
                                 <td></td>
-                                <td></td>
-                                <td></td>
+                                <td style="text-align: right">{{ saleDiscountApplication.totalOtherUnitPrice|default|number_format(2) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Kirim: {{ saleDiscountApplication.deliveryType|default }}</td>
                                 <td>Total Harga Jual</td>
-                                <td>{{ saleDiscountApplication.totalPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.subTotalUnitPrice|default|number_format(2) }}</td>
                                 <td></td>
-                                <td></td>
+                                <td style="text-align: right">{{ saleDiscountApplication.grandTotalUnitPrice|default|number_format(2) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Komisi a/n: {{ saleDiscountApplication.mediatorName|default }}</td>

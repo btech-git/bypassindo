@@ -56,6 +56,8 @@
                 </div>
                 {{ form_row(form.assemblyYear, {'label' : 'NIK' }) }}
                 {{ form_row(form.vehicleColor, {'label' : 'Warna' }) }}
+                {{ form_row(form.ownershipStatus, {'label' : 'BBN Off TR / On TR' }) }}
+                {{ form_row(form.ownershipCategory, {'label' : 'Hitam / Kuning' }) }}
             </div>
             <div class="col-sm-6">
                 {{ form_row(form.supplier, {'attr': {'readonly': true, 'data-toggle': 'modal', 'data-target': '#supplier-dialog'}, 'label' : 'Karoseri' }) }}
@@ -90,12 +92,14 @@
                 {{ form_row(form.workshopType, {'label' : 'Bentuk Karoseri' }) }}
                 {{ form_row(form.workshopReference, {'label' : 'Referensi' }) }}
                 {{ form_row(form.deliveryType, {'label' : 'Kirim (karoseri/KIR/customer)' }) }}
-                {{ form_row(form.ownershipStatus, {'label' : 'BBN Off TR / On TR' }) }}
-                {{ form_row(form.ownershipCategory, {'label' : 'Hitam / Kuning' }) }}
                 {{ form_row(form.requestQuantity, {'label' : 'Jumlah Unit' }) }}
                 <div class="form-group">
                     {{ form_row(form.unitPrice, {'label' : 'Harga Jual / Unit (incl PPN)', 'attr': {'data-bind-target': '[data-name=unit-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
                     <span data-name="unit-price-text">{{ saleDiscountApplication.unitPrice|default|number_format(2) }}</span>
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.otherUnitPrice, {'label' : 'Harga Referensi', 'attr': {'data-bind-target': '[data-name=other-unit-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                    <span data-name="other-unit-price-text">{{ saleDiscountApplication.otherUnitPrice|default|number_format(2) }}</span>
                 </div>
                 <div class="form-group">
                     {{ form_row(form.approvedPrice, {'label' : 'Harga Disetujui (incl PPN)', 'attr': {'data-bind-target': '[data-name=approved-price-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}

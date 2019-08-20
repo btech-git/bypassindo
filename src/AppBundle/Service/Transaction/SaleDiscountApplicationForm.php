@@ -45,9 +45,15 @@ class SaleDiscountApplicationForm
     {
         $grandTotal = $saleDiscountApplication->getOtherPricingAmount1() + $saleDiscountApplication->getOtherPricingAmount2() + $saleDiscountApplication->getOtherPricingAmount3() + $saleDiscountApplication->getOtherPricingAmount4() + $saleDiscountApplication->getOtherPricingAmount5();
         $totalPrice = $saleDiscountApplication->getUnitPrice() * $saleDiscountApplication->getRequestQuantity();
+        $totalOtherUnitPrice = $saleDiscountApplication->getOtherUnitPrice() * $saleDiscountApplication->getRequestQuantity();
+        $subTotalUnitPrice = $saleDiscountApplication->getUnitPrice() + $saleDiscountApplication->getOtherUnitPrice();
+        $grandTotalUnitPrice = $totalPrice + $totalOtherUnitPrice;
         $saleDiscountApplication->setTotalPrice($totalPrice);
         $saleDiscountApplication->setGrandTotalPrice($grandTotal);
         $saleDiscountApplication->setSubTotalPrice(0);
+        $saleDiscountApplication->setTotalOtherUnitPrice($totalOtherUnitPrice);
+        $saleDiscountApplication->setSubTotalUnitPrice($subTotalUnitPrice);
+        $saleDiscountApplication->setGrandTotalUnitPrice($grandTotalUnitPrice);
         $saleDiscountApplication->setRegistrationPrice(0);
 //        $customerStatusType = $saleDiscountApplication->getCustomerStatusType();
 //        if ($customerStatusType !== SaleDiscountApplication::CUSTOMER_STATUS_TYPE_OTHER) {

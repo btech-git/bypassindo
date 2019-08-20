@@ -10,6 +10,7 @@ use LibBundle\Grid\DataBuilder;
 use LibBundle\Grid\SortOperator\BlankType as SortBlankType;
 use LibBundle\Grid\SortOperator\AscendingType;
 use LibBundle\Grid\SortOperator\DescendingType;
+use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualNonEmptyType;
 use LibBundle\Grid\SearchOperator\ContainNonEmptyType;
 use LibBundle\Grid\Transformer\EntityTransformer;
@@ -35,11 +36,14 @@ class AccountGridType extends DataGridType
                     ->addOperator(ContainNonEmptyType::class)
                 ->addField('name')
                     ->addOperator(ContainNonEmptyType::class)
-                ->addField('accountCategory')
+            ->addGroup('accountCategory')
+                ->setEntityName(AccountCategory::class)
+                ->addField('id')
                     ->setDataTransformer(new EntityTransformer($em, AccountCategory::class))
+                    ->addOperator(SearchBlankType::class)
                     ->addOperator(EqualNonEmptyType::class)
                         ->getInput(1)
-                            ->setListData($accountCategories, $accountCategoryLabelModifier, '')
+                            ->setListData($accountCategories, $accountCategoryLabelModifier, null)
         ;
 
         $builder->sortWidget()
@@ -66,6 +70,9 @@ class AccountGridType extends DataGridType
         list($criteria, $associations) = $this->getSpecifications($options);
 
         $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+            if ($group === 'accountCategory' && $field === 'id' && $operator === EqualNonEmptyType::class && $values[0] !== null && $values[0] !== '') {
+                $associations['accountCategory']['merge'] = true;
+            }
             $operator::search($criteria[$group], $field, $values);
         });
 
@@ -77,7 +84,7 @@ class AccountGridType extends DataGridType
             $criteria['account']->setMaxResults($size);
             $criteria['account']->setFirstResult($offset);
         });
-        
+
         $objects = $repository->match($criteria['account'], $associations);
 
         $builder->setData($objects);
@@ -85,43 +92,15 @@ class AccountGridType extends DataGridType
 
     private function getSpecifications(array $options)
     {
-        $names = array('account');
+        $names = array('account', 'accountCategory');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
         }
 
-        $associations = array();
-
-        if (array_key_exists('form', $options)) {
-//            $expr = Criteria::expr();
-            switch ($options['form']) {
-                case 'sale_invoice_downpayment':
-                    $associations['saleInvoiceDownpayment']['merge'] = true;
-                    break;
-                case 'sale_payment_detail':
-                    $associations['salePaymentDetail']['merge'] = true;
-                    break;
-                case 'purchase_payment_detail':
-                    $associations['purchasePaymentDetail']['merge'] = true;
-                    break;
-                case 'expense_header':
-                    $associations['expenseHeader']['merge'] = true;
-                    break;
-                case 'expense_detail':
-                    $associations['expenseDetail']['merge'] = true;
-                    break;
-                case 'deposit_header':
-                    $associations['depositHeader']['merge'] = true;
-                    break;
-                case 'deposit_detail':
-                    $associations['depositDetail']['merge'] = true;
-                    break;
-                case 'journal_voucher_detail':
-                    $associations['journalVoucherDetail']['merge'] = true;
-                    break;
-            }
-        }
+        $associations = array(
+            'accountCategory' => array('criteria' => $criteria['accountCategory']),
+        );
 
         return array($criteria, $associations);
     }

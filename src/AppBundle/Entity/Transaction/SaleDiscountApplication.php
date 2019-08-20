@@ -147,6 +147,26 @@ class SaleDiscountApplication extends CodeNumberEntity
     private $totalPrice;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $otherUnitPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $totalOtherUnitPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $subTotalUnitPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThan(0)
+     */
+    private $grandTotalUnitPrice;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $approvedPrice;
@@ -262,7 +282,7 @@ class SaleDiscountApplication extends CodeNumberEntity
     private $otherPricingAmount5;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
-     * @Assert\NotNull() @Assert\GreaterThan(0)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $grandTotalPrice;
     /**
@@ -396,6 +416,18 @@ class SaleDiscountApplication extends CodeNumberEntity
 
     public function getTotalPrice() { return $this->totalPrice; }
     public function setTotalPrice($totalPrice) { $this->totalPrice = $totalPrice; }
+
+    public function getOtherUnitPrice() { return $this->otherUnitPrice; }
+    public function setOtherUnitPrice($otherUnitPrice) { $this->otherUnitPrice = $otherUnitPrice; }
+
+    public function getTotalOtherUnitPrice() { return $this->totalOtherUnitPrice; }
+    public function setTotalOtherUnitPrice($totalOtherUnitPrice) { $this->totalOtherUnitPrice = $totalOtherUnitPrice; }
+
+    public function getSubTotalUnitPrice() { return $this->subTotalUnitPrice; }
+    public function setSubTotalUnitPrice($subTotalUnitPrice) { $this->subTotalUnitPrice = $subTotalUnitPrice; }
+
+    public function getGrandTotalUnitPrice() { return $this->grandTotalUnitPrice; }
+    public function setGrandTotalUnitPrice($grandTotalUnitPrice) { $this->grandTotalUnitPrice = $grandTotalUnitPrice; }
 
     public function getApprovedPrice() { return $this->approvedPrice; }
     public function setApprovedPrice($approvedPrice) { $this->approvedPrice = $approvedPrice; }

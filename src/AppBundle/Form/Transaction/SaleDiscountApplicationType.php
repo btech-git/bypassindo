@@ -93,6 +93,7 @@ class SaleDiscountApplicationType extends AbstractType
                 'choices_as_values' => true,
             ))
             ->add('unitPrice')
+            ->add('otherUnitPrice')
             ->add('mediatorName')
             ->add('mediatorRanking')
             ->add('mediatorPhone')
