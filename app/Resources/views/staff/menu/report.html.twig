@@ -66,6 +66,14 @@
                     <td>Buku Besar</td>
                     <td>{{ include('action.html.twig', {'url': path('report_account_journal_ledger_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
                 </tr>
+                <tr>
+                    <td>Neraca</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_balance_sheet_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
+                <tr>
+                    <td>Profit/Loss</td>
+                    <td>{{ include('action.html.twig', {'url': path('report_profit_loss_index'), 'label': 'Report', 'button': 'btn btn-primary', 'icon': 'glyphicon glyphicon-list'}) }}</td>
+                </tr>
             </tbody>
         </table>
     {# {% endif %} #}
