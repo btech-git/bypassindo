@@ -1,7 +1,7 @@
 {
-    "subTotal": {{ saleInvoiceHeader.subTotal|default|json_encode|raw }},
+    "subTotal": {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|json_encode|raw }},
     "taxNominal": {{ saleInvoiceHeader.taxNominal|default|json_encode|raw }},
-    "grandTotal": {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|json_encode|raw }},
+    "grandTotal": {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|json_encode|raw }},
     "saleInvoiceDetailGenerals": {
         {%- for index, saleInvoiceDetailGeneral in saleInvoiceHeader.saleInvoiceDetailGenerals -%}
             "{{ index }}": {

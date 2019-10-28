@@ -34,6 +34,11 @@ class DeliveryInspectionHeader extends CodeNumberEntity
      * @ORM\Column(type="boolean")
      * @Assert\NotNull()
      */
+    private $isVehicleIncomplete;
+    /**
+     * @ORM\Column(type="boolean")
+     * @Assert\NotNull()
+     */
     private $isBodyBuilderExecuted;
     /**
      * @ORM\Column(type="text")
@@ -81,6 +86,9 @@ class DeliveryInspectionHeader extends CodeNumberEntity
 
     public function getIsVehicleComplete() { return $this->isVehicleComplete; }
     public function setIsVehicleComplete($isVehicleComplete) { $this->isVehicleComplete = $isVehicleComplete; }
+
+    public function getIsVehicleIncomplete() { return $this->isVehicleIncomplete; }
+    public function setIsVehicleIncomplete($isVehicleIncomplete) { $this->isVehicleIncomplete = $isVehicleIncomplete; }
 
     public function getIsBodyBuilderExecuted() { return $this->isBodyBuilderExecuted; }
     public function setIsBodyBuilderExecuted($isBodyBuilderExecuted) { $this->isBodyBuilderExecuted = $isBodyBuilderExecuted; }

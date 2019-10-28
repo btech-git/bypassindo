@@ -21,6 +21,7 @@ class DeliveryInspectionHeaderType extends AbstractType
         $builder
             ->add('transactionDate', 'date')
             ->add('isVehicleComplete')
+            ->add('isVehicleIncomplete')
             ->add('isBodyBuilderExecuted')
             ->add('note')
             ->add('receiveOrder', EntityTextType::class, array('class' => ReceiveOrder::class))

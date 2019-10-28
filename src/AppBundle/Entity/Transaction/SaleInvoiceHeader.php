@@ -66,6 +66,16 @@ class SaleInvoiceHeader extends CodeNumberEntity
     private $grandTotalBeforeDownpayment;
     /**
      * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $taxNominal;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
+     * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
+     */
+    private $taxNominalReplacement;
+    /**
+     * @ORM\Column(type="decimal", precision=18, scale=2)
      * @Assert\NotNull() @Assert\GreaterThan(0)
      */
     private $grandTotalAfterDownpayment;
@@ -84,6 +94,11 @@ class SaleInvoiceHeader extends CodeNumberEntity
      * @Assert\NotNull() @Assert\GreaterThanOrEqual(0)
      */
     private $remaining;
+    /**
+     * @ORM\Column(name="is_tax", type="boolean")
+     * @Assert\NotNull()
+     */
+    private $isTax;
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Admin\Staff")
      * @Assert\NotNull()
@@ -155,6 +170,12 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getGrandTotalBeforeDownpayment() { return $this->grandTotalBeforeDownpayment; }
     public function setGrandTotalBeforeDownpayment($grandTotalBeforeDownpayment) { $this->grandTotalBeforeDownpayment = $grandTotalBeforeDownpayment; }
 
+    public function getTaxNominal() { return $this->taxNominal; }
+    public function setTaxNominal($taxNominal) { $this->taxNominal = $taxNominal; }
+    
+    public function getTaxNominalReplacement() { return $this->taxNominalReplacement; }
+    public function setTaxNominalReplacement($taxNominalReplacement) { $this->taxNominalReplacement = $taxNominalReplacement; }
+    
     public function getGrandTotalAfterDownpayment() { return $this->grandTotalAfterDownpayment; }
     public function setGrandTotalAfterDownpayment($grandTotalAfterDownpayment) { $this->grandTotalAfterDownpayment = $grandTotalAfterDownpayment; }
 
@@ -167,6 +188,9 @@ class SaleInvoiceHeader extends CodeNumberEntity
     public function getRemaining() { return $this->remaining; }
     public function setRemaining($remaining) { $this->remaining = $remaining; }
 
+    public function getIsTax() { return $this->isTax; }
+    public function setIsTax($isTax) { $this->isTax = $isTax; }
+    
     public function getStaffFirst() { return $this->staffFirst; }
     public function setStaffFirst(Staff $staffFirst = null) { $this->staffFirst = $staffFirst; }
 
@@ -209,12 +233,16 @@ class SaleInvoiceHeader extends CodeNumberEntity
             $grandTotalBeforeDownpayment += $saleInvoiceDetailGeneral->getTotal();
         }
         $this->grandTotalBeforeDownpayment = $grandTotalBeforeDownpayment;
+        $taxNominal = $this->getIsTax() ? $grandTotalBeforeDownpayment * 0.1 : 0;
+        $this->taxNominal = round($taxNominal);
         $totalDownpayment = 0.00;
         foreach ($this->saleInvoiceDetailUnitDownpayments as $saleInvoiceDetailUnitDownpayment) {
             $totalDownpayment += $saleInvoiceDetailUnitDownpayment->getAmount();
         }
         $this->totalDownpayment = $totalDownpayment;
-        $this->grandTotalAfterDownpayment = $this->grandTotalBeforeDownpayment - $this->totalDownpayment;
+        $this->grandTotalAfterDownpayment = $this->grandTotalBeforeDownpayment + round($taxNominal) - $this->totalDownpayment;
+        $grandTotalReplacement = $grandTotalBeforeDownpayment + round($this->taxNominalReplacement);
+        $this->grandTotalReplacement = $grandTotalReplacement;
         
         $totalPayment = '0.00';
         if ($this->salePaymentHeaders !== null) {

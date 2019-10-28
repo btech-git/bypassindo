@@ -87,8 +87,24 @@
             </tbody>
             <tfoot>
                 <tr>
+                    <td class="text-right" colspan="4">Sub Total</td>
+                    <td class="text-right"><span data-name="sub-total">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</span></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <span style="display: inline-block">PPn 10%</span>
+                        <span style="display: inline-block">{{ form_row(form.isTax, {'label': false, 'attr': {'data-name': 'is-tax'} }) }}</span>
+                    </td>
+                    <td class="text-right">
+                        {{ form_row(form.taxNominal, {'label': false}) }}
+                        {{ form_row(form.taxNominalReplacement, {'label': false, 'attr': {'data-name': 'tax-nominal-replacement', 'data-bind-target': '[data-name=tax-nominal-replacement-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
+                        <span data-name="tax-nominal-replacement-text">{{ form.vars.value.taxNominalReplacement|default|number_format(2) }}</span>
+                    </td>
+                </tr>
+                <tr>
                     <td class="text-right" colspan="4">Grand Total</td>
-                    <td class="text-right"><span data-name="grand-total">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="grand-total">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>
@@ -130,7 +146,7 @@
     {{ parent() }}
     <script>
         jQuery(function($) {
-            function bind() {
+            function bind(updateTextNominal) {
                 $.ajax({
                     method: "POST",
                     url: "{{ path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')|merge({'_format': 'json'})) }}",
@@ -141,7 +157,11 @@
                             $("[data-name=total-" + index + "]", "#sale-invoice-detail-general-list").text($.numberFormat(saleInvoiceDetailGeneral.total, 2));
                         });
                         $("[data-name=sub-total]", "#sale-invoice-detail-general-list").text($.numberFormat(data.subTotal, 2));
-                        $("[data-name=tax-nominal]", "#sale-invoice-detail-general-list").text($.numberFormat(data.taxNominal, 2));
+                        $("#{{ form.taxNominal.vars.id }}", "#sale-invoice-detail-general-list").val(data.taxNominal);
+                        if (updateTextNominal) {
+                            $("[data-name=tax-nominal-replacement]", "#sale-invoice-detail-general-list").val(data.taxNominal);
+                            $("[data-name=tax-nominal-replacement-text]", "#sale-invoice-detail-general-list").text($.numberFormat(data.taxNominal, 2));
+                        }
                         $("[data-name=grand-total]", "#sale-invoice-detail-general-list").text($.numberFormat(data.grandTotal, 2));
                     }
                 });
@@ -152,20 +172,23 @@
             var tableFoot = $("tfoot", table);
             
             tableBody.on("change", "[data-name=quantity]", function() {
-                bind();
+                bind(true);
             });
             tableBody.on("change", "[data-name=price]", function() {
-                bind();
+                bind(true);
             });
             tableBody.on("change", "[data-name=discount]", function() {
-                bind();
+                bind(true);
             });
             tableFoot.on("change", "[data-name=is-tax]", function() {
-                bind();
+                bind(true);
+            });
+            tableFoot.on("change", "[data-name=tax-nominal-replacement]", function() {
+                bind(false);
             });
             tableBody.on("click", ".remove-sale-invoice-detail-general-prototype", function() {
                 $(this).closest("tr").remove();
-                bind();
+                bind(true);
             });
             
             $("#customer-grid").on("click", "table[data-role=table] tbody tr", function() {
