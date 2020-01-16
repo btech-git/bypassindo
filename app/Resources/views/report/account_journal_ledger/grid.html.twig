@@ -54,8 +54,8 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td class="text-left" colspan="5">Beginning Balance</td>
-                                    <td class="text-right">{{ beginningBalanceData[index]|default|number_format(2) }}</td>
+                                    <td class="text-left" colspan="4">Beginning Balance</td>
+                                    <td class="text-right" colspan="2">{{ beginningBalanceData[index]|default|number_format(2) }}</td>
                                 </tr>
                                 {% for journalLedger in account.journalLedgers %}
                                     {% set balanceAggregate = balanceAggregate + journalLedger.debit - journalLedger.credit %}
