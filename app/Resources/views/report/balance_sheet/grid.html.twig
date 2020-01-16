@@ -36,7 +36,7 @@
                 {% endif %}
                 {% set categoryName = item['account_category_name'] %}
                 {% set totalSum = 0 %}
-                {% if lastCode|slice(0, 1) == '1' and item['account_category_code']|slice(0, 1) == '2' %}
+                {% if lastCode|slice(0, 1) == '2' and item['account_category_code']|slice(0, 1) == '3' %}
                     <div class="row text-larger">
                         <div class="font-weight-bold padding-row-1 padding-left-0 text-right">AKTIVA</div>
                         <div class="font-weight-bold padding-row-1 border-n text-underline">{{ balanceSheetAmount|number_format(2) }}</div>
