@@ -40,7 +40,7 @@ class JournalLedgerRepository extends EntityRepository
             FROM AppBundle\Entity\Report\JournalLedger j
             JOIN j.account a
             JOIN a.accountCategory c
-            WHERE a.isProfitLoss = false AND j.transactionDate <= :transactionDate AND c.account_category_id IS NOT NULL
+            WHERE a.isProfitLoss = false AND j.transactionDate <= :transactionDate
             GROUP BY a.id
             ORDER BY c.code ASC, a.code ASC
         ');
