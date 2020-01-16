@@ -19,7 +19,7 @@ class JournalLedgerRepository extends EntityRepository
     public function getProfitLossData($endDate)
     {
         $query = $this->_em->createQuery('
-            SELECT a.code AS account_code, c.code AS account_category_code, a.name AS account_name, c.name AS account_category_name, SUM(j.debit - j.credit) AS total
+            SELECT a.code AS account_code, c.code AS account_category_code, a.name AS account_name, c.name AS account_category_name, SUM(j.credit - j.debit) AS total
             FROM AppBundle\Entity\Report\JournalLedger j
             JOIN j.account a
             JOIN a.accountCategory c

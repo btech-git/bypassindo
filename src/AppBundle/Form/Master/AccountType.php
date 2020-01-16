@@ -16,6 +16,8 @@ class AccountType extends AbstractType
             ->add('name')
             ->add('isActive')
             ->add('accountCategory')
+            ->add('isCashOrBank')
+            ->add('isProfitLoss')
         ;
     }
 
