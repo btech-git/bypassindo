@@ -11,7 +11,7 @@
 <div class="report">
     <div class="report-header">
         <div class="report-title">PT. Bypassindo Jaya Indah</div>
-        <div class="report-title">Laporan Buku Besar</div>
+        <div class="report-title">Laporan Buku Besar {{ account.name|default }}</div>
         <div>
             {% set startDate = grid.searchVals['journalLedgers']['transactionDate'][1]|default %}
             {% set endDate = grid.searchVals['journalLedgers']['transactionDate'][2]|default %}
@@ -23,10 +23,10 @@
 
     <table class="report-data">
         <thead class="border-top-solid-bold border-bottom-solid-bold">
-            <tr>
+            <!--<tr>
                 <th class="text-left">Akun</th>
                 <th class="text-left">Saldo Awal</th>
-            </tr>
+            </tr>-->
             <tr>
                 <td colspan="2">
                     <table>
@@ -46,10 +46,10 @@
         </thead>
         <tbody class="border-top-solid-bold border-bottom-solid-bold">
             {% for index, account in grid.data %}
-                <tr data-field-id="{{ account.id }}">
-                    <td class="text-left">{{ account.name|default }}</td>
-                    <td class="text-right">{{ beginningBalanceData[index]|default|number_format(2) }}</td>
-                </tr>
+                <!--<tr data-field-id="{{ account.id }}">
+                    <td class="text-left">{#{ account.name|default }}</td>
+                    <td class="text-right">{{ beginningBalanceData[index]|default|number_format(2) }#}</td>
+                </tr>-->
                 <tr class="border-bottom-dotted-bold">
                     <td colspan="5">
                         {% set debitSum = 0.00 %}
