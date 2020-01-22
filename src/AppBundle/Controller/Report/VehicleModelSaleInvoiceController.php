@@ -59,7 +59,7 @@ class VehicleModelSaleInvoiceController extends Controller
 
         $excel = $this->get('phpexcel');
         $excelXmlReader = $this->get('lib.excel.xml_reader');
-        $xml = $this->renderView('report/customer_sale_invoice/export.xml.twig', array(
+        $xml = $this->renderView('report/vehicle_model_sale_invoice/export.xml.twig', array(
             'grid' => $grid->createView(),
         ));
         $excelObject = $excelXmlReader->load($xml);

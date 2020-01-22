@@ -167,4 +167,15 @@ class DeliveryOrderController extends Controller
         ));
     }
     
+    /**
+     * @Route("/{id}/memo_hand_over", name="transaction_delivery_order_memo_hand_over", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_SALES_STAFF')")
+     */
+    public function memoHandOverAction(DeliveryOrder $deliveryOrder)
+    {
+        return $this->render('transaction/delivery_order/memo_hand_over.html.twig', array(
+            'deliveryOrder' => $deliveryOrder,
+        ));
+    }    
 }

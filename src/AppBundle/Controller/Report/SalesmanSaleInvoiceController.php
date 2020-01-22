@@ -52,21 +52,21 @@ class SalesmanSaleInvoiceController extends Controller
     public function exportAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(VehicleModel::class);
+        $repository = $em->getRepository(Staff::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(VehicleModelSaleInvoiceGridType::class, $repository, $request);
+        $grid->build(SalesmanSaleInvoiceGridType::class, $repository, $request);
 
         $excel = $this->get('phpexcel');
         $excelXmlReader = $this->get('lib.excel.xml_reader');
-        $xml = $this->renderView('report/customer_sale_invoice/export.xml.twig', array(
+        $xml = $this->renderView('report/salesman_sale_invoice/export.xml.twig', array(
             'grid' => $grid->createView(),
         ));
         $excelObject = $excelXmlReader->load($xml);
         $writer = $excel->createWriter($excelObject, 'Excel5');
         $response = $excel->createStreamedResponse($writer);
 
-        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'report.xls');
+        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'Penjualan per salesman.xls');
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');

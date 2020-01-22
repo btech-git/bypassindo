@@ -3,44 +3,46 @@
 {% block title 'Memo' %}
 
 {% block body %}
-    <div class="memo-content">
-        <div class="rows-1 header">
-            {{ saleInvoiceHeader.codeNumber|default }}
+    {% for batch in saleInvoiceHeader.saleInvoiceDetailUnits | batch(5) %}
+        <div class="memo-content">
+            <div class="rows-1 header">
+                {{ saleInvoiceHeader.codeNumber|default }}
+            </div>
+            <div class="rows-1 header">
+                {{ saleInvoiceHeader.dueDate|default ? saleInvoiceHeader.dueDate|date('d M Y') }}
+            </div>
+            <div class="rows-empty top">
+                &nbsp;
+            </div>
+            <div class="rows-2">
+                {{ saleInvoiceHeader.customer.name|default }} <br />
+                {{ saleInvoiceHeader.customer.contactPerson|default }} <br />
+                {{ saleInvoiceHeader.customer.officeAddress|default }}
+            </div>
+            <div class="rows-1 nominal">
+                {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0, '.', '')|say|capitalize }} rupiah.
+            </div>
+            <div class="rows-empty middle">
+                &nbsp;
+            </div>
+            <div class="table-payment">
+                {% for saleInvoiceDetailUnit in batch %}
+                    <div class="rows-1 price-info content-left">
+                        {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.vehicleModel.vldModelName|default }}
+                    </div>
+                    <div class="rows-1 price-info content-right">
+                        {{ saleInvoiceDetailUnit.vehicleChassisNumber|default }} - {{ saleInvoiceDetailUnit.vehicleMachineNumber|default }} - {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }} - {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="rows-empty bottom" style="text-align: right">
+                Jakarta, {{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}
+            </div>
+            <div class="rows-1 total-price">
+                {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}
+            </div>
         </div>
-        <div class="rows-1 header">
-            {{ saleInvoiceHeader.dueDate|default ? saleInvoiceHeader.dueDate|date('d M Y') }}
-        </div>
-        <div class="rows-empty top">
-            &nbsp;
-        </div>
-        <div class="rows-2">
-            {{ saleInvoiceHeader.customer.name|default }} <br />
-            {{ saleInvoiceHeader.customer.contactPerson|default }} <br />
-            {{ saleInvoiceHeader.customer.officeAddress|default }}
-        </div>
-        <div class="rows-1 nominal">
-            {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0, '.', '')|say|capitalize }} rupiah.
-        </div>
-        <div class="rows-empty middle">
-            &nbsp;
-        </div>
-        <div class="table-payment">
-            {% for saleInvoiceDetailUnit in saleInvoiceHeader.saleInvoiceDetailUnits %}
-                <div class="rows-1 price-info content-left">
-                    {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.vehicleModel.vldModelName|default }}
-                </div>
-                <div class="rows-1 price-info content-right">
-                    {{ saleInvoiceDetailUnit.vehicleChassisNumber|default }} - {{ saleInvoiceDetailUnit.vehicleMachineNumber|default }} - {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }} - {{ saleInvoiceDetailUnit.receiveOrder.purchaseDeliveryOrder.vehicleProductionYear|default }}
-                </div>
-            {% endfor %}
-        </div>
-        <div class="rows-empty bottom" style="text-align: right">
-            Jakarta, {{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}
-        </div>
-        <div class="rows-1 total-price">
-            {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}
-        </div>
-    </div>
+    {% endfor %}
 {% endblock %}
 
 {% block stylesheets_include %}

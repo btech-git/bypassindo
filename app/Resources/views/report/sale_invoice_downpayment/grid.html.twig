@@ -2,9 +2,9 @@
 
 <div class="hidden-print">
     {{ grid_top(grid) }}
-    {#<div class="text-center">
+    <div class="text-center">
         <button type="button" class="btn btn-info btn-sm" id="export">Export</button>
-    </div>#}
+    </div>
     <hr />
 </div>
 
@@ -66,12 +66,12 @@
     {{ grid_bottom(grid) }}
 </div>
 
-{#<script>
+<script>
     jQuery(function($) {
         $("#export").click(function() {
-            var url = "{{ path('report_sale_invoice_header_export') }}";
+            var url = "{{ path('report_sale_invoice_downpayment_export') }}";
             var data = {{ grid.params|json_encode|raw }};
             $.redirect(url, data);
         });
     });
-</script>#}
+</script>

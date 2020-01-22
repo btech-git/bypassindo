@@ -57,15 +57,19 @@ class AccountJournalLedgerController extends Controller
     public function exportAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(VehicleModel::class);
+        $repository = $em->getRepository(Account::class);
 
+        $accountJournalLedgerService = $this->get('app.report.account_journal_ledger_summary');
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(VehicleModelSaleInvoiceGridType::class, $repository, $request);
+        $grid->build(AccountJournalLedgerGridType::class, $repository, $request);
+        $dataGridView = $grid->createView();
+        $beginningBalanceData = $accountJournalLedgerService->getBeginningBalanceData($dataGridView);
 
         $excel = $this->get('phpexcel');
         $excelXmlReader = $this->get('lib.excel.xml_reader');
         $xml = $this->renderView('report/account_journal_ledger/export.xml.twig', array(
             'grid' => $grid->createView(),
+            'beginningBalanceData' => $beginningBalanceData,
         ));
         $excelObject = $excelXmlReader->load($xml);
         $writer = $excel->createWriter($excelObject, 'Excel5');

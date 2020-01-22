@@ -138,4 +138,16 @@ class ReceiveOrderController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_receive_order_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_INVENTORY_STAFF')")
+     */
+    public function memoAction(ReceiveOrder $receiveOrder)
+    {
+        return $this->render('transaction/receive_order/memo.html.twig', array(
+            'receiveOrder' => $receiveOrder,
+        ));
+    }
 }

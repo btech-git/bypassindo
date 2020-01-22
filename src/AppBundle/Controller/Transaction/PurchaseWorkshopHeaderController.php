@@ -229,4 +229,16 @@ class PurchaseWorkshopHeaderController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_purchase_workshop_header_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
+     */
+    public function memoAction(PurchaseWorkshopHeader $purchaseWorkshopHeader)
+    {
+        return $this->render('transaction/purchase_workshop_header/memo.html.twig', array(
+            'purchaseWorkshopHeader' => $purchaseWorkshopHeader,
+        ));
+    }
 }

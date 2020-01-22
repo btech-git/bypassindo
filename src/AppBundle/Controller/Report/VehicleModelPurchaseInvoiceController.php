@@ -59,14 +59,14 @@ class VehicleModelPurchaseInvoiceController extends Controller
 
         $excel = $this->get('phpexcel');
         $excelXmlReader = $this->get('lib.excel.xml_reader');
-        $xml = $this->renderView('report/customer_purchase_invoice/export.xml.twig', array(
+        $xml = $this->renderView('report/vehicle_model_purchase_invoice/export.xml.twig', array(
             'grid' => $grid->createView(),
         ));
         $excelObject = $excelXmlReader->load($xml);
         $writer = $excel->createWriter($excelObject, 'Excel5');
         $response = $excel->createStreamedResponse($writer);
 
-        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'report.xls');
+        $dispositionHeader = $response->headers->makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'pembelian per model.xls');
         $response->headers->set('Content-Type', 'text/vnd.ms-excel; charset=utf-8');
         $response->headers->set('Pragma', 'public');
         $response->headers->set('Cache-Control', 'maxage=1');

@@ -96,5 +96,8 @@
             </tr>
         </tfoot>
     </table>
-
+                
+    <a target="_blank" class="btn btn-info" href="{{ path('transaction_purchase_workshop_header_memo', {'id': purchaseWorkshopHeader.id}) }}">
+        <span class="glyphicon glyphicon-print"></span> Print PO
+    </a>
 {% endblock %}

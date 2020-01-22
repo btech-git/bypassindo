@@ -52,7 +52,7 @@
                         <ss:Data ss:Type="String">Beginning Balance</ss:Data>
                     </ss:Cell>
                     <ss:Cell>
-                        <ss:Data ss:Type="String">{{ beginningBalanceData[index]|default|number_format(2) }}</ss:Data>
+                        <ss:Data ss:Type="String">{{ beginningBalanceData[index]|default }}</ss:Data>
                     </ss:Cell>
                 </ss:Row>
                 {% for journalLedger in account.journalLedgers %}

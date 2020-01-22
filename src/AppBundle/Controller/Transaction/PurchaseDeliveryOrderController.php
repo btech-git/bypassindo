@@ -167,4 +167,16 @@ class PurchaseDeliveryOrderController extends Controller
     {
         return $this->render('transaction/purchase_delivery_order/index_outstanding.html.twig');
     }
+    
+    /**
+     * @Route("/{id}/memo", name="transaction_purchase_delivery_order_memo", requirements={"id": "\d+"})
+     * @Method("GET")
+     * @Security("has_role('ROLE_INVENTORY_STAFF')")
+     */
+    public function memoAction(PurchaseDeliveryOrder $purchaseDeliveryOrder)
+    {
+        return $this->render('transaction/purchase_delivery_order/memo.html.twig', array(
+            'purchaseDeliveryOrder' => $purchaseDeliveryOrder,
+        ));
+    }
 }

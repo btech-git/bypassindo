@@ -54,7 +54,7 @@ class AccountJournalLedgerGridType extends DataGridType
 
         $builder->pageWidget()
             ->addPageSizeField()
-                ->addItems(5, 10)
+                ->addItems(10, 25, 50, 100)
             ->addPageNumField()
         ;
     }
