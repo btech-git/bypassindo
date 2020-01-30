@@ -16,7 +16,7 @@
                 {{ form_row(form.paymentMethod, {'label': 'Jenis Pembayaran'}) }}
                 <div class="form-group">
                     {{ form_row(form.amount, {'label': 'Jumlah DP (Rp.)', 'attr': {'data-bind-target': '[data-name=amount-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-                    <span data-name="amount-text">{{ saleInvoiceDownpayment.amount|default|number_format(2) }}</span>
+                    <span data-name="amount-text">{{ saleInvoiceDownpayment.amount|default|number_format(0) }}</span>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -48,7 +48,7 @@
                     </div>
                     <div>
                         <label>Jumlah Downpayment:</label>
-                        <span data-name="sale-order-downpayment">{{ saleInvoiceDownpayment.saleOrder.downPayment|default|number_format(2) }}</span>
+                        <span data-name="sale-order-downpayment">{{ saleInvoiceDownpayment.saleOrder.downPayment|default|number_format(0) }}</span>
                     </div>
                 </div>
                 {{ form_row(form.account, {'label': 'Pelunasan ke Akun'}) }}

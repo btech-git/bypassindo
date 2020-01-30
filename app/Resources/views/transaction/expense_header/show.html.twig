@@ -53,14 +53,14 @@
                     <td class="text-left">{{ expenseDetail.account.code|default }}</td>
                     <td class="text-left">{{ expenseDetail.account.name|default }}</td>
                     <td class="text-left">{{ expenseDetail.memo|default }}</td>
-                    <td class="text-right">{{ expenseDetail.amount|default|number_format(2) }}</td>
+                    <td class="text-right">{{ expenseDetail.amount|default|number_format(0) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td class="text-right" colspan="3">Total</td>
-                <td class="text-right">{{ expenseHeader.totalAmount|default|number_format(2) }}</td>
+                <td class="text-right">{{ expenseHeader.totalAmount|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

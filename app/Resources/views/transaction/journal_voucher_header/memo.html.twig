@@ -19,10 +19,10 @@
                 {{ journalVoucherDetail.account.name|default }}
             </div>
             <div class="rows-2 price-info content-right">
-                {{ journalVoucherDetail.debit|default|number_format(2) }}
+                {{ journalVoucherDetail.debit|default|number_format(0) }}
             </div>
             <div class="rows-2 price-info content-right">
-                {{ journalVoucherDetail.credit|default|number_format(2) }}
+                {{ journalVoucherDetail.credit|default|number_format(0) }}
             </div>
         </div>
         {% endfor %}

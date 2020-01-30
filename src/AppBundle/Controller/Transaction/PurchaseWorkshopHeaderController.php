@@ -235,10 +235,13 @@ class PurchaseWorkshopHeaderController extends Controller
      * @Method("GET")
      * @Security("has_role('ROLE_ACCOUNTING_STAFF')")
      */
-    public function memoAction(PurchaseWorkshopHeader $purchaseWorkshopHeader)
+    public function memoAction(Request $request, PurchaseWorkshopHeader $purchaseWorkshopHeader)
     {
+        $show = $request->query->getBoolean('show', false);
+
         return $this->render('transaction/purchase_workshop_header/memo.html.twig', array(
             'purchaseWorkshopHeader' => $purchaseWorkshopHeader,
+            'show' => $show,
         ));
     }
 }

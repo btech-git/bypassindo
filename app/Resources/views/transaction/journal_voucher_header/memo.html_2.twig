@@ -18,8 +18,8 @@
         </div>
         
         <div class="body">
-                <div class="right"><h3>{{ journalVoucherHeader.totalDebit|default|number_format(2) }}<br/><br/><br/>
-                {{ journalVoucherHeader.totalCredit|default|number_format(2) }}</h3></div>
+                <div class="right"><h3>{{ journalVoucherHeader.totalDebit|default|number_format(0) }}<br/><br/><br/>
+                {{ journalVoucherHeader.totalCredit|default|number_format(0) }}</h3></div>
         </div>
        
         <div class="note">
@@ -73,16 +73,16 @@
                         <td class="left">{{ journalVoucherDetail.account.code|default }}</td>
                         <td class="left">{{ journalVoucherDetail.account.name|default }}</td>
                         <td class="left">{{ journalVoucherDetail.memo|default }}</td>
-                        <td class="right">{{ journalVoucherDetail.debit|default|number_format(2) }}</td>
-                        <td class="right">{{ journalVoucherDetail.credit|default|number_format(2) }}</td>
+                        <td class="right">{{ journalVoucherDetail.debit|default|number_format(0) }}</td>
+                        <td class="right">{{ journalVoucherDetail.credit|default|number_format(0) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" class="label right">Total</td>
-                    <td class="right">{{ journalVoucherHeader.totalDebit|default|number_format(2) }}</td>
-                    <td class="right">{{ journalVoucherHeader.totalCredit|default|number_format(2) }}</td>
+                    <td class="right">{{ journalVoucherHeader.totalDebit|default|number_format(0) }}</td>
+                    <td class="right">{{ journalVoucherHeader.totalCredit|default|number_format(0) }}</td>
                 </tr>
             </tfoot>
         </table>

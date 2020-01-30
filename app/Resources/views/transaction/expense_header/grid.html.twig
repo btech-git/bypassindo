@@ -27,7 +27,7 @@
                 <td class="text-left">{{ expenseHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ expenseHeader.transactionDate|default ? expenseHeader.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ expenseHeader.account.name|default }}</td>
-                <td class="text-right">{{ expenseHeader.totalAmount|default|number_format(2) }}</td>
+                <td class="text-right">{{ expenseHeader.totalAmount|default|number_format(0) }}</td>
                 <td class="text-left">{{ expenseHeader.note|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {

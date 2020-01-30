@@ -42,16 +42,16 @@
                     <td class="text-left">{{ journalVoucherDetail.account.code|default }}</td>
                     <td class="text-left">{{ journalVoucherDetail.account.name|default }}</td>
                     <td class="text-left">{{ journalVoucherDetail.memo|default }}</td>
-                    <td class="text-right">{{ journalVoucherDetail.debit|default|number_format(2) }}</td>
-                    <td class="text-right">{{ journalVoucherDetail.credit|default|number_format(2) }}</td>
+                    <td class="text-right">{{ journalVoucherDetail.debit|default|number_format(0) }}</td>
+                    <td class="text-right">{{ journalVoucherDetail.credit|default|number_format(0) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td class="text-right" colspan="3">Total</td>
-                <td class="text-right">{{ journalVoucherHeader.totalDebit|default|number_format(2) }}</td>
-                <td class="text-right">{{ journalVoucherHeader.totalCredit|default|number_format(2) }}</td>
+                <td class="text-right">{{ journalVoucherHeader.totalDebit|default|number_format(0) }}</td>
+                <td class="text-right">{{ journalVoucherHeader.totalCredit|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

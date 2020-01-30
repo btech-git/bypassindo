@@ -48,9 +48,9 @@
                     <td class="text-left">{{ purchaseInvoiceDetailUnit.purchaseDeliveryOrder.vehicleModel.vosModelName|default }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailUnit.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailUnit.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
-                    <td class="text-right">{{ total|default|number_format(2) }}</td>
-                    <td class="text-right">{{ purchaseInvoiceDetailUnit.unitPrice|default|number_format(2) }}</td>
-                    <td class="text-right">{{ (purchaseInvoiceDetailUnit.unitPrice * 0.1)|default|number_format(2) }}</td>
+                    <td class="text-right">{{ total|default|number_format(0) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailUnit.unitPrice|default|number_format(0) }}</td>
+                    <td class="text-right">{{ (purchaseInvoiceDetailUnit.unitPrice * 0.1)|default|number_format(0) }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailUnit.purchaseInvoiceHeader.taxInvoiceNumber|default }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailUnit.purchaseInvoiceHeader.taxInvoiceDate|default ? purchaseInvoiceDetailUnit.purchaseInvoiceHeader.taxInvoiceDate|date('j F Y') }}</td>
                 </tr>
@@ -60,7 +60,7 @@
         <tfoot class="border-top-solid-bold border-bottom-solid-bold">
             <tr>
                 <td class="text-right" colspan="6"></td>
-                <td class="text-right">{{ totalSum|default|number_format(2) }}</td>
+                <td class="text-right">{{ totalSum|default|number_format(0) }}</td>
                 <td class="text-right" colspan="4"></td>
             </tr>
         </tfoot>

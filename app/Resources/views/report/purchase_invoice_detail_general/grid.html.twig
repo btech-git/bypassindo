@@ -46,7 +46,7 @@
                     <td class="text-left">{{ purchaseInvoiceDetailGeneral.purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailGeneral.purchaseInvoiceHeader.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
                     <td class="text-left">{{ purchaseInvoiceDetailGeneral.itemName|default }}</td>
-                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(2) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(0) }}</td>
                 </tr>
                 {% set totalSum = totalSum + total %}
             {% endfor %}
@@ -54,7 +54,7 @@
         <tfoot class="border-top-solid-bold border-bottom-solid-bold">
             <tr>
                 <td class="text-right" colspan="7"></td>
-                <td class="text-right">{{ totalSum|default|number_format(2) }}</td>
+                <td class="text-right">{{ totalSum|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

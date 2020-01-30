@@ -71,9 +71,9 @@
                                 <td>Harga Chassis (Off)</td>
                                 <td colspan="2">TIPE: {{ saleDiscountApplication.vehicleModel.vosModelName|default }}</td>
                                 <td>{{ saleDiscountApplication.requestQuantity|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.unitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.unitPrice|default|number_format(0) }}</td>
                                 <td></td>
-                                <td style="text-align: right">{{ saleDiscountApplication.totalPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.totalPrice|default|number_format(0) }}</td>
                             </tr>
                             <tr>
                                 <td>BBN: {{ saleDiscountApplication.ownershipStatus|default }}</td>
@@ -87,16 +87,16 @@
                             <tr>
                                 <td colspan="3">Bentuk Karoseri: {{ saleDiscountApplication.workshopType|default }}</td>
                                 <td>Ref: {{ saleDiscountApplication.workshopReference|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.otherUnitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherUnitPrice|default|number_format(0) }}</td>
                                 <td></td>
-                                <td style="text-align: right">{{ saleDiscountApplication.totalOtherUnitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.totalOtherUnitPrice|default|number_format(0) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Kirim: {{ saleDiscountApplication.deliveryType|default }}</td>
                                 <td>Total Harga Jual</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.subTotalUnitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.subTotalUnitPrice|default|number_format(0) }}</td>
                                 <td></td>
-                                <td style="text-align: right">{{ saleDiscountApplication.grandTotalUnitPrice|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.grandTotalUnitPrice|default|number_format(0) }}</td>
                             </tr>
                             <tr>
                                 <td colspan="3">Komisi a/n: {{ saleDiscountApplication.mediatorName|default }}</td>
@@ -104,7 +104,7 @@
                                 <td colspan="2">No HP: {{ saleDiscountApplication.mediatorPhone|default }}</td>
                             </tr>
                             <tr>
-                                <td colspan="3">Rp: {{ saleDiscountApplication.mediatorPrice|default|number_format(2) }}</td>
+                                <td colspan="3">Rp: {{ saleDiscountApplication.mediatorPrice|default|number_format(0) }}</td>
                                 <td colspan="2">{{ saleDiscountApplication.mediatorTaxSelection|default }}</td>
                                 <td colspan="2">Menjadi Rp:</td>
                             </tr>
@@ -120,22 +120,22 @@
                             </tr>
                             <tr>
                                 <td>1. {{ saleDiscountApplication.otherPricingName1|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount1|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount1|default|number_format(0) }}</td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td>2. {{ saleDiscountApplication.otherPricingName2|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount2|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount2|default|number_format(0) }}</td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td>3. {{ saleDiscountApplication.otherPricingName3|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount3|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount3|default|number_format(0) }}</td>
                                 <td></td>
                             </tr>
                             <tr>
                                 <td>4. {{ saleDiscountApplication.otherPricingName4|default }}</td>
-                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount4|default|number_format(2) }}</td>
+                                <td style="text-align: right">{{ saleDiscountApplication.otherPricingAmount4|default|number_format(0) }}</td>
                                 <td></td>
                             </tr>
                         </tbody>
@@ -152,8 +152,8 @@
                                 <td colspan="2">No. HP: {{ saleDiscountApplication.supplier.mobilePhone|default }}</td>
                             </tr>
                             <tr>
-                                <td>Modal (incl PPN): {{ saleDiscountApplication.workshopPrice|default|number_format(2) }}</td>
-                                <td>Profit: {{ saleDiscountApplication.workshopProfit|default|number_format(2) }}</td>
+                                <td>Modal (incl PPN): {{ saleDiscountApplication.workshopPrice|default|number_format(0) }}</td>
+                                <td>Profit: {{ saleDiscountApplication.workshopProfit|default|number_format(0) }}</td>
                                 <td>{{ saleDiscountApplication.isWorkshopSplitPurchase|default ? 'Split PO' : 'Tidak Split PO' }}</td>
                             </tr>
                         </tbody>
@@ -192,28 +192,28 @@
                 </tr>
                 <tr>
                     <td>1. Tanda Jadi:</td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.bookingFee|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.bookingFee|default|number_format(0) }}</td>
                     <td>Harga PO Leasing: </td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingPrice|default|number_format(2) }}</td>
-                    <td rowspan="4" style="vertical-align: top">(Wajib Bayar PPN 10% senilai pengajuan harga ke leasing) Rp: {{ saleDiscountApplication.leasingTaxAmount|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingPrice|default|number_format(0) }}</td>
+                    <td rowspan="4" style="vertical-align: top">(Wajib Bayar PPN 10% senilai pengajuan harga ke leasing) Rp: {{ saleDiscountApplication.leasingTaxAmount|default|number_format(0) }}</td>
                 </tr>
                 <tr>
                     <td>2. Total DP I:</td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.downpayment1|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.downpayment1|default|number_format(0) }}</td>
                     <td>Selisih PO-Invoice: </td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingPriceDifference|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingPriceDifference|default|number_format(0) }}</td>
                 </tr>
                 <tr>
                     <td>3. Total DP II:</td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.downpayment2|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.downpayment2|default|number_format(0) }}</td>
                     <td>Lebih Bayar: </td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingOverPaid|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingOverPaid|default|number_format(0) }}</td>
                 </tr>
                 <tr>
                     <td>4. Pelunasan:</td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.totalPayment|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.totalPayment|default|number_format(0) }}</td>
                     <td>Net Lebih Bayar: </td>
-                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingOverPaidNett|default|number_format(2) }}</td>
+                    <td style="text-decoration: underline; text-align: right">{{ saleDiscountApplication.leasingOverPaidNett|default|number_format(0) }}</td>
                 </tr>
             </table>
         </div>

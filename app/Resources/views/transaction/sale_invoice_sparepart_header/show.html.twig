@@ -43,7 +43,7 @@
             </tr>
             <tr>
                 <th>Grand Total</th>
-                <td>{{ saleInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(2) }}</td>
+                <td>{{ saleInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(0) }}</td>
             </tr>
         </tbody>
     </table>
@@ -65,16 +65,16 @@
                 <tr>
                     <td class="text-left">{{ saleInvoiceSparepartDetail.itemName|default }}</td>
                     <td class="text-center">{{ saleInvoiceSparepartDetail.quantity|default|number_format(0) }}</td>
-                    <td class="text-right">{{ saleInvoiceSparepartDetail.itemPrice|default|number_format(2) }}</td>
-                    <td class="text-right">{{ saleInvoiceSparepartDetail.materialDiscount|default|number_format(2) }}</td>
-                    <td class="text-right">{{ saleInvoiceSparepartDetail.saleAmount|default|number_format(2) }}</td>
+                    <td class="text-right">{{ saleInvoiceSparepartDetail.itemPrice|default|number_format(0) }}</td>
+                    <td class="text-right">{{ saleInvoiceSparepartDetail.materialDiscount|default|number_format(0) }}</td>
+                    <td class="text-right">{{ saleInvoiceSparepartDetail.saleAmount|default|number_format(0) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td class="text-right" colspan="4">Grand Total</td>
-                <td class="text-right">{{ saleInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoiceSparepartHeader.grandTotalAfterTax|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

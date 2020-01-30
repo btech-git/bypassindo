@@ -65,32 +65,32 @@
                 <tr>
                     <td class="text-left">{{ purchaseInvoiceDetailGeneral.itemName|default }}</td>
                     <td class="text-center">{{ purchaseInvoiceDetailGeneral.quantity|default|number_format(0) }}</td>
-                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.unitPrice|default|number_format(2) }}</td>
-                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.discount|default|number_format(2) }}</td>
-                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(2) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.unitPrice|default|number_format(0) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.discount|default|number_format(0) }}</td>
+                    <td class="text-right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(0) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td class="text-right" colspan="4">Sub Total</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.subTotal|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="4">PPn</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.taxNominalReplacement|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.taxNominalReplacement|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="4">Grand Total</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="4">Total Payment</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.totalPayment|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.totalPayment|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <td class="text-right" colspan="4">Remaining</td>
-                <td class="text-right">{{ purchaseInvoiceHeader.remaining|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseInvoiceHeader.remaining|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

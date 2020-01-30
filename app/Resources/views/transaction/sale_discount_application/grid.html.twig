@@ -32,9 +32,9 @@
                 <td class="text-left">{{ saleDiscountApplication.transactionDate|default ? saleDiscountApplication.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ saleDiscountApplication.customer.name|default }}</td>
                 <td class="text-left">{{ saleDiscountApplication.vehicleModel.vosModelName|default }}</td>
-                <td class="text-right">{{ saleDiscountApplication.salesmanPrice|default|number_format(2) }}</td>
-                <td class="text-right">{{ saleDiscountApplication.approvedPrice|default|number_format(2) }}</td>
-                <td class="text-right">{{ saleDiscountApplication.grandTotalPrice|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleDiscountApplication.salesmanPrice|default|number_format(0) }}</td>
+                <td class="text-right">{{ saleDiscountApplication.approvedPrice|default|number_format(0) }}</td>
+                <td class="text-right">{{ saleDiscountApplication.grandTotalPrice|default|number_format(0) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {

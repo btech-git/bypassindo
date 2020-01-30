@@ -18,7 +18,7 @@
                 <td class="text-left">{{ saleInvoiceDownpayment.transactionDate|default ? saleInvoiceDownpayment.transactionDate|date('Y-m-d') }}</td>
                 <td class="text-left">{{ saleInvoiceDownpayment.taxNumber|default }}</td>
                 <td class="text-left">{{ saleInvoiceDownpayment.note|default }}</td>
-                <td class="text-right">{{ saleInvoiceDownpayment.amount|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleInvoiceDownpayment.amount|default|number_format(0) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {

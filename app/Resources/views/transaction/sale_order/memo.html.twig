@@ -130,9 +130,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="center">{{ saleOrder.quantity|default|number_format(2) }}</td>
-                        <td class="right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
-                        <td class="right">{{ saleOrder.total|default|number_format(2) }}</td>
+                        <td class="center">{{ saleOrder.quantity|default|number_format(0) }}</td>
+                        <td class="right">{{ saleOrder.unitPrice|default|number_format(0) }}</td>
+                        <td class="right">{{ saleOrder.total|default|number_format(0) }}</td>
                     </tr>
                 </tbody>
             </table>

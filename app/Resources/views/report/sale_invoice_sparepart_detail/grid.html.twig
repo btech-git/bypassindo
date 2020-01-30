@@ -46,9 +46,9 @@
                     <td class="text-left">{{ saleInvoiceSparepartDetail.saleInvoiceSparepartHeader.taxNumber|default }}</td>
                     <td class="text-left">{{ saleInvoiceSparepartDetail.itemName|default }}</td>
                     <td class="text-center">{{ saleInvoiceSparepartDetail.quantity|default|number_format(0) }}</td>
-                    <td class="text-right">{{ saleInvoiceSparepartDetail.itemPrice|default|number_format(2) }}</td>
-                    <td class="text-right">{{ saleInvoiceSparepartDetail.materialDiscount|default|number_format(2) }}</td>
-                    <td class="text-right">{{ total|default|number_format(2) }}</td>
+                    <td class="text-right">{{ saleInvoiceSparepartDetail.itemPrice|default|number_format(0) }}</td>
+                    <td class="text-right">{{ saleInvoiceSparepartDetail.materialDiscount|default|number_format(0) }}</td>
+                    <td class="text-right">{{ total|default|number_format(0) }}</td>
                 </tr>
                 {% set totalSum = totalSum + total %}
             {% endfor %}
@@ -56,7 +56,7 @@
         <tfoot class="border-top-solid-bold border-bottom-solid-bold">
             <tr>
                 <td class="text-right" colspan="8">Grand Total</td>
-                <td class="text-right">{{ totalSum|default|number_format(2) }}</td>
+                <td class="text-right">{{ totalSum|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

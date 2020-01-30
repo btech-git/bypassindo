@@ -47,7 +47,7 @@
             </tr>
             <tr>
                 <th>Komisi (Rp.)</th>
-                <td>{{ saleDiscountApplication.mediatorPrice|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.mediatorPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Manufacture Code</th>
@@ -87,11 +87,11 @@
             </tr>
             <tr>
                 <th>Modal (incl PPN)</th>
-                <td>{{ saleDiscountApplication.workshopPrice|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.workshopPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Profit</th>
-                <td>{{ saleDiscountApplication.workshopProfit|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.workshopProfit|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Split PO</th>
@@ -127,11 +127,11 @@
             </tr>
             <tr>
                 <th>Harga Jual / Unit (incl PPN)</th>
-                <td>{{ saleDiscountApplication.unitPrice|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.unitPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Harga Disetujui (incl PPN)</th>
-                <td>{{ saleDiscountApplication.approvedPrice|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.approvedPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Cara Pembayaran</th>
@@ -159,23 +159,23 @@
             </tr>
             <tr>
                 <th>Tanda Jadi</th>
-                <td>{{ saleDiscountApplication.bookingFee|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.bookingFee|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Total DP I</th>
-                <td>{{ saleDiscountApplication.downpayment1|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.downpayment1|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Total DP II</th>
-                <td>{{ saleDiscountApplication.downpayment2|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.downpayment2|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Pelunasan</th>
-                <td>{{ saleDiscountApplication.totalPayment|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.totalPayment|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Wajib Bayar PPN 10% senilai pengajuan harga ke leasing (Rp.)</th>
-                <td>{{ saleDiscountApplication.leasingTaxAmount|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.leasingTaxAmount|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Invoice vs PO leasing sesuai?</th>
@@ -183,19 +183,19 @@
             </tr>
             <tr>
                 <th>Harga PO Leasing</th>
-                <td>{{ saleDiscountApplication.leasingPrice|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.leasingPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Selisih PO-Invoice</th>
-                <td>{{ saleDiscountApplication.leasingPriceDifference|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.leasingPriceDifference|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Lebih Bayar</th>
-                <td>{{ saleDiscountApplication.leasingOverPaid|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.leasingOverPaid|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Nett Lebih Bayar</th>
-                <td>{{ saleDiscountApplication.leasingOverPaidNett|default|number_format(2) }}</td>
+                <td>{{ saleDiscountApplication.leasingOverPaidNett|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Note</th>

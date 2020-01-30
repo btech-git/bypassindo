@@ -21,7 +21,7 @@
             <span data-name="payment-type-{{ object.vars.name }}">{{ object.vars.value.receiveOrder.purchaseDeliveryOrder.saleOrder.financeCompany.name|default }}</span>
         </td>
         <td class="text-right">
-            <span data-name="unit-price-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
+            <span data-name="unit-price-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove">Delete</button>
@@ -41,7 +41,7 @@
             <span data-name="transaction-date-{{ object.vars.name }}">{{ object.vars.value.saleInvoiceDownpayment.transactionDate|default ? object.vars.value.saleInvoiceDownpayment.transactionDate|date('j M Y') }}</span>
         </td>
         <td class="text-right">
-            <span data-name="amount-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(2) }}</span>
+            <span data-name="amount-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove">Delete</button>
@@ -124,17 +124,17 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="2">Sub Total</td>
-                    <td class="text-right"><span data-name="grand-total-before-downpayment">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="grand-total-before-downpayment">{{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="text-right" colspan="2">Total DP</td>
-                    <td class="text-right"><span data-name="total-downpayment">{{ saleInvoiceHeader.totalDownpayment|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="total-downpayment">{{ saleInvoiceHeader.totalDownpayment|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
                 <tr>
                     <td class="text-right" colspan="2">Grand Total</td>
-                    <td class="text-right"><span data-name="grand-total-after-downpayment">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="grand-total-after-downpayment">{{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>

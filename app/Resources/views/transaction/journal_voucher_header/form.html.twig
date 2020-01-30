@@ -18,11 +18,11 @@
         </td>
         <td>
             {{ form_row(object.debit, {'label': false, 'attr': {'data-name': 'debit', 'data-bind-target': '[data-name=debit-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="debit-text-{{ object.vars.name }}">{{ object.vars.value.debit|default|number_format(2) }}</span>
+            <span data-name="debit-text-{{ object.vars.name }}">{{ object.vars.value.debit|default|number_format(0) }}</span>
         </td>
         <td>
             {{ form_row(object.credit, {'label': false, 'attr': {'data-name': 'credit', 'data-bind-target': '[data-name=credit-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="credit-text-{{ object.vars.name }}">{{ object.vars.value.credit|default|number_format(2) }}</span>
+            <span data-name="credit-text-{{ object.vars.name }}">{{ object.vars.value.credit|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove">Delete</button>
@@ -86,8 +86,8 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="3">Total</td>
-                    <td class="text-right" data-name="total-debit">{{ journalVoucherHeader.totalDebit|default|number_format(2) }}</td>
-                    <td class="text-right" data-name="total-credit">{{ journalVoucherHeader.totalCredit|default|number_format(2) }}</td>
+                    <td class="text-right" data-name="total-debit">{{ journalVoucherHeader.totalDebit|default|number_format(0) }}</td>
+                    <td class="text-right" data-name="total-credit">{{ journalVoucherHeader.totalCredit|default|number_format(0) }}</td>
                     <td></td>
                 </tr>
             </tfoot>

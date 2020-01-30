@@ -18,7 +18,7 @@
                 {{ expenseHeader.objectiveReason|default }}
             </div>
             <div class="rows-1 top-info content-right">
-                {{ expenseHeader.totalAmount|default|number_format(2) }}
+                {{ expenseHeader.totalAmount|default|number_format(0) }}
             </div>
         </div>
         <div class="rows-2">
@@ -32,7 +32,7 @@
                 {{ expenseHeader.chequeNumber|default }}
             </div>
             <div class="rows-1 bottom-info content-right">
-                {{ expenseHeader.totalAmount|default|number_format(2) }}
+                {{ expenseHeader.totalAmount|default|number_format(0) }}
             </div>
         </div>
         <div class="rows-empty">

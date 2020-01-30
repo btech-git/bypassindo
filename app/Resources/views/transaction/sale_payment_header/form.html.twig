@@ -27,7 +27,7 @@
             {{ form_row(object.amount, {'label': false, 'attr': {'data-name': 'amount', 'data-bind-target': '[data-name=amount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
         </td>
         <td class="text-right" >
-            <span data-name="amount-text-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(2) }}</span>
+            <span data-name="amount-text-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove-sale-payment-detail-prototype">Delete</button>
@@ -61,15 +61,15 @@
                     </div>
                     <div>
                         <label>Grand Total:</label>
-                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceDownpayment.amount|default|number_format(2) }}</span>
+                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceDownpayment.amount|default|number_format(0) }}</span>
                     </div>
                     <div>
                         <label>Total Payment:</label>
-                        <span data-name="total-payment">{{ salePaymentHeader.saleInvoiceDownpayment.totalPayment|default|number_format(2) }}</span>
+                        <span data-name="total-payment">{{ salePaymentHeader.saleInvoiceDownpayment.totalPayment|default|number_format(0) }}</span>
                     </div>
                     <div>
                         <label>Sisa:</label>
-                        <span data-name="remaining">{{ salePaymentHeader.saleInvoiceDownpayment.remaining|default|number_format(2) }}</span>
+                        <span data-name="remaining">{{ salePaymentHeader.saleInvoiceDownpayment.remaining|default|number_format(0) }}</span>
                     </div>
                 </div>
             </div>
@@ -95,15 +95,15 @@
                     </div>
                     <div>
                         <label>Grand Total:</label>
-                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}</span>
+                        <span data-name="grand-total">{{ salePaymentHeader.saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0) }}</span>
                     </div>
                     <div>
                         <label>Total Payment:</label>
-                        <span data-name="total-payment">{{ salePaymentHeader.saleInvoiceHeader.totalPayment|default|number_format(2) }}</span>
+                        <span data-name="total-payment">{{ salePaymentHeader.saleInvoiceHeader.totalPayment|default|number_format(0) }}</span>
                     </div>
                     <div>
                         <label>Sisa:</label>
-                        <span data-name="remaining">{{ salePaymentHeader.saleInvoiceHeader.remaining|default|number_format(2) }}</span>
+                        <span data-name="remaining">{{ salePaymentHeader.saleInvoiceHeader.remaining|default|number_format(0) }}</span>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="5">Grand Total</td>
-                    <td class="text-right"><span data-name="total-amount">{{ salePaymentHeader.totalAmount|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="total-amount">{{ salePaymentHeader.totalAmount|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>

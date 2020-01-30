@@ -55,7 +55,7 @@
                             <tbody>
                                 <tr>
                                     <td class="text-left font-weight-bold" colspan="4">Beginning Balance</td>
-                                    <td class="text-right font-weight-bold" colspan="2">{{ beginningBalanceData[index]|default|number_format(2) }}</td>
+                                    <td class="text-right font-weight-bold" colspan="2">{{ beginningBalanceData[index]|default|number_format(0) }}</td>
                                 </tr>
                                 {% for journalLedger in account.journalLedgers %}
                                     {% set balanceAggregate = balanceAggregate + journalLedger.debit - journalLedger.credit %}
@@ -63,9 +63,9 @@
                                         <td class="text-left">{{ journalLedger.codeNumber|default }}</td>
                                         <td class="text-left">{{ journalLedger.transactionDate|default ? journalLedger.transactionDate|date('j F Y') }}</td>
                                         <td class="text-left">{{ journalLedger.transactionSubject|default }}</td>
-                                        <td class="text-right">{{ journalLedger.debit|default|number_format(2) }}</td>
-                                        <td class="text-right">{{ journalLedger.credit|default|number_format(2) }}</td>
-                                        <td class="text-right">{{ balanceAggregate|default|number_format(2) }}</td>
+                                        <td class="text-right">{{ journalLedger.debit|default|number_format(0) }}</td>
+                                        <td class="text-right">{{ journalLedger.credit|default|number_format(0) }}</td>
+                                        <td class="text-right">{{ balanceAggregate|default|number_format(0) }}</td>
                                     </tr>
                                     {% set debitSum = debitSum + journalLedger.debit %}
                                     {% set creditSum = creditSum + journalLedger.credit %}
@@ -74,8 +74,8 @@
                             <tfoot class="border-top-solid-normal">
                                 <tr>
                                     <td class="text-right" colspan="3">Total</td>
-                                    <td class="text-right">{{ debitSum|default|number_format(2) }}</td>
-                                    <td class="text-right">{{ creditSum|default|number_format(2) }}</td>
+                                    <td class="text-right">{{ debitSum|default|number_format(0) }}</td>
+                                    <td class="text-right">{{ creditSum|default|number_format(0) }}</td>
                                     <td></td>
                                 </tr>
                             </tfoot>

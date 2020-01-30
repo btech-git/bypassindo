@@ -53,14 +53,14 @@
                         <td class="left">{{ expenseDetail.account.code|default }}</td>
                         <td class="left">{{ expenseDetail.account.name|default }}</td>
                         <td class="left">{{ expenseDetail.memo|default }}</td>
-                        <td class="right">{{ expenseDetail.amount|default|number_format(2) }}</td>
+                        <td class="right">{{ expenseDetail.amount|default|number_format(0) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" class="label right">Grand Total</td>
-                    <td class="right">{{ expenseHeader.totalAmount|default|number_format(2) }}</td>
+                    <td class="right">{{ expenseHeader.totalAmount|default|number_format(0) }}</td>
                 </tr>
             </tfoot>
         </table>

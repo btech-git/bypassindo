@@ -26,8 +26,8 @@
             <tr data-field-id="{{ journalVoucherHeader.id }}">
                 <td class="text-left">{{ journalVoucherHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ journalVoucherHeader.transactionDate|default ? journalVoucherHeader.transactionDate|date('j M Y') }}</td>
-                <td class="text-right">{{ journalVoucherHeader.totalCredit|default|number_format(2) }}</td>
-                <td class="text-right">{{ journalVoucherHeader.totalDebit|default|number_format(2) }}</td>
+                <td class="text-right">{{ journalVoucherHeader.totalCredit|default|number_format(0) }}</td>
+                <td class="text-right">{{ journalVoucherHeader.totalDebit|default|number_format(0) }}</td>
                 <td class="text-left">{{ journalVoucherHeader.note|default }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {

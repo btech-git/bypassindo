@@ -60,7 +60,7 @@
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.purchaseInvoiceHeader.supplier.name|default }}</td>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.vehicleChassisNumber|default }}</td>
                                         <td class="text-left">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.vehicleMachineNumber|default }}</td>
-                                        <td class="text-right">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.total|default|number_format(2) }}</td>
+                                        <td class="text-right">{{ purchaseDeliveryOrder.purchaseInvoiceDetailUnit.total|default|number_format(0) }}</td>
                                     </tr>
                                     {% set totalSum = totalSum + purchaseDeliveryOrder.purchaseInvoiceDetailUnit.total %}
                                 {% endfor %}
@@ -68,7 +68,7 @@
                             <tfoot class="border-top-solid-normal">
                                 <tr>
                                     <td class="text-right" colspan="5">Grand Total Pembelian</td>
-                                    <td class="text-right"><strong>{{ totalSum|default|number_format(2) }}</strong></td>
+                                    <td class="text-right"><strong>{{ totalSum|default|number_format(0) }}</strong></td>
                                 </tr>
                             </tfoot>
                         </table>

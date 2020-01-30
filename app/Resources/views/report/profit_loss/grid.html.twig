@@ -31,7 +31,7 @@
                 {% if lastCode != '' %}
                     <div class="row">
                         <div class="font-weight-bold padding-left-2">Total {{ categoryName }}</div>
-                        <div class="font-weight-bold border-top-solid-normal">{{ totalSum|number_format(2) }}</div>
+                        <div class="font-weight-bold border-top-solid-normal">{{ totalSum|number_format(0) }}</div>
                     </div>
                     {% set profitLossAmount = profitLossAmount + totalSum %}
                     {% set categoryCount = categoryCount + 1 %}
@@ -41,7 +41,7 @@
                 {% if categoryCount == 2 %}
                     <div class="row text-larger">
                         <div class="font-weight-bold padding-row-1 padding-left-0 text-right">LABA KOTOR</div>
-                        <div class="font-weight-bold padding-row-1 border-n text-underline">{{ profitLossAmount|number_format(2) }}</div>
+                        <div class="font-weight-bold padding-row-1 border-n text-underline">{{ profitLossAmount|number_format(0) }}</div>
                     </div>
                 {% endif %}
                 <div class="row">
@@ -51,20 +51,20 @@
             {% endif %}
             <div class="row">
                 <div class="font-weight-normal padding-left-1">{{ item['account_name'] }}</div>
-                <div class="font-weight-normal">{{ item['total']|number_format(2) }}</div>
+                <div class="font-weight-normal">{{ item['total']|number_format(0) }}</div>
             </div>
             {% set totalSum = totalSum + item['total'] %}
             {% set lastCode = item['account_category_code'] %}
         {% endfor %}
         <div class="row">
             <div class="font-weight-bold padding-left-2">Total {{ categoryName }}</div>
-            <div class="font-weight-bold border-top-solid-normal">{{ totalSum|number_format(2) }}</div>
+            <div class="font-weight-bold border-top-solid-normal">{{ totalSum|number_format(0) }}</div>
         </div>
         {% set profitLossAmount = profitLossAmount + totalSum %}
         {% set categoryCount = categoryCount + 1 %}
         <div class="row text-larger">
             <div class="font-weight-bold padding-row-1 padding-left-0 text-right">LABA BERSIH</div>
-            <div class="font-weight-bold padding-row-1 border-n text-underline">{{ profitLossAmount|number_format(2) }}</div>
+            <div class="font-weight-bold padding-row-1 border-n text-underline">{{ profitLossAmount|number_format(0) }}</div>
         </div>
     </div>
 </div>

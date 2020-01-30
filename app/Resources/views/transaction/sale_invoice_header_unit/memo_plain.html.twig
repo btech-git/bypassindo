@@ -39,7 +39,7 @@
                 Jakarta, {{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}
             </div>
             <div class="rows-1 total-price">
-                {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(2) }}
+                {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0) }}
             </div>
         </div>
     {% endfor %}

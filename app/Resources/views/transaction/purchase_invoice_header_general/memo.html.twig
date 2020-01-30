@@ -73,16 +73,16 @@
                     <tr>
                         <td class="left">{{ purchaseInvoiceDetailGeneral.itemName|default }}</td>
                         <td class="center">{{ purchaseInvoiceDetailGeneral.quantity|default|number_format(0) }}</td>
-                        <td class="right">{{ purchaseInvoiceDetailGeneral.unitPrice|default|number_format(2) }}</td>
-                        <td class="right">{{ purchaseInvoiceDetailGeneral.discount|default|number_format(2) }}</td>
-                        <td class="right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(2) }}</td>
+                        <td class="right">{{ purchaseInvoiceDetailGeneral.unitPrice|default|number_format(0) }}</td>
+                        <td class="right">{{ purchaseInvoiceDetailGeneral.discount|default|number_format(0) }}</td>
+                        <td class="right">{{ purchaseInvoiceDetailGeneral.total|default|number_format(0) }}</td>
                     </tr>
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="4" class="label right">Grand Total</td>
-                    <td class="right">{{ purchaseInvoiceHeader.grandTotal|default|number_format(2) }}</td>
+                    <td class="right">{{ purchaseInvoiceHeader.grandTotal|default|number_format(0) }}</td>
                 </tr>
             </tfoot>
         </table>

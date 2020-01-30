@@ -46,7 +46,7 @@
                     <td class="text-left">{{ saleInvoiceDownpayment.customer.name|default }}</td>
                     <td class="text-left">{{ saleInvoiceDownpayment.saleOrder.staffFirst.name|default }}</td>
                     <td class="text-left">{{ saleInvoiceDownpayment.account.name|default }}</td>
-                    <td class="text-right">{{ saleInvoiceDownpayment.amount|default|number_format(2) }}</td>
+                    <td class="text-right">{{ saleInvoiceDownpayment.amount|default|number_format(0) }}</td>
                 </tr>
                 {% set totalSum = totalSum + total %}
             {% endfor %}
@@ -54,7 +54,7 @@
         <tfoot class="border-top-solid-bold border-bottom-solid-bold">
             <tr>
                 <td class="text-right" colspan="7"></td>
-                <td class="text-right">{{ totalSum|default|number_format(2) }}</td>
+                <td class="text-right">{{ totalSum|default|number_format(0) }}</td>
                 <td class="text-right" colspan="2"></td>
             </tr>
         </tfoot>

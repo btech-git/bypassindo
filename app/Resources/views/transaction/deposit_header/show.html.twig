@@ -45,14 +45,14 @@
                     <td class="text-left">{{ depositDetail.account.code|default }}</td>
                     <td class="text-left">{{ depositDetail.account.name|default }}</td>
                     <td class="text-left">{{ depositDetail.memo|default }}</td>
-                    <td class="text-right">{{ depositDetail.amount|default|number_format(2) }}</td>
+                    <td class="text-right">{{ depositDetail.amount|default|number_format(0) }}</td>
                 </tr>
             {% endfor %}
         </tbody>
         <tfoot>
             <tr>
                 <td class="text-right" colspan="3">Total</td>
-                <td class="text-right">{{ depositHeader.totalAmount|default|number_format(2) }}</td>
+                <td class="text-right">{{ depositHeader.totalAmount|default|number_format(0) }}</td>
             </tr>
         </tfoot>
     </table>

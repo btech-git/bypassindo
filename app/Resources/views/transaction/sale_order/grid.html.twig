@@ -36,8 +36,8 @@
                 <td class="text-left">{{ saleOrder.vehicleSerialNumber|default }}</td>
                 <td class="text-left">{{ saleOrder.vehicleColor|default }}</td>
                 <td class="text-left">{{ saleOrder.quantity|default }}</td>
-                <td class="text-right">{{ saleOrder.unitPrice|default|number_format(2) }}</td>
-                <td class="text-right">{{ saleOrder.total|default|number_format(2) }}</td>
+                <td class="text-right">{{ saleOrder.unitPrice|default|number_format(0) }}</td>
+                <td class="text-right">{{ saleOrder.total|default|number_format(0) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {

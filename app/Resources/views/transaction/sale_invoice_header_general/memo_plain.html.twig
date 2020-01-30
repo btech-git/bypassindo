@@ -28,7 +28,7 @@
                     {{ saleInvoiceDetailGeneral.itemName|default }}
                 </div>
                 <div class="rows-1 price-info content-right">
-                    {{ saleInvoiceDetailGeneral.total|default|number_format(2) }}
+                    {{ saleInvoiceDetailGeneral.total|default|number_format(0) }}
                 </div>
             {% endfor %}
         </div>
@@ -36,7 +36,7 @@
             &nbsp;
         </div>
         <div class="rows-1 total-price">
-            {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(2) }}
+            {{ saleInvoiceHeader.grandTotalBeforeDownpayment|default|number_format(0) }}
         </div>
     </div>
 {% endblock %}

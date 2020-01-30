@@ -18,7 +18,7 @@
         </td>
         <td>
             {{ form_row(object.amount, {'label': false, 'attr': {'data-group-name': 'amount', 'data-bind-target': '[data-name=amount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="amount-text-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(2) }}</span>
+            <span data-name="amount-text-{{ object.vars.name }}">{{ object.vars.value.amount|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove">Delete</button>
@@ -81,7 +81,7 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="3">Total</td>
-                    <td class="text-right" data-name="total-amount">{{ depositHeader.totalAmount|default|number_format(2) }}</td>
+                    <td class="text-right" data-name="total-amount">{{ depositHeader.totalAmount|default|number_format(0) }}</td>
                     <td colspan="2"></td>
                 </tr>
             </tfoot>

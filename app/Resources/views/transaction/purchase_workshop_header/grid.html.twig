@@ -25,7 +25,7 @@
                 <td class="text-left">{{ purchaseWorkshopHeader.codeNumber|default }}</td>
                 <td class="text-left">{{ purchaseWorkshopHeader.transactionDate|default ? purchaseWorkshopHeader.transactionDate|date('j M Y') }}</td>
                 <td class="text-left">{{ purchaseWorkshopHeader.supplier.name|default }}</td>
-                <td class="text-right">{{ purchaseWorkshopHeader.grandTotalReplacement|default|number_format(2) }}</td>
+                <td class="text-right">{{ purchaseWorkshopHeader.grandTotalReplacement|default|number_format(0) }}</td>
                 <td class="text-left">
                     {{ include('transaction/actions.html.twig', {
                         'contents': {

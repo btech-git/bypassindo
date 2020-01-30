@@ -16,14 +16,14 @@
         </td>
         <td>
             {{ form_row(object.unitPrice, {'label': false, 'attr': {'data-name': 'price', 'data-bind-target': '[data-name=unit-price-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(2) }}</span>
+            <span data-name="unit-price-text-{{ object.vars.name }}">{{ object.vars.value.unitPrice|default|number_format(0) }}</span>
         </td>
         <td>
             {{ form_row(object.discount, {'label': false, 'attr': {'data-name': 'discount', 'data-bind-target': '[data-name=discount-text-' ~ object.vars.name ~ ']', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(2) }}</span>
+            <span data-name="discount-text-{{ object.vars.name }}">{{ object.vars.value.discount|default|number_format(0) }}</span>
         </td>
         <td class="text-right">
-            <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(2) }}</span>
+            <span data-name="total-{{ object.vars.name }}">{{ object.vars.value.total|default|number_format(0) }}</span>
         </td>
         <td>
             <button type="button" class="btn btn-info remove-purchase-invoice-detail-general-prototype">Delete</button>
@@ -112,7 +112,7 @@
             <tfoot>
                 <tr>
                     <td class="text-right" colspan="4">Sub Total</td>
-                    <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="sub-total">{{ purchaseInvoiceHeader.subTotal|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
                 <tr>
@@ -123,12 +123,12 @@
                     <td class="text-right">
                         {{ form_row(form.taxNominal, {'label': false}) }}
                         {{ form_row(form.taxNominalReplacement, {'label': false, 'attr': {'data-name': 'tax-nominal-replacement', 'data-bind-target': '[data-name=tax-nominal-replacement-text]', 'data-bind-format': 'number', 'data-option-precision': 2} }) }}
-                        <span data-name="tax-nominal-replacement-text">{{ form.vars.value.taxNominalReplacement|default|number_format(2) }}</span>
+                        <span data-name="tax-nominal-replacement-text">{{ form.vars.value.taxNominalReplacement|default|number_format(0) }}</span>
                     </td>
                 </tr>
                 <tr>
                     <td class="text-right" colspan="4">Grand Total</td>
-                    <td class="text-right"><span data-name="grand-total">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(2) }}</span></td>
+                    <td class="text-right"><span data-name="grand-total">{{ purchaseInvoiceHeader.grandTotalReplacement|default|number_format(0) }}</span></td>
                     <td></td>
                 </tr>
             </tfoot>

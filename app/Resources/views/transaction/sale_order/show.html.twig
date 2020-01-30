@@ -83,11 +83,11 @@
             </tr>
             <tr>
                 <th>Harga /unit (Rp.)</th>
-                <td>{{ saleOrder.unitPrice|default|number_format(2) }}</td>
+                <td>{{ saleOrder.unitPrice|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Total (Rp.)</th>
-                <td>{{ saleOrder.total|default|number_format(2) }}</td>
+                <td>{{ saleOrder.total|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Cash</th>
@@ -107,11 +107,11 @@
             </tr>
             <tr>
                 <th>Angsuran /bulan (Rp.)</th>
-                <td>{{ saleOrder.leasingMonthlyNominal|default|number_format(2) }}</td>
+                <td>{{ saleOrder.leasingMonthlyNominal|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>DP (Rp.)</th>
-                <td>{{ saleOrder.downPayment|default|number_format(2) }}</td>
+                <td>{{ saleOrder.downPayment|default|number_format(0) }}</td>
             </tr>
             <tr>
                 <th>Alamat Kirim</th>
