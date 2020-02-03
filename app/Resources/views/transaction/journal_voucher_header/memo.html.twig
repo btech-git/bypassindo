@@ -4,13 +4,16 @@
 
 {% block body %}
     <div class="memo-content">
+        <div class="rows-empty top">
+            &nbsp;
+        </div>
         <div class="rows-1">
             {{ journalVoucherHeader.codeNumber|default }}
         </div>
         <div class="rows-1">
             {{ journalVoucherHeader.transactionDate|default ? journalVoucherHeader.transactionDate|date('j F Y') }}
         </div>
-        <div class="rows-empty">
+        <div class="rows-empty middle">
             &nbsp;
         </div>
         {% for journalVoucherDetail in journalVoucherHeader.journalVoucherDetails %}
@@ -84,8 +87,11 @@
             height: 18mm;
             padding-left: 25mm;
         }
-        div.memo-content div.rows-empty {
+        div.memo-content div.rows-empty.middle {
             height: 4mm;
+        }
+        div.memo-content div.rows-empty.top {
+            height: 0mm;
         }
     </style>
 {% endblock %}

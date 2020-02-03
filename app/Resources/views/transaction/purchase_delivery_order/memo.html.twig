@@ -13,34 +13,34 @@
         <div class="rows-empty middle">
             &nbsp;
         </div>
-        <div class="rows-2">
+        <div class="rows-1 info">
             {{ purchaseDeliveryOrder.saleOrder.customer.name|default }} <br /><br />
         </div>
         <div class="rows-2">
-            {{ purchaseDeliveryOrder.saleOrder.customer.officeAddress|default }}
+            {{ purchaseDeliveryOrder.saleOrder.customer.officeAddress|nl2br }}
         </div>
         <div class="rows-empty bottom">
             &nbsp;
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.saleOrder.vehicleModel.vosModelName|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.vehicleProductionYear|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.vehicleMachineNumber|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.vehicleChassisNumber|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.saleOrder.vehicleColor|default }}
         </div>
-        <div class="rows-2">
+        <div class="rows-3">
             {{ purchaseDeliveryOrder.note|default }}
         </div>
     </div>
@@ -87,26 +87,30 @@
             text-align: left;
         }
         div.memo-content div.rows-1.content-right {
-            width: 200mm;
+            width: 130mm;
             padding-right: 5mm;
             text-align: right;
         }
-        div.memo-content div.rows-1.total-price {
-            height: 10mm;
-            padding-left: 18mm;
+        div.memo-content div.rows-1.info {
+            height: 8mm;
+            padding-left: 35mm;
         }
         div.memo-content div.rows-2 {
-            height: 10mm;
+            height: 11mm;
+            padding-left: 35mm;
+        }
+        div.memo-content div.rows-3 {
+            height: 7mm;
             padding-left: 35mm;
         }
         div.memo-content div.rows-empty.top {
-            height: 40mm;
+            height: 50mm;
         }
         div.memo-content div.rows-empty.middle {
-            height: 20mm;
+            height: 45mm;
         }
         div.memo-content div.rows-empty.bottom {
-            height: 12mm;
+            height: 18mm;
         }
         div.table-payment {
             height: 38mm;

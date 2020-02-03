@@ -150,7 +150,7 @@ class DepositHeaderController extends Controller
      */
     public function memoAction(DepositHeader $depositHeader)
     {
-        return $this->render('transaction/deposit_header/memo.html.twig', array(
+        return $this->render('transaction/deposit_header/memo_plain.html.twig', array(
             'depositHeader' => $depositHeader,
         ));
     }

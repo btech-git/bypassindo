@@ -5,24 +5,26 @@
 {% block body %}
     {% for batch in saleInvoiceHeader.saleInvoiceDetailUnits | batch(5) %}
         <div class="memo-content">
+            <div class="rows-empty top">
+                &nbsp;
+            </div>
             <div class="rows-1 header">
                 {{ saleInvoiceHeader.codeNumber|default }}
             </div>
             <div class="rows-1 header">
                 {{ saleInvoiceHeader.dueDate|default ? saleInvoiceHeader.dueDate|date('d M Y') }}
             </div>
-            <div class="rows-empty top">
+            <div class="rows-empty middle">
                 &nbsp;
             </div>
             <div class="rows-2">
                 {{ saleInvoiceHeader.customer.name|default }} <br />
-                {{ saleInvoiceHeader.customer.contactPerson|default }} <br />
-                {{ saleInvoiceHeader.customer.officeAddress|default }}
+                {{ saleInvoiceHeader.customer.officeAddress|nl2br }}
             </div>
             <div class="rows-1 nominal">
                 {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0, '.', '')|say|capitalize }} rupiah.
             </div>
-            <div class="rows-empty middle">
+            <div class="rows-empty bottom">
                 &nbsp;
             </div>
             <div class="table-payment">
@@ -35,8 +37,8 @@
                     </div>
                 {% endfor %}
             </div>
-            <div class="rows-empty bottom" style="text-align: right">
-                Jakarta, {{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}
+            <div class="rows-3">
+                {{ saleInvoiceHeader.transactionDate|default ? saleInvoiceHeader.transactionDate|date('d M Y') }}
             </div>
             <div class="rows-1 total-price">
                 {{ saleInvoiceHeader.grandTotalAfterDownpayment|default|number_format(0) }}
@@ -71,7 +73,7 @@
         }
         div.memo-content div.rows-1.header {
             height: 10mm;
-            padding-left: 153mm;
+            padding-left: 148mm;
         }
         div.memo-content div.rows-1.nominal {
             height: 11mm;
@@ -91,24 +93,29 @@
             text-align: left;
         }
         div.memo-content div.rows-1.total-price {
-            height: 10mm;
+            height: 5mm;
             padding-left: 18mm;
         }
         div.memo-content div.rows-2 {
             height: 15.4mm;
             padding-left: 38mm;
         }
+        div.memo-content div.rows-3 {
+            height: 10mm;
+            padding-left: 60mm;
+            text-align: center;
+        }
         div.memo-content div.rows-empty.top {
             height: 6mm;
         }
         div.memo-content div.rows-empty.middle {
-            height: 9mm;
+            height: 4mm;
         }
         div.memo-content div.rows-empty.bottom {
-            height: 12mm;
+            height: 9mm;
         }
         div.table-payment {
-            height: 38mm;
+            height: 35mm;
         }
     </style>
 {% endblock %}

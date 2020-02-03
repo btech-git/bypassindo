@@ -19,9 +19,10 @@
         <div class="rows-2 content-left">
             {{ deliveryOrder.codeNumber|default }}
         </div>
+        <br />
         <div class="rows-3 content-left">
             {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }} <br />
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.officeAddress|default }} <br /><br />
+            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.officeAddress|nl2br }} <br /><br />
             {{ deliveryOrder.transactionDate|default ? deliveryOrder.transactionDate|date('j F Y') }}<br />
             {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleBrand|default }}<br />
             {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleModel.vosModelName|default }}<br />
@@ -32,10 +33,13 @@
             {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}<br />
             {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}<br />
         </div>
+        <div class="rows-empty bottom">
+            &nbsp;
+        </div>
         <div class="rows-4 content-left">
             <table style="width: 100%">
                 <tr>
-                    <td style="width: 55%">{{ deliveryOrder.isSpareTire|default ? 'V' : '' }}</td>
+                    <td style="width: 70%">{{ deliveryOrder.isSpareTire|default ? 'V' : '' }}</td>
                     <td>{{ deliveryOrder.isServiceBook|default ? 'V' : '' }}</td>
                 </tr>
                 <tr>
@@ -123,13 +127,13 @@
             height: 7mm;
         }
         div.memo-content div.rows-1.content-left {
-            width: 155mm;
+            width: 75mm;
             padding-left: 2mm;
             text-align: left;
         }
         div.memo-content div.rows-1.content-right {
-            width: 125mm;
-            padding-right: 5mm;
+            width: 85mm;
+            padding-left: 85mm;
             text-align: right;
         }
         div.memo-content div.rows-1.total-price {
@@ -137,28 +141,28 @@
             padding-left: 18mm;
         }
         div.memo-content div.rows-2.content-left {
-            height: 15.4mm;
-            padding-left: 50mm;
+            height: 7mm;
+            padding-left: 20mm;
             text-align: left;
         }
         div.memo-content div.rows-3.content-left {
             width: 155mm;
-            padding-left: 65mm;
+            padding-left: 45mm;
             text-align: left;
         }
         div.memo-content div.rows-4.content-left {
             width: 90%;
-            padding-left: 10mm;
+            padding-left: 7mm;
             text-align: left;
         }
         div.memo-content div.rows-empty.top {
-            height: 60mm;
+            height: 20mm;
         }
         div.memo-content div.rows-empty.middle {
-            height: 9mm;
+            height: 11mm;
         }
         div.memo-content div.rows-empty.bottom {
-            height: 12mm;
+            height: 9mm;
         }
         div.table-payment {
             height: 38mm;

@@ -16,26 +16,32 @@
         <div class="rows-empty middle">
             &nbsp;
         </div>
-        <div class="rows-1 content-left">
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }} <br />
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.officeAddress|default }} <br /><br />
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.phone|default }}
-        </div>
-        <div class="rows-1 content-right">
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }} <br />
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.transactionDate|default ? deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.transactionDate|date('j F Y') }} <br /><br />
-            {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.staffFirst.name|default }}
-        </div>
-        <table style="width: 80%">
+        <table style="width: 90%">
             <tr>
-                <td style="padding-left: 60mm;">
+                <td style="width: 70%">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.name|default }}</td>
+                <td style="width: 25%; padding-left: 90mm;">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.codeNumber|default }}</td>
+            </tr>
+            <tr>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.officeAddress|nl2br }}</td>
+                <td style="padding-left: 60mm;">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.transactionDate|default ? deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.transactionDate|date('j F Y') }}</td>
+            </tr>
+            <tr>
+                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.customer.phone|default }}</td>
+                <td style="padding-left: 60mm;">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.staffFirst.name|default }}</td>
+            </tr>
+        </table>
+        <br />
+        <br />
+        <table style="width: 100%">
+            <tr>
+                <td style="padding-left: 30mm;">
                     {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleModel.manufactureCode|default }}<br />
                     {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleModel.vosModelName|default }}<br />
                     {{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleModel.dmsVariantName|default }}
                 </td>
-                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
-                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
-                <td>{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
+                <td style="width: 20%">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleMachineNumber|default }}</td>
+                <td style="width: 20%; text-align: center">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.vehicleChassisNumber|default }}</td>
+                <td style="width: 20%; text-align: right">{{ deliveryOrder.deliveryInspectionHeader.receiveOrder.purchaseDeliveryOrder.saleOrder.vehicleColor|default }}</td>
             </tr>
         </table>
     </div>
@@ -77,12 +83,12 @@
             height: 7mm;
         }
         div.memo-content div.rows-1.content-left {
-            width: 155mm;
+            width: 125mm;
             padding-left: 2mm;
             text-align: left;
         }
         div.memo-content div.rows-1.content-right {
-            width: 125mm;
+            width: 155mm;
             padding-right: 5mm;
             text-align: right;
         }
@@ -95,10 +101,10 @@
             padding-left: 35mm;
         }
         div.memo-content div.rows-empty.top {
-            height: 60mm;
+            height: 1mm;
         }
         div.memo-content div.rows-empty.middle {
-            height: 9mm;
+            height: 20mm;
         }
         div.memo-content div.rows-empty.bottom {
             height: 12mm;
