@@ -6,7 +6,7 @@ use LibBundle\Doctrine\EntityRepository;
 
 class JournalLedgerRepository extends EntityRepository
 {
-    public function getBeginningBalance($account, $startDate)
+    public function getAccountBeginningBalance($account, $startDate)
     {
         $query = $this->_em->createQuery('SELECT COALESCE(SUM(t.debit - t.credit), 0) AS beginningBalance FROM AppBundle\Entity\Report\JournalLedger t WHERE t.account = :account AND t.transactionDate < :transactionDate');
         $query->setParameter('account', $account);

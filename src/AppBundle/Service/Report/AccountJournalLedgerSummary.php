@@ -14,14 +14,11 @@ class AccountJournalLedgerSummary
         $this->journalLedgerRepository = $journalLedgerRepository;
     }
     
-    public function getBeginningBalanceData(DataGridView $dataGridView)
+    public function getBeginningBalance(DataGridView $dataGridView)
     {
-        $startDate = $dataGridView->searchVals['journalLedgers']['transactionDate'][1];
-        $beginningBalanceSummary = array();
-        foreach ($dataGridView->data as $i => $account) {
-            $beginningBalance = $this->journalLedgerRepository->getBeginningBalance($account, $startDate);
-            $beginningBalanceSummary[$i] = $beginningBalance;
-        }
-        return $beginningBalanceSummary;
+        $startDate = $dataGridView->searchVals['journalLedger']['transactionDate'][1];
+        $account = empty($dataGridView->data) ? null : $dataGridView->data[0]->getAccount();
+        $beginningBalance = $this->journalLedgerRepository->getAccountBeginningBalance($account, $startDate);
+        return $beginningBalance;
     }
 }

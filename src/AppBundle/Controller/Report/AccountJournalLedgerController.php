@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\Master\Account;
+use AppBundle\Entity\Report\JournalLedger;
 use AppBundle\Grid\Report\AccountJournalLedgerGridType;
 
 /**
@@ -24,18 +25,18 @@ class AccountJournalLedgerController extends Controller
     public function gridAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Account::class);
+        $repository = $em->getRepository(JournalLedger::class);
 
         $grid = $this->get('lib.grid.datagrid');
-        $grid->build(AccountJournalLedgerGridType::class, $repository, $request);
+        $grid->build(AccountJournalLedgerGridType::class, $repository, $request, array('em' => $em));
 
         $accountJournalLedgerService = $this->get('app.report.account_journal_ledger_summary');
         $dataGridView = $grid->createView();
-        $beginningBalanceData = $accountJournalLedgerService->getBeginningBalanceData($dataGridView);
+        $beginningBalance = $accountJournalLedgerService->getBeginningBalance($dataGridView);
 
         return $this->render('report/account_journal_ledger/grid.html.twig', array(
             'grid' => $dataGridView,
-            'beginningBalanceData' => $beginningBalanceData,
+            'beginningBalance' => $beginningBalance,
         ));
     }
 
@@ -57,19 +58,19 @@ class AccountJournalLedgerController extends Controller
     public function exportAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository(Account::class);
+        $repository = $em->getRepository(JournalLedger::class);
 
         $accountJournalLedgerService = $this->get('app.report.account_journal_ledger_summary');
         $grid = $this->get('lib.grid.datagrid');
         $grid->build(AccountJournalLedgerGridType::class, $repository, $request);
         $dataGridView = $grid->createView();
-        $beginningBalanceData = $accountJournalLedgerService->getBeginningBalanceData($dataGridView);
+        $beginningBalance = $accountJournalLedgerService->getBeginningBalance($dataGridView);
 
         $excel = $this->get('phpexcel');
         $excelXmlReader = $this->get('lib.excel.xml_reader');
         $xml = $this->renderView('report/account_journal_ledger/export.xml.twig', array(
             'grid' => $grid->createView(),
-            'beginningBalanceData' => $beginningBalanceData,
+            'beginningBalanceData' => $beginningBalance,
         ));
         $excelObject = $excelXmlReader->load($xml);
         $writer = $excel->createWriter($excelObject, 'Excel5');

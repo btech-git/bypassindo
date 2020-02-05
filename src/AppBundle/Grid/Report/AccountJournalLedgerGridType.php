@@ -14,6 +14,7 @@ use LibBundle\Grid\SearchOperator\BlankType as SearchBlankType;
 use LibBundle\Grid\SearchOperator\EqualType;
 use LibBundle\Grid\SearchOperator\BetweenType;
 use LibBundle\Grid\SearchOperator\ContainType;
+use LibBundle\Grid\Transformer\EntityTransformer;
 use AppBundle\Entity\Master\Account;
 use AppBundle\Entity\Report\JournalLedger;
 
@@ -21,14 +22,19 @@ class AccountJournalLedgerGridType extends DataGridType
 {
     public function buildWidgets(WidgetsBuilder $builder, array $options)
     {
+        $em = $options['em'];
+        $accounts = $em->getRepository(Account::class)->findAll();
+        $accountLabelModifier = function($account) { return $account->getName(); };
+        
         $builder->searchWidget()
-            ->addGroup('account')
-                ->setEntityName(Account::class)
-                ->addField('name')
-                    ->addOperator(SearchBlankType::class)
+            ->addGroup('journalLedger')
+                ->setEntityName(JournalLedger::class)
+                ->addField('account')
+                    ->setDataTransformer(new EntityTransformer($em, Account::class))
                     ->addOperator(EqualType::class)
-                    ->addOperator(ContainType::class)
-            ->addGroup('journalLedgers')
+                        ->getInput(1)
+                            ->setListData($accounts, $accountLabelModifier)
+                    ->setDefault(EqualType::class, $accounts[0])
                 ->setEntityName(JournalLedger::class)
                 ->addField('transactionDate')
                     ->addOperator(BetweenType::class)
@@ -40,30 +46,27 @@ class AccountJournalLedgerGridType extends DataGridType
         ;
 
         $builder->sortWidget()
-            ->addGroup('account')
+            ->addGroup('journalLedger')
                 ->addField('name')
                     ->addOperator(SortBlankType::class)
                     ->addOperator(AscendingType::class)
                     ->addOperator(DescendingType::class)
-            ->addGroup('journalLedgers')
-                ->addField('transactionDate')
-                    ->addOperator(SortBlankType::class)
-                    ->addOperator(AscendingType::class)
-                    ->setDefault(AscendingType::class)
         ;
 
         $builder->pageWidget()
             ->addPageSizeField()
-                ->addItems(10, 25, 50, 100)
+                ->addItems(1000)
             ->addPageNumField()
         ;
     }
 
     public function buildData(DataBuilder $builder, ObjectRepository $repository, array $options)
     {
-        list($criteria, $associations) = $this->getSpecifications($options);
+        list($criteria) = $this->getSpecifications($options);
+        
+        $criteria['journalLedger']->orderBy(array('transactionDate' => Criteria::ASC));
 
-        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria, &$associations) {
+        $builder->processSearch(function($values, $operator, $field, $group) use ($criteria) {
             $operator::search($criteria[$group], $field, $values);
         });
 
@@ -71,28 +74,24 @@ class AccountJournalLedgerGridType extends DataGridType
             $operator::sort($criteria[$group], $field);
         });
 
-        $builder->processPage($repository->count($criteria['account'], $associations), function($offset, $size) use ($criteria) {
-            $criteria['account']->setMaxResults($size);
-            $criteria['account']->setFirstResult($offset);
+        $builder->processPage($repository->count($criteria['journalLedger']), function($offset, $size) use ($criteria) {
+            $criteria['journalLedger']->setMaxResults($size);
+            $criteria['journalLedger']->setFirstResult($offset);
         });
         
-        $objects = $repository->match($criteria['account'], $associations);
+        $objects = $repository->match($criteria['journalLedger']);
 
         $builder->setData($objects);
     }
 
     private function getSpecifications(array $options)
     {
-        $names = array('account', 'journalLedgers');
+        $names = array('journalLedger');
         $criteria = array();
         foreach ($names as $name) {
             $criteria[$name] = Criteria::create();
         }
 
-        $associations = array(
-            'journalLedgers' => array('criteria' => $criteria['journalLedgers'], 'merge' => true),
-        );
-
-        return array($criteria, $associations);
+        return array($criteria);
     }
 }
