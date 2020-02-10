@@ -24,6 +24,7 @@
         <div class="rows-2">
             {{ expenseHeader.totalAmount|default|number_format(0, '.', '')|say|capitalize }} rupiah.
         </div>
+        <br />
         <div>
             <div class="rows-1 bottom-info content-left">
                 {{ expenseHeader.account.name|default }}
@@ -70,21 +71,21 @@
         }
         div.memo-content div.rows-1.header {
             height: 7mm;
-            padding-left: 135mm;
+            padding-left: 165mm;
         }
         div.memo-content div.rows-1.top-info, div.memo-content div.rows-1.bottom-info {
             height: 6mm;
         }
         div.memo-content div.rows-1.top-info.content-left {
-            width: 9cm;
-            padding-left: 3cm;
+            width: 12cm;
+            padding-left: 5cm;
         }
         div.memo-content div.rows-1.top-info.content-right {
             width: 6cm;
-            padding-left: 13mm;
+            padding-left: 17mm;
         }
         div.memo-content div.rows-1.bottom-info.content-left {
-            width: 45mm;
+            width: 55mm;
             padding-left: 5mm;
         }
         div.memo-content div.rows-1.bottom-info.content-middle {
@@ -98,12 +99,12 @@
         div.memo-content div.rows-2 {
             width: 16cm;
             height: 13mm;
-            padding-left: 3cm;
+            padding-left: 5cm;
         }
         div.memo-content div.rows-3 {
             width: 16cm;
             height: 2cm;
-            padding-left: 3cm;
+            padding-left: 5cm;
         }
         div.memo-content div.rows-empty {
             height: 7mm;
