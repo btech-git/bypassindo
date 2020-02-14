@@ -19,13 +19,21 @@
                             <div class="cell label">Voucher #</div>
                             <div class="cell value">{{ expenseHeader.codeNumber|default }}</div>
                         </div>
+                        <div class="row">
+                            <div class="cell label">Tanggal</div>
+                            <div class="cell value">{{ expenseHeader.transactionDate|default ? expenseHeader.transactionDate|date('j F Y') }}</div>
+                        </div>
                     </div>
                 </div>
                 <div class="cell col">
                     <div class="table full">
                         <div class="row">
-                            <div class="cell label">Tanggal</div>
-                            <div class="cell value">{{ expenseHeader.transactionDate|default ? expenseHeader.transactionDate|date('j F Y') }}</div>
+                            <div class="cell label">Pengeluaran Untuk:</div>
+                            <div class="cell value">{{ expenseHeader.objectiveReason|default }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="cell label">BG/Giro #</div>
+                            <div class="cell value">{{ expenseHeader.chequeNumber|default }}</div>
                         </div>
                     </div>
                 </div>
@@ -37,26 +45,33 @@
         <table class="detail">
             <thead>
                 <tr class="bg-info">
-                <th style="width: 15%">Kode</th>
-                <th style="width: 25%">Akun</th>
-                <th>Keterangan</th>
-                <th style="width: 20%">Amount</th>
+                    <th style="width: 15%">Kode</th>
+                    <th style="width: 25%">Akun</th>
+                    <th>Keterangan</th>
+                    <th style="width: 20%">Jumlah</th>
                 </tr>
             </thead>
             <tbody>
-                {% for expenseDetail in expenseHeader.expenseDetails %}
-                    <tr>
-                        <td class="left">{{ expenseDetail.account.code|default }}</td>
-                        <td class="left">{{ expenseDetail.account.name|default }}</td>
-                        <td class="left">{{ expenseDetail.memo|default }}</td>
-                        <td class="right">{{ expenseDetail.amount|default|number_format(0) }}</td>
-                    </tr>
+                {% set rowspan = show ? 10 : 10 %}
+                {% for row in expenseHeader.expenseDetails|batch(rowspan, '') %}
+                    {% for expenseDetail in row %}
+                        <tr>
+                            {% for i in 1..4 if expenseDetail is empty %}
+                                <td>&nbsp;</td>
+                            {% else %}
+                                <td class="left">{{ expenseDetail.account.code|default }}</td>
+                                <td class="left">{{ expenseDetail.account.name|default }}</td>
+                                <td class="left">{{ expenseDetail.memo|default }}</td>
+                                <td class="right">{{ expenseDetail.amount|default|number_format(0) }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
                 {% endfor %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="3" class="label right">Grand Total</td>
-                    <td class="right">{{ expenseHeader.totalAmount|default|number_format(0) }}</td>
+                    <td class="label right">{{ expenseHeader.totalAmount|default|number_format(0) }}</td>
                 </tr>
             </tfoot>
         </table>
@@ -71,35 +86,28 @@
             </div>
         </div>
         
-        <div class="note">
-            <div class="table">
-                <div class="cell label">Catatan:</div>
-                <div class="cell">&nbsp;&nbsp;</div>
-                <div class="cell">{{ expenseHeader.note|default }}</div>
-            </div>
-        </div>
-        
         <br />
         
-        <div class="signature">
-            <div class="table full">
-                <div class="cell sig">
-                    <div>Direksi,</div>
-                </div>
-                <div class="cell sig">
-                    <div>Accounting,</div>
-                </div>
-                <div class="cell sig">
-                    <div>Finance,</div>
-                </div>
-                <div class="cell sig">
-                    <div>Kas,</div>
-                </div>
-                <div class="cell sig">
-                    <div>Penerima,</div>
-                </div>
-            </div>
-        </div>
+        <table class="detail">
+            <thead>
+                <tr class="bg-info">
+                    <th style="width: 20%">Direksi</th>
+                    <th style="width: 20%">Accounting</th>
+                    <th style="width: 20%">Finance</th>
+                    <th style="width: 20%">Kas</th>
+                    <th style="width: 20%">Penerima</th>
+                <tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 3cm">&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 {% endblock %}
 
