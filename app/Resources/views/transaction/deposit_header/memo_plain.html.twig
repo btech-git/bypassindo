@@ -80,6 +80,11 @@
         
         <div class="note">
             <div class="table">
+                <div class="cell label">Catatan:</div>
+                <div class="cell">&nbsp;&nbsp;</div>
+                <div class="cell">{{ depositHeader.note|default }}.</div>
+            </div>
+            <div class="table">
                 <div class="cell label">Terbilang:</div>
                 <div class="cell">&nbsp;&nbsp;</div>
                 <div class="cell">{{ depositHeader.totalAmount|default|number_format(0, '.', '')|say|capitalize }} rupiah.</div>
@@ -100,7 +105,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="height: 3cm">&nbsp;</td>
+                    <td style="height: 2cm">&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
                     <td>&nbsp;</td>
