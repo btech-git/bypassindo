@@ -44,7 +44,7 @@ abstract class CodeNumberAccountEntity
     {
         $numerals = self::makeRomanNumerals();
         
-        return sprintf('%04d/%s/%s/%02d/%s', intval($this->codeNumberOrdinal), $this->getCodeNumberConstant(), $numerals[intval($this->codeNumberMonth)], intval($this->codeNumberYear), $this->getCodeNumberAccountCode());
+        return sprintf('%s.%04d/%s/%s/%02d', $this->getAccount()->getAlias(), intval($this->codeNumberOrdinal), $this->getCodeNumberConstant(), $numerals[intval($this->codeNumberMonth)], intval($this->codeNumberYear));
     }
     
     public function setCodeNumber($codeNumber)
