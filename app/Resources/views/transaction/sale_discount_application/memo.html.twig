@@ -77,12 +77,16 @@
                             </tr>
                             <tr>
                                 <td>BBN: {{ saleDiscountApplication.ownershipStatus|default }}</td>
-                                <td>{{ saleDiscountApplication.ownershipCategory|default }}</td>
-                                <td>Area: {{ saleDiscountApplication.orderArea|default }}</td>
+                                <td colspan="2">{{ saleDiscountApplication.ownershipCategory|default }}</td>
                                 <td>{{ saleDiscountApplication.customer.isPersonal|default ? 'Perorangan' : '' }} {{ saleDiscountApplication.customer.isCompany|default ? 'Perusahaan' : '' }}</td>
                                 <td style="text-align: right">{{ saleDiscountApplication.otherUnitPrice|default|number_format(0) }}</td>
                                 <td></td>
                                 <td></td>
+                            </tr>
+                            <tr>
+                                <td>Kir / Tanpa: {{ saleDiscountApplication.vehicleTestingStatus|default }}</td>
+                                <td colspan="3">Area: {{ saleDiscountApplication.orderArea|default }}</td>
+                                <td colspan="3">Keterangan: </td>
                             </tr>
                             <tr>
                                 <td colspan="3">Bentuk Karoseri: {{ saleDiscountApplication.workshopType|default }}</td>
